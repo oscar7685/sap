@@ -28,8 +28,6 @@
                 </table>
                 <br/>            
                 <h5 style="text-align: center;">Del programa ${programa.nombre} usted ha sido seleccionado al azar para diligenciar una sencilla encuesta de caracter an&oacute;nimo y voluntario, Recuerde que su participaci&oacute;n es fundamental en el proceso de autoevaluaci&oacute;n </h5>
-                <br/>
-                <p class="marketing-byline">&Eacute;dgar Parra Chac&oacute;n. Rector Universidad de Cartagena</p>              
             </c:when>
             <c:otherwise>
                 No Existen Encuestas Disponibles.
