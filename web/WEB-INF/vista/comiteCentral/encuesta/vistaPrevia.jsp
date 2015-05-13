@@ -1,23 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link media="print" href="<%=request.getContextPath()%>/css/print.css" rel="stylesheet"/>
-<script type="text/javascript">
-    $(function() {
-        var inst = $("#ins").val();
-        inst = inst.replace(/\n/gi, "<br/>");
-        $("#insp").append(inst);
-    });
-
-
-</script>
 <style type="text/css">
     @media all {
         div.saltopagina{
             display: none;
         }
-        #insp{
+        .insp{
             line-height: 22px;
+            text-align: justify;
         }
+
         .span5{
             width: 360px;
             font-size: 14px;
@@ -34,28 +27,33 @@
     <div style="margin-left: -30px;">
         <div id="conte" class="span10" style="text-align: justify">
             <div class="row">
-                <table class="table table-bordered table-striped" style="font-weight: bold;">
+                <table class="table table-striped table-bordered" style="font-weight: bold;">
                     <tbody>
                         <tr>
-                            <td rowspan="3" style="width: 25%; text-align: center;"><img src="<%=request.getContextPath()%>/img/LogoU.png"></td>
-                            <td style="width: 50%; text-align: center;">UNIVERSIDAD DE CARTAGENA</td>
-                            <td style="width: 25%;">CÓDIGO: ${encuesta.getCodigo()}</td>
+                            <td></td>
+                            <td colspan="3" style="width: 50%; text-align: center; vertical-align: middle">ARMADA NACIONAL</td>
+
                         </tr>
                         <tr>
-                            <td style="width: 50%; text-align: center;">AUTOEVALUACIÓN Y ACREDITACIÓN</td>
-                            <td>VERSIÓN:${encuesta.getVersion()}</td>
+                            <td rowspan="2" style="width: 15%; text-align: center;"><img src="<%=request.getContextPath()%>/img/armada2.jpg"></td>
+                            <td colspan="3" style="text-align: center;"><img src="<%=request.getContextPath()%>/img/escuela.png"></td>
+
+                        </tr>   
+                        <tr>
+                            <td colspan="3" style="text-align: center;">ESCUELA NAVAL DE CADETES "ALMIRANTE PADILLA"
+                                <br/>PROGRAMA __________________________<br>${encuesta.getNombre()}</td>
+
                         </tr>
                         <tr>
-                            <td style="width: 50%; text-align: center;">${encuesta.getNombre()}</td>
-                            <td>FECHA:${encuesta.getFecha()}</td>
+                            <td colspan="2" style="width: 25%; text-align: center; vertical-align: middle">Procedimiento: Autoevaluación</td>
+                            <td style="text-align: center;">Código: FAYM-FT-453-JINEN-V02</td>
+                            <td>Rige a partir de: 04/04/08</td>
                         </tr>
                     </tbody>
                 </table>
-                <h3>Objetivo:</h3>
-                <p style="text-align: justify;">${encuesta.getObjetivo()}</p>
-                <h3>Instrucciones:</h3>
-                <textarea id="ins" style="display: none;" rows="9">${encuesta.getInstrucciones()}</textarea>
-                <p id="insp" style="text-align: justify;"></p>
+                <br/>
+                <p class="insp">${encuesta.getObjetivo()}</p>
+                <p class="insp">${encuesta.getInstrucciones()}</p>
                 <br/>
             </div>
 
