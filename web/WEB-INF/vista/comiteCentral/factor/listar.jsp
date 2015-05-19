@@ -28,15 +28,15 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
                 </c:when>
                 <c:otherwise>
                     No existen factores registrados en el sistema para este modelo.
                 </c:otherwise>
             </c:choose>
-
+            <br/>
             <a href="#crearFactor" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear factor</a>
 
         </div>
     </div>
 </div>    
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>

@@ -32,7 +32,7 @@
                                                     <c:out value="${programa.nombre}"/>
                                                 </c:otherwise>
                                             </c:choose>
-                                                
+
                                         </c:forEach>
 
                                     </td>
@@ -43,13 +43,15 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
                 </c:when>
                 <c:otherwise>
                     No existen Coordinadores de programa registrados en el sistema.
                 </c:otherwise>
             </c:choose>
+            <br/>
             <a href="#crearCoordinador" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear coordinador</a>
         </div>
     </div>
 </div>    
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
+

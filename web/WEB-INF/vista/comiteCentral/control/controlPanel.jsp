@@ -81,6 +81,7 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
                 </c:when>
                 <c:otherwise>
                     No  se han encontrado procesos activos.
@@ -91,4 +92,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
+

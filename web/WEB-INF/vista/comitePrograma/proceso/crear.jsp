@@ -1,21 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <script type="text/javascript">
+
     $(function() {
-        $("#formCrearProceso").validate({
+        $("#formX").validate({
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=crearProceso",
-                    data: $("#formCrearProceso").serialize(),
-                    success: function(data) {
-                        $("#dancing-dots-text").remove();
-                        if (data == 1) {
-                            location = "/sap/#controlPanel";
-                        }
-                        if (data == 0) {
-                            $('#modalCc3').modal();
-                              location = "/sap/#controlPanel";
-                        }
+                    url: "/sap/controladorCC?action=crearPrograma",
+                    data: $("#formX").serialize(),
+                    success: function() {
+                        location = "/sap/#listarProgramas";
                     } //fin success
                 }); //fin $.ajax    
             }
@@ -25,9 +19,9 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <form id="formCrearProceso" class="form-horizontal" method="post">
+            <form id="formX" class="form-horizontal" method="post">
                 <fieldset>
-                    <legend>Nuevo Proceso de Autoevaluaci&oacute;n</legend>
+                    <legend>Nuevo programa</legend>
                     <div class="control-group">
                         <label for="programa"  class="control-label">Programa</label>
                         <div class="controls">

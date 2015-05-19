@@ -3,28 +3,34 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-
-            <h3 style="margin: 0;">Listado de  Preguntas</h3>
+            <h3 style="margin: 0;">Listado de  programas</h3>
             <c:choose>
-                <c:when test="${fn:length(listaP)!= 0}">
-
+                <c:when test="${fn:length(listaPro)!= 0}">
                     <table id="tablaX" class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th class="span1">C&oacute;digo</th>    
-                        <th class="span8">Pregunta</th>
+                        <th>Nombre</th>
+                        <th>Modalidad</th>
+                        <th>Tipo de formación</th>
+                        <th>Facultad</th>
                         <th class="span1">Acci&oacute;n</th>
                         </thead>
                         <tbody>
-                            <c:forEach items="${listaP}" var="row" varStatus="iter">
+                            <c:forEach items="${listaPro}" var="row" varStatus="iter">
                                 <tr>
                                     <td>   
-                                        <c:out value="${row.codigo}"/>
+                                        <c:out value="${row.nombre}"/>
                                     </td>
                                     <td>   
-                                        <c:out value="${row.pregunta}"/>
+                                        <c:out value="${row.modalidad}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row.tipoformacion}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row.facultadId.nombre}"/>
                                     </td>
                                     <td class="action span2">
-                                        <a href="#editarPregunta&${row.id}" title="Editar"><i class="icon-edit"></i></a>
+                                        <a href="#editarPrograma&${row.id}" title="Editar"><i class="icon-edit"></i></a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -33,13 +39,11 @@
                     <script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
                 </c:when>
                 <c:otherwise>
-                    No existen preguntas registradas en el sistema para este modelo.
+                    No existen Programas registrados en el sistema.
                 </c:otherwise>
             </c:choose>
             <br/>
-            <a href="#crearPregunta" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear pregunta</a>
-
+            <a href="#crearPrograma" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear programa</a>
         </div>
     </div>
-</div>    
-
+</div>  

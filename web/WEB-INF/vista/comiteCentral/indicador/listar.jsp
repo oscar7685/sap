@@ -29,15 +29,16 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
                 </c:when>
                 <c:otherwise>
                     No existen indicadores registrados en el sistema para este modelo.
                 </c:otherwise>
             </c:choose>
-             
+             <br/>
              <a href="#crearIndicador" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear indicador</a>
              
         </div>
     </div>
 </div>    
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
+

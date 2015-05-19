@@ -248,7 +248,7 @@ $(function() {
                     }); //fin del $.ajax
 
                 } else {
-                    if (hash === "#crearModelo" || hash === "#listarModelo" || hash === "#listarCoordinadores" || hash === "#crearCoordinador" || hash === "#controlPanel") {
+                    if (hash === "#crearModelo" || hash === "#crearPrograma" || hash === "#listarProgramas" || hash === "#listarModelo" || hash === "#listarCoordinadores" || hash === "#crearCoordinador" || hash === "#controlPanel") {
                         var url3 = "/sap/" + hash;
                         url3 = url3.replace('#', "controladorCC?action=") + "CC";
                         $("div.ui-layout-center").empty();
@@ -296,7 +296,7 @@ $(function() {
                                 } //fin success
                             }); //fin del $.ajax
                         } else {
-                            if (hash.indexOf("#editarModelo") !== -1 || hash.indexOf("#editarCoordinador") !== -1) {
+                            if (hash.indexOf("#editarModelo") !== -1 || hash.indexOf("#editarCoordinador") !== -1 || hash.indexOf("#editarPrograma") !== -1) {
                                 var cual = hash.split("&");
                                 hash = cual[0];
                                 var url3 = "/sap/controladorCC?action=";

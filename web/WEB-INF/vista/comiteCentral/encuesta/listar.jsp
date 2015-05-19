@@ -35,7 +35,7 @@
                     No existen encuestas registradas en el sistema para este modelo.
                 </c:otherwise>
             </c:choose>
-
+            <br/>        
             <a href="#crearEncuesta" class="btn btn-large btn-primary llamador"><i class="icon-plus"></i> Crear encuesta</a>
 
         </div>
