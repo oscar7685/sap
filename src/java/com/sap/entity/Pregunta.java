@@ -53,7 +53,7 @@ public class Pregunta implements Serializable {
     private String codigo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 1000)
     @Column(name = "pregunta")
     private String pregunta;
     @Basic(optional = false)
@@ -63,12 +63,23 @@ public class Pregunta implements Serializable {
     private String tipo;
     @ManyToMany(mappedBy = "preguntaList")
     private List<Encuesta> encuestaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
+    private List<Respuesta> respuestaList;
+    @OneToMany(mappedBy = "preguntaPadre")
+    private List<Pregunta> preguntaList;
+    @JoinColumn(name = "pregunta_padre", referencedColumnName = "id")
+    @ManyToOne
+    private Pregunta preguntaPadre;
     @JoinColumn(name = "modelo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Modelo modeloId;
     @JoinColumn(name = "indicador_id", referencedColumnName = "id")
     @ManyToOne
     private Indicador indicadorId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaCondicionada")
+    private List<Condicion> condicionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaCondicionadora")
+    private List<Condicion> condicionList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
     private List<Resultadoevaluacion> resultadoevaluacionList;
 
@@ -127,6 +138,32 @@ public class Pregunta implements Serializable {
         this.encuestaList = encuestaList;
     }
 
+    @XmlTransient
+    public List<Respuesta> getRespuestaList() {
+        return respuestaList;
+    }
+
+    public void setRespuestaList(List<Respuesta> respuestaList) {
+        this.respuestaList = respuestaList;
+    }
+
+    @XmlTransient
+    public List<Pregunta> getPreguntaList() {
+        return preguntaList;
+    }
+
+    public void setPreguntaList(List<Pregunta> preguntaList) {
+        this.preguntaList = preguntaList;
+    }
+
+    public Pregunta getPreguntaPadre() {
+        return preguntaPadre;
+    }
+
+    public void setPreguntaPadre(Pregunta preguntaPadre) {
+        this.preguntaPadre = preguntaPadre;
+    }
+
     public Modelo getModeloId() {
         return modeloId;
     }
@@ -141,6 +178,24 @@ public class Pregunta implements Serializable {
 
     public void setIndicadorId(Indicador indicadorId) {
         this.indicadorId = indicadorId;
+    }
+
+    @XmlTransient
+    public List<Condicion> getCondicionList() {
+        return condicionList;
+    }
+
+    public void setCondicionList(List<Condicion> condicionList) {
+        this.condicionList = condicionList;
+    }
+
+    @XmlTransient
+    public List<Condicion> getCondicionList1() {
+        return condicionList1;
+    }
+
+    public void setCondicionList1(List<Condicion> condicionList1) {
+        this.condicionList1 = condicionList1;
     }
 
     @XmlTransient

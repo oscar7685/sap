@@ -7,30 +7,11 @@
 </style>
 <script type="text/javascript">
     $(function() {
-        $("#tipo").on('mouseleave', function(e) {
-            $('#tipo').popover('destroy');
-        });
         $("#indicador").on('mouseleave', function(e) {
             $('#indicador').popover('destroy');
         });
 
-        $("#tipo").on('mouseover', function(e) {
-            var $e = $(e.target);
-            if ($e.is('option')) {
-                $('#tipo').popover('destroy');
-                $("#tipo").popover({
-                    trigger: 'manual',
-                    placement: 'right',
-                    html: true,
-                    title: $e.attr("data-title"),
-                    content: function() {
-                        return '<img src="' + ($e).data('img') + '" />';
-                    }
-
-                }).popover('show');
-            }
-        });
-        $("#indicador").on('mouseover', function(e) {
+       $("#indicador").on('mouseover', function(e) {
             var $e = $(e.target);
             if ($e.is('option')) {
                 $('#indicador').popover('destroy');
@@ -79,13 +60,96 @@
                         <div class="controls">
                             <select name="tipo" id="tipo">
                                 <c:choose>
-                                    <c:when test="${pregunta.getTipo().equals('1')}">
-                                        <option data-img="<%=request.getContextPath()%>/img/1-5.png" rel="popover" data-title="Elegir del 1 al 5"  selected="selected"  value="1">Elegir del 1 al 5</option>
-                                        <option value="2" data-img="<%=request.getContextPath()%>/img/Si-No.png" rel="popover" data-title="Pregunta abierta">Pregunta abierta</option>
+                                    <c:when test="${pregunta.getTipo().equals('1to5')}">
+                                        <option selected="selected"  value="1to5">Elegir del 1 al 5</option>
+                                        <option value="abierta">Pregunta abierta</option>
+                                        <option value="smur">Selección multiple unica respuesta</option>
+                                        <option value="multiple">Selección multiple multiple respuesta</option>
+                                        <option value="matriz15">Matriz 1-5</option>
+                                        <option value="simatriz">Matriz Si-No</option>
+                                        <option value="6matriz">Matriz 0-5</option>
+                                        <option value="vecesmatriz">Matriz Veces</option>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo().equals('abierta')}">
+                                        <option value="1to5">Elegir del 1 al 5</option>
+                                        <option value="abierta" selected="selected">Pregunta abierta</option>
+                                        <option value="smur">Selección multiple unica respuesta</option>
+                                        <option value="multiple">Selección multiple multiple respuesta</option>
+                                        <option value="matriz15">Matriz 1-5</option>
+                                        <option value="simatriz">Matriz Si-No</option>
+                                        <option value="6matriz">Matriz 0-5</option>
+                                        <option value="vecesmatriz">Matriz Veces</option>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo().equals('smur')}">
+                                        <option value="1to5">Elegir del 1 al 5</option>
+                                        <option value="abierta" >Pregunta abierta</option>
+                                        <option value="smur" selected="selected">Selección multiple unica respuesta</option>
+                                        <option value="multiple">Selección multiple multiple respuesta</option>
+                                        <option value="matriz15">Matriz 1-5</option>
+                                        <option value="simatriz">Matriz Si-No</option>
+                                        <option value="6matriz">Matriz 0-5</option>
+                                        <option value="vecesmatriz">Matriz Veces</option>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo().equals('multiple')}">
+                                        <option value="1to5">Elegir del 1 al 5</option>
+                                        <option value="abierta" >Pregunta abierta</option>
+                                        <option value="smur">Selección multiple unica respuesta</option>
+                                        <option value="multiple" selected="selected">Selección multiple multiple respuesta</option>
+                                        <option value="matriz15">Matriz 1-5</option>
+                                        <option value="simatriz">Matriz Si-No</option>
+                                        <option value="6matriz">Matriz 0-5</option>
+                                        <option value="vecesmatriz">Matriz Veces</option>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo().equals('matriz15')}">
+                                        <option value="1to5">Elegir del 1 al 5</option>
+                                        <option value="abierta" >Pregunta abierta</option>
+                                        <option value="smur">Selección multiple unica respuesta</option>
+                                        <option value="multiple">Selección multiple multiple respuesta</option>
+                                        <option value="matriz15" selected="selected">Matriz 1-5</option>
+                                        <option value="simatriz">Matriz Si-No</option>
+                                        <option value="6matriz">Matriz 0-5</option>
+                                        <option value="vecesmatriz">Matriz Veces</option>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo().equals('simatriz')}">
+                                        <option value="1to5">Elegir del 1 al 5</option>
+                                        <option value="abierta" >Pregunta abierta</option>
+                                        <option value="smur">Selección multiple unica respuesta</option>
+                                        <option value="multiple">Selección multiple multiple respuesta</option>
+                                        <option value="matriz15">Matriz 1-5</option>
+                                        <option value="simatriz" selected="selected">Matriz Si-No</option>
+                                        <option value="6matriz">Matriz 0-5</option>
+                                        <option value="vecesmatriz">Matriz Veces</option>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo().equals('6matriz')}">
+                                        <option value="1to5">Elegir del 1 al 5</option>
+                                        <option value="abierta" >Pregunta abierta</option>
+                                        <option value="smur">Selección multiple unica respuesta</option>
+                                        <option value="multiple">Selección multiple multiple respuesta</option>
+                                        <option value="matriz15">Matriz 1-5</option>
+                                        <option value="simatriz">Matriz Si-No</option>
+                                        <option value="6matriz" selected="selected">Matriz 0-5</option>
+                                        <option value="vecesmatriz">Matriz Veces</option>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo().equals('6matriz')}">
+                                        <option value="1to5">Elegir del 1 al 5</option>
+                                        <option value="abierta" >Pregunta abierta</option>
+                                        <option value="smur">Selección multiple unica respuesta</option>
+                                        <option value="multiple">Selección multiple multiple respuesta</option>
+                                        <option value="matriz15">Matriz 1-5</option>
+                                        <option value="simatriz">Matriz Si-No</option>
+                                        <option value="6matriz">Matriz 0-5</option>
+                                        <option value="vecesmatriz" selected="selected">Matriz Veces</option>
                                     </c:when>
                                     <c:otherwise>
-                                        <option  data-img="<%=request.getContextPath()%>/img/1-5.png" rel="popover" data-title="Elegir del 1 al 5"  value="1">Elegir del 1 al 5</option>
-                                        <option selected="selected" value="2" data-img="<%=request.getContextPath()%>/img/Si-No.png" rel="popover" data-title="Pregunta abierta">Pregunta abierta</option>
+                                        <option value=""></option>
+                                        <option value="1to5">Elegir del 1 al 5</option>
+                                        <option value="abierta" >Pregunta abierta</option>
+                                        <option value="smur">Selección multiple unica respuesta</option>
+                                        <option value="multiple">Selección multiple multiple respuesta</option>
+                                        <option value="matriz15">Matriz 1-5</option>
+                                        <option value="simatriz">Matriz Si-No</option>
+                                        <option value="6matriz">Matriz 0-5</option>
+                                        <option value="vecesmatriz" selected="selected">Matriz Veces</option>
                                     </c:otherwise>   
                                 </c:choose>
                             </select>

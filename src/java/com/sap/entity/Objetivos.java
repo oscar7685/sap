@@ -1,9 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sap.entity;
 
 import java.io.Serializable;
@@ -41,12 +39,12 @@ public class Objetivos implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idobjetivos", nullable = false)
+    @Column(name = "idobjetivos")
     private Integer idobjetivos;
     @Size(max = 2000)
-    @Column(name = "objetivo", length = 2000)
+    @Column(name = "objetivo")
     private String objetivo;
-    @JoinColumn(name = "hallazgo_idhallazgo", referencedColumnName = "idhallazgo", nullable = false)
+    @JoinColumn(name = "hallazgo_idhallazgo", referencedColumnName = "idhallazgo")
     @ManyToOne(optional = false)
     private Hallazgo hallazgoIdhallazgo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "objetivosIdobjetivos")

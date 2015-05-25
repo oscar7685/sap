@@ -1,9 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sap.entity;
 
 import java.io.Serializable;
@@ -42,22 +40,22 @@ public class Hallazgo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idhallazgo", nullable = false)
+    @Column(name = "idhallazgo")
     private Integer idhallazgo;
     @Size(max = 3000)
-    @Column(name = "hallazgo", length = 3000)
+    @Column(name = "hallazgo")
     private String hallazgo;
     @Size(max = 45)
-    @Column(name = "tipo", length = 45)
+    @Column(name = "tipo")
     private String tipo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hallazgoIdhallazgo")
     private List<Objetivos> objetivosList;
-    @JoinColumn(name = "proceso_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private Proceso procesoId;
-    @JoinColumn(name = "caracteristica_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "caracteristica_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Caracteristica caracteristicaId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
 
     public Hallazgo() {
     }
@@ -99,20 +97,20 @@ public class Hallazgo implements Serializable {
         this.objetivosList = objetivosList;
     }
 
-    public Proceso getProcesoId() {
-        return procesoId;
-    }
-
-    public void setProcesoId(Proceso procesoId) {
-        this.procesoId = procesoId;
-    }
-
     public Caracteristica getCaracteristicaId() {
         return caracteristicaId;
     }
 
     public void setCaracteristicaId(Caracteristica caracteristicaId) {
         this.caracteristicaId = caracteristicaId;
+    }
+
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
+
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
     }
 
     @Override

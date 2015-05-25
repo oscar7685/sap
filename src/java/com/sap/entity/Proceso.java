@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -45,20 +46,23 @@ public class Proceso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "fechainicio", nullable = false, length = 30)
+    @Column(name = "fechainicio")
     private String fechainicio;
     @Size(max = 30)
-    @Column(name = "fechacierre", length = 30)
+    @Column(name = "fechacierre")
     private String fechacierre;
     @Size(max = 500)
-    @Column(name = "descripcion", length = 500)
+    @Column(name = "descripcion")
     private String descripcion;
-    @ManyToMany(mappedBy = "procesoList")
+    @JoinTable(name = "procesohasindicador", joinColumns = {
+        @JoinColumn(name = "proceso_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "indicador_id", referencedColumnName = "id")})
+    @ManyToMany
     private List<Indicador> indicadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
@@ -72,12 +76,14 @@ public class Proceso implements Serializable {
     private List<Encabezado> encabezadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Numericadocumental> numericadocumentalList;
-    @JoinColumn(name = "programa_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private Programa programaId;
-    @JoinColumn(name = "modelo_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Modelo modeloId;
+    @JoinColumn(name = "programa_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Programa programaId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Ponderacionindicador> ponderacionindicadorList;
 
     public Proceso() {
     }
@@ -186,6 +192,14 @@ public class Proceso implements Serializable {
         this.numericadocumentalList = numericadocumentalList;
     }
 
+    public Modelo getModeloId() {
+        return modeloId;
+    }
+
+    public void setModeloId(Modelo modeloId) {
+        this.modeloId = modeloId;
+    }
+
     public Programa getProgramaId() {
         return programaId;
     }
@@ -194,12 +208,13 @@ public class Proceso implements Serializable {
         this.programaId = programaId;
     }
 
-    public Modelo getModeloId() {
-        return modeloId;
+    @XmlTransient
+    public List<Ponderacionindicador> getPonderacionindicadorList() {
+        return ponderacionindicadorList;
     }
 
-    public void setModeloId(Modelo modeloId) {
-        this.modeloId = modeloId;
+    public void setPonderacionindicadorList(List<Ponderacionindicador> ponderacionindicadorList) {
+        this.ponderacionindicadorList = ponderacionindicadorList;
     }
 
     @Override

@@ -60,15 +60,15 @@ public class Numericadocumental implements Serializable {
     @Size(max = 2000)
     @Column(name = "accion")
     private String accion;
-    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Proceso procesoId;
-    @JoinColumn(name = "instrumento_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Instrumento instrumentoId;
     @JoinColumn(name = "indicador_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Indicador indicadorId;
+    @JoinColumn(name = "instrumento_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Instrumento instrumentoId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
 
     public Numericadocumental() {
     }
@@ -133,12 +133,12 @@ public class Numericadocumental implements Serializable {
         this.accion = accion;
     }
 
-    public Proceso getProcesoId() {
-        return procesoId;
+    public Indicador getIndicadorId() {
+        return indicadorId;
     }
 
-    public void setProcesoId(Proceso procesoId) {
-        this.procesoId = procesoId;
+    public void setIndicadorId(Indicador indicadorId) {
+        this.indicadorId = indicadorId;
     }
 
     public Instrumento getInstrumentoId() {
@@ -149,12 +149,12 @@ public class Numericadocumental implements Serializable {
         this.instrumentoId = instrumentoId;
     }
 
-    public Indicador getIndicadorId() {
-        return indicadorId;
+    public Proceso getProcesoId() {
+        return procesoId;
     }
 
-    public void setIndicadorId(Indicador indicadorId) {
-        this.indicadorId = indicadorId;
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
     }
 
     @Override

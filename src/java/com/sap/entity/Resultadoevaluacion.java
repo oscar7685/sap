@@ -78,6 +78,14 @@ public class Resultadoevaluacion implements Serializable {
         this.respuesta = respuesta;
     }
 
+    public String getRespuestaAbierta() {
+        return respuestaAbierta;
+    }
+
+    public void setRespuestaAbierta(String respuestaAbierta) {
+        this.respuestaAbierta = respuestaAbierta;
+    }
+
     public Pregunta getPreguntaId() {
         return preguntaId;
     }
@@ -86,14 +94,6 @@ public class Resultadoevaluacion implements Serializable {
         this.preguntaId = preguntaId;
     }
 
-    public String getRespuestaAbierta() {
-        return respuestaAbierta;
-    }
-
-    public void setRespuestaAbierta(String respuestaAbierta) {
-        this.respuestaAbierta = respuestaAbierta;
-    }
-    
     public Encabezado getEncabezadoId() {
         return encabezadoId;
     }

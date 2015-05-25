@@ -1,9 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sap.entity;
 
 import java.io.Serializable;
@@ -45,17 +43,17 @@ public class Caracteristica implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "codigo", nullable = false, length = 100)
+    @Column(name = "codigo")
     private String codigo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
-    @Column(name = "nombre", nullable = false, length = 500)
+    @Column(name = "nombre")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
@@ -63,7 +61,7 @@ public class Caracteristica implements Serializable {
     private List<Hallazgo> hallazgoList;
     @OneToMany(mappedBy = "caracteristicaId")
     private List<Indicador> indicadorList;
-    @JoinColumn(name = "modelo_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Modelo modeloId;
     @JoinColumn(name = "factor_id", referencedColumnName = "id")
@@ -89,10 +87,6 @@ public class Caracteristica implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public int CantiIndicadores() {
-        return this.getIndicadorList().size();
     }
 
     public String getCodigo() {
