@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50542
 File Encoding         : 65001
 
-Date: 2015-05-24 21:24:23
+Date: 2015-05-27 07:13:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -298,13 +298,15 @@ CREATE TABLE `encuesta` (
   PRIMARY KEY (`id`),
   KEY `fk_encuesta_modelo1` (`modelo_id`),
   CONSTRAINT `fk_encuesta_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of encuesta
 -- ----------------------------
 INSERT INTO `encuesta` VALUES ('1', 'FAYM-FT-453-JINEN-V02', 'ENCUESTA A PROFESORES', 'Actualmente el programa de  _PROGRAMA_ se encuentra en proceso de autoevaluación con el fin de obtener la renovación de la acreditación de alta calidad por parte del CNA, identificando y valorando fortalezas y debilidades, mediante un proceso amplio y participativo de la Comunidad Educativa.', 'Las preguntas que se registran a continuación tienen como objetivo primordial, obtener información pertinente y confiable sobre las condiciones de calidad y cumplimiento de cada uno de los indicadores enunciados.', '1', 'Procedimiento: Autoevaluación', 'Rige a partir de: 04/04/08');
 INSERT INTO `encuesta` VALUES ('2', 'FAYM-FT-453-JINEN-V02', 'ENCUESTA A ESTUDIANTES', 'Actualmente el programa de  _PROGRAMA_ se encuentra en proceso de autoevaluación con el fin de obtener la renovación de la acreditación de alta calidad por parte del CNA, identificando y valorando fortalezas y debilidades, mediante un proceso amplio y participativo de la Comunidad Educativa.', 'Las preguntas que se registran a continuación tienen como objetivo primordial, obtener información pertinente y confiable sobre las condiciones de calidad y cumplimiento de cada uno de los indicadores enunciados', '1', 'Procedimiento: Autoevaluación', 'Rige a partir de: 04/04/08');
+INSERT INTO `encuesta` VALUES ('3', 'FAYM-FT-453-JINEN-V02', 'ENCUESTA A PERSONAL ADMINISTRATIVO', 'Actualmente el programa de  _PROGRAMA_ se encuentra en proceso de autoevaluación con el fin de obtener la renovación de la acreditación de alta calidad por parte del CNA, identificando y valorando fortalezas y debilidades, mediante un proceso amplio y participativo de la Comunidad Educativa.', 'Las preguntas que se registran a continuación tienen como objetivo primordial, obtener información pertinente y confiable sobre las condiciones de calidad y cumplimiento de cada uno de los indicadores enunciados.', '1', 'Procedimiento: Autoevaluación', 'Rige a partir de: 04/04/08');
+INSERT INTO `encuesta` VALUES ('4', 'FAYM-FT-453-JINEN-V02', 'ENCUESTA A PERSONAL DIRECTIVO', 'Actualmente el programa de  _PROGRAMA_ se encuentra en proceso de autoevaluación con el fin de obtener la renovación de la acreditación de alta calidad por parte del CNA, identificando y valorando fortalezas y debilidades, mediante un proceso amplio y participativo de la Comunidad Educativa.', 'Las preguntas que se registran a continuación tienen como objetivo primordial, obtener información pertinente y confiable sobre las condiciones de calidad y cumplimiento de cada uno de los indicadores enunciados.', '1', 'Procedimiento: Autoevaluación', 'Rige a partir de: 04/04/08');
 
 -- ----------------------------
 -- Table structure for encuestahaspregunta
@@ -323,43 +325,90 @@ CREATE TABLE `encuestahaspregunta` (
 -- ----------------------------
 -- Records of encuestahaspregunta
 -- ----------------------------
+INSERT INTO `encuestahaspregunta` VALUES ('2', '1');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '2');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '3');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '3');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '3');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '4');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '4');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '4');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '8');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '9');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '9');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '10');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '11');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '11');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '12');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '12');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '12');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '12');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '13');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '13');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '13');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '13');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '14');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '14');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '14');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '14');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '15');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '15');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '15');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '15');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '16');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '16');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '17');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '17');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '18');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '19');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '20');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '20');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '21');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '21');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '22');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '22');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '22');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '23');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '23');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '24');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '24');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '24');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '25');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '25');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '25');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '26');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '27');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '27');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '28');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '28');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '29');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '29');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '29');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '30');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '30');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '30');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '31');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '32');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '33');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '34');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '34');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '35');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '36');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '37');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '38');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '39');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '39');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '40');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '40');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '41');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '41');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '42');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '42');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '43');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '44');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '45');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '46');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '47');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '48');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '49');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '50');
@@ -368,46 +417,117 @@ INSERT INTO `encuestahaspregunta` VALUES ('1', '52');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '53');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '54');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '55');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '56');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '56');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '57');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '58');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '58');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '58');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '59');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '59');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '60');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '61');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '61');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '62');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '62');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '62');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '63');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '63');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '64');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '64');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '64');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '65');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '65');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '66');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '66');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '66');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '67');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '68');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '68');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '69');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '69');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '70');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '70');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '71');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '71');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '71');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '72');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '72');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '72');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '74');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '74');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '74');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '75');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '75');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '75');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '76');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '76');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '77');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '77');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '78');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '78');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '79');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '79');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '80');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '80');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '81');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '81');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '81');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '82');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '82');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '82');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '83');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '83');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '84');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '85');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '86');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '86');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '86');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '86');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '87');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '87');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '87');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '87');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '88');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '88');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '88');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '88');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '89');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '89');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '89');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '89');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '90');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '91');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '92');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '92');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '93');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '93');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '93');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '93');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '94');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '94');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '94');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '94');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '95');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '95');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '95');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '96');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '97');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '97');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '98');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '98');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '98');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '99');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '99');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '99');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '107');
+INSERT INTO `encuestahaspregunta` VALUES ('2', '107');
+INSERT INTO `encuestahaspregunta` VALUES ('3', '107');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '107');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '108');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '108');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '109');
+INSERT INTO `encuestahaspregunta` VALUES ('4', '109');
 
 -- ----------------------------
 -- Table structure for estudiante
@@ -1470,7 +1590,7 @@ INSERT INTO `pregunta` VALUES ('18', '2.6.2.a', 'Señale en grado de importancia
 INSERT INTO `pregunta` VALUES ('19', '2.6.3.a', 'Evalúe  de acuerdo con la escala establecida (donde 5 es la actividad que  más participa y 1 es la actividad en que menos  participa) en cuales de las siguientes actividades de formación integral, ha participado activamente:', 'matriz15', null, '1', null);
 INSERT INTO `pregunta` VALUES ('20', '2.7.2.a', 'El Reglamento Académico establece la competencia, las normas técnicas y procedimientos que debe cumplir la Escuela Naval de Cadetes Almirante Padilla para la evaluación de los estudiantes, la relación con los docentes y otros aspectos de la administración académica. Su cumplimiento y control es responsabilidad de todo el personal involucrado en el proceso de formación y capacitación. ¿Tiene conocimiento de sus deberes y derechos contemplados en el Reglamento Académico de la Escuela Naval de Cadetes “Almirante Padilla”?', 'smur', '31', '1', null);
 INSERT INTO `pregunta` VALUES ('21', '2.7.2.b', 'De acuerdo con su apreciación, evalúe los siguientes aspectos, del Reglamento Académico de la Escuela Naval de Cadetes “Almirante Padilla”:', 'matriz15', null, '1', null);
-INSERT INTO `pregunta` VALUES ('22', '2.7.4.a', '¿Considera usted que existe participación de los estudiantes en los órganos de dirección del programa?', '1to5', '33', '1', null);
+INSERT INTO `pregunta` VALUES ('22', '2.7.4.a', 'El Reglamento Académico establece la competencia, las normas técnicas y procedimientos que debe cumplir la Escuela Naval de Cadetes Almirante Padilla para la evaluación de los estudiantes, la relación con los docentes y otros aspectos de la administración académica. Su cumplimiento y control es responsabilidad de todo el personal involucrado en el proceso de formación y capacitación. Mediante el acto de la matrícula, el estudiante manifiesta que conoce y acepta el presente reglamento y adquiere el compromiso de cumplirlo. ¿Considera usted que existe participación de los estudiantes en los órganos de dirección del programa?', '1to5', '33', '1', null);
 INSERT INTO `pregunta` VALUES ('23', '2.7.4.b', '¿Considera usted que este sistema de participación, tiene un impacto positivo y significativo para el  proceso de formación?', '1to5', '33', '1', null);
 INSERT INTO `pregunta` VALUES ('24', '3.8.3.a', '¿Conoce las políticas, las normas y los criterios académicos, establecidos por la Escuela Naval de Cadetes Almirante Padilla, para la selección, vinculación y permanencia de los docentes?', 'smur', '37', '1', null);
 INSERT INTO `pregunta` VALUES ('25', '3.8.3.b ', 'Según su apreciación sobre las políticas, las normas y los criterios académicos, establecidos por la Escuela Naval de Cadetes Almirante Padilla, para la selección, vinculación y permanencia de los docentes, evalúe los siguientes aspectos:', 'matriz15', null, '1', null);
