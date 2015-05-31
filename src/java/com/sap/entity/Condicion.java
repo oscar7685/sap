@@ -29,8 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Condicion.findAll", query = "SELECT c FROM Condicion c"),
     @NamedQuery(name = "Condicion.findByIdcondicion", query = "SELECT c FROM Condicion c WHERE c.idcondicion = :idcondicion"),
-    @NamedQuery(name = "Condicion.findByTipo", query = "SELECT c FROM Condicion c WHERE c.tipo = :tipo"),
-    @NamedQuery(name = "Condicion.findByRespuestaCondicionadora", query = "SELECT c FROM Condicion c WHERE c.respuestaCondicionadora = :respuestaCondicionadora")})
+    @NamedQuery(name = "Condicion.findByTipo", query = "SELECT c FROM Condicion c WHERE c.tipo = :tipo")})
 public class Condicion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,9 +40,9 @@ public class Condicion implements Serializable {
     @Size(max = 45)
     @Column(name = "tipo")
     private String tipo;
-    @Size(max = 45)
-    @Column(name = "respuesta_condicionadora")
-    private String respuestaCondicionadora;
+    @JoinColumn(name = "respuesta_idrespuesta", referencedColumnName = "idrespuesta")
+    @ManyToOne(optional = false)
+    private Respuesta respuestaIdrespuesta;
     @JoinColumn(name = "pregunta_condicionada", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Pregunta preguntaCondicionada;
@@ -74,12 +73,12 @@ public class Condicion implements Serializable {
         this.tipo = tipo;
     }
 
-    public String getRespuestaCondicionadora() {
-        return respuestaCondicionadora;
+    public Respuesta getRespuestaIdrespuesta() {
+        return respuestaIdrespuesta;
     }
 
-    public void setRespuestaCondicionadora(String respuestaCondicionadora) {
-        this.respuestaCondicionadora = respuestaCondicionadora;
+    public void setRespuestaIdrespuesta(Respuesta respuestaIdrespuesta) {
+        this.respuestaIdrespuesta = respuestaIdrespuesta;
     }
 
     public Pregunta getPreguntaCondicionada() {

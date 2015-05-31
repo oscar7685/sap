@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link media="print" href="<%=request.getContextPath()%>/css/print.css" rel="stylesheet"/>
 <style type="text/css">
@@ -59,187 +60,238 @@
             </div>
 
             <c:forEach items="${encuesta.getPreguntaList()}" var="pregunta" varStatus="status">
-                <div class="row printDiv">
-                    <div class="span10">
-                        <c:choose>
-                            <c:when test="${pregunta.getCodigo()!='-'}">
-                                <p style="font-weight: bold;">${pregunta.getCodigo()} ${pregunta.getPregunta()}</p>
-                            </c:when>
-                            <c:otherwise>
-                                <p style="font-weight: bold;">${pregunta.getPregunta()}</p>
-                            </c:otherwise>
+                <c:choose>
+                    <c:when test="${fn:length(pregunta.condicionList) > 0}">
+                        <div class="row hide" id="pregunta${pregunta.id}" > 
+                        </c:when>
+                        <c:otherwise>
+                            <div class="row" id="pregunta${pregunta.id}">
+                            </c:otherwise>        
                         </c:choose>
-
                         <c:choose>
-                            <c:when test="${pregunta.getTipo()=='matriz15'}">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="span4"></th>
-                                            <th class="span2" style="font-size: 12px">1</th>
-                                            <th class="span2" style="font-size: 12px">2</th>
-                                            <th class="span2" style="font-size: 12px">3 </th>
-                                            <th class="span2" style="font-size: 12px">4</th>
-                                            <th class="span2" style="font-size: 12px">5</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${pregunta.preguntaList}" var="sub">
-                                            <tr>
-                                                <td>${sub.getPregunta()}</td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="1" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="2" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="3" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="4" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="5" /></label></td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </c:when>
-                            <c:when test="${pregunta.getTipo()=='simatriz'}">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="span4"></th>
-                                            <th class="span2" style="font-size: 12px">SI</th>
-                                            <th class="span2" style="font-size: 12px">NO</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${pregunta.preguntaList}" var="sub">
-                                            <tr>
-                                                <td>${sub.getPregunta()}</td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="SI" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="NO" /></label></td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </c:when>
-                            <c:when test="${pregunta.getTipo()=='1to5'}">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="span4"></th>
-                                            <th class="span2" style="font-size: 12px">1</th>
-                                            <th class="span2" style="font-size: 12px">2</th>
-                                            <th class="span2" style="font-size: 12px">3</th>
-                                            <th class="span2" style="font-size: 12px">4</th>
-                                            <th class="span2" style="font-size: 12px">5</th>
-                                            <th class="span2" ></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Insatisfactoriamente</td>
-                                            <td><label class="radio"><input type="radio" name="Rpregunta${pregunta.id}" value="1" /></label></td>
-                                            <td><label class="radio"><input type="radio" name="Rpregunta${pregunta.id}" value="2" /></label></td>
-                                            <td><label class="radio"><input type="radio" name="Rpregunta${pregunta.id}" value="3" /></label></td>
-                                            <td><label class="radio"><input type="radio" name="Rpregunta${pregunta.id}" value="4" /></label></td>
-                                            <td><label class="radio"><input type="radio" name="Rpregunta${pregunta.id}" value="5" /></label></td>
-                                            <td>Plenamente</td>
-                                            
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-                            </c:when>
-                            <c:when test="${pregunta.getTipo()=='abierta'}">
-                                <input type="text" name="Rpregunta${pregunta.id}">
-                            </c:when>
-
-                            <c:when test="${pregunta.getTipo()=='smur'}">
-                                <c:forEach items="${pregunta.respuestaList}" var="respuesta" varStatus="status">
-                                    <label class="radio"><input value="${respuesta.respuesta}" type="radio" name="Rpregunta${pregunta.id}">${respuesta.respuesta}</label>
-                                    </c:forEach>
+                            <c:when test="${fn:length(pregunta.condicionList1) > 0 }">
+                                <div class="span10 condicionador">
                                 </c:when>
-                                <c:when test="${pregunta.getTipo()=='multiple'}">
-                                    <c:forEach items="${pregunta.respuestaList}" var="respuesta" varStatus="status">
-                                    <label class="checkbox"><input value="${respuesta.respuesta}" name="Rpregunta${pregunta.id}[]" type="checkbox">${respuesta.respuesta}</label>
-                                    </c:forEach>
-                                </c:when>
-                                <c:when test="${pregunta.getTipo()=='6matriz'}">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="span3"></th>
-                                            <th class="span2" style="font-size: 12px">0 </th>
-                                            <th class="span2" style="font-size: 12px">1 </th>
-                                            <th class="span2" style="font-size: 12px">2 </th>
-                                            <th class="span2" style="font-size: 12px">3 </th>
-                                            <th class="span2" style="font-size: 12px">4 </th>
-                                            <th class="span2" style="font-size: 12px">5 </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${pregunta.preguntaList}" var="sub">
-                                            <tr>
-                                                <td>${sub.getPregunta()}</td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="0" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="1" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="2" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="3" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="4" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="5" /></label></td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </c:when>
-                            <c:when test="${pregunta.getTipo()=='vecesmatriz'}">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="span5"></th>
-                                            <th class="span2" style="font-size: 12px">UNA VEZ</th>
-                                            <th class="span2" style="font-size: 12px">DOS VECES</th>
-                                            <th class="span2" style="font-size: 12px">TRES VECES</th>
-                                            <th class="span2" style="font-size: 12px">MÁS DE TRES</th>
-                                            <th class="span2" style="font-size: 12px">NINGUNA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${pregunta.preguntaList}" var="sub">
-                                            <tr>
-                                                <td>${sub.getPregunta()}</td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="1vez" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="2veces" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="3veces" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="masde3" /></label></td>
-                                                <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="ninguna" /></label></td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </c:when>
+                                <c:otherwise>
+                                    <div class="span10">
+                                    </c:otherwise>        
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${pregunta.getCodigo()!='-'}">
+                                        <p style="font-weight: bold;">${pregunta.getCodigo()} ${pregunta.getPregunta()}</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p style="font-weight: bold;">${pregunta.getPregunta()}</p>
+                                    </c:otherwise>
+                                </c:choose>
 
-                        </c:choose>
-                    </div> 
+                                <c:choose>
+                                    <c:when test="${pregunta.getTipo()=='matriz15'}">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="span4"></th>
+                                                    <th class="span2" style="font-size: 12px">1</th>
+                                                    <th class="span2" style="font-size: 12px">2</th>
+                                                    <th class="span2" style="font-size: 12px">3 </th>
+                                                    <th class="span2" style="font-size: 12px">4</th>
+                                                    <th class="span2" style="font-size: 12px">5</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${pregunta.preguntaList}" var="sub">
+                                                    <tr>
+                                                        <td>${sub.getPregunta()}</td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="1" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="2" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="3" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="4" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="5" /></label></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo()=='simatriz'}">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="span4"></th>
+                                                    <th class="span2" style="font-size: 12px">SI</th>
+                                                    <th class="span2" style="font-size: 12px">NO</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${pregunta.preguntaList}" var="sub">
+                                                    <tr>
+                                                        <td>${sub.getPregunta()}</td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="SI" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="NO" /></label></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo()=='1to5'}">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="span4"></th>
+                                                    <th class="span2" style="font-size: 12px">1</th>
+                                                    <th class="span2" style="font-size: 12px">2</th>
+                                                    <th class="span2" style="font-size: 12px">3</th>
+                                                    <th class="span2" style="font-size: 12px">4</th>
+                                                    <th class="span2" style="font-size: 12px">5</th>
+                                                    <th class="span2" ></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Insatisfactoriamente</td>
+                                                    <td><label class="radio"><input type="radio" name="Rpregunta${pregunta.id}" value="1" /></label></td>
+                                                    <td><label class="radio"><input type="radio" name="Rpregunta${pregunta.id}" value="2" /></label></td>
+                                                    <td><label class="radio"><input type="radio" name="Rpregunta${pregunta.id}" value="3" /></label></td>
+                                                    <td><label class="radio"><input type="radio" name="Rpregunta${pregunta.id}" value="4" /></label></td>
+                                                    <td><label class="radio"><input type="radio" name="Rpregunta${pregunta.id}" value="5" /></label></td>
+                                                    <td>Plenamente</td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo()=='abierta'}">
+                                        <input type="text" name="Rpregunta${pregunta.id}">
+                                    </c:when>
+
+                                    <c:when test="${pregunta.getTipo()=='smur'}">
+                                        <c:forEach items="${pregunta.respuestaList}" var="respuesta" varStatus="status">
+                                            <c:choose>
+                                            <c:when test="${fn:length(respuesta.condicionList)>0}">
+                                                <label class="radio">
+                                                    <input type="radio" value="${respuesta.idrespuesta}" id="respuesta${respuesta.idrespuesta}" name="Rpregunta${pregunta.id}" class="datacondicion required"
+                                                           datacondicion="pregunta${respuesta.condicionList.get(0).preguntaCondicionada.id}">
+                                                    ${respuesta.respuesta}
+                                                </label>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <label class="radio">
+                                                    <input type="radio" value="${respuesta.idrespuesta}" id="respuesta${respuesta.idrespuesta}" name="Rpregunta${pregunta.id}" class="required">
+                                                    ${respuesta.respuesta}
+                                                </label>
+                                            </c:otherwise>        
+                                            </c:choose>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo()=='multiple'}">
+                                        <c:forEach items="${pregunta.respuestaList}" var="respuesta" varStatus="status">
+                                            <label class="checkbox"><input value="${respuesta.respuesta}" name="Rpregunta${pregunta.id}[]" type="checkbox">${respuesta.respuesta}</label>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:when test="${pregunta.getTipo()=='6matriz'}">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="span3"></th>
+                                                    <th class="span2" style="font-size: 12px">0 </th>
+                                                    <th class="span2" style="font-size: 12px">1 </th>
+                                                    <th class="span2" style="font-size: 12px">2 </th>
+                                                    <th class="span2" style="font-size: 12px">3 </th>
+                                                    <th class="span2" style="font-size: 12px">4 </th>
+                                                    <th class="span2" style="font-size: 12px">5 </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${pregunta.preguntaList}" var="sub">
+                                                    <tr>
+                                                        <td>${sub.getPregunta()}</td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="0" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="1" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="2" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="3" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="4" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="5" /></label></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo()=='vecesmatriz'}">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="span5"></th>
+                                                    <th class="span2" style="font-size: 12px">UNA VEZ</th>
+                                                    <th class="span2" style="font-size: 12px">DOS VECES</th>
+                                                    <th class="span2" style="font-size: 12px">TRES VECES</th>
+                                                    <th class="span2" style="font-size: 12px">MÁS DE TRES</th>
+                                                    <th class="span2" style="font-size: 12px">NINGUNA</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${pregunta.preguntaList}" var="sub">
+                                                    <tr>
+                                                        <td>${sub.getPregunta()}</td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="1vez" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="2veces" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="3veces" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="masde3" /></label></td>
+                                                        <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="ninguna" /></label></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </c:when>
+
+                                </c:choose>
+                            </div> 
+                        </div>
+                    </c:forEach>  
+
                 </div>
-            </c:forEach>  
-
+            </div>
         </div>
-    </div>
-</div>
 
-<script type="text/javascript">
-    $(function() {
-        $("p").html(function(busca, reemplaza) {
-            return reemplaza.replace('_PROGRAMA_', 'Administración');
-        });
-        $("#spanprograma").html(function(busca, reemplaza) {
-            return reemplaza.replace('_PROGRAMA_', 'Administración');
-        });
+        <script type="text/javascript">
+            $(function() {
+                $("p").html(function(busca, reemplaza) {
+                    return reemplaza.replace('_PROGRAMA_', 'Administración');
+                });
+                $("#spanprograma").html(function(busca, reemplaza) {
+                    return reemplaza.replace('_PROGRAMA_', 'Administración');
+                });
 
 
-        setTimeout(function() {
-            $("#printEnlace").click(function() {
-                $('.hero-unit').printArea();
-                return false;
+                setTimeout(function() {
+                    $("#printEnlace").click(function() {
+                        $('.hero-unit').printArea();
+                        return false;
+                    });
+                }, 1000);
+
+                //se activa cuando una pregunta que condiciona a otra es contestada
+                $(".condicionador input[type=radio]").change(function() {
+                    console.log("activado!");
+                    if ($(this).is(":checked")) {
+                        if ($(this).hasClass("datacondicion")) {
+                            var preguntaCondicionada = $(this).attr("datacondicion").replace(/\s+/g, '');
+                            var vectorPregunta = preguntaCondicionada.split(",");
+                            for (var i = 0; i < vectorPregunta.length; i++) {
+                                $("#" + vectorPregunta[i]).removeClass("hide");
+                            }
+
+                        } else {
+                            var preguntaCondicionada = $(this).parents(".condicionador").find(".datacondicion").attr("datacondicion").replace(/\s+/g, '');
+                            var vectorPregunta = preguntaCondicionada.split(",");
+                            for (var i = 0; i < vectorPregunta.length; i++) {
+                                $("#" + vectorPregunta[i]).addClass("hide");
+                            }
+
+                        }
+                    }
+
+                });
+
+
             });
-        }, 1000);
-
-
-    });
-</script>
+        </script>

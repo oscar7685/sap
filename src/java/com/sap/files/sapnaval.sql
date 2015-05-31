@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50542
 File Encoding         : 65001
 
-Date: 2015-05-27 07:13:24
+Date: 2015-05-31 13:36:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,8 +30,8 @@ CREATE TABLE `administrativo` (
   KEY `fk_administrativo_programa1_idx` (`programa_id`),
   KEY `fk_administrativo_persona1_idx` (`persona_id`),
   CONSTRAINT `fk_administrativo_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_administrativo_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_administrativo_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_administrativo_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_administrativo_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -71,15 +71,14 @@ CREATE TABLE `asignacionencuesta` (
   KEY `fk_asignacionencuesta_fuente1_idx` (`fuente_id`),
   KEY `fk_asignacionencuesta_encuesta1_idx` (`encuesta_id`),
   KEY `fk_asignacionencuesta_modelo1` (`modelo_id`),
-  CONSTRAINT `fk_asignacionencuesta_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_asignacionencuesta_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_asignacionencuesta_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_asignacionencuesta_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of asignacionencuesta
 -- ----------------------------
-INSERT INTO `asignacionencuesta` VALUES ('1', '2', '1', '1');
 
 -- ----------------------------
 -- Table structure for caracteristica
@@ -151,17 +150,27 @@ CREATE TABLE `condicion` (
   `pregunta_condicionadora` int(11) NOT NULL,
   `pregunta_condicionada` int(11) NOT NULL,
   `tipo` varchar(45) DEFAULT NULL,
-  `respuesta_condicionadora` varchar(45) DEFAULT NULL,
+  `respuesta_idrespuesta` int(11) NOT NULL,
   PRIMARY KEY (`idcondicion`),
   KEY `fk_condicion_pregunta1_idx` (`pregunta_condicionadora`),
   KEY `fk_condicion_pregunta2_idx` (`pregunta_condicionada`),
+  KEY `fk_condicion_respuesta1_idx` (`respuesta_idrespuesta`),
   CONSTRAINT `fk_condicion_pregunta1` FOREIGN KEY (`pregunta_condicionadora`) REFERENCES `pregunta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_condicion_pregunta2` FOREIGN KEY (`pregunta_condicionada`) REFERENCES `pregunta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_condicion_pregunta2` FOREIGN KEY (`pregunta_condicionada`) REFERENCES `pregunta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_condicion_respuesta1` FOREIGN KEY (`respuesta_idrespuesta`) REFERENCES `respuesta` (`idrespuesta`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of condicion
 -- ----------------------------
+INSERT INTO `condicion` VALUES ('1', '24', '25', 'MostrarSI', '21');
+INSERT INTO `condicion` VALUES ('2', '26', '27', 'MostrarSI', '23');
+INSERT INTO `condicion` VALUES ('3', '52', '53', 'MostrarSI', '37');
+INSERT INTO `condicion` VALUES ('4', '69', '70', 'MostrarSI', '41');
+INSERT INTO `condicion` VALUES ('5', '79', '80', 'MostrarSI', '45');
+INSERT INTO `condicion` VALUES ('6', '81', '82', 'MostrarSI', '47');
+INSERT INTO `condicion` VALUES ('7', '98', '99', 'MostrarSI', '68');
+INSERT INTO `condicion` VALUES ('8', '14', '15', 'MostrarSI', '15');
 
 -- ----------------------------
 -- Table structure for directorprograma
@@ -177,8 +186,8 @@ CREATE TABLE `directorprograma` (
   KEY `fk_directorprograma_programa1_idx` (`programa_id`),
   KEY `fk_directorprograma_persona1_idx` (`persona_id`),
   CONSTRAINT `fk_directorprograma_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_directorprograma_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_directorprograma_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_directorprograma_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_directorprograma_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -200,8 +209,8 @@ CREATE TABLE `docente` (
   KEY `fk_docente_programa1_idx` (`programa_id`),
   KEY `fk_docente_persona1_idx` (`persona_id`),
   CONSTRAINT `fk_docente_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_docente_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_docente_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_docente_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_docente_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -222,8 +231,8 @@ CREATE TABLE `egresado` (
   KEY `fk_egresado_programa1_idx` (`programa_id`),
   KEY `fk_egresado_persona1_idx` (`persona_id`),
   CONSTRAINT `fk_egresado_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_egresado_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_egresado_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_egresado_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_egresado_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -272,10 +281,10 @@ CREATE TABLE `encabezado` (
   KEY `fk_encabezado_encuesta1_idx` (`encuesta_id`),
   KEY `fk_encabezado_fuente1_idx` (`fuente_id`),
   KEY `fk_encabezado_muestrapersona1` (`muestrapersona_id`),
+  CONSTRAINT `fk_encabezado_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_encabezado_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_encabezado_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_encabezado_muestrapersona1` FOREIGN KEY (`muestrapersona_id`) REFERENCES `muestrapersona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_encabezado_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_encabezado_muestrapersona1` FOREIGN KEY (`muestrapersona_id`) REFERENCES `muestrapersona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -298,7 +307,7 @@ CREATE TABLE `encuesta` (
   PRIMARY KEY (`id`),
   KEY `fk_encuesta_modelo1` (`modelo_id`),
   CONSTRAINT `fk_encuesta_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of encuesta
@@ -307,6 +316,8 @@ INSERT INTO `encuesta` VALUES ('1', 'FAYM-FT-453-JINEN-V02', 'ENCUESTA A PROFESO
 INSERT INTO `encuesta` VALUES ('2', 'FAYM-FT-453-JINEN-V02', 'ENCUESTA A ESTUDIANTES', 'Actualmente el programa de  _PROGRAMA_ se encuentra en proceso de autoevaluación con el fin de obtener la renovación de la acreditación de alta calidad por parte del CNA, identificando y valorando fortalezas y debilidades, mediante un proceso amplio y participativo de la Comunidad Educativa.', 'Las preguntas que se registran a continuación tienen como objetivo primordial, obtener información pertinente y confiable sobre las condiciones de calidad y cumplimiento de cada uno de los indicadores enunciados', '1', 'Procedimiento: Autoevaluación', 'Rige a partir de: 04/04/08');
 INSERT INTO `encuesta` VALUES ('3', 'FAYM-FT-453-JINEN-V02', 'ENCUESTA A PERSONAL ADMINISTRATIVO', 'Actualmente el programa de  _PROGRAMA_ se encuentra en proceso de autoevaluación con el fin de obtener la renovación de la acreditación de alta calidad por parte del CNA, identificando y valorando fortalezas y debilidades, mediante un proceso amplio y participativo de la Comunidad Educativa.', 'Las preguntas que se registran a continuación tienen como objetivo primordial, obtener información pertinente y confiable sobre las condiciones de calidad y cumplimiento de cada uno de los indicadores enunciados.', '1', 'Procedimiento: Autoevaluación', 'Rige a partir de: 04/04/08');
 INSERT INTO `encuesta` VALUES ('4', 'FAYM-FT-453-JINEN-V02', 'ENCUESTA A PERSONAL DIRECTIVO', 'Actualmente el programa de  _PROGRAMA_ se encuentra en proceso de autoevaluación con el fin de obtener la renovación de la acreditación de alta calidad por parte del CNA, identificando y valorando fortalezas y debilidades, mediante un proceso amplio y participativo de la Comunidad Educativa.', 'Las preguntas que se registran a continuación tienen como objetivo primordial, obtener información pertinente y confiable sobre las condiciones de calidad y cumplimiento de cada uno de los indicadores enunciados.', '1', 'Procedimiento: Autoevaluación', 'Rige a partir de: 04/04/08');
+INSERT INTO `encuesta` VALUES ('5', 'FAYM-FT-453-JINEN-V02', 'ENCUESTA A EGRESADOS', 'Actualmente el programa de  _PROGRAMA_ se encuentra en proceso de autoevaluación con el fin de obtener la renovación de la acreditación de alta calidad por parte del CNA, identificando y valorando fortalezas y debilidades, mediante un proceso amplio y participativo de la Comunidad Educativa.', 'Las preguntas que se registran a continuación tienen como objetivo primordial, obtener información pertinente y confiable sobre las condiciones de calidad y cumplimiento de cada uno de los indicadores enunciados.', '1', 'Procedimiento: Autoevaluación', 'Rige a partir de: 04/04/08');
+INSERT INTO `encuesta` VALUES ('6', 'FAYM-FT-453-JINEN-V02', 'ENCUESTA A EMPLEADORES', 'Actualmente el programa de  _PROGRAMA_ se encuentra en proceso de autoevaluación con el fin de obtener la renovación de la acreditación de alta calidad por parte del CNA, identificando y valorando fortalezas y debilidades, mediante un proceso amplio y participativo de la Comunidad Educativa.', 'Las preguntas que se registran a continuación tienen como objetivo primordial, obtener información pertinente y confiable sobre las condiciones de calidad y cumplimiento de cada uno de los indicadores enunciados.', '1', 'Procedimiento: Autoevaluación', 'Rige a partir de: 04/04/08');
 
 -- ----------------------------
 -- Table structure for encuestahaspregunta
@@ -330,9 +341,15 @@ INSERT INTO `encuestahaspregunta` VALUES ('2', '2');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '3');
 INSERT INTO `encuestahaspregunta` VALUES ('3', '3');
 INSERT INTO `encuestahaspregunta` VALUES ('4', '3');
+INSERT INTO `encuestahaspregunta` VALUES ('6', '3');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '4');
 INSERT INTO `encuestahaspregunta` VALUES ('3', '4');
 INSERT INTO `encuestahaspregunta` VALUES ('4', '4');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '4');
+INSERT INTO `encuestahaspregunta` VALUES ('6', '4');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '5');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '6');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '7');
 INSERT INTO `encuestahaspregunta` VALUES ('4', '8');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '9');
 INSERT INTO `encuestahaspregunta` VALUES ('3', '9');
@@ -343,18 +360,23 @@ INSERT INTO `encuestahaspregunta` VALUES ('1', '12');
 INSERT INTO `encuestahaspregunta` VALUES ('2', '12');
 INSERT INTO `encuestahaspregunta` VALUES ('3', '12');
 INSERT INTO `encuestahaspregunta` VALUES ('4', '12');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '12');
+INSERT INTO `encuestahaspregunta` VALUES ('6', '12');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '13');
 INSERT INTO `encuestahaspregunta` VALUES ('2', '13');
 INSERT INTO `encuestahaspregunta` VALUES ('3', '13');
 INSERT INTO `encuestahaspregunta` VALUES ('4', '13');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '13');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '14');
 INSERT INTO `encuestahaspregunta` VALUES ('2', '14');
 INSERT INTO `encuestahaspregunta` VALUES ('3', '14');
 INSERT INTO `encuestahaspregunta` VALUES ('4', '14');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '14');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '15');
 INSERT INTO `encuestahaspregunta` VALUES ('2', '15');
 INSERT INTO `encuestahaspregunta` VALUES ('3', '15');
 INSERT INTO `encuestahaspregunta` VALUES ('4', '15');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '15');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '16');
 INSERT INTO `encuestahaspregunta` VALUES ('2', '16');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '17');
@@ -454,6 +476,7 @@ INSERT INTO `encuestahaspregunta` VALUES ('4', '71');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '72');
 INSERT INTO `encuestahaspregunta` VALUES ('2', '72');
 INSERT INTO `encuestahaspregunta` VALUES ('4', '72');
+INSERT INTO `encuestahaspregunta` VALUES ('6', '73');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '74');
 INSERT INTO `encuestahaspregunta` VALUES ('2', '74');
 INSERT INTO `encuestahaspregunta` VALUES ('4', '74');
@@ -520,6 +543,13 @@ INSERT INTO `encuestahaspregunta` VALUES ('4', '98');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '99');
 INSERT INTO `encuestahaspregunta` VALUES ('3', '99');
 INSERT INTO `encuestahaspregunta` VALUES ('4', '99');
+INSERT INTO `encuestahaspregunta` VALUES ('6', '100');
+INSERT INTO `encuestahaspregunta` VALUES ('6', '101');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '102');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '103');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '104');
+INSERT INTO `encuestahaspregunta` VALUES ('5', '105');
+INSERT INTO `encuestahaspregunta` VALUES ('6', '106');
 INSERT INTO `encuestahaspregunta` VALUES ('1', '107');
 INSERT INTO `encuestahaspregunta` VALUES ('2', '107');
 INSERT INTO `encuestahaspregunta` VALUES ('3', '107');
@@ -546,8 +576,8 @@ CREATE TABLE `estudiante` (
   KEY `fk_estudiante_programa1_idx` (`programa_id`),
   KEY `fk_estudiante_persona1_idx` (`persona_id`),
   CONSTRAINT `fk_estudiante_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_estudiante_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_estudiante_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_estudiante_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_estudiante_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -653,8 +683,8 @@ CREATE TABLE `hallazgo` (
   PRIMARY KEY (`idhallazgo`),
   KEY `fk_hallazgo_proceso1` (`proceso_id`),
   KEY `fk_hallazgo_caracteristica1` (`caracteristica_id`),
-  CONSTRAINT `fk_hallazgo_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_hallazgo_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_hallazgo_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_hallazgo_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -955,8 +985,8 @@ CREATE TABLE `instrumentohasindicador` (
   PRIMARY KEY (`instrumento_id`,`indicador_id`),
   KEY `fk_instrumento_has_indicador_indicador1` (`indicador_id`),
   KEY `fk_instrumento_has_indicador_instrumento1` (`instrumento_id`),
-  CONSTRAINT `fk_instrumento_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_instrumento_has_indicador_instrumento1` FOREIGN KEY (`instrumento_id`) REFERENCES `instrumento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_instrumento_has_indicador_instrumento1` FOREIGN KEY (`instrumento_id`) REFERENCES `instrumento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_instrumento_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -1439,9 +1469,9 @@ CREATE TABLE `numericadocumental` (
   KEY `fk_numericadocumental_proceso1_idx` (`proceso_id`),
   KEY `fk_numericadocumental_instrumento1` (`instrumento_id`),
   KEY `fk_numericadocumental_indicador1` (`indicador_id`),
-  CONSTRAINT `fk_numericadocumental_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_numericadocumental_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_numericadocumental_instrumento1` FOREIGN KEY (`instrumento_id`) REFERENCES `instrumento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_numericadocumental_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_numericadocumental_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -1496,8 +1526,8 @@ CREATE TABLE `ponderacioncaracteristica` (
   PRIMARY KEY (`id`),
   KEY `fk_ponderacioncaracteristica_proceso1_idx` (`proceso_id`),
   KEY `fk_ponderacioncaracteristica_caracteristica1_idx` (`caracteristica_id`),
-  CONSTRAINT `fk_ponderacioncaracteristica_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ponderacioncaracteristica_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_ponderacioncaracteristica_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ponderacioncaracteristica_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -1517,8 +1547,8 @@ CREATE TABLE `ponderacionfactor` (
   PRIMARY KEY (`id`),
   KEY `fk_ponderacionfactor_proceso1_idx` (`proceso_id`),
   KEY `fk_ponderacionfactor_factor1_idx` (`factor_id`),
-  CONSTRAINT `fk_ponderacionfactor_factor1` FOREIGN KEY (`factor_id`) REFERENCES `factor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ponderacionfactor_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_ponderacionfactor_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ponderacionfactor_factor1` FOREIGN KEY (`factor_id`) REFERENCES `factor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -1537,8 +1567,8 @@ CREATE TABLE `ponderacionindicador` (
   PRIMARY KEY (`idponderacionindicador`),
   KEY `fk_ponderacionindicador_proceso1_idx` (`proceso_id`),
   KEY `fk_ponderacionindicador_indicador1_idx` (`indicador_id`),
-  CONSTRAINT `fk_ponderacionindicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ponderacionindicador_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_ponderacionindicador_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ponderacionindicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -1910,8 +1940,8 @@ CREATE TABLE `proceso` (
   PRIMARY KEY (`id`),
   KEY `fk_proceso_programa1_idx` (`programa_id`),
   KEY `fk_proceso_modelo1` (`modelo_id`),
-  CONSTRAINT `fk_proceso_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_proceso_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_proceso_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_proceso_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -1928,8 +1958,8 @@ CREATE TABLE `procesohasindicador` (
   PRIMARY KEY (`proceso_id`,`indicador_id`),
   KEY `fk_proceso_has_indicador_indicador1` (`indicador_id`),
   KEY `fk_proceso_has_indicador_proceso1` (`proceso_id`),
-  CONSTRAINT `fk_proceso_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_proceso_has_indicador_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_proceso_has_indicador_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_proceso_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -2007,8 +2037,8 @@ CREATE TABLE `representantehasprivilegio` (
   PRIMARY KEY (`representante_id`,`privilegio_id`),
   KEY `fk_representante_has_privilegio_privilegio1` (`privilegio_id`),
   KEY `fk_representante_has_privilegio_representante1` (`representante_id`),
-  CONSTRAINT `fk_representante_has_privilegio_privilegio1` FOREIGN KEY (`privilegio_id`) REFERENCES `privilegio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_representante_has_privilegio_representante1` FOREIGN KEY (`representante_id`) REFERENCES `representante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_representante_has_privilegio_representante1` FOREIGN KEY (`representante_id`) REFERENCES `representante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_representante_has_privilegio_privilegio1` FOREIGN KEY (`privilegio_id`) REFERENCES `privilegio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
