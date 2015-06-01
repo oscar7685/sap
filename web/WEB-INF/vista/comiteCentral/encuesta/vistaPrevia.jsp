@@ -61,7 +61,7 @@
 
             <c:forEach items="${encuesta.getPreguntaList()}" var="pregunta" varStatus="status">
                 <c:choose>
-                    <c:when test="${fn:length(pregunta.condicionList) > 0}">
+                    <c:when test="${fn:length(pregunta.condicionList) > 0 && !(encuesta.id==4 && pregunta.id ==27)}"><!--pregunta condicionada-->
                         <div class="row hide" id="pregunta${pregunta.id}" > 
                         </c:when>
                         <c:otherwise>
@@ -69,7 +69,7 @@
                             </c:otherwise>        
                         </c:choose>
                         <c:choose>
-                            <c:when test="${fn:length(pregunta.condicionList1) > 0 }">
+                            <c:when test="${fn:length(pregunta.condicionList1) > 0 }"><!--pregunta condicionadora-->
                                 <div class="span10 condicionador">
                                 </c:when>
                                 <c:otherwise>
@@ -167,19 +167,19 @@
                                     <c:when test="${pregunta.getTipo()=='smur'}">
                                         <c:forEach items="${pregunta.respuestaList}" var="respuesta" varStatus="status">
                                             <c:choose>
-                                            <c:when test="${fn:length(respuesta.condicionList)>0}">
-                                                <label class="radio">
-                                                    <input type="radio" value="${respuesta.idrespuesta}" id="respuesta${respuesta.idrespuesta}" name="Rpregunta${pregunta.id}" class="datacondicion required"
-                                                           datacondicion="pregunta${respuesta.condicionList.get(0).preguntaCondicionada.id}">
-                                                    ${respuesta.respuesta}
-                                                </label>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <label class="radio">
-                                                    <input type="radio" value="${respuesta.idrespuesta}" id="respuesta${respuesta.idrespuesta}" name="Rpregunta${pregunta.id}" class="required">
-                                                    ${respuesta.respuesta}
-                                                </label>
-                                            </c:otherwise>        
+                                                <c:when test="${fn:length(respuesta.condicionList)>0}">
+                                                    <label class="radio">
+                                                        <input type="radio" value="${respuesta.idrespuesta}" id="respuesta${respuesta.idrespuesta}" name="Rpregunta${pregunta.id}" class="datacondicion required"
+                                                               datacondicion="pregunta${respuesta.condicionList.get(0).preguntaCondicionada.id}">
+                                                        ${respuesta.respuesta}
+                                                    </label>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <label class="radio">
+                                                        <input type="radio" value="${respuesta.idrespuesta}" id="respuesta${respuesta.idrespuesta}" name="Rpregunta${pregunta.id}" class="required">
+                                                        ${respuesta.respuesta}
+                                                    </label>
+                                                </c:otherwise>        
                                             </c:choose>
                                         </c:forEach>
                                     </c:when>
@@ -271,7 +271,6 @@
 
                 //se activa cuando una pregunta que condiciona a otra es contestada
                 $(".condicionador input[type=radio]").change(function() {
-                    console.log("activado!");
                     if ($(this).is(":checked")) {
                         if ($(this).hasClass("datacondicion")) {
                             var preguntaCondicionada = $(this).attr("datacondicion").replace(/\s+/g, '');

@@ -17,38 +17,38 @@ $(function() {
     myLayout = $('body').layout({
         //	enable showOverflow on west-pane so CSS popups will overlap north pane
         west__size: 280
-        , center__paneSelector: ".ui-layout-center"
-        , north__paneClass: "ui-layout-pane2"
+                , center__paneSelector: ".ui-layout-center"
+                , north__paneClass: "ui-layout-pane2"
                 //	reference only - these options are NOT required because 'true' is the default
-        , closable: true	// pane can open & close
-        , resizable: false	// when open, pane can be resized 
-        , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-        , north__size: 1
-        , north__closable: false
-        , north__maxSize: 1
-        , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
-        , north__spacing_open: 0		// no resizer-bar when open (zero height)
-        , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
-        , south__closable: false
-        , south__spacing_open: 0		// no resizer-bar when open (zero height)
-        , west__spacing_open: 0
-        , west__spacing_closed: 20
-        , west__togglerLength_closed: 35
-        , west__togglerAlign_closed: "top"
-        , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
-        , west__togglerTip_closed: "Mostrar menú"
-        , west__togglerTip_open: "Ocultar menú"
-        , west__enableCursorHotkey: false
-        , west__onclose_end: function() {
+                , closable: true	// pane can open & close
+                , resizable: false	// when open, pane can be resized 
+                , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
+                , north__size: 1
+                , north__closable: false
+                , north__maxSize: 1
+                , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
+                , north__spacing_open: 0		// no resizer-bar when open (zero height)
+                , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+                , south__closable: false
+                , south__spacing_open: 0		// no resizer-bar when open (zero height)
+                , west__spacing_open: 0
+                , west__spacing_closed: 20
+                , west__togglerLength_closed: 35
+                , west__togglerAlign_closed: "top"
+                , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
+                , west__togglerTip_closed: "Mostrar menú"
+                , west__togglerTip_open: "Ocultar menú"
+                , west__enableCursorHotkey: false
+                , west__onclose_end: function() {
             $("#conte").removeClass("span10").addClass("span12");
         }
         , west__onopen_end: function() {
             $("#conte").removeClass("span12").addClass("span10");
         }
         , south__paneClass: "ui-layout-pane"
-        , west__togglerContent_open: ""
-        , west__minSize: 200
-        , west__maxSize: 350
+                , west__togglerContent_open: ""
+                , west__minSize: 200
+                , west__maxSize: 350
 
 
     });
@@ -100,6 +100,7 @@ $(function() {
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>' +
+                '<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Ponderar Indicadores</a></li>' +
                 '<li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>' +
                 //  '<li class="divider"></li>' +
                 //'<li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Ejecutar proceso</a></li>' +
@@ -115,6 +116,7 @@ $(function() {
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Caracter&iacute;sticas</a></li>' +
+                '<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Indicadores</a></li>' +
                 '<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 ' <li><a href = "#preparedInfoNumerica"><i class = "icon-file-alt"></i> Informaci&oacute;n Num&eacute;rica</a></li>' +
@@ -134,6 +136,7 @@ $(function() {
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
+                 '<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Indicadores</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 ' <li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
                 ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
@@ -166,7 +169,7 @@ $(function() {
                 || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                 || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                 || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                || hash === "#comentarios" || hash === "#todosResultados") {
+                || hash === "#comentarios" || hash === "#todosResultados" || hash === "#listPonderacionInd" ) {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -225,9 +228,9 @@ $(function() {
                 {
                     if (data === '1') {
                         menuProceso1();
-                    }else if(data==='2'){
+                    } else if (data === '2') {
                         menuProceso2();
-                    }else if(data==='3'){
+                    } else if (data === '3') {
                         menuProceso3();
                     }
                     myLayout.addCloseBtn("#west-closer", "west");

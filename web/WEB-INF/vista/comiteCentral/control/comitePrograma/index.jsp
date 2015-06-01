@@ -26,6 +26,7 @@
                     <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                     <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>
                     <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>
+                    <li><a href="#listPonderacionInd"><i class="icon-signal"></i> Ponderar Indicadores</a></li>
                     <li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>
                 </ul>
             </div>
