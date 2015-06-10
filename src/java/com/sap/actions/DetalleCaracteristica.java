@@ -146,7 +146,7 @@ public class DetalleCaracteristica implements Action {
         }
         long t1 = System.currentTimeMillis();
         long t3 = (t1 - t0);
-        System.out.println("el tiempo que demora detallePCaracteristica es: " + t3);
+        
         sesion.setAttribute("indicadores", indicadores);
         sesion.setAttribute("cumplimientoIN", cumplimiento);
         sesion.setAttribute("caracteristica", c);

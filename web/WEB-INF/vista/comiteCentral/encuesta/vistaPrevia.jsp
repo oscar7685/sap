@@ -60,47 +60,50 @@
             </div>
 
             <c:forEach items="${encuesta.getPreguntaList()}" var="pregunta" varStatus="status">
-                <c:choose>
-                    <c:when test="${status.count%2==1}">
-                        <div class="row printDiv">
-                            <div class="span5">
-                                <p>${pregunta.getCodigo()} ${pregunta.getPregunta()}</p>
-                                <c:choose>
-                                    <c:when test="${pregunta.getTipo()=='1'}">
-                                        <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
-                                        <label class="radio"><input type="radio">4 De acuerdo</label>
-                                        <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
-                                        <label class="radio"><input type="radio">2 En desacuerdo</label>
-                                        <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
-                                        <label class="radio"><input type="radio">0 No sabe</label>
-                                        </c:when>
-                                        <c:when test="${pregunta.getTipo()=='2'}">
-                                        <textarea rows="3" class="span4"></textarea>
-                                    </c:when>
-                                </c:choose>
-                            </div>
+                <div class="span10">
+                    <p><strong>${pregunta.getPregunta()}</strong></p>
+                    <c:choose>
+                        <c:when test="${pregunta.getTipo()=='1' && pregunta.getPreguntaPadre()== null}">
+                            <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
+                            <label class="radio"><input type="radio">4 De acuerdo</label>
+                            <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
+                            <label class="radio"><input type="radio">2 En desacuerdo</label>
+                            <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
+                            <label class="radio"><input type="radio">0 No sabe</label>
+                            </c:when>
+                            <c:when test="${pregunta.getTipo()=='2'}">
+                            <textarea rows="3" class="span8"></textarea>
                         </c:when>
-
-                        <c:otherwise>
-                            <div class="span5">
-                                <p>${pregunta.getCodigo()} ${pregunta.getPregunta()}</p>
-                                <c:choose>
-                                    <c:when test="${pregunta.getTipo()=='1'}">
-                                        <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
-                                        <label class="radio"><input type="radio">4 De acuerdo</label>
-                                        <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
-                                        <label class="radio"><input type="radio">2 En desacuerdo</label>
-                                        <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
-                                        <label class="radio"><input type="radio">0 No sabe</label>
-                                        </c:when>
-                                        <c:when test="${pregunta.getTipo()=='2'}">
-                                        <textarea rows="3" class="span4"></textarea>
-                                    </c:when>
-                                </c:choose>
-                            </div>
-                        </div><!--jaja-->
-                    </c:otherwise>
-                </c:choose>
+                        <c:when test="${pregunta.getTipo()=='3'}">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="span4"></th>
+                                        <th class="span2" style="font-size: 12px">5</th>
+                                        <th class="span2" style="font-size: 12px">4</th>
+                                        <th class="span2" style="font-size: 12px">3</th>
+                                        <th class="span2" style="font-size: 12px">2 </th>
+                                        <th class="span2" style="font-size: 12px">1</th>
+                                        <th class="span2" style="font-size: 12px">0</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${pregunta.getPreguntaList()}" var="sub" varStatus="subStatus">
+                                        <tr>
+                                            <td>${sub.getPregunta()}</td>
+                                            <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="5" /></label></td>
+                                            <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="4" /></label></td>
+                                            <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="3" /></label></td>
+                                            <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="2" /></label></td>
+                                            <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="1" /></label></td>
+                                            <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="0" /></label></td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:when>
+                    </c:choose>
+                </div>
             </c:forEach>  
         </div>
     </div>

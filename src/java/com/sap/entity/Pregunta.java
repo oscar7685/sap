@@ -63,6 +63,11 @@ public class Pregunta implements Serializable {
     private String tipo;
     @ManyToMany(mappedBy = "preguntaList")
     private List<Encuesta> encuestaList;
+    @OneToMany(mappedBy = "preguntaPadre")
+    private List<Pregunta> preguntaList;
+    @JoinColumn(name = "pregunta_padre", referencedColumnName = "id")
+    @ManyToOne
+    private Pregunta preguntaPadre;
     @JoinColumn(name = "modelo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Modelo modeloId;
@@ -125,6 +130,23 @@ public class Pregunta implements Serializable {
 
     public void setEncuestaList(List<Encuesta> encuestaList) {
         this.encuestaList = encuestaList;
+    }
+
+    @XmlTransient
+    public List<Pregunta> getPreguntaList() {
+        return preguntaList;
+    }
+
+    public void setPreguntaList(List<Pregunta> preguntaList) {
+        this.preguntaList = preguntaList;
+    }
+
+    public Pregunta getPreguntaPadre() {
+        return preguntaPadre;
+    }
+
+    public void setPreguntaPadre(Pregunta preguntaPadre) {
+        this.preguntaPadre = preguntaPadre;
     }
 
     public Modelo getModeloId() {
