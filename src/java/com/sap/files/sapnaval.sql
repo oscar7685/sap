@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Local
-Source Server Version : 50542
+Source Server         : local
+Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : sapnaval
 
 Target Server Type    : MYSQL
-Target Server Version : 50542
+Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-05-31 21:32:17
+Date: 2015-06-16 07:12:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -622,7 +622,7 @@ CREATE TABLE `facultad` (
   `descripcion` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of facultad
@@ -705,7 +705,7 @@ CREATE TABLE `indicador` (
   KEY `fk_indicador_modelo1` (`modelo_id`),
   CONSTRAINT `fk_indicador_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_indicador_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of indicador
@@ -742,7 +742,7 @@ INSERT INTO `indicador` VALUES ('29', '2.6.3', 'Estudiantes que participan efect
 INSERT INTO `indicador` VALUES ('30', '2.7.1', 'Mecanismos utilizados para la divulgación del reglamento estudiantil y académico. ', '7', '1');
 INSERT INTO `indicador` VALUES ('31', '2.7.2', 'Apreciación de estudiantes y profesores del programa sobre la pertinencia, vigencia y aplicación del reglamento estudiantil y académico. ', '7', '1');
 INSERT INTO `indicador` VALUES ('32', '2.7.3', 'Evidencias sobre la aplicación de las normas establecidas en los reglamentos estudiantil y académico para atender las situaciones presentadas con los estudiantes. ', '7', '1');
-INSERT INTO `indicador` VALUES ('33', '2.7.4', 'Apreciación de directivos, profesores y estudiantes sobre la participación del estudiantado en los órganos de dirección del programa. ', '7', '1');
+INSERT INTO `indicador` VALUES ('33', '2.7.4', '¿En qué nivel se da la participación de los estudiantes en los órganos de dirección del programa?', '7', '1');
 INSERT INTO `indicador` VALUES ('34', '2.7.5', 'Políticas y estrategias sobre estímulos académicos para los estudiantes. El programa tiene evidencias sobre la aplicación de estas políticas y estrategias. ', '7', '1');
 INSERT INTO `indicador` VALUES ('35', '3.8.1', 'Aplicación de las políticas, las normas y los criterios académicos establecidos por la institución para la selección y la vinculación de los profesores. ', '8', '1');
 INSERT INTO `indicador` VALUES ('36', '3.8.2', 'Estrategias de la Institución para propiciar la permanencia de los profesores en el programa y el relevo generacional. ', '8', '1');
@@ -778,7 +778,7 @@ INSERT INTO `indicador` VALUES ('65', '3.13.4', 'Existencia y aplicación de un 
 INSERT INTO `indicador` VALUES ('66', '3.14.1', 'Políticas y reglamentaciones institucionales en materia de remuneración de los profesores en las que se tengan en cuenta los méritos profesionales y académicos, así como los estímulos a la producción académica y de innovación debidamente evaluada. ', '14', '1');
 INSERT INTO `indicador` VALUES ('67', '3.14.2', 'Evidencias sobre la aplicación de estas políticas y reglamentaciones. ', '14', '1');
 INSERT INTO `indicador` VALUES ('68', '3.14.3', 'Apreciación de los profesores con respecto a la correspondencia entre la remuneración y los méritos académicos y profesionales ', '14', '1');
-INSERT INTO `indicador` VALUES ('69', '3.14.4', 'Apreciación de los profesores del programa y de pares externos, sobre el sistema de evaluación de la producción académica.', '14', '1');
+INSERT INTO `indicador` VALUES ('69', '3.14.6', 'Apreciación de los profesores del programa y de pares externos, sobre el sistema de evaluación de la producción académica.', '14', '1');
 INSERT INTO `indicador` VALUES ('70', '3.15.1', 'Existencia y aplicación de políticas institucionales en materia de evaluación integral al desempeño de los profesores. La institución presente evidencias sobre el desarrollo de estas políticas. ', '15', '1');
 INSERT INTO `indicador` VALUES ('71', '3.15.2', 'Criterios y mecanismos de evaluación de los profesores adscritos al programa, en correspondencia con la naturaleza del cargo, las funciones y los compromisos contraídos en relación con las metas institucionales y del programa. ', '15', '1');
 INSERT INTO `indicador` VALUES ('72', '3.15.3', 'Evaluaciones realizadas a los profesores adscritos al programa durante los últimos cinco años y las acciones adelantadas por la institución y por el programa a partir de dichos resultados. ', '15', '1');
@@ -955,6 +955,8 @@ INSERT INTO `indicador` VALUES ('242', '10.40.1', 'Manejo de los recursos físic
 INSERT INTO `indicador` VALUES ('243', '10.40.2', 'Criterios y mecanismos para la elaboración, ejecución y seguimiento del presupuesto y para la asignación de recursos físicos y financieros para el programa.', '40', '1');
 INSERT INTO `indicador` VALUES ('244', '10.40.3', 'Evidencias de los controles legales y administrativos para asegurar el manejo transparente de los recursos.', '40', '1');
 INSERT INTO `indicador` VALUES ('245', '10.40.4', 'Apreciación de directivos y profesores adscritos al programa sobre la equidad en la asignación de recursos físicos y financieros para el programa', '40', '1');
+INSERT INTO `indicador` VALUES ('246', '3.14.4', 'Nivel de correspondencia entre la remuneración que han de recibir los profesores, establecida en las normas legales e institucionales vigentes, y la que reciben por sus servicios al programa.', '14', '1');
+INSERT INTO `indicador` VALUES ('247', '3.14.5', 'Grado de correlación existente entre la remuneración que reciben los profesores del programa y sus méritos académicos y profesionales comprobados.', '14', '1');
 
 -- ----------------------------
 -- Table structure for instrumento
@@ -1593,7 +1595,7 @@ CREATE TABLE `pregunta` (
   CONSTRAINT `fk_pregunta_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_pregunta_modelo1` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_pregunta_pregunta1` FOREIGN KEY (`pregunta_padre`) REFERENCES `pregunta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=312 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=313 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pregunta
@@ -1649,8 +1651,8 @@ INSERT INTO `pregunta` VALUES ('48', '3.13.3.a', '¿Ha obtenido premios u otros 
 INSERT INTO `pregunta` VALUES ('49', '3.13.4.a', '¿Conoce las políticas de propiedad  intelectual de la Escuela Naval de Cadetes “Almirante Padilla”, referente a los materiales de apoyo a la docencia?', 'smur', '65', '1', null);
 INSERT INTO `pregunta` VALUES ('50', '3.14.1.a', '¿Conoce las políticas y reglamentaciones institucionales en materia de remuneración de los profesores en las que se tengan en cuenta los méritos profesionales y académicos,  así como los estímulos a la producción académica y de innovación debidamente evaluada?', 'smur', '66', '1', null);
 INSERT INTO `pregunta` VALUES ('51', '3.14.3.a', '¿Considera usted que existe una correspondencia entre la remuneración y los méritos académicos y profesionales?', '1to5', '68', '1', null);
-INSERT INTO `pregunta` VALUES ('52', '3.14.4.a', '¿Tiene conocimiento usted sobre existencia de un sistema de evaluación de la producción académica en la Escuela Naval de cadetes “Almirante Padilla”?', 'smur', '69', '1', null);
-INSERT INTO `pregunta` VALUES ('53', '3.14.4.b', '¿Según su apreciación considera que el sistema de evaluación de la producción académica de la Escuela Naval de Cadetes “Almirante Padilla”,  es acorde con las políticas institucionales?', '1to5', '69', '1', null);
+INSERT INTO `pregunta` VALUES ('52', '3.14.6.a', '¿Tiene conocimiento usted sobre existencia de un sistema de evaluación de la producción académica en la Escuela Naval de cadetes “Almirante Padilla”?', 'smur', '69', '1', null);
+INSERT INTO `pregunta` VALUES ('53', '3.14.6.b', '¿Según su apreciación considera que el sistema de evaluación de la producción académica de la Escuela Naval de Cadetes “Almirante Padilla”,  es acorde con las políticas institucionales?', '1to5', '69', '1', null);
 INSERT INTO `pregunta` VALUES ('54', '3.15.1.a', '¿Conoce las políticas institucionales en materia de evaluación de los docentes?', 'smur', '70', '1', null);
 INSERT INTO `pregunta` VALUES ('55', '3.15.5.a', 'De acuerdo con su apreciación sobre los criterios y mecanismos para la evaluación de docentes, evalué los siguientes aspectos:', 'matriz15', null, '1', null);
 INSERT INTO `pregunta` VALUES ('56', '4.16.4.a', 'El Currículo contribuye a la formación en valores, actitudes, aptitudes, conocimientos, métodos, principios de acción básicos y competencias comunicativas y profesionales, de acuerdo con el estado del arte de la disciplina, profesión, ocupación u oficio, y busca la formación integral del estudiante, en coherencia con la misión institucional y los objetivos del programa. ¿Según su apreciación, considera que la calidad e integridad del currículo propician la formación integral del estudiante?', 'matriz15', null, '1', null);
@@ -1909,6 +1911,7 @@ INSERT INTO `pregunta` VALUES ('308', '-', 'La suficiencia de los recursos para 
 INSERT INTO `pregunta` VALUES ('309', '-', 'Ejecución presupuestal de los recursos asignados', 'matriz15', '239', '1', '108');
 INSERT INTO `pregunta` VALUES ('310', '-', 'Recursos Físicos', 'matriz15', '245', '1', '109');
 INSERT INTO `pregunta` VALUES ('311', '-', 'Recursos financieros', 'matriz15', '245', '1', '109');
+INSERT INTO `pregunta` VALUES ('312', '-', 'Chat interno', 'matriz15', '209', '1', '94');
 
 -- ----------------------------
 -- Table structure for privilegio
