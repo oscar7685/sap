@@ -12,9 +12,6 @@
 </script>
 <style type="text/css">
     @media all {
-        div.saltopagina{
-            display: none;
-        }
         #insp{
             line-height: 22px;
         }
@@ -61,17 +58,17 @@
 
             <c:forEach items="${encuesta.getPreguntaList()}" var="pregunta" varStatus="status">
                 <div class="span10">
-                    <p><strong>${pregunta.getPregunta()}</strong></p>
+                    <p><strong>${pregunta.getCodigo()} ${pregunta.getPregunta()}</strong></p>
                     <c:choose>
                         <c:when test="${pregunta.getTipo()=='1' && pregunta.getPreguntaPadre()== null}">
-                            <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
-                            <label class="radio"><input type="radio">4 De acuerdo</label>
-                            <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
-                            <label class="radio"><input type="radio">2 En desacuerdo</label>
-                            <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
-                            <label class="radio"><input type="radio">0 No sabe</label>
-                            </c:when>
-                            <c:when test="${pregunta.getTipo()=='2'}">
+                              <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
+                              <label class="radio"><input type="radio">4 De acuerdo</label>
+                              <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
+                              <label class="radio"><input type="radio">2 En desacuerdo</label>
+                              <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
+                              <label class="radio"><input type="radio">0 No sabe</label>
+                        </c:when>
+                        <c:when test="${pregunta.getTipo()=='2'}">
                             <textarea rows="3" class="span8"></textarea>
                         </c:when>
                         <c:when test="${pregunta.getTipo()=='3'}">
@@ -90,7 +87,7 @@
                                 <tbody>
                                     <c:forEach items="${pregunta.getPreguntaList()}" var="sub" varStatus="subStatus">
                                         <tr>
-                                            <td>${sub.getPregunta()}</td>
+                                            <td>${sub.getCodigo()} ${sub.getPregunta()}</td>
                                             <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="5" /></label></td>
                                             <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="4" /></label></td>
                                             <td><label class="radio"><input type="radio" name="pregunta${sub.id}" value="3" /></label></td>
@@ -111,30 +108,6 @@
 
 <script type="text/javascript">
     $(function() {
-        setTimeout(function() {
-            var altura = 0;
-            var primer = true;
-            $("#conte .row").each(function(ind, el) {
-                altura += $(el).height();
-                if (primer) {
-                    if (altura > 1050) {
-                        $("<div class='saltopagina'></div>").insertBefore($(el));
-                        altura = $(el).height();
-                        primer = false;
-                    }
-
-                } else {
-                    if (altura > 1200) {
-                        $("<div class='saltopagina'></div>").insertBefore($(el));
-                        altura = $(el).height();
-                    }
-                }
-
-
-            });
-
-        }, 1000);
-
         setTimeout(function() {
             $("#printEnlace").click(function() {
                 $('.hero-unit').printArea();

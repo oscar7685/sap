@@ -153,7 +153,7 @@ $(function() {
             urlx = url3;
 
 
-        } else if (hash === "#todosResultados") {
+        } else if (hash === "#todosResultados" || hash === "#resultadosGenerales" ) {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
