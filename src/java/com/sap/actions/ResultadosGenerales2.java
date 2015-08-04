@@ -37,7 +37,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author acreditacion
  */
-public class ResultadosGenerales implements Action {
+public class ResultadosGenerales2 implements Action {
 
     NumericadocumentalFacade numericadocumentalFacade = lookupNumericadocumentalFacadeBean();
     PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade = lookupPonderacioncaracteristicaFacadeBean();
@@ -348,7 +348,7 @@ public class ResultadosGenerales implements Action {
         sesion.setAttribute("numerico", numerico);
         sesion.setAttribute("documental", documental);
 
-        return "/WEB-INF/vista/comitePrograma/proceso/informe/informeGeneral2.jsp";
+        return "/WEB-INF/vista/comitePrograma/proceso/informe/informeGeneral.jsp";
     }
 
     private IndicadorFacade lookupIndicadorFacadeBean() {

@@ -135,7 +135,7 @@ $(function() {
     };
     var hash;
     $(window).hashchange(function() {
-        hash = location.hash;
+       hash = location.hash;
         if (hash === "#CerrarSesion") {
             $.post('/sap/loginController?action=CerrarSesion', function() {
                 location = "/sap";
@@ -153,7 +153,7 @@ $(function() {
             urlx = url3;
 
 
-        } else if (hash === "#todosResultados" || hash === "#resultadosGenerales" ) {
+        } else if (hash === "#todosResultados" || hash === "#resultadosGenerales" || hash === "#resultadosGenerales2" ) {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();

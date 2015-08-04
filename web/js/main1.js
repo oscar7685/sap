@@ -166,7 +166,7 @@ $(function() {
                 || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                 || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                 || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                || hash === "#comentarios" || hash === "#todosResultados" || hash ==="#resultadosGenerales") {
+                || hash === "#comentarios" || hash === "#todosResultados" || hash ==="#resultadosGenerales" || hash ==="#resultadosGenerales2") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();

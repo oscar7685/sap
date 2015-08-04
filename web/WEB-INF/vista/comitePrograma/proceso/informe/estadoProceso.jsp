@@ -167,6 +167,7 @@
                     <a  href="<%=request.getContextPath()%>/#informeMatrizFactores" class="btn btn-warning"><i class="icon-bar-chart">  </i>Matriz de calidad por factores</a>
                     <a  href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas" class="btn btn-warning"><i class="icon-bar-chart">  </i>Matriz de calidad por caracter&iacute;sticas</a>
                     <a  href="<%=request.getContextPath()%>/#resultadosGenerales"><i class="icon-bar-chart"></i> Resultados Generales</a>
+                    <a  href="<%=request.getContextPath()%>/#resultadosGenerales2" class="btn btn-warning"><i class="icon-bar-chart"></i> Resultados Generales2</a>
                     <c:if test="${EstadoProceso == 3}">
                     <a class="btn btn-warning" href="<%=request.getContextPath()%>/#todosResultados"><i class="icon-bar-chart"></i> Resultados</a>
                     <a class="btn btn-warning" href="<%=request.getContextPath()%>/#comentarios"><i class="icon-comment"></i> Comentarios</a>    
