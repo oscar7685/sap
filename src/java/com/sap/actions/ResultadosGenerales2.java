@@ -344,11 +344,12 @@ public class ResultadosGenerales2 implements Action {
         sesion.setAttribute("PromedioPreguntasXindicador", PromedioPreguntasXindicador);
         sesion.setAttribute("cantidadIndF", cantidadIndF);
         sesion.setAttribute("cantidadIndC", cantidadIndC);
+        sesion.setAttribute("factores", factores);
 
         sesion.setAttribute("numerico", numerico);
         sesion.setAttribute("documental", documental);
 
-        return "/WEB-INF/vista/comitePrograma/proceso/informe/informeGeneral.jsp";
+        return "/WEB-INF/vista/comitePrograma/proceso/informe/informeGeneral2.jsp";
     }
 
     private IndicadorFacade lookupIndicadorFacadeBean() {

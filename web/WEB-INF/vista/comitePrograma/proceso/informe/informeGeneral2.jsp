@@ -46,7 +46,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    <c:set var="indiceF" value="0"></c:set>
+                    <tr>
+                        <td>${factores.get(indiceF).getCodigo()}</td>
+                        <td>${factores.get(indiceF).getNombre()}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
                 </tbody>
             </table>  
         </div>
