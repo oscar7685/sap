@@ -9,6 +9,7 @@ import com.sap.ejb.FactorFacade;
 import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.NumericadocumentalFacade;
 import com.sap.ejb.PonderacioncaracteristicaFacade;
+import com.sap.ejb.PonderacionfactorFacade;
 import com.sap.entity.Caracteristica;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Factor;
@@ -16,6 +17,7 @@ import com.sap.entity.Indicador;
 import com.sap.entity.Instrumento;
 import com.sap.entity.Modelo;
 import com.sap.entity.Numericadocumental;
+import com.sap.entity.Ponderacioncaracteristica;
 import com.sap.entity.Ponderacionfactor;
 import com.sap.entity.Pregunta;
 import com.sap.entity.Proceso;
@@ -39,6 +41,7 @@ import javax.servlet.http.HttpSession;
  */
 public class ResultadosGenerales2 implements Action {
 
+    PonderacionfactorFacade ponderacionfactorFacade = lookupPonderacionfactorFacadeBean();
     NumericadocumentalFacade numericadocumentalFacade = lookupNumericadocumentalFacadeBean();
     PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade = lookupPonderacioncaracteristicaFacadeBean();
     CaracteristicaFacade caracteristicaFacade = lookupCaracteristicaFacadeBean();
@@ -51,6 +54,9 @@ public class ResultadosGenerales2 implements Action {
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
         Modelo modelo = (Modelo) sesion.getAttribute("Modelo");
         List<Indicador> indicadores = indicadorFacade.findByModeloYenOrden(modelo);
+
+        Numericadocumental[] numericaO = new Numericadocumental[indicadores.size()]; //numerica
+        Numericadocumental[] documentalO = new Numericadocumental[indicadores.size()]; //documental
 
         double[] numerico = new double[indicadores.size()]; //numerica x indicador
         double[] documental = new double[indicadores.size()]; //documental x indicador
@@ -74,7 +80,9 @@ public class ResultadosGenerales2 implements Action {
 
         }
 
-        List<Ponderacionfactor> ponderacionesF = new ArrayList<Ponderacionfactor>(); //ponderacion de los factores
+        List<Ponderacionfactor> ponderacionesF = ponderacionfactorFacade.findByList("procesoId", proceso); //ponderacion de los factores
+        List<Ponderacioncaracteristica> ponderacionesCara = ponderacioncaracteristicaFacade.findByList("procesoId", proceso); //ponderacion de las caracteristicas
+
         float cumplimientoF[] = new float[factores.size()];
         double ponderacionF[] = new double[factores.size()];
 
@@ -182,49 +190,63 @@ public class ResultadosGenerales2 implements Action {
                                     promedioEmpl += Integer.parseInt(respuestas.get(n).getRespuesta());
                                 }
 
-                                suma += Integer.parseInt(respuestas.get(n).getRespuesta());
-                                numR++;
+                                // suma += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                // numR++;
                             }
                         }
 
-                        float promedioXpregunta = suma / numR;
+                        float promedioXpregunta = 0;
+                        int FuentesPregunta = 0;
                         if (numEst != 0) {
                             promedioEstudiantes /= numEst;
+                            promedioXpregunta += promedioEstudiantes;
+                            FuentesPregunta++;
                         }
                         if (numDoc != 0) {
                             promedioDocentes /= numDoc;
+                            promedioXpregunta += promedioDocentes;
+                            FuentesPregunta++;
                         }
                         if (numAdmi != 0) {
                             promedioAdmin /= numAdmi;
+                            promedioXpregunta += promedioAdmin;
+                            FuentesPregunta++;
                         }
                         if (numEgr != 0) {
                             promedioEgre /= numEgr;
+                            promedioXpregunta += promedioEgre;
+                            FuentesPregunta++;
                         }
                         if (numDire != 0) {
                             promedioDire /= numDire;
+                            promedioXpregunta += promedioDire;
+                            FuentesPregunta++;
                         }
                         if (numEmp != 0) {
                             promedioEmpl /= numEmp;
+                            promedioXpregunta += promedioEmpl;
+                            FuentesPregunta++;
                         }
 
                         sumaPromediosXpregunta += promedioXpregunta;
-                        promedioxPregunta.add((Math.rint(promedioXpregunta * 10) / 10));
+                        promedioxPregunta.add(promedioXpregunta/FuentesPregunta);
                         promedioxPreguntaEs.add((Math.rint(promedioEstudiantes * 10) / 10));
                         promedioxPreguntaDo.add((Math.rint(promedioDocentes * 10) / 10));
                         promedioxPreguntaAd.add((Math.rint(promedioAdmin * 10) / 10));
                         promedioxPreguntaEg.add((Math.rint(promedioEgre * 10) / 10));
                         promedioxPreguntaDi.add((Math.rint(promedioDire * 10) / 10));
                         promedioxPreguntaEm.add((Math.rint(promedioEmpl * 10) / 10));
+
                     }
                     if (suma > 0) {
                         promedioPregunta = (float) sumaPromediosXpregunta / preguntas.size();
-                        //promediorespuestas[l] = (float) (Math.rint(promedioPregunta * 10) / 10);
                         promedioE[indice] = (double) (Math.rint(promedioPregunta * 10) / 10);
                     }
                 } else {
                     if (instrumento.getId() == 2) {
                         Numericadocumental numDoc1 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", proceso, "instrumentoId", instrumento);
                         if (numDoc1 != null) {
+                            numericaO[indice] = numDoc1;
                             calificacionNum = numDoc1.getEvaluacion();
                             numerico[indice] = calificacionNum;
                         } else {
@@ -235,6 +257,7 @@ public class ResultadosGenerales2 implements Action {
                         if (instrumento.getId() == 3) {
                             Numericadocumental numDoc2 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", proceso, "instrumentoId", instrumento);
                             if (numDoc2 != null) {
+                                documentalO[indice] = numDoc2;
                                 calificacionDoc = numDoc2.getEvaluacion();
                                 documental[indice] = calificacionDoc;
                             } else {
@@ -331,6 +354,7 @@ public class ResultadosGenerales2 implements Action {
         sesion.setAttribute("ponderacionesF", ponderacionesF);
         sesion.setAttribute("cumplimientoF", cumplimientoF);
         sesion.setAttribute("ponderacionesC", ponderacionC);
+        sesion.setAttribute("ponderacionesCara", ponderacionesCara);
         sesion.setAttribute("cumplimientoC", cumplimientoC);
         sesion.setAttribute("cumplimientoI", cumplimientoI);
         sesion.setAttribute("listIndicadores", indicadores);
@@ -345,9 +369,12 @@ public class ResultadosGenerales2 implements Action {
         sesion.setAttribute("cantidadIndF", cantidadIndF);
         sesion.setAttribute("cantidadIndC", cantidadIndC);
         sesion.setAttribute("factores", factores);
+        sesion.setAttribute("caracteristicas", caracteristicas);
 
         sesion.setAttribute("numerico", numerico);
+        sesion.setAttribute("numericaO", numericaO);
         sesion.setAttribute("documental", documental);
+        sesion.setAttribute("documentalO", documentalO);
 
         return "/WEB-INF/vista/comitePrograma/proceso/informe/informeGeneral2.jsp";
     }
@@ -396,6 +423,16 @@ public class ResultadosGenerales2 implements Action {
         try {
             Context c = new InitialContext();
             return (NumericadocumentalFacade) c.lookup("java:global/sap/NumericadocumentalFacade!com.sap.ejb.NumericadocumentalFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private PonderacionfactorFacade lookupPonderacionfactorFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (PonderacionfactorFacade) c.lookup("java:global/sap/PonderacionfactorFacade!com.sap.ejb.PonderacionfactorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

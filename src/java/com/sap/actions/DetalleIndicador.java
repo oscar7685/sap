@@ -37,7 +37,6 @@ public class DetalleIndicador implements Action{
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        long t0 = System.currentTimeMillis();
             HttpSession sesion = request.getSession();
             sesion.setAttribute("numerico", null);
             sesion.setAttribute("documental", null);
@@ -138,9 +137,7 @@ public class DetalleIndicador implements Action{
             }
             sesion.setAttribute("indicador", in);
 
-            long t1 = System.currentTimeMillis();
-            long t3 = (t1 - t0);
-            System.out.println("el tiempo que demora detalleIndicador es: " + t3);
+            
 
             return "/WEB-INF/vista/comitePrograma/proceso/informe/detalleIndicador.jsp";
     }
