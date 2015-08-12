@@ -190,7 +190,7 @@ public class ResultadosGenerales2 implements Action {
                                     promedioEmpl += Integer.parseInt(respuestas.get(n).getRespuesta());
                                 }
 
-                                // suma += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                 //suma += Integer.parseInt(respuestas.get(n).getRespuesta());
                                 // numR++;
                             }
                         }
@@ -227,9 +227,9 @@ public class ResultadosGenerales2 implements Action {
                             promedioXpregunta += promedioEmpl;
                             FuentesPregunta++;
                         }
-
+                        promedioXpregunta = (float)(Math.rint((promedioXpregunta/FuentesPregunta) * 10) / 10);
                         sumaPromediosXpregunta += promedioXpregunta;
-                        promedioxPregunta.add(promedioXpregunta/FuentesPregunta);
+                        promedioxPregunta.add(promedioXpregunta);
                         promedioxPreguntaEs.add((Math.rint(promedioEstudiantes * 10) / 10));
                         promedioxPreguntaDo.add((Math.rint(promedioDocentes * 10) / 10));
                         promedioxPreguntaAd.add((Math.rint(promedioAdmin * 10) / 10));
@@ -238,7 +238,7 @@ public class ResultadosGenerales2 implements Action {
                         promedioxPreguntaEm.add((Math.rint(promedioEmpl * 10) / 10));
 
                     }
-                    if (suma > 0) {
+                    if (sumaPromediosXpregunta > 0) {
                         promedioPregunta = (float) sumaPromediosXpregunta / preguntas.size();
                         promedioE[indice] = (double) (Math.rint(promedioPregunta * 10) / 10);
                     }
