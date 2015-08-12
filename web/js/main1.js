@@ -125,6 +125,28 @@ $(function() {
                 '</div>'
                 );
     };
+    
+    var menuProceso4 = function() {
+        $("#menu0").html('<div align="center" class="alert alert-success"><i class="icon-play-sign"></i> Proceso en ejecuci&oacute;n</div>' +
+                '<div id="menu" style="padding: 8px 0pt;" class="well">' +
+                '<ul class="nav nav-list">' +
+                '<button id="west-closer" class="close">&laquo;</button>' +
+                '<li class="nav-header">Proceso de Autoevaluaci&oacute;n</li>' +
+                '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
+                '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Caracter&iacute;sticas</a></li>' +
+                '<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>' +
+                '<li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
+                '<li><a href = "#preparedInfoNumerica"><i class = "icon-file-alt"></i> Informaci&oacute;n Num&eacute;rica</a></li>' +
+                '<li><a href = "#preparedInfoDocumental"><i class = "icon-list-ol"></i> Informaci&oacute;n Documental</a></li>' +
+                '<li><a href="#cerrarPreguntas"><i class="icon-lock"></i> Cerrar preguntas</a></li>' +
+                '<li class = "nav-header"> Estado del proceso </li>' +
+                '<li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
+                '</ul>' +
+                '</div>'
+                );
+    };
+    
     var menuProceso3 = function() {
         $("#menu0").html('<div align="center" class="alert alert-error" style="margin-bottom:5px;"><i class="icon-play-sign"></i> Proceso finalizado</div>' +
                 '<div id="menu" style="padding: 8px 0pt;" class="well">' +
@@ -229,6 +251,8 @@ $(function() {
                         menuProceso2();
                     }else if(data==='3'){
                         menuProceso3();
+                    }else if(data==='4'){
+                        menuProceso4();
                     }
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();

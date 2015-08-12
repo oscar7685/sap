@@ -39,20 +39,18 @@ public class ListarProceso implements Action {
             LOGGER.error("ha ocurrido un error buscando el programa" + e);
         }
         try {
-            if (programa == null) {
-                programas = (List<Programa>) sesion.getAttribute("Programas");
-            }
+            programas = (List<Programa>) sesion.getAttribute("Programas");
         } catch (Exception e) {
             LOGGER.error("ha ocurrido un error buscando los programas" + e);
         }
 
-        
         if (programa != null) {
             sesion.setAttribute("listProceso", procesoFacade.findByList("programaId", programa));
-        } else if (programas != null) {
+        } 
+        if (programas != null) {
             sesion.setAttribute("listProceso", procesoFacade.findByListReprestanteMultiple("programaId", programas));
         }
-         
+        
         return "/WEB-INF/vista/comitePrograma/proceso/listar.jsp";
     }
 

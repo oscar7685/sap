@@ -50,11 +50,13 @@ public class VerPProceso implements Action {
             }
             if (tienePreguntasAbiertas) {
                 sesion.setAttribute("abiertas", "true");
+                 return "4";
             } else {
                 sesion.setAttribute("abiertas", "false");
+                 return "2";
             }
             /////////Termina 
-            return "2";
+           
         } else {
             sesion.setAttribute("EstadoProceso", 3);
             return "3";
