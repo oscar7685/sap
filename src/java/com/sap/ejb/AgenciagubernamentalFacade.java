@@ -5,9 +5,12 @@
 package com.sap.ejb;
 
 import com.sap.entity.Agenciagubernamental;
+import com.sap.entity.Programa;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +28,12 @@ public class AgenciagubernamentalFacade extends AbstractFacade<Agenciagubernamen
 
     public AgenciagubernamentalFacade() {
         super(Agenciagubernamental.class);
+    }
+    
+    public List findByPrograma(Programa p) {
+        Query q = em.createNamedQuery("Agenciagubernamental.findByPrograma");
+        q.setParameter("programa", p);
+        return q.getResultList();
     }
     
 }

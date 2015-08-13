@@ -56,7 +56,7 @@ public class Numericadocumental implements Serializable {
     @Column(name = "lugar")
     private String lugar;
     @Column(name = "evaluacion")
-    private Integer evaluacion;
+    private float evaluacion;
     @Size(max = 2000)
     @Column(name = "accion")
     private String accion;
@@ -69,7 +69,27 @@ public class Numericadocumental implements Serializable {
     @JoinColumn(name = "indicador_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Indicador indicadorId;
+    @Column(name = "esperado")
+    private float esperado;
 
+    public float getEsperado() {
+        return esperado;
+    }
+
+    public void setEsperado(float esperado) {
+        this.esperado = esperado;
+    }
+
+    public float getObtenido() {
+        return obtenido;
+    }
+
+    public void setObtenido(float obtenido) {
+        this.obtenido = obtenido;
+    }
+    @Column(name = "obtenido")
+    private float obtenido;
+    
     public Numericadocumental() {
     }
 
@@ -117,11 +137,11 @@ public class Numericadocumental implements Serializable {
         this.lugar = lugar;
     }
 
-    public Integer getEvaluacion() {
+    public float getEvaluacion() {
         return evaluacion;
     }
 
-    public void setEvaluacion(Integer evaluacion) {
+    public void setEvaluacion(float evaluacion) {
         this.evaluacion = evaluacion;
     }
 

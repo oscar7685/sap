@@ -5,6 +5,7 @@
 package com.sap.actions;
 
 import com.sap.ejb.AdministrativoFacade;
+import com.sap.ejb.AgenciagubernamentalFacade;
 import com.sap.ejb.DirectorprogramaFacade;
 import com.sap.ejb.DocenteFacade;
 import com.sap.ejb.EgresadoFacade;
@@ -38,9 +39,10 @@ import org.apache.log4j.Logger;
  * @author acreditacion
  */
 public class SelectorListMuestra implements Action {
-
+    
     private static final Logger LOGGER = Logger.getLogger(SelectorListMuestra.class);
     MuestraagenciaFacade muestraagenciaFacade = lookupMuestraagenciaFacadeBean();
+    AgenciagubernamentalFacade agenciagubernamentalFacade = lookupAgenciagubernamentalFacadeBean();
     EmpleadorFacade empleadorFacade = lookupEmpleadorFacadeBean();
     MuestraempleadorFacade muestraempleadorFacade = lookupMuestraempleadorFacadeBean();
     DirectorprogramaFacade directorprogramaFacade = lookupDirectorprogramaFacadeBean();
@@ -111,9 +113,13 @@ public class SelectorListMuestra implements Action {
                 sesion.setAttribute("listPoblacion", e);
                 List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
                 sesion.setAttribute("listEncabezado", le);
-            } else if (fuente.equals("Agencia")) {
+            } else if (fuente.equals("Visitante")) {
                 sesion.setAttribute("listMuestraSeleccionada", muestraagenciaFacade.findByList("muestrapersonaId.muestraId", m));
                 sesion.setAttribute("Fuente", fuenteFacade.find(7));
+                List e = agenciagubernamentalFacade.findByPrograma((Programa) programa);
+                sesion.setAttribute("listPoblacion", e);
+                List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
+                sesion.setAttribute("listEncabezado", le);
             }
         } catch (Exception e) {
             LOGGER.error("Se ha presentado un error: ", e);
@@ -259,6 +265,16 @@ public class SelectorListMuestra implements Action {
             return (MuestraagenciaFacade) c.lookup("java:global/sap/MuestraagenciaFacade!com.sap.ejb.MuestraagenciaFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private AgenciagubernamentalFacade lookupAgenciagubernamentalFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (AgenciagubernamentalFacade) c.lookup("java:global/sap/AgenciagubernamentalFacade!com.sap.ejb.AgenciagubernamentalFacade");
+        } catch (NamingException ne) {
+            java.util.logging.Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
     }

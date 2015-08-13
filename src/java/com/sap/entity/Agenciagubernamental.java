@@ -29,8 +29,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Agenciagubernamental.findAll", query = "SELECT a FROM Agenciagubernamental a"),
     @NamedQuery(name = "Agenciagubernamental.findById", query = "SELECT a FROM Agenciagubernamental a WHERE a.id = :id"),
+    @NamedQuery(name = "Agenciagubernamental.findByPrograma", query = "SELECT e FROM Agenciagubernamental e where e.programaId =:programa"),
     @NamedQuery(name = "Agenciagubernamental.findByDescripcion", query = "SELECT a FROM Agenciagubernamental a WHERE a.descripcion = :descripcion")})
 public class Agenciagubernamental implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +48,17 @@ public class Agenciagubernamental implements Serializable {
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
+    @JoinColumn(name = "programa_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Programa programaId;
+
+    public Programa getProgramaId() {
+        return programaId;
+    }
+
+    public void setProgramaId(Programa programaId) {
+        this.programaId = programaId;
+    }
 
     public Agenciagubernamental() {
     }
@@ -110,5 +123,5 @@ public class Agenciagubernamental implements Serializable {
     public String toString() {
         return "com.sap.entity.Agenciagubernamental[ id=" + id + " ]";
     }
-    
+
 }

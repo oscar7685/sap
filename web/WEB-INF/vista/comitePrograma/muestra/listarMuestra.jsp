@@ -76,6 +76,7 @@
                                         <option value="Administrativo">Administrativos</option>
                                         <option value="Directivo">Directores de programa</option>
                                         <option value="Empleador">Empleadores</option>
+                                        <option value="Visitante">Visitantes</option>
                                     </select>
                                 </div>
                             </div>   

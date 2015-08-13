@@ -12,6 +12,7 @@ import com.sap.entity.Instrumento;
 import com.sap.entity.Modelo;
 import com.sap.entity.Numericadocumental;
 import com.sap.entity.Proceso;
+import com.sap.entity.Programa;
 import com.sap.interfaz.Action;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class PreparedInfoNumerica implements Action {
         HttpSession sesion = request.getSession();
         Proceso p = (Proceso) sesion.getAttribute("Proceso");
         Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
+        Programa programa = p.getProgramaId();
         Instrumento ins = instrumentoFacade.find(2);
         List<Numericadocumental> listaNum = numericadocumentalFacade.findByList2("procesoId", p, "instrumentoId", ins);
        
@@ -50,9 +52,16 @@ public class PreparedInfoNumerica implements Action {
                 indicadoresNum.add(indicador);
             }
         }
+        sesion.setAttribute("programa", programa); // son todos los que son numericos
         sesion.setAttribute("lisrInidicadorsNum", indicadoresNum); // son todos los que son numericos
         sesion.setAttribute("listaNum", listaNum);//son la numerica documental que ya estan en la tabla calificados
-        return "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoNumerica2.jsp";
+        
+        if (m2.getId() != 5) {
+            return "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoNumerica2.jsp";
+        } else {
+            return "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoNumericaFisica.jsp";
+        }
+        
 
     }
 

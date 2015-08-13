@@ -4,11 +4,13 @@
  */
 package com.sap.controller;
 
+import com.sap.ejb.AgenciagubernamentalFacade;
 import com.sap.ejb.AsignacionencuestaFacade;
 import com.sap.ejb.EncabezadoFacade;
 import com.sap.ejb.EncuestaFacade;
 import com.sap.ejb.FuenteFacade;
 import com.sap.ejb.MuestraadministrativoFacade;
+import com.sap.ejb.MuestraagenciaFacade;
 import com.sap.ejb.MuestradirectorFacade;
 import com.sap.ejb.MuestradocenteFacade;
 import com.sap.ejb.MuestraegresadoFacade;
@@ -22,6 +24,7 @@ import com.sap.entity.Encabezado;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Modelo;
 import com.sap.entity.Muestraadministrativo;
+import com.sap.entity.Muestraagencia;
 import com.sap.entity.Muestradirector;
 import com.sap.entity.Muestradocente;
 import com.sap.entity.Muestraegresado;
@@ -51,6 +54,8 @@ import org.apache.log4j.Logger;
 public class loginController extends HttpServlet {
 
     private final static Logger LOGGER = Logger.getLogger(loginController.class);
+    @EJB
+    private MuestraagenciaFacade muestraagenciaFacade;
     @EJB
     private EncabezadoFacade encabezadoFacade;
     @EJB
@@ -469,6 +474,62 @@ public class loginController extends HttpServlet {
                                                 List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(6), proceso.getModeloId());
                                                 if (aux4 != null && aux4.size() > 0) {
                                                     List<Encabezado> encabExistentes = encabezadoFacade.findByVars(proceso, aux4.get(0).getEncuestaId(), fuenteFacade.find(6), persona);
+                                                    if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
+                                                    } else {
+                                                        session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                        break;
+                                    } else {
+                                        if (l + 1 == aux.size()) {
+                                            out.print(1);
+                                        }
+                                    }
+                                }
+                            }
+
+                        } else if (tp != null && tp.equals("Visitantes")) {
+                            Muestrapersona persona = null;
+                            Muestraagencia visitante = null;
+                            List<Muestraagencia> auxVi2 = null;
+                            List<Encuesta> auxVi3 = null;
+                            Modelo m;
+                            Proceso proceso;
+                            List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
+                            if (aux != null && aux.size() > 0) {
+                                for (int l = 0; l < aux.size(); l++) {
+                                    persona = aux.get(l);
+
+                                    if (persona != null && persona.getPassword().equals(pw)) {
+                                        auxVi2 = muestraagenciaFacade.findByMuestraPersona(persona);
+                                    }
+                                    if (auxVi2 != null && auxVi2.size() > 0) {
+                                        for (int i = 0; i < auxVi2.size(); i++) {
+                                            visitante = auxVi2.get(i);
+                                        }
+                                    }
+                                    if (visitante != null) {
+                                        out.print(0);
+                                        session.setAttribute("tipoLogin", "Fuente");
+                                        session.setAttribute("programa", visitante.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                                        session.setAttribute("persona", persona);
+                                        session.setAttribute("fuente", fuenteFacade.find(7));
+                                        proceso = persona.getMuestraId().getProcesoId();
+                                        if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
+                                            m = proceso.getModeloId();
+                                            auxVi3 = encuestaFacade.findByModelo(m);
+                                            session.setAttribute("proceso", proceso);
+
+                                        }
+                                        if (auxVi3 != null) {
+                                            for (int i = 0; i < auxVi3.size(); i++) {
+                                                Encuesta en = auxVi3.get(i);
+                                                List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(7), proceso.getModeloId());
+                                                if (aux4 != null && aux4.size() > 0) {
+                                                    List<Encabezado> encabExistentes = encabezadoFacade.findByVars(proceso, aux4.get(0).getEncuestaId(), fuenteFacade.find(7), persona);
                                                     if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
                                                     } else {
                                                         session.setAttribute("encuesta", aux4.get(0).getEncuestaId());

@@ -99,8 +99,9 @@
                             <option>Docentes</option>
                             <option>Administrativos</option>
                             <option>Egresados</option>
-                            <option>Directores de programa</option>
+                            <option>Directivos de programa</option>
                             <option>Empleadores</option>
+                            <option>Visitantes</option>
                         </optgroup>
                     </select>
                     <label class="checkbox">

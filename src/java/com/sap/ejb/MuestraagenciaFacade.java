@@ -5,9 +5,12 @@
 package com.sap.ejb;
 
 import com.sap.entity.Muestraagencia;
+import com.sap.entity.Muestrapersona;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -15,6 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class MuestraagenciaFacade extends AbstractFacade<Muestraagencia> {
+
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -26,5 +30,10 @@ public class MuestraagenciaFacade extends AbstractFacade<Muestraagencia> {
     public MuestraagenciaFacade() {
         super(Muestraagencia.class);
     }
-    
+
+    public List findByMuestraPersona(Muestrapersona p) {
+        Query q = em.createNamedQuery("Muestraagencia.findByMuestraPersonaId");
+        q.setParameter("muestrapersona", p);
+        return q.getResultList();
+    }
 }

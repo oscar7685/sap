@@ -30,6 +30,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class PreparedInfoDocumental implements Action {
+
     IndicadorFacade indicadorFacade = lookupIndicadorFacadeBean();
     NumericadocumentalFacade numericadocumentalFacade = lookupNumericadocumentalFacadeBean();
     InstrumentoFacade instrumentoFacade = lookupInstrumentoFacadeBean();
@@ -39,10 +40,10 @@ public class PreparedInfoDocumental implements Action {
         HttpSession sesion = request.getSession();
         Proceso p = (Proceso) sesion.getAttribute("Proceso");
         Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
-        
+
         Instrumento ins = instrumentoFacade.find(3);
         List<Numericadocumental> listaDoc = numericadocumentalFacade.findByList2("procesoId", p, "instrumentoId", ins);
-        
+
         List<Indicador> listInXmodelo = indicadorFacade.findByList("modeloId", m2);
         List<Indicador> indicadoresDoc = new ArrayList<Indicador>();
 
@@ -53,7 +54,12 @@ public class PreparedInfoDocumental implements Action {
         }
         sesion.setAttribute("lisrInidicadorsDoc", indicadoresDoc); // son todos los que son documentales
         sesion.setAttribute("listaDoc", listaDoc);//son los que ya estan en la tabla calificados
-        return "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental2.jsp";
+        if (m2.getId() != 5) {
+            return "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumental2.jsp";
+        } else {
+            return "/WEB-INF/vista/comitePrograma/numericaDocumental/asignarInfoDocumentalFisica.jsp";
+        }
+
     }
 
     private InstrumentoFacade lookupInstrumentoFacadeBean() {
