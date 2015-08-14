@@ -353,7 +353,7 @@ public class GenerarMuestra implements Action {
         }
 
         //********************************Agencia
-        aux = agenciagubernamentalFacade.count();
+        aux = agenciagubernamentalFacade.countByProperty("programaId", programa);
 
         N = aux;
 
@@ -362,7 +362,7 @@ public class GenerarMuestra implements Action {
 
             tamanioMuestra = (int) Math.floor(n);
 
-            List<Agenciagubernamental> lag = agenciagubernamentalFacade.generarMuestraSinPrograma(tamanioMuestra);
+            List<Agenciagubernamental> lag = agenciagubernamentalFacade.generarMuestra(programa, tamanioMuestra);
 
             it = lag.iterator();
 

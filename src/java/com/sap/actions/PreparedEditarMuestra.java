@@ -5,6 +5,7 @@
 package com.sap.actions;
 
 import com.sap.ejb.AdministrativoFacade;
+import com.sap.ejb.AgenciagubernamentalFacade;
 import com.sap.ejb.DirectorprogramaFacade;
 import com.sap.ejb.DocenteFacade;
 import com.sap.ejb.EgresadoFacade;
@@ -13,6 +14,7 @@ import com.sap.ejb.EncabezadoFacade;
 import com.sap.ejb.EstudianteFacade;
 import com.sap.ejb.FuenteFacade;
 import com.sap.ejb.MuestraadministrativoFacade;
+import com.sap.ejb.MuestraagenciaFacade;
 import com.sap.ejb.MuestradirectorFacade;
 import com.sap.ejb.MuestradocenteFacade;
 import com.sap.ejb.MuestraegresadoFacade;
@@ -37,6 +39,9 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class PreparedEditarMuestra implements Action {
+
+    AgenciagubernamentalFacade agenciagubernamentalFacade = lookupAgenciagubernamentalFacadeBean();
+    MuestraagenciaFacade muestraagenciaFacade = lookupMuestraagenciaFacadeBean();
     DirectorprogramaFacade directorprogramaFacade = lookupDirectorprogramaFacadeBean();
     MuestradirectorFacade muestradirectorFacade = lookupMuestradirectorFacadeBean();
     EmpleadorFacade empleadorFacade = lookupEmpleadorFacadeBean();
@@ -98,6 +103,14 @@ public class PreparedEditarMuestra implements Action {
                             sesion.setAttribute("listPoblacion", emp);
                             List lemp = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
                             sesion.setAttribute("listEncabezado", lemp);
+                        } else if (fuente.equals("Visitante")) {
+                            Muestra m = (Muestra) sesion.getAttribute("Muestra");
+                            sesion.setAttribute("listMuestraSeleccionada", muestraagenciaFacade.findByList("muestrapersonaId.muestraId", m));
+                            sesion.setAttribute("Fuente", fuenteFacade.find(7));
+                            List vis = agenciagubernamentalFacade.findByList("programaId", programa);
+                            sesion.setAttribute("listPoblacion", vis);
+                            List lvis = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
+                            sesion.setAttribute("listEncabezado", lvis);
                         } else {
                             Muestra m = (Muestra) sesion.getAttribute("Muestra");
                             sesion.setAttribute("listMuestraSeleccionada", muestradirectorFacade.findByList("muestrapersonaId.muestraId", m));
@@ -112,7 +125,7 @@ public class PreparedEditarMuestra implements Action {
             }
 
         }
-       return "/WEB-INF/vista/comitePrograma/muestra/editarMuestra.jsp";
+        return "/WEB-INF/vista/comitePrograma/muestra/editarMuestra.jsp";
     }
 
     private FuenteFacade lookupFuenteFacadeBean() {
@@ -239,6 +252,26 @@ public class PreparedEditarMuestra implements Action {
         try {
             Context c = new InitialContext();
             return (DirectorprogramaFacade) c.lookup("java:global/sap/DirectorprogramaFacade!com.sap.ejb.DirectorprogramaFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private MuestraagenciaFacade lookupMuestraagenciaFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (MuestraagenciaFacade) c.lookup("java:global/sap/MuestraagenciaFacade!com.sap.ejb.MuestraagenciaFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private AgenciagubernamentalFacade lookupAgenciagubernamentalFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (AgenciagubernamentalFacade) c.lookup("java:global/sap/AgenciagubernamentalFacade!com.sap.ejb.AgenciagubernamentalFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
