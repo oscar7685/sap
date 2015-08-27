@@ -5,12 +5,14 @@
 package com.sap.actions;
 
 import com.sap.ejb.AdministrativoFacade;
+import com.sap.ejb.AgenciagubernamentalFacade;
 import com.sap.ejb.DirectorprogramaFacade;
 import com.sap.ejb.DocenteFacade;
 import com.sap.ejb.EgresadoFacade;
 import com.sap.ejb.EmpleadorFacade;
 import com.sap.ejb.EstudianteFacade;
 import com.sap.ejb.MuestraadministrativoFacade;
+import com.sap.ejb.MuestraagenciaFacade;
 import com.sap.ejb.MuestradirectorFacade;
 import com.sap.ejb.MuestradocenteFacade;
 import com.sap.ejb.MuestraegresadoFacade;
@@ -18,6 +20,7 @@ import com.sap.ejb.MuestraempleadorFacade;
 import com.sap.ejb.MuestraestudianteFacade;
 import com.sap.ejb.MuestrapersonaFacade;
 import com.sap.entity.Administrativo;
+import com.sap.entity.Agenciagubernamental;
 import com.sap.entity.Directorprograma;
 import com.sap.entity.Docente;
 import com.sap.entity.Egresado;
@@ -25,6 +28,7 @@ import com.sap.entity.Empleador;
 import com.sap.entity.Estudiante;
 import com.sap.entity.Muestra;
 import com.sap.entity.Muestraadministrativo;
+import com.sap.entity.Muestraagencia;
 import com.sap.entity.Muestradirector;
 import com.sap.entity.Muestradocente;
 import com.sap.entity.Muestraegresado;
@@ -52,6 +56,8 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class EditarMuestra implements Action {
+    MuestraagenciaFacade muestraagenciaFacade = lookupMuestraagenciaFacadeBean();
+    AgenciagubernamentalFacade agenciagubernamentalFacade = lookupAgenciagubernamentalFacadeBean();
     MuestraempleadorFacade muestraempleadorFacade = lookupMuestraempleadorFacadeBean();
     EmpleadorFacade empleadorFacade = lookupEmpleadorFacadeBean();
     MuestradirectorFacade muestradirectorFacade = lookupMuestradirectorFacadeBean();
@@ -326,6 +332,47 @@ public class EditarMuestra implements Action {
                                     mempl.setEmpresa(empl.getEmpresa());
                                     muestraempleadorFacade.create(mempl);
                                 }
+                            }else if (fuente.equals("Visitante")) {
+                                Collection nuevos = new ArrayList();
+                                Collection viejos = new ArrayList();
+                                List<Muestraagencia> muestraAux = (List<Muestraagencia>) sesion.getAttribute("listMuestraSeleccionada");
+                                for (Muestraagencia muestravisitante : muestraAux) {
+                                    viejos.add(muestravisitante.getMuestrapersonaId().getCedula());
+                                }
+                                Muestra m = (Muestra) sesion.getAttribute("Muestra");
+                                List<Agenciagubernamental> lax = agenciagubernamentalFacade.findByList("programaId", programa);
+                                for (Agenciagubernamental visitante : lax) {
+                                    if ("1".equals(request.getParameter(String.valueOf(visitante.getPersonaId().getId())))) {
+                                        nuevos.add(visitante.getPersonaId().getId());
+                                    }
+                                }
+                                Collection viejos2 = new ArrayList(viejos);
+                                viejos.removeAll(nuevos); // quedan solo las cedulas de las personas que han sido eliminadas
+                                nuevos.removeAll(viejos2); //quedan solo las cedulas de las personas que han sido agregadas
+
+                                for (Object object : viejos) {
+                                    Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", object.toString(), "muestraId", m);
+                                    Muestraagencia maux = muestraagenciaFacade.findBySingle("muestrapersonaId", mp);
+                                    muestraagenciaFacade.remove(maux);
+                                    muestrapersonaFacade.remove(mp);
+                                }
+                                for (Object object : nuevos) {
+                                    Agenciagubernamental visi = agenciagubernamentalFacade.findBySingle2("personaId.id", object.toString(), "programaId", m.getProcesoId().getProgramaId());
+                                    Persona per = visi.getPersonaId();
+
+                                    Muestrapersona mp = new Muestrapersona();
+                                    mp.setCedula(per.getId());
+                                    mp.setNombre(per.getNombre());
+                                    mp.setApellido(per.getApellido());
+                                    mp.setPassword(per.getPassword());
+                                    mp.setMail(per.getMail());
+                                    mp.setMuestraId(m);
+                                    muestrapersonaFacade.create(mp);
+                                    Muestraagencia mvisi = new Muestraagencia();
+                                    mvisi.setDescripcion(visi.getDescripcion());
+                                    mvisi.setMuestrapersonaId(mp);
+                                    muestraagenciaFacade.create(mvisi);
+                                }
                             }
                         }
                     }
@@ -460,6 +507,26 @@ public class EditarMuestra implements Action {
         try {
             Context c = new InitialContext();
             return (MuestraempleadorFacade) c.lookup("java:global/sap/MuestraempleadorFacade!com.sap.ejb.MuestraempleadorFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private AgenciagubernamentalFacade lookupAgenciagubernamentalFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (AgenciagubernamentalFacade) c.lookup("java:global/sap/AgenciagubernamentalFacade!com.sap.ejb.AgenciagubernamentalFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private MuestraagenciaFacade lookupMuestraagenciaFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (MuestraagenciaFacade) c.lookup("java:global/sap/MuestraagenciaFacade!com.sap.ejb.MuestraagenciaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

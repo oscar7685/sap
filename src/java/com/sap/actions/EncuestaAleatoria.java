@@ -30,6 +30,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class EncuestaAleatoria implements Action {
+
     ResultadoevaluacionFacade resultadoevaluacionFacade = lookupResultadoevaluacionFacadeBean();
     EncabezadoFacade encabezadoFacade = lookupEncabezadoFacadeBean();
 
@@ -38,7 +39,13 @@ public class EncuestaAleatoria implements Action {
         HttpSession sesion = request.getSession();
         Proceso pro = (Proceso) sesion.getAttribute("Proceso");
         String idFuente = request.getParameter("id");
-        int idf = Integer.parseInt(idFuente);
+        int idf = 0;
+        try {
+            idf = Integer.parseInt(idFuente);
+        } catch (Exception e) {
+            //evita error en la app
+        }
+
         Modelo m = pro.getModeloId();
         int indiceEncuesta;
         int indiceEncabezado;
