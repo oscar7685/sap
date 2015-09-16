@@ -1,0 +1,18 @@
+1. Pregunta sencilla
+2. Pregunta abierta
+3. Pregunta Matriz
+
+
+Cambiar modelo del proceso de autoevaluacion del proceso de la maestria en inmunologia al nuevo (4)
+
+Cambiar en la tabla de ponderacion de factores los numeros de los factores del 13 al 22 por 31 al 40
+
+Cambiar en la tabla de ponderacion de caracteristicas los numeros de las caracteristicas del 41 al 69 por 31 al 40 por 156 al 184
+
+
+Asignar encuesta
+
+19	1	20	4
+20	2	21	4
+21	4	22	4
+22	5	23	4
