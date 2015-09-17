@@ -322,7 +322,7 @@ public class loginController extends HttpServlet {
                         }
 
                     } else {
-                        if (tp != null && tp.equals("Directores de programa")) {
+                        if (tp != null && tp.equals("Directivos de programa")) {
                             Muestrapersona persona = null;
                             Muestradirector director = null;
                             List<Muestradirector> auxDi2 = null;
