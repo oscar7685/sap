@@ -35,6 +35,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class InformeMatrizCaracteristicas implements Action {
+
     PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade = lookupPonderacioncaracteristicaFacadeBean();
     NumericadocumentalFacade numericadocumentalFacade = lookupNumericadocumentalFacadeBean();
     ResultadoevaluacionFacade resultadoevaluacionFacade = lookupResultadoevaluacionFacadeBean();
@@ -44,7 +45,7 @@ public class InformeMatrizCaracteristicas implements Action {
         HttpSession sesion = request.getSession();
         Proceso p = (Proceso) sesion.getAttribute("Proceso");
         Modelo mod = p.getModeloId();
-        long t0 = System.currentTimeMillis();
+
         float calificacionNum;
         float calificacionDoc;
         float calificacionPer;
@@ -65,7 +66,7 @@ public class InformeMatrizCaracteristicas implements Action {
                     if (instrumento.getId() == 1) {
                         //RECUPERAMOS LAS PREGUNTAS DEL ACTUAL INDICADOR
                         List<Pregunta> preguntas = indicadores.get(k).getPreguntaList();
-                        float promedioPregunta, suma, numP;
+                        float promedioPregunta, suma;
 
                         //declaramos promedio de respuestas para cada preguntas
                         float promediorespuestas[] = new float[preguntas.size()];
@@ -80,7 +81,7 @@ public class InformeMatrizCaracteristicas implements Action {
                             //declaramos arreglo para tener los promedios de respuesta de la actual pregunta en cada encuesta
                             float promediorespuestasxencuesta[] = new float[cantEn];
 
-                            //calculamos el promedio de respuesta de la pregunta actual en cada encuesta
+                            /* 1. Calculamos el promedio de la pregunta en cada encuesta*/
                             for (int m = 0; m < cantEn; m++) {
                                 suma = 0;
 
@@ -90,62 +91,64 @@ public class InformeMatrizCaracteristicas implements Action {
                                 }
                                 if (suma > 0) {
                                     promediorespuestasxencuesta[m] = (float) suma / respuestas.size();
+                                    promediorespuestasxencuesta[m] = (float) Math.rint(promediorespuestasxencuesta[m] * 10) / 10;
                                 }
 
                             }
-                            //calculamos el promedio de respuesta por pregunta usando los promedios por encuesta
+                            /* 2. Calculamos el promedio de la pregunta teniendo en cuenta los promedios por encuesta*/
                             float promedioPreguntaAux = 0;
                             int cantidadEncuestas = encuestas.size();
+                            int encuestasContestadas = 0;
                             for (int m = 0; m < cantidadEncuestas; m++) {
                                 promedioPreguntaAux += promediorespuestasxencuesta[m];
+                                if (promediorespuestasxencuesta[m] > 0) {
+                                    encuestasContestadas++;
+                                }
                             }
-                            promedioPregunta = (float) promedioPreguntaAux / encuestas.size();
+                            promedioPregunta = (float) promedioPreguntaAux / encuestasContestadas;
                             promediorespuestas[l] = (float) (Math.rint(promedioPregunta * 10) / 10);
 
                         }
-                        int numPre = 0;
+                        /* 3. Calculamos el promedio de la percepcion en el indicador*/
+                        int numPreContestadas = 0;
                         for (int q = 0; q < promediorespuestas.length; q++) {
                             if (promediorespuestas[q] > 0) {
                                 calificacionPer += promediorespuestas[q];
-                                numPre++;
+                                numPreContestadas++;
                             }
                         }
-                        calificacionPer = (float) calificacionPer / numPre;
-                    } else {
-                        if (instrumento.getId() == 2) {
-                            Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
-                            if (numDoc != null) {
-                                calificacionNum = (float) numDoc.getEvaluacion();
-                            }
+                        calificacionPer = (float) calificacionPer / numPreContestadas;
+                        calificacionPer = (float) Math.rint(calificacionPer * 10) / 10;
+                    } else if (instrumento.getId() == 2) {
+                        Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
+                        if (numDoc != null) {
+                            calificacionNum = (float) numDoc.getEvaluacion();
+                        }
 
-                        } else {
-                            if (instrumento.getId() == 3) {
-                                Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
-                                if (numDoc != null) {
-                                    calificacionDoc = (float) numDoc.getEvaluacion();
-                                }
-                            }
+                    } else if (instrumento.getId() == 3) {
+                        Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(k), "procesoId", p, "instrumentoId", instrumento);
+                        if (numDoc != null) {
+                            calificacionDoc = (float) numDoc.getEvaluacion();
                         }
                     }
                 }
+                /* 4. Calcular el cumplimiento del indicador*/
                 if (calificacionNum != 0 && calificacionDoc != 0 && calificacionPer != 0) {
                     cumplimiento[k] = (calificacionPer + calificacionNum + calificacionDoc) / 3;
-                } else {
-                    if (calificacionNum != 0 && calificacionPer != 0) {
-                        cumplimiento[k] = (calificacionNum + calificacionPer) / 2;
-                    } else if (calificacionDoc != 0 && calificacionPer != 0) {
-                        cumplimiento[k] = (calificacionPer + calificacionDoc) / 2;
-                    } else if (calificacionDoc != 0 && calificacionNum != 0) {
-                        cumplimiento[k] = (calificacionNum + calificacionDoc) / 2;
-                    } else if (calificacionDoc != 0) {
-                        cumplimiento[k] = calificacionDoc;
-                    } else if (calificacionNum != 0) {
-                        cumplimiento[k] = calificacionNum;
-                    } else if (calificacionPer != 0) {
-                        cumplimiento[k] = calificacionPer;
-                    }
+                } else if (calificacionNum != 0 && calificacionPer != 0) {
+                    cumplimiento[k] = (calificacionNum + calificacionPer) / 2;
+                } else if (calificacionDoc != 0 && calificacionPer != 0) {
+                    cumplimiento[k] = (calificacionPer + calificacionDoc) / 2;
+                } else if (calificacionDoc != 0 && calificacionNum != 0) {
+                    cumplimiento[k] = (calificacionNum + calificacionDoc) / 2;
+                } else if (calificacionDoc != 0) {
+                    cumplimiento[k] = calificacionDoc;
+                } else if (calificacionNum != 0) {
+                    cumplimiento[k] = calificacionNum;
+                } else if (calificacionPer != 0) {
+                    cumplimiento[k] = calificacionPer;
                 }
-
+                cumplimiento[k]= (float) (Math.rint(cumplimiento[k] * 10) / 10); //cumplimiento de cada indicador
             }
 
             float sumaCumplimientoIndicadores = 0;
@@ -156,6 +159,7 @@ public class InformeMatrizCaracteristicas implements Action {
                     calificados++;
                 }
             }
+            /* 5. Calculamos el cumplimiento de la caracteristica*/
             if (sumaCumplimientoIndicadores > 0) {
                 cumplimiento2[j] = (float) sumaCumplimientoIndicadores / calificados;
                 cumplimiento2[j] = (float) (Math.rint(cumplimiento2[j] * 10) / 10);
@@ -163,9 +167,6 @@ public class InformeMatrizCaracteristicas implements Action {
 
             ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
         }
-        long t1 = System.currentTimeMillis();
-        long t3 = (t1 - t0);
-        System.out.println("el tiempo que demora matriz caracteristicas es: " + t3);
         sesion.setAttribute("caracteristicas", caracteristicas);
         sesion.setAttribute("ponderacionesC", ponderacionesC);
         sesion.setAttribute("cumplimiento", cumplimiento2);

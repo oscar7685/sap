@@ -89,9 +89,9 @@
                         </c:when>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${indicador.caracteristicaId.id != indiceCaracteristicas}">
+                        <c:when test="${indicadorAux.caracteristicaId.id != indiceCaracteristicas}">
                             <c:set var="indiceC" value="${indiceC+1}"></c:set>
-                            <c:set var="indiceCaracteristicas" value="${indicador.caracteristicaId.id}"></c:set>
+                            <c:set var="indiceCaracteristicas" value="${indicadorAux.caracteristicaId.id}"></c:set>
                                 <h3>Caracteristica</h3>
                                 <table class="table table-striped table-bordered table-condensed">
                                     <thead style="background-color: #ffffff;">

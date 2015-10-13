@@ -221,7 +221,6 @@
                         <th>Relacion con el logro ideal</th>
                         </thead>
                         <tbody>
-                            <c:set var="indice" value="0"></c:set>
                             <c:forEach items="${caracteristicas}" var="caracteristica" varStatus="iter">
                                 <fmt:parseNumber var="cum"  value="${cumplimiento[iter.index]}" />
                                 <c:choose>
@@ -234,25 +233,25 @@
                                                 <a href="#detalleCaracteristica&${caracteristica.id}" data="${caracteristica.nombre}">${caracteristica.nombre}</a> 
                                             </td>
                                             <td>   
-                                                ${ponderacionesC.get(indice).nivelimportancia}
+                                                ${ponderacionesC.get(iter.index).nivelimportancia}
                                             </td>
                                             <td>   
-                                                ${ponderacionesC.get(indice).ponderacion}
+                                                ${ponderacionesC.get(iter.index).ponderacion}
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimiento[iter.index]}"/>
                                             </td>
                                             <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimiento[iter.index] * ponderacionesC.get(indice).ponderacion}"/>
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimiento[iter.index] * ponderacionesC.get(iter.index).ponderacion}"/>
                                             </td>
                                             <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesC.get(indice).ponderacion}"/>
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesC.get(iter.index).ponderacion}"/>
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimiento[iter.index] * 20}"/>%
                                             </td>
                                         </tr>
-                                        <c:set var="indice" value="${indice+1}"></c:set>
+                                        
                                     </c:when>
                                 </c:choose>
 

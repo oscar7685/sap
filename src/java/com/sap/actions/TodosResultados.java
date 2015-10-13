@@ -37,7 +37,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author acreditacion
  */
-public class TodosResultados implements Action{
+public class TodosResultados implements Action {
+
     NumericadocumentalFacade numericadocumentalFacade = lookupNumericadocumentalFacadeBean();
     PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade = lookupPonderacioncaracteristicaFacadeBean();
     CaracteristicaFacade caracteristicaFacade = lookupCaracteristicaFacadeBean();
@@ -51,278 +52,298 @@ public class TodosResultados implements Action{
         Modelo modelo = (Modelo) sesion.getAttribute("Modelo");
         List<Indicador> indicadores = indicadorFacade.findByModeloYenOrden(modelo);
 
-            double[] numerico = new double[indicadores.size()]; //numerica x indicador
-            double[] documental = new double[indicadores.size()]; //documental x indicador
-            double[] promedioE = new double[indicadores.size()]; //encuesta x indicador
+        double[] numerico = new double[indicadores.size()]; //numerica x indicador
+        double[] documental = new double[indicadores.size()]; //documental x indicador
+        double[] promedioE = new double[indicadores.size()]; //encuesta x indicador
 
-            List<Factor> factores = factorFacade.findByModelo(modelo);
-            List<Caracteristica> caracteristicas = caracteristicaFacade.findByModelo(modelo);
+        List<Factor> factores = factorFacade.findByModelo(modelo);
+        List<Caracteristica> caracteristicas = caracteristicaFacade.findByModelo(modelo);
 
-            List<Ponderacionfactor> ponderacionesF = new ArrayList<Ponderacionfactor>(); //ponderacion de los factores
-            float cumplimientoF[] = new float[factores.size()];
-            double ponderacionF[] = new double[factores.size()];
+        List<Ponderacionfactor> ponderacionesF = new ArrayList<Ponderacionfactor>(); //ponderacion de los factores
+        float cumplimientoF[] = new float[factores.size()];
+        double ponderacionF[] = new double[factores.size()];
 
-            float cumplimientoC[] = new float[caracteristicas.size()]; //cumplimiento x caracteristica
-            double ponderacionC[] = new double[caracteristicas.size()]; //ponderacion x caracteristica
-            float cumplimientoI[] = new float[indicadores.size()]; //cumplimiento indicadores
+        float cumplimientoC[] = new float[caracteristicas.size()]; //cumplimiento x caracteristica
+        double ponderacionC[] = new double[caracteristicas.size()]; //ponderacion x caracteristica
+        float cumplimientoI[] = new float[indicadores.size()]; //cumplimiento indicadores
 
-            float promedioPregunta = 0;
-            float suma;
-            float numP;
+        float promedioPregunta = 0;
 
-            List<List> PromedioPreguntasXindicador = new ArrayList<List>();
-            List<List> PromedioPreguntasXindicadorEs = new ArrayList<List>();
-            List<List> PromedioPreguntasXindicadorDo = new ArrayList<List>();
-            List<List> PromedioPreguntasXindicadorAd = new ArrayList<List>();
-            List<List> PromedioPreguntasXindicadorEg = new ArrayList<List>();
-            List<List> PromedioPreguntasXindicadorDi = new ArrayList<List>();
-            List<List> PromedioPreguntasXindicadorEm = new ArrayList<List>();
+        List<List> PromedioPreguntasXindicador = new ArrayList<List>();
+        List<List> PromedioPreguntasXindicadorEs = new ArrayList<List>();
+        List<List> PromedioPreguntasXindicadorDo = new ArrayList<List>();
+        List<List> PromedioPreguntasXindicadorAd = new ArrayList<List>();
+        List<List> PromedioPreguntasXindicadorEg = new ArrayList<List>();
+        List<List> PromedioPreguntasXindicadorDi = new ArrayList<List>();
+        List<List> PromedioPreguntasXindicadorEm = new ArrayList<List>();
 
-            int caracActual = indicadores.get(0).getCaracteristicaId().getId();
-            int factorActual = indicadores.get(0).getCaracteristicaId().getFactorId().getId();
-            double ponderacionCActual = ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(indicadores.get(0).getCaracteristicaId(), proceso).getPonderacion();
-            float sumaPonC = 0;
-            float sumaC = 0;
-            float sumaI = 0;
-            float numI = 0;
+        int caracActual = indicadores.get(0).getCaracteristicaId().getId();
+        int factorActual = indicadores.get(0).getCaracteristicaId().getFactorId().getId();
+        double ponderacionCActual = ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(indicadores.get(0).getCaracteristicaId(), proceso).getPonderacion();
+        float sumaPonC = 0;
+        float sumaC = 0;
+        float sumaI = 0;
+        float numI = 0;
 
-            float calificacionNum = 0;
-            float calificacionDoc = 0;
-            float promedioEstudiantes, promedioDocentes, promedioAdmin, promedioEgre, promedioDire, promedioEmpl;
-            int numEst, numDoc, numAdmi, numEgr, numDire, numEmp;
-            int indice = 0;
-            int indiceCarac = 0;
-            int indiceFactor = 0;
-            float sumaPromediosXpregunta;
-            for (Indicador in : indicadores) {
-                List promedioxPregunta = new ArrayList();
-                List promedioxPreguntaEs = new ArrayList();
-                List promedioxPreguntaDo = new ArrayList();
-                List promedioxPreguntaAd = new ArrayList();
-                List promedioxPreguntaEg = new ArrayList();
-                List promedioxPreguntaDi = new ArrayList();
-                List promedioxPreguntaEm = new ArrayList();
-                sumaPromediosXpregunta = 0;
-                suma = 0;
-                numP = 0;
-                calificacionNum = 0;
-                calificacionDoc = 0;
-                promedioPregunta = 0;
-                List<Instrumento> instr = in.getInstrumentoList();
-                for (int i = 0; i < instr.size(); i++) {
-                    Instrumento instrumento = instr.get(i);
-                    if (instrumento.getId() == 1) {
-                        List<Pregunta> preguntas = in.getPreguntaList();
-                        float promediorespuestas[] = new float[preguntas.size()];
-                        int ceros[] = new int[preguntas.size()];
-                        int unos[] = new int[preguntas.size()];
-                        int dos[] = new int[preguntas.size()];
-                        int tres[] = new int[preguntas.size()];
-                        int cuatros[] = new int[preguntas.size()];
-                        int cincos[] = new int[preguntas.size()];
+        float calificacionNum = 0;
+        float calificacionDoc = 0;
+        float promedioEstudiantes, promedioDocentes, promedioAdmin, promedioEgre, promedioDire, promedioEmpl;
+        int numEst, numDoc, numAdmi, numEgr, numDire, numEmp;
+        int indice = 0;
+        int indiceCarac = 0;
+        int indiceFactor = 0;
+        float sumaPromediosXpregunta;
+        for (Indicador in : indicadores) {
+            List promedioxPregunta = new ArrayList();
+            List promedioxPreguntaEs = new ArrayList();
+            List promedioxPreguntaDo = new ArrayList();
+            List promedioxPreguntaAd = new ArrayList();
+            List promedioxPreguntaEg = new ArrayList();
+            List promedioxPreguntaDi = new ArrayList();
+            List promedioxPreguntaEm = new ArrayList();
+            sumaPromediosXpregunta = 0;
 
-                        for (int l = 0; l < preguntas.size(); l++) {
-                            suma = 0;
-                            int numR = 0;
-                            Pregunta pregunta = preguntas.get(l);
-                            promedioPregunta = 0;
+            calificacionNum = 0;
+            calificacionDoc = 0;
+            promedioPregunta = 0;
+            List<Instrumento> instr = in.getInstrumentoList();
+            for (int i = 0; i < instr.size(); i++) {
+                Instrumento instrumento = instr.get(i);
+                /*Si es encuesta*/
+                if (instrumento.getId() == 1) {
+                    List<Pregunta> preguntas = in.getPreguntaList();
+                    int preguntasContestadasEnElActualIndicador = 0;
+                    for (int l = 0; l < preguntas.size(); l++) {
+                        Pregunta pregunta = preguntas.get(l);
 
-                            List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
-                            List<Encuesta> encuestaPregunta = pregunta.getEncuestaList();
-                            promedioEstudiantes = 0;
-                            promedioDocentes = 0;
-                            promedioAdmin = 0;
-                            promedioEgre = 0;
-                            promedioDire = 0;
-                            promedioEmpl = 0;
-                            numEst = 0;
-                            numDoc = 0;
-                            numAdmi = 0;
-                            numEgr = 0;
-                            numDire = 0;
-                            numEmp = 0;
-                            for (int n = 0; n < respuestas.size(); n++) {
-                                if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == proceso.getId()
-                                        && respuestas.get(n).getRespuesta() != null && (respuestas.get(n).getRespuesta().equals("1") || respuestas.get(n).getRespuesta().equals("2")
-                                        || respuestas.get(n).getRespuesta().equals("3") || respuestas.get(n).getRespuesta().equals("4") || respuestas.get(n).getRespuesta().equals("5"))) {
+                        List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
+                        if (respuestas.size() > 0) {
+                            preguntasContestadasEnElActualIndicador++;
+                        }
+                        promedioEstudiantes = 0;
+                        promedioDocentes = 0;
+                        promedioAdmin = 0;
+                        promedioEgre = 0;
+                        promedioDire = 0;
+                        promedioEmpl = 0;
+                        numEst = 0;
+                        numDoc = 0;
+                        numAdmi = 0;
+                        numEgr = 0;
+                        numDire = 0;
+                        numEmp = 0;
+                        for (int n = 0; n < respuestas.size(); n++) {
+                            if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == proceso.getId()
+                                    && respuestas.get(n).getRespuesta() != null && (respuestas.get(n).getRespuesta().equals("1") || respuestas.get(n).getRespuesta().equals("2")
+                                    || respuestas.get(n).getRespuesta().equals("3") || respuestas.get(n).getRespuesta().equals("4") || respuestas.get(n).getRespuesta().equals("5"))) {
 
-                                    if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 1) {
-                                        numEst++;
-                                        promedioEstudiantes += Integer.parseInt(respuestas.get(n).getRespuesta());
-                                    } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 2) {
-                                        numDoc++;
-                                        promedioDocentes += Integer.parseInt(respuestas.get(n).getRespuesta());
-                                    } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 3) {
-                                        numAdmi++;
-                                        promedioAdmin += Integer.parseInt(respuestas.get(n).getRespuesta());
-                                    } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 4) {
-                                        numEgr++;
-                                        promedioEgre += Integer.parseInt(respuestas.get(n).getRespuesta());
-                                    } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 5) {
-                                        numDire++;
-                                        promedioDire += Integer.parseInt(respuestas.get(n).getRespuesta());
-                                    } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 6) {
-                                        numEmp++;
-                                        promedioEmpl += Integer.parseInt(respuestas.get(n).getRespuesta());
-                                    }
-
-                                    suma += Integer.parseInt(respuestas.get(n).getRespuesta());
-                                    numR++;
+                                if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 1) {
+                                    numEst++;
+                                    promedioEstudiantes += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 2) {
+                                    numDoc++;
+                                    promedioDocentes += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 3) {
+                                    numAdmi++;
+                                    promedioAdmin += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 4) {
+                                    numEgr++;
+                                    promedioEgre += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 5) {
+                                    numDire++;
+                                    promedioDire += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 6) {
+                                    numEmp++;
+                                    promedioEmpl += Integer.parseInt(respuestas.get(n).getRespuesta());
                                 }
-                            }
-
-                            float promedioXpregunta = suma / numR;
-                            if (numEst != 0) {
-                                promedioEstudiantes /= numEst;
-                            }
-                            if (numDoc != 0) {
-                                promedioDocentes /= numDoc;
-                            }
-                            if (numAdmi != 0) {
-                                promedioAdmin /= numAdmi;
-                            }
-                            if (numEgr != 0) {
-                                promedioEgre /= numEgr;
-                            }
-                            if (numDire != 0) {
-                                promedioDire /= numDire;
-                            }
-                            if (numEmp != 0) {
-                                promedioEmpl /= numEmp;
-                            }
-
-                            sumaPromediosXpregunta += promedioXpregunta;
-                            promedioxPregunta.add((Math.rint(promedioXpregunta * 10) / 10));
-                            promedioxPreguntaEs.add((Math.rint(promedioEstudiantes * 10) / 10));
-                            promedioxPreguntaDo.add((Math.rint(promedioDocentes * 10) / 10));
-                            promedioxPreguntaAd.add((Math.rint(promedioAdmin * 10) / 10));
-                            promedioxPreguntaEg.add((Math.rint(promedioEgre * 10) / 10));
-                            promedioxPreguntaDi.add((Math.rint(promedioDire * 10) / 10));
-                            promedioxPreguntaEm.add((Math.rint(promedioEmpl * 10) / 10));
-                        }
-                        if (suma > 0) {
-                            promedioPregunta = (float) sumaPromediosXpregunta / preguntas.size();
-                            //promediorespuestas[l] = (float) (Math.rint(promedioPregunta * 10) / 10);
-                            promedioE[indice] = (double) (Math.rint(promedioPregunta * 10) / 10);
-                        }
-                    } else {
-                        if (instrumento.getId() == 2) {
-                            Numericadocumental numDoc1 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", proceso, "instrumentoId", instrumento);
-                            calificacionNum = numDoc1.getEvaluacion();
-                            numerico[indice] = calificacionNum;
-
-                        } else {
-                            if (instrumento.getId() == 3) {
-                                Numericadocumental numDoc2 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", proceso, "instrumentoId", instrumento);
-                                calificacionDoc = numDoc2.getEvaluacion();
-                                documental[indice] = calificacionDoc;
 
                             }
                         }
-                    }
-                }
-                if (calificacionNum != 0 && calificacionDoc != 0 && promedioPregunta != 0) {
-                    cumplimientoI[indice] = (promedioPregunta + calificacionNum + calificacionDoc) / 3;
-                } else {
-                    if (calificacionNum != 0 && promedioPregunta != 0) {
-                        cumplimientoI[indice] = (calificacionNum + promedioPregunta) / 2;
-                    } else {
-                        if (calificacionDoc != 0 && promedioPregunta != 0) {
-                            cumplimientoI[indice] = (promedioPregunta + calificacionDoc) / 2;
-                        } else {
-                            if (calificacionDoc != 0 && calificacionNum != 0) {
-                                cumplimientoI[indice] = (calificacionNum + calificacionDoc) / 2;
-                            } else {
-                                if (calificacionDoc != 0) {
-                                    cumplimientoI[indice] = calificacionDoc;
-                                } else {
-                                    if (calificacionNum != 0) {
-                                        cumplimientoI[indice] = calificacionNum;
-                                    } else {
-                                        if (promedioPregunta != 0) {
-                                            cumplimientoI[indice] = promedioPregunta;
-                                        }
-                                    }
-                                }
-                            }
+
+                        int numFuentes = 0;
+                        float promedioXpregunta = 0;
+                        /* 1. Calculamos el promedio de la pregunta en cada encuesta*/
+                        /*redondeo promedio x fuente*/
+                        if (numEst != 0) {
+                            promedioEstudiantes /= numEst;
+                            promedioEstudiantes = (float) Math.rint(promedioEstudiantes * 10) / 10;
+                            promedioXpregunta += promedioEstudiantes;
+                            numFuentes++;
                         }
+                        if (numDoc != 0) {
+                            promedioDocentes /= numDoc;
+                            promedioDocentes = (float) Math.rint(promedioDocentes * 10) / 10;
+                            promedioXpregunta += promedioDocentes;
+                            numFuentes++;
+                        }
+                        if (numAdmi != 0) {
+                            promedioAdmin /= numAdmi;
+                            promedioAdmin = (float) Math.rint(promedioAdmin * 10) / 10;
+                            promedioXpregunta += promedioAdmin;
+                            numFuentes++;
+                        }
+                        if (numEgr != 0) {
+                            promedioEgre /= numEgr;
+                            promedioEgre = (float) Math.rint(promedioEgre * 10) / 10;
+                            promedioXpregunta += promedioEgre;
+                            numFuentes++;
+                        }
+                        if (numDire != 0) {
+                            promedioDire /= numDire;
+                            promedioDire = (float) Math.rint(promedioDire * 10) / 10;
+                            promedioXpregunta += promedioDire;
+                            numFuentes++;
+                        }
+                        if (numEmp != 0) {
+                            promedioEmpl /= numEmp;
+                            promedioEmpl = (float) Math.rint(promedioEmpl * 10) / 10;
+                            promedioXpregunta += promedioEmpl;
+                            numFuentes++;
+                        }
+
+                        /* 2. Calculamos el promedio de la pregunta teniendo en cuenta los promedios por encuesta*/
+                        /*redondeo promedio x pregunta*/
+                        if (numFuentes != 0) {
+                            promedioXpregunta /= numFuentes;
+                            promedioXpregunta = (float) Math.rint(promedioXpregunta * 10) / 10;
+                        }
+
+                        sumaPromediosXpregunta += promedioXpregunta;
+                        promedioxPregunta.add(promedioXpregunta);
+                        promedioxPreguntaEs.add(promedioEstudiantes);
+                        promedioxPreguntaDo.add(promedioDocentes);
+                        promedioxPreguntaAd.add(promedioAdmin);
+                        promedioxPreguntaEg.add(promedioEgre);
+                        promedioxPreguntaDi.add(promedioDire);
+                        promedioxPreguntaEm.add(promedioEmpl);
                     }
-                }
-                cumplimientoI[indice] = (float) (Math.rint(cumplimientoI[indice] * 10) / 10); //cumplimiento de cada indicador
-
-                if (in.getCaracteristicaId().getId() == caracActual) {
-                    if (cumplimientoI[indice] != 0) {
-                        numI++;//contamos los indicadores de una misma caracteristica
-                        sumaI += cumplimientoI[indice];//sumamos los cumplimientos de los indicadores de una misma caracteristica
+                    /* 3. Calculamos el promedio de la percepcion en el indicador*/
+                    if (sumaPromediosXpregunta > 0) {
+                        promedioPregunta = (float) sumaPromediosXpregunta / preguntasContestadasEnElActualIndicador;
+                        promedioPregunta = (float) Math.rint(promedioPregunta * 10) / 10;
+                        promedioE[indice] = (double) promedioPregunta;
                     }
 
-                } else {
-                    //cumplimiento de caracteristicas tomando en cuenta solo los indicadores antes del cambio
+                } else if (instrumento.getId() == 2) { /*Termina instrumento encuesta - Instrumento numerica*/
 
-                    cumplimientoC[indiceCarac] = sumaI / numI;
-                    cumplimientoC[indiceCarac] = (float) (Math.rint(cumplimientoC[indiceCarac] * 10) / 10);
-                    sumaPonC += ponderacionCActual; //vamos sumando las ponderaciones de las caracteristicas hasta antes del cambio
-                    sumaC += cumplimientoC[indiceCarac] * ponderacionCActual; //vamos sumando los cumplimientos de cada una de las caracteristicas
-
-                    //cambiamos la ponderacion a la actual
-                    ponderacionCActual = ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(indicadores.get(0).getCaracteristicaId(), proceso).getPonderacion();
-                    ponderacionC[indiceCarac] = ponderacionCActual;
-                    indiceCarac++; //acabamos de entrar a una nueva caracteristica
-                    caracActual = in.getCaracteristicaId().getId();//sacamos el id de la caracteristica actual
-
-                    sumaI = cumplimientoI[indice];//inicializamos la suma de cumplimientos xq acabamos de cambiar de caracteristica
-                    numI = 1;//inicializamos en 1 el numero de indicadores
-                }
-
-                if (in.getCaracteristicaId().getFactorId().getId() != factorActual) {
-                    if (sumaPonC != 0) {
-                        cumplimientoF[indiceFactor] = sumaC / sumaPonC;//sacamos el cumplimiento del factor inmediatamente anterior
-                        cumplimientoF[indiceFactor] = (float) (Math.rint(cumplimientoF[indiceFactor] * 10) / 10);
+                    Numericadocumental numDoc1 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", proceso, "instrumentoId", instrumento);
+                    if (numDoc1 != null) {
+                        calificacionNum = (float) numDoc1.getEvaluacion();
+                        numerico[indice] = calificacionNum;
                     }
-                    sumaPonC = 0;
-                    sumaC = 0;
-                    indiceFactor++;
-                    factorActual = in.getCaracteristicaId().getFactorId().getId();//actualizamos el factor
-                }
-                indice++;
-                if (indice == indicadores.size()) {
-                    cumplimientoC[indiceCarac] = sumaI / numI;  //cumplimiento de la ultima caracteristica
-                    ponderacionCActual = ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(indicadores.get(0).getCaracteristicaId(), proceso).getPonderacion();
-                    ponderacionC[indiceCarac] = ponderacionCActual;
-                    sumaPonC += ponderacionCActual;
-                    sumaC += cumplimientoC[indiceCarac] * ponderacionCActual;
-                    if (sumaPonC != 0) {
-                        cumplimientoF[indiceFactor] = sumaC / sumaPonC;//cumplimiento del ultimo factor
-                        cumplimientoF[indiceFactor] = (float) (Math.rint(cumplimientoF[indiceFactor] * 10) / 10);
+
+                } else if (instrumento.getId() == 3) { /*Instrumento documental*/
+
+                    Numericadocumental numDoc2 = numericadocumentalFacade.findBySingle3("indicadorId", in, "procesoId", proceso, "instrumentoId", instrumento);
+                    if (numDoc2 != null) {
+                        calificacionDoc = (float) numDoc2.getEvaluacion();
+                        documental[indice] = calificacionDoc;
                     }
+
                 }
-                PromedioPreguntasXindicador.add(promedioxPregunta);
-                PromedioPreguntasXindicadorEs.add(promedioxPreguntaEs);
-                PromedioPreguntasXindicadorDo.add(promedioxPreguntaDo);
-                PromedioPreguntasXindicadorAd.add(promedioxPreguntaAd);
-                PromedioPreguntasXindicadorEg.add(promedioxPreguntaEg);
-                PromedioPreguntasXindicadorDi.add(promedioxPreguntaDi);
-                PromedioPreguntasXindicadorEm.add(promedioxPreguntaEm);
+
+            } /*termina de revisar cada instrumento*/
+
+            /* 4. Calcular el cumplimiento del indicador*/
+            if (calificacionNum != 0 && calificacionDoc != 0 && promedioPregunta != 0) {
+                cumplimientoI[indice] = (promedioPregunta + calificacionNum + calificacionDoc) / 3;
+            } else if (calificacionNum != 0 && promedioPregunta != 0) {
+                cumplimientoI[indice] = (calificacionNum + promedioPregunta) / 2;
+            } else if (calificacionDoc != 0 && promedioPregunta != 0) {
+                cumplimientoI[indice] = (promedioPregunta + calificacionDoc) / 2;
+            } else if (calificacionDoc != 0 && calificacionNum != 0) {
+                cumplimientoI[indice] = (calificacionNum + calificacionDoc) / 2;
+            } else if (calificacionDoc != 0) {
+                cumplimientoI[indice] = calificacionDoc;
+            } else if (calificacionNum != 0) {
+                cumplimientoI[indice] = calificacionNum;
+            } else if (promedioPregunta != 0) {
+                cumplimientoI[indice] = promedioPregunta;
             }
-            sesion.setAttribute("ponderacionesF", ponderacionesF);
-            sesion.setAttribute("cumplimientoF", cumplimientoF);
-            sesion.setAttribute("ponderacionesC", ponderacionC);
-            sesion.setAttribute("cumplimientoC", cumplimientoC);
-            sesion.setAttribute("cumplimientoI", cumplimientoI);
-            sesion.setAttribute("listIndicadores", indicadores);
-            sesion.setAttribute("promedioE", promedioE);
-            sesion.setAttribute("PromedioPreguntasXindicadorEs", PromedioPreguntasXindicadorEs);
-            sesion.setAttribute("PromedioPreguntasXindicadorDo", PromedioPreguntasXindicadorDo);
-            sesion.setAttribute("PromedioPreguntasXindicadorAd", PromedioPreguntasXindicadorAd);
-            sesion.setAttribute("PromedioPreguntasXindicadorEg", PromedioPreguntasXindicadorEg);
-            sesion.setAttribute("PromedioPreguntasXindicadorDi", PromedioPreguntasXindicadorDi);
-            sesion.setAttribute("PromedioPreguntasXindicadorEm", PromedioPreguntasXindicadorEm);
-            sesion.setAttribute("PromedioPreguntasXindicador", PromedioPreguntasXindicador);
 
-            sesion.setAttribute("numerico", numerico);
-            sesion.setAttribute("documental", documental);
+            cumplimientoI[indice] = (float) (Math.rint(cumplimientoI[indice] * 10) / 10); //cumplimiento de cada indicador
+            /*finaliza hacer el cruce para dar el cumplimiento del indicador*/
 
-            return "/WEB-INF/vista/comitePrograma/proceso/informe/resultados.jsp";
+            /* 5. Calculamos el cumplimiento de la caracteristica*/
+            if (in.getCaracteristicaId().getId() == caracActual) {
+                if (cumplimientoI[indice] != 0) {
+                    numI++;//contamos los indicadores de una misma caracteristica
+                    sumaI += cumplimientoI[indice];//sumamos los cumplimientos de los indicadores de una misma caracteristica
+                }
+
+            } else {
+                //cumplimiento de caracteristicas tomando en cuenta solo los indicadores antes del cambio
+                /*da el cumplimiento de la caracteristica*/
+                cumplimientoC[indiceCarac] = sumaI / numI;
+                /*redondea el cumplimiento de la caracteristica*/
+                cumplimientoC[indiceCarac] = (float) (Math.rint(cumplimientoC[indiceCarac] * 10) / 10);
+                sumaPonC += ponderacionCActual; //vamos sumando las ponderaciones de las caracteristicas hasta antes del cambio
+                sumaC += cumplimientoC[indiceCarac] * ponderacionCActual; //vamos sumando los cumplimientos de cada una de las caracteristicas
+
+                //cambiamos la ponderacion a la actual
+                ponderacionCActual = ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(indicadores.get(0).getCaracteristicaId(), proceso).getPonderacion();
+                ponderacionC[indiceCarac] = ponderacionCActual;
+                indiceCarac++; //acabamos de entrar a una nueva caracteristica
+                caracActual = in.getCaracteristicaId().getId();//sacamos el id de la caracteristica actual
+                sumaI = 0;
+                numI = 0;
+                if (cumplimientoI[indice] > 0) {
+                    sumaI = cumplimientoI[indice];//inicializamos la suma de cumplimientos xq acabamos de cambiar de caracteristica
+                    numI++;//inicializamos en 1 el numero de indicadores
+                }
+            }
+
+            /* 6. Cumplimiento de los factores*/
+            if (in.getCaracteristicaId().getFactorId().getId() != factorActual) {
+                if (sumaPonC != 0) {
+                    cumplimientoF[indiceFactor] = sumaC / sumaPonC;//sacamos el cumplimiento del factor inmediatamente anterior
+                    cumplimientoF[indiceFactor] = (float) (Math.rint(cumplimientoF[indiceFactor] * 10) / 10);
+                }
+                sumaPonC = 0;
+                sumaC = 0;
+                indiceFactor++;
+                factorActual = in.getCaracteristicaId().getFactorId().getId();//actualizamos el factor
+            }
+            indice++;
+            if (indice == indicadores.size()) {
+                cumplimientoC[indiceCarac] = sumaI / numI;  //cumplimiento de la ultima caracteristica
+                ponderacionCActual = ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(indicadores.get(0).getCaracteristicaId(), proceso).getPonderacion();
+                ponderacionC[indiceCarac] = ponderacionCActual;
+                sumaPonC += ponderacionCActual;
+                sumaC += cumplimientoC[indiceCarac] * ponderacionCActual;
+                if (sumaPonC != 0) {
+                    cumplimientoF[indiceFactor] = sumaC / sumaPonC;//cumplimiento del ultimo factor
+                    cumplimientoF[indiceFactor] = (float) (Math.rint(cumplimientoF[indiceFactor] * 10) / 10);
+                }
+            }
+            /*Cumplimiento de los factores*/
+            PromedioPreguntasXindicador.add(promedioxPregunta);
+            PromedioPreguntasXindicadorEs.add(promedioxPreguntaEs);
+            PromedioPreguntasXindicadorDo.add(promedioxPreguntaDo);
+            PromedioPreguntasXindicadorAd.add(promedioxPreguntaAd);
+            PromedioPreguntasXindicadorEg.add(promedioxPreguntaEg);
+            PromedioPreguntasXindicadorDi.add(promedioxPreguntaDi);
+            PromedioPreguntasXindicadorEm.add(promedioxPreguntaEm);
+        } // termina de recorrer cada uno de los indicadores
+        sesion.setAttribute("ponderacionesF", ponderacionesF);
+        sesion.setAttribute("cumplimientoF", cumplimientoF);
+        sesion.setAttribute("ponderacionesC", ponderacionC);
+        sesion.setAttribute("cumplimientoC", cumplimientoC);
+        sesion.setAttribute("cumplimientoI", cumplimientoI);
+        sesion.setAttribute("listIndicadores", indicadores);
+        sesion.setAttribute("promedioE", promedioE);
+        sesion.setAttribute("PromedioPreguntasXindicadorEs", PromedioPreguntasXindicadorEs);
+        sesion.setAttribute("PromedioPreguntasXindicadorDo", PromedioPreguntasXindicadorDo);
+        sesion.setAttribute("PromedioPreguntasXindicadorAd", PromedioPreguntasXindicadorAd);
+        sesion.setAttribute("PromedioPreguntasXindicadorEg", PromedioPreguntasXindicadorEg);
+        sesion.setAttribute("PromedioPreguntasXindicadorDi", PromedioPreguntasXindicadorDi);
+        sesion.setAttribute("PromedioPreguntasXindicadorEm", PromedioPreguntasXindicadorEm);
+        sesion.setAttribute("PromedioPreguntasXindicador", PromedioPreguntasXindicador);
+
+        sesion.setAttribute("numerico", numerico);
+        sesion.setAttribute("documental", documental);
+
+        return "/WEB-INF/vista/comitePrograma/proceso/informe/resultados.jsp";
     }
 
     private IndicadorFacade lookupIndicadorFacadeBean() {
@@ -374,5 +395,4 @@ public class TodosResultados implements Action{
             throw new RuntimeException(ne);
         }
     }
-    
 }

@@ -32,6 +32,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class DetalleCaracteristica implements Action {
+
     NumericadocumentalFacade numericadocumentalFacade = lookupNumericadocumentalFacadeBean();
     ResultadoevaluacionFacade resultadoevaluacionFacade = lookupResultadoevaluacionFacadeBean();
     CaracteristicaFacade caracteristicaFacade = lookupCaracteristicaFacadeBean();
@@ -40,10 +41,10 @@ public class DetalleCaracteristica implements Action {
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        long t0 = System.currentTimeMillis();
+        
         Proceso p = (Proceso) proceso;
         String idCaracteristica = request.getParameter("id");
-        //Modelo m = p.getModeloId();
+
         float calificacionNum;
         float calificacionDoc;
         float calificacionPer;
@@ -61,7 +62,7 @@ public class DetalleCaracteristica implements Action {
                 if (instrumento.getId() == 1) {
                     //RECUPERAMOS LAS PREGUNTAS DEL ACTUAL INDICADOR
                     List<Pregunta> preguntas = indicadores.get(j).getPreguntaList();
-                    float promedioPregunta, suma, numP;
+                    float promedioPregunta, suma;
 
                     //declaramos promedio de respuestas para cada preguntas
                     float promediorespuestas[] = new float[preguntas.size()];
@@ -76,54 +77,57 @@ public class DetalleCaracteristica implements Action {
                         //declaramos arreglo para tener los promedios de respuesta de la actual pregunta en cada encuesta
                         float promediorespuestasxencuesta[] = new float[cantEn];
 
-                        //calculamos el promedio de respuesta de la pregunta actual en cada encuesta
+                        /* 1. Calculamos el promedio de la pregunta en cada encuesta*/
                         for (int m = 0; m < cantEn; m++) {
                             suma = 0;
-                            numP = 0;
+
                             List<Resultadoevaluacion> respuestas = resultadoevaluacionFacade.findResultadosxPreguntaxEncuestaxProceso(p, encuestas.get(m), pregunta);
                             for (Resultadoevaluacion resultadoevaluacion : respuestas) {
                                 suma += Integer.parseInt(resultadoevaluacion.getRespuesta());
-                                numP++;
                             }
                             if (suma > 0) {
-                                promediorespuestasxencuesta[m] = (float) suma / numP;
+                                promediorespuestasxencuesta[m] = (float) suma / respuestas.size();
+                                promediorespuestasxencuesta[m] = (float) Math.rint(promediorespuestasxencuesta[m] * 10) / 10;
                             }
 
                         }
-                        //calculamos el promedio de respuesta por pregunta usando los promedios por encuesta
+                        /* 2. Calculamos el promedio de la pregunta teniendo en cuenta los promedios por encuesta*/
                         float promedioPreguntaAux = 0;
                         int cantidadEncuestas = encuestas.size();
+                        int encuestasContestadas = 0;
                         for (int m = 0; m < cantidadEncuestas; m++) {
                             promedioPreguntaAux += promediorespuestasxencuesta[m];
+                            if (promediorespuestasxencuesta[m] > 0) {
+                                encuestasContestadas++;
+                            }
                         }
-                        promedioPregunta = (float) promedioPreguntaAux / encuestas.size();
+                        promedioPregunta = (float) promedioPreguntaAux / encuestasContestadas;
                         promediorespuestas[l] = (float) (Math.rint(promedioPregunta * 10) / 10);
 
                     }
-                    int numPre = 0;
+                    /* 3. Calculamos el promedio de la percepcion en el indicador*/
+                    int numPreContestadas = 0;
                     for (int k = 0; k < promediorespuestas.length; k++) {
                         if (promediorespuestas[k] > 0) {
                             calificacionPer += promediorespuestas[k];
-                            numPre++;
+                            numPreContestadas++;
                         }
                     }
-                    calificacionPer = (float) calificacionPer / numPre;
+                    calificacionPer = (float) calificacionPer / numPreContestadas;
+                    calificacionPer = (float) Math.rint(calificacionPer * 10) / 10;
 
-                } else {
-                    if (instrumento.getId() == 2) {
-                        Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(j), "procesoId", p, "instrumentoId", instrumento);
-                        if (numDoc != null) {
-                            calificacionNum = (float) numDoc.getEvaluacion();
-                        }
-                    } else {
-                        if (instrumento.getId() == 3) {
-                            Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(j), "procesoId", p, "instrumentoId", instrumento);
-                            if (numDoc != null) {
-                                calificacionDoc = (float) numDoc.getEvaluacion();
-                            }
-                        }
+                } else if (instrumento.getId() == 2) {
+                    Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(j), "procesoId", p, "instrumentoId", instrumento);
+                    if (numDoc != null) {
+                        calificacionNum = (float) numDoc.getEvaluacion();
+                    }
+                } else if (instrumento.getId() == 3) {
+                    Numericadocumental numDoc = numericadocumentalFacade.findBySingle3("indicadorId", indicadores.get(j), "procesoId", p, "instrumentoId", instrumento);
+                    if (numDoc != null) {
+                        calificacionDoc = (float) numDoc.getEvaluacion();
                     }
                 }
+                /* 4. Calcular el cumplimiento del indicador*/
                 if (calificacionNum != 0 && calificacionDoc != 0 && calificacionPer != 0) {
                     cumplimiento[j] = (calificacionPer + calificacionNum + calificacionDoc) / 3;
                 } else if (calificacionNum != 0 && calificacionPer != 0) {
@@ -144,9 +148,6 @@ public class DetalleCaracteristica implements Action {
             cumplimiento[j] = (float) (Math.rint(cumplimiento[j] * 10) / 10);
 
         }
-        long t1 = System.currentTimeMillis();
-        long t3 = (t1 - t0);
-        
         sesion.setAttribute("indicadores", indicadores);
         sesion.setAttribute("cumplimientoIN", cumplimiento);
         sesion.setAttribute("caracteristica", c);

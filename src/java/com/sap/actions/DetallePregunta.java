@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class DetallePregunta implements Action {
+
     PreguntaFacade preguntaFacade = lookupPreguntaFacadeBean();
     ResultadoevaluacionFacade resultadoevaluacionFacade = lookupResultadoevaluacionFacadeBean();
 
@@ -36,10 +37,8 @@ public class DetallePregunta implements Action {
         Proceso p = (Proceso) sesion.getAttribute("Proceso");
         sesion.setAttribute("numerico", null);
         sesion.setAttribute("documental", null);
-        long t0 = System.currentTimeMillis();
         float suma;
-        float numP;
-      
+
         String idPregunta = request.getParameter("id");
         Pregunta pre = preguntaFacade.find(Integer.parseInt(idPregunta));
 
@@ -56,17 +55,17 @@ public class DetallePregunta implements Action {
         //declaramos arreglo para tener los promedios de respuesta de la actual pregunta en cada encuesta
         float promediorespuestasxencuesta[] = new float[cantEn];
 
-        //calculamos el promedio de respuesta de la pregunta actual en cada encuesta
+        /* 1. Calculamos el promedio de la pregunta en cada encuesta*/
         for (int m = 0; m < cantEn; m++) {
             suma = 0;
-            numP = 0;
+
             List<Resultadoevaluacion> respuestas = resultadoevaluacionFacade.findResultadosxPreguntaxEncuestaxProceso(p, encuestas.get(m), pre);
             for (Resultadoevaluacion resultadoevaluacion : respuestas) {
                 suma += Integer.parseInt(resultadoevaluacion.getRespuesta());
-                numP++;
+
             }
             if (suma > 0) {
-                promediorespuestasxencuesta[m] = (float) (Math.rint((suma / numP) * 10) / 10);
+                promediorespuestasxencuesta[m] = (float) (Math.rint((suma / respuestas.size()) * 10) / 10);
             }
 
             //contamos cuantos 5,4,3,2,1,0 se respondieron x encuesta
@@ -81,9 +80,6 @@ public class DetallePregunta implements Action {
             }
         }
 
-        long t1 = System.currentTimeMillis();
-        long t3 = (t1 - t0);
-        System.out.println("el tiempo que demora detallePregunta es: " + t3);
         sesion.setAttribute("promediorepuestasE", promediorespuestasxencuesta);
         sesion.setAttribute("cerosE", ceros);
         sesion.setAttribute("unosE", unos);
