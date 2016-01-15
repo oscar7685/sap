@@ -10,5 +10,5 @@
         <property name="URL" value="jdbc:mysql://127.0.0.1:3306/sapnaval"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="jdni_naval" object-type="user" pool-name="mysql_sapnaval_rootPool"/>
+    <jdbc-resource enabled="true" jndi-name="jdbc/sample" object-type="user" pool-name="mysql_sapnaval_rootPool"/>
 </resources>

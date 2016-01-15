@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -55,18 +57,23 @@ public class Caracteristica implements Serializable {
     @Size(min = 1, max = 500)
     @Column(name = "nombre")
     private String nombre;
+    @JoinTable(name = "pregunta_has_caracteristica", joinColumns = {
+        @JoinColumn(name = "caracteristica_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "pregunta_id", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Pregunta> preguntaList;
+    @JoinColumn(name = "factor_id", referencedColumnName = "id")
+    @ManyToOne
+    private Factor factorId;
+    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Modelo modeloId;
+    @OneToMany(mappedBy = "caracteristicaId")
+    private List<Indicador> indicadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
     private List<Hallazgo> hallazgoList;
-    @OneToMany(mappedBy = "caracteristicaId")
-    private List<Indicador> indicadorList;
-    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Modelo modeloId;
-    @JoinColumn(name = "factor_id", referencedColumnName = "id")
-    @ManyToOne
-    private Factor factorId;
 
     public Caracteristica() {
     }
@@ -106,6 +113,40 @@ public class Caracteristica implements Serializable {
     }
 
     @XmlTransient
+    public List<Pregunta> getPreguntaList() {
+        return preguntaList;
+    }
+
+    public void setPreguntaList(List<Pregunta> preguntaList) {
+        this.preguntaList = preguntaList;
+    }
+
+    public Factor getFactorId() {
+        return factorId;
+    }
+
+    public void setFactorId(Factor factorId) {
+        this.factorId = factorId;
+    }
+
+    public Modelo getModeloId() {
+        return modeloId;
+    }
+
+    public void setModeloId(Modelo modeloId) {
+        this.modeloId = modeloId;
+    }
+
+    @XmlTransient
+    public List<Indicador> getIndicadorList() {
+        return indicadorList;
+    }
+
+    public void setIndicadorList(List<Indicador> indicadorList) {
+        this.indicadorList = indicadorList;
+    }
+
+    @XmlTransient
     public List<Ponderacioncaracteristica> getPonderacioncaracteristicaList() {
         return ponderacioncaracteristicaList;
     }
@@ -121,31 +162,6 @@ public class Caracteristica implements Serializable {
 
     public void setHallazgoList(List<Hallazgo> hallazgoList) {
         this.hallazgoList = hallazgoList;
-    }
-
-    @XmlTransient
-    public List<Indicador> getIndicadorList() {
-        return indicadorList;
-    }
-
-    public void setIndicadorList(List<Indicador> indicadorList) {
-        this.indicadorList = indicadorList;
-    }
-
-    public Modelo getModeloId() {
-        return modeloId;
-    }
-
-    public void setModeloId(Modelo modeloId) {
-        this.modeloId = modeloId;
-    }
-
-    public Factor getFactorId() {
-        return factorId;
-    }
-
-    public void setFactorId(Factor factorId) {
-        this.factorId = factorId;
     }
 
     @Override
