@@ -56,7 +56,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author acreditacion
  */
-public class GenerarMuestra implements Action {
+public class GenerarMuestraCenso implements Action {
 
     MuestraagenciaFacade muestraagenciaFacade = lookupMuestraagenciaFacadeBean();
     AgenciagubernamentalFacade agenciagubernamentalFacade = lookupAgenciagubernamentalFacadeBean();
@@ -86,86 +86,49 @@ public class GenerarMuestra implements Action {
 
         sesion.setAttribute("Muestra", m);
 
-        //Tamaño muestra
-        double n = 0;
-        //Nivel de confianza
-        double z = 1.96;
-        //Probabilidad Ocurrencia
-        double p = 0.5;
-        //Nivel de tolerancia 
-        double e = 0.04;
-        //Porbabilidad de no ocurrencia
-        double q = 0.5;
-        //Tamaño de la población
-        double N = 0.0;
+
 
         //********************************Estudiante
-        double aux = estudianteFacade.countByProperty("programaId", programa);
+        // double aux = estudianteFacade.countByProperty("programaId", programa);
 
-        N = aux;
+        List<Estudiante> le = estudianteFacade.findByList("programaId", programa);
 
-        if (N != 0.0) {
-            n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-        }
+        Iterator it = le.iterator();
 
-        double cociente = n / N;
+        if (!le.isEmpty()) {
+            while (it.hasNext()) {
+                Estudiante est = (Estudiante) it.next();
+                Persona per = est.getPersonaId();
 
-        for (int i = 3; i < 10; i++) {
+                Muestrapersona mp = new Muestrapersona();
 
-            int tamanioMuestra1 = 0;
+                mp.setCedula(per.getId());
+                mp.setNombre(per.getNombre());
+                mp.setApellido(per.getApellido());
+                mp.setPassword(per.getPassword());
+                mp.setMail(per.getMail());
+                mp.setMuestraId(m);
 
-            int tamaniosem = estudianteFacade.countByProperty2("programaId", programa, "semestre", "0" + i);
+                muestrapersonaFacade.create(mp);
 
-            tamanioMuestra1 = (int) Math.round(tamaniosem * cociente);
+                Muestraestudiante me = new Muestraestudiante();
+                me.setCodigo(est.getId());
+                me.setSemestre(est.getSemestre());
+                me.setPeriodo(est.getPeriodo());
+                me.setAnio(est.getAnio());
+                me.setMuestrapersonaId(mp);
+                me.setProgramaId(programa);
+                me.setTipo(est.getTipo());
 
-            List<Estudiante> le = estudianteFacade.generarMuestraEst(programa, tamanioMuestra1, "semestre", "0" + i);
-
-            Iterator it = le.iterator();
-
-            if (!le.isEmpty()) {
-                while (it.hasNext()) {
-                    Estudiante est = (Estudiante) it.next();
-                    Persona per = est.getPersonaId();
-
-                    Muestrapersona mp = new Muestrapersona();
-
-                    mp.setCedula(per.getId());
-                    mp.setNombre(per.getNombre());
-                    mp.setApellido(per.getApellido());
-                    mp.setPassword(per.getPassword());
-                    mp.setMail(per.getMail());
-                    mp.setMuestraId(m);
-
-                    muestrapersonaFacade.create(mp);
-
-                    Muestraestudiante me = new Muestraestudiante();
-                    me.setCodigo(est.getId());
-                    me.setSemestre(est.getSemestre());
-                    me.setPeriodo(est.getPeriodo());
-                    me.setAnio(est.getAnio());
-                    me.setMuestrapersonaId(mp);
-                    me.setProgramaId(programa);
-                    me.setTipo(est.getTipo());
-
-                    muestraestudianteFacade.create(me);
-                }
+                muestraestudianteFacade.create(me);
             }
-
         }
+
+
 
         //********************************Docente
-        int tamanioMuestra = 0;
-        Iterator it;
-        aux = docenteFacade.countByProperty("programaId", programa);
-
-        N = aux;
-
-        if (N != 0.0) {
-            n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-
-            tamanioMuestra = (int) Math.floor(n);
-
-            List<Docente> ld = docenteFacade.generarMuestra(programa, tamanioMuestra);
+      
+            List<Docente> ld = docenteFacade.findByPrograma(programa);
 
             it = ld.iterator();
 
@@ -193,19 +156,10 @@ public class GenerarMuestra implements Action {
                 }
             }
 
-        }
+        
 
         //********************************Egresado
-        aux = egresadoFacade.countByProperty("programaId", programa);
-
-        N = aux;
-
-        if (N != 0.0) {
-            n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-
-            tamanioMuestra = (int) Math.floor(n);
-
-            List<Egresado> leg = egresadoFacade.generarMuestra(programa, tamanioMuestra);
+            List<Egresado> leg = egresadoFacade.findByList("programaId", programa);
 
             it = leg.iterator();
 
@@ -232,19 +186,10 @@ public class GenerarMuestra implements Action {
                     muestraegresadoFacade.create(meg);
                 }
             }
-        }
+        
 
         //********************************Director
-        aux = directorprogramaFacade.countByProperty("programaId", programa);
-
-        N = aux;
-
-        if (N != 0.0) {
-            n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-
-            tamanioMuestra = (int) Math.floor(n);
-
-            List<Directorprograma> ldp = directorprogramaFacade.generarMuestra(programa, tamanioMuestra);
+            List<Directorprograma> ldp = directorprogramaFacade.findByPrograma(programa);
 
             it = ldp.iterator();
 
@@ -271,19 +216,11 @@ public class GenerarMuestra implements Action {
                 }
             }
 
-        }
+        
 
         //********************************Administrativo
-        aux = administrativoFacade.countByProperty("programaId", programa);
-
-        N = aux;
-
-        if (N != 0.0) {
-            n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-
-            tamanioMuestra = (int) Math.floor(n);
-
-            List<Administrativo> lad = administrativoFacade.generarMuestra(programa, tamanioMuestra);
+        
+            List<Administrativo> lad = administrativoFacade.findByPrograma(programa);
 
             it = lad.iterator();
 
@@ -311,19 +248,11 @@ public class GenerarMuestra implements Action {
                 }
             }
 
-        }
+        
 
         //********************************EMpleador
-        aux = empleadorFacade.countByProperty("programaId", programa);
-
-        N = aux;
-
-        if (N != 0.0) {
-            n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-
-            tamanioMuestra = (int) Math.floor(n);
-
-            List<Empleador> lem = empleadorFacade.generarMuestra(programa, tamanioMuestra);
+        
+            List<Empleador> lem = empleadorFacade.findByPrograma(programa);
 
             it = lem.iterator();
 
@@ -351,19 +280,12 @@ public class GenerarMuestra implements Action {
                     muestraempleadorFacade.create(mem);
                 }
             }
-        }
+        
 
         //********************************Agencia
-        aux = agenciagubernamentalFacade.count();
-
-        N = aux;
-
-        if (N != 0.0) {
-            n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-
-            tamanioMuestra = (int) Math.floor(n);
-
-            List<Agenciagubernamental> lag = agenciagubernamentalFacade.generarMuestraSinPrograma(tamanioMuestra);
+  
+/*
+            List<Agenciagubernamental> lag = agenciagubernamentalFacade.findByList("programaId", programa);
 
             it = lag.iterator();
 
@@ -389,8 +311,8 @@ public class GenerarMuestra implements Action {
 
                     muestraagenciaFacade.create(mag);
                 }
-            }
-        }
+            }*/
+        
         return "NA";
     }
 

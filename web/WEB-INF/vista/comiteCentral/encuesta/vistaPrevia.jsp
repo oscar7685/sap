@@ -31,24 +31,9 @@
                 <table class="table table-striped table-bordered" style="font-weight: bold;">
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td colspan="3" style="width: 50%; text-align: center; vertical-align: middle">ARMADA NACIONAL</td>
-
-                        </tr>
-                        <tr>
-                            <td rowspan="2" style="width: 15%; text-align: center;"><img src="<%=request.getContextPath()%>/img/armada2.jpg"></td>
-                            <td colspan="3" style="text-align: center;"><img src="<%=request.getContextPath()%>/img/escuela.png"></td>
-
-                        </tr>   
-                        <tr>
-                            <td colspan="3" style="text-align: center;">ESCUELA NAVAL DE CADETES "ALMIRANTE PADILLA"
-                                <br/><span id="spanprograma">PROGRAMA: _PROGRAMA_</span><br/>${encuesta.getNombre()}</td>
-
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="width: 25%; text-align: center; vertical-align: middle">Procedimiento: Autoevaluación</td>
-                            <td style="text-align: center;">Código: FAYM-FT-453-JINEN-V02</td>
-                            <td>Rige a partir de: 04/04/08</td>
+                            <td style="text-align: center;">ESCUELA NAVAL DE CADETES "ALMIRANTE PADILLA"
+                            <!--<br/><span id="spanprograma">PROGRAMA: _PROGRAMA_</span>-->
+                            <br/>${encuesta.getNombre()}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -56,14 +41,13 @@
                 <p class="insp">${encuesta.getObjetivo()}</p>
                 <p class="insp">${encuesta.getInstrucciones()}</p>
                 <br/>
-                <strong>DATOS GENERALES</strong>
             </div>
 
             <c:forEach items="${encuesta.getPreguntaList()}" var="pregunta" varStatus="status">
 
                 <div class="row" id="pregunta${pregunta.id}">
                     <div class="span10">
-                        <p style="font-weight: bold;">${pregunta.getCodigo()} ${pregunta.getPregunta()}</p>
+                        <p style="font-weight: bold;">${status.index+1} ${pregunta.getPregunta()}</p>
 
 
                         <table class="table">

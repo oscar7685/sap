@@ -68,7 +68,20 @@ public class Muestraestudiante implements Serializable {
     @JoinColumn(name = "muestrapersona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestrapersona muestrapersonaId;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "tipo")
+    private String tipo;
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
     public Muestraestudiante() {
     }
 

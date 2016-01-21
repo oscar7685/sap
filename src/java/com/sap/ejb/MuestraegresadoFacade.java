@@ -28,7 +28,7 @@ public class MuestraegresadoFacade extends AbstractFacade<Muestraegresado> {
 
     public MuestraegresadoFacade() {
         super(Muestraegresado.class);
-    }
+}
     public List findByMuestraPersona(Muestrapersona p) {
         Query q = em.createNamedQuery("Muestraegresado.findByMuestraPersonaId");
         q.setParameter("muestrapersona", p);

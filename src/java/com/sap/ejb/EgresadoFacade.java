@@ -30,10 +30,10 @@ public class EgresadoFacade extends AbstractFacade<Egresado> {
     public EgresadoFacade() {
         super(Egresado.class);
     }
-
+    
     public List findByPrograma(Programa p) {
         Query q = em.createNamedQuery("Egresado.findByPrograma");
         q.setParameter("programa", p);
         return q.getResultList();
-    }
+}
 }

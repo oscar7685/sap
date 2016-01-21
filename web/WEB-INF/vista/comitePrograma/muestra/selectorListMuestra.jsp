@@ -9,7 +9,7 @@
             $("tr.pendienteC").hide();
             $("tr.guardadoC").hide();
             $(".btn-group input").each(function(index) {
-                 if ($(this).prop("checked") && index == 0) {
+                if ($(this).prop("checked") && index == 0) {
                     $("tr.pendienteC").show();
                 } else if ($(this).prop("checked") && index == 1) {
                     $("tr.terminadoC").show();
@@ -19,7 +19,7 @@
             });
             $("#total").text("Total: " + ($("tr.terminadoC:visible").length + $("tr.pendienteC:visible").length + $("tr.guardadoC:visible").length));
         });
-        
+
 
 
         marcacion = new Date()
@@ -133,7 +133,7 @@
 
 </c:if>
 <div id="printMuestra">
-    <p style="font-weight: bold">Muestra generada para la fuente ${Fuente.nombre}. ${Programa.getNombre()}</p>
+    <p style="font-weight: bold">Muestra generada para la fuente ${Fuente.nombre}.</p>
     <c:if test="${EstadoProceso == 2}">
         <div>
             <div style="margin-left: 0px;" class="span1"><span style="margin-left: 0px;" id="spanActualizado" class="label label-info span1">Actualizado</span></div>
@@ -166,8 +166,8 @@
                             <th>Apellido</th>
                             <th>Contraseña</th>
                                 <c:choose>
-                                    <c:when test="${Semestre == 'todos'}">
-                                    <th>Semestre</th>
+                                    <c:when test="${selectorFuente == 'Estudiante' || selectorFuente == 'Egresado' || selectorFuente == 'Docente' }">
+                                    <th>Tipo</th>
                                     </c:when>
                                 </c:choose>
                             </thead>
@@ -217,12 +217,12 @@
                                                             <c:out value="${row.muestrapersonaId.password}"/>
                                                         </td>
                                                         <c:choose>
-                                                            <c:when test="${Semestre == 'todos' }">
+                                                            <c:when test="${selectorFuente == 'Estudiante' || selectorFuente == 'Egresado' || selectorFuente == 'Docente' }">
                                                                 <td style="background-color: #D9EDF7; color: #3A87AD;">
-                                                                    <c:out value="${row.semestre}"/>
+                                                                    <c:out value="${row.tipo}"/>
                                                                 </td>
                                                             </c:when>
-                                                        </c:choose>
+                                                        </c:choose>   
                                                     </tr>
                                                 </c:if>                   
                                             </c:if>
@@ -242,12 +242,12 @@
                                                     <c:out value="${row.muestrapersonaId.password}"/>
                                                 </td>
                                                 <c:choose>
-                                                    <c:when test="${Semestre == 'todos' }">
+                                                    <c:when test="${selectorFuente == 'Estudiante' || selectorFuente == 'Egresado' || selectorFuente == 'Docente' }">
                                                         <td style="background-color: #F2DEDE; color: #B94A48;">
-                                                            <c:out value="${row.semestre}"/>
+                                                            <c:out value="${row.tipo}"/>
                                                         </td>
                                                     </c:when>
-                                                </c:choose>
+                                                </c:choose>        
                                             </tr>
 
                                         </c:if>
@@ -271,9 +271,9 @@
                                                 <c:out value="${row.muestrapersonaId.password}"/>
                                             </td>
                                             <c:choose>
-                                                <c:when test="${Semestre == 'todos' }">
+                                                <c:when test="${selectorFuente == 'Estudiante' || selectorFuente == 'Egresado' || selectorFuente == 'Docente' }">
                                                     <td>
-                                                        <c:out value="${row.semestre}"/>
+                                                        <c:out value="${row.tipo}"/>
                                                     </td>
                                                 </c:when>
                                             </c:choose>

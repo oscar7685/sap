@@ -12,6 +12,16 @@
             }); //fin $.ajax    
 
         });
+        $("#botonGenerarMuestraCenso").click(function() {
+            $.ajax({
+                type: 'POST',
+                url: "/sap/controladorCP?action=generarMuestraCenso",
+                success: function() {
+                    location = "/sap/#listMuestra";
+                } //fin success
+            }); //fin $.ajax    
+
+        });
     });
 </script>
 <div class="hero-unit">
@@ -26,7 +36,8 @@
                 <c:otherwise>
                     No  se ha registrado la muestra en el sistema para este proceso.
                     <br><br>
-                    <a id="botonGenerarMuestra" href="#generarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Generar Muestra</a>
+                    <a id="botonGenerarMuestra" href="#generarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-sort"></i> Generar Muestra</a>
+                    <a id="botonGenerarMuestraCenso" href="#generarMuestraCenso" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Aplicar Censo</a>
                 </c:otherwise>
             </c:choose>
         </div>

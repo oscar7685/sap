@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,7 +41,19 @@ public class Muestraegresado implements Serializable {
     @JoinColumn(name = "muestrapersona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestrapersona muestrapersonaId;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "tipo")
+    private String tipo;
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
     public Muestraegresado() {
     }
 
