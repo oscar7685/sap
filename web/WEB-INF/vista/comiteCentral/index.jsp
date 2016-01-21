@@ -164,19 +164,21 @@
 </html>
 
 <div class="modal hide fade" id="modalCp2">
-    <div class="modal-header">
-        <a data-dismiss="modal" class="close">×</a>
-        <h3>Atención!</h3>
-    </div>
-    <div class="modal-body">
-        <h4>Ejecutar Proceso de Autoevaluación Institucional.</h4>
-        <br>
-        <p>Debe configurar todo el proceso para continuar.</p>
-    </div>
-    <div class="modal-footer">
-        <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
-    </div>
-</div>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Atención!</h2>
+            </div>
+            <div class="modal-body">
+                <h4>Ejecutar Proceso de Autoevaluación</h4>
+                <br>
+                <p>Debe configurar todo el proceso para continuar.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <div class="modal hide fade" id="modalCc1">
     <div class="modal-header">
