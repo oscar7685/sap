@@ -85,14 +85,7 @@
                     <select id="perfilIngreso" name="perfilIngreso" class="input-block-level {required:true}">
                         <option>Comite central</option>
                         <option>Comite programa</option>
-                        <optgroup label="Fuente">
-                            <option>Estudiantes</option>
-                            <option>Docentes</option>
-                            <option>Administrativos</option>
-                            <option>Egresados</option>
-                            <option>Directores de programa</option>
-                            <option>Empleadores</option>
-                        </optgroup>
+                        <option selected="selected">Fuente</option>
                     </select>
                     <label class="checkbox">
                         <input type="checkbox" name="recordar" value="remember-me"> Recordar

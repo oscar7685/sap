@@ -1,55 +1,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.pagination.js"></script>
-<script type="text/javascript">
-    var itemsxpagina = 10;
-    function pageselectCallback(page_index, jq) {
-        var num_entries = $("#preguntas tr").length;
-        for (var i = 0; i < num_entries; i++)
-        {
-            $('#preguntas tr:eq(' + i + ')').css("display", "none");
+<link media="print" href="<%=request.getContextPath()%>/css/print.css" rel="stylesheet"/>
+<style type="text/css">
+    @media all {
+        div.saltopagina{
+            display: none;
         }
-        var max_elem = Math.min((page_index + 1) * itemsxpagina, num_entries);
-        for (var i = page_index * itemsxpagina; i < max_elem; i++)
-        {
-            $('#preguntas tr:eq(' + i + ')').css("display", "table-row");
-
+        .insp{
+            line-height: 22px;
+            text-align: justify;
         }
-        return false;
-    }
 
-    function initPagination() {
-        // count entries inside the hidden content
-        var num_entries = jQuery('#preguntas tr').length;
+        .span5{
+            width: 360px;
+            font-size: 14px;
+            font-family: "Helvetica Neue",​Helvetica,​Arial,​sans-serif;
+        }
+    } 
 
-        // Create content inside pagination element
-        $(".pagination").pagination(num_entries, {
-            callback: pageselectCallback,
-            items_per_page: itemsxpagina,
-            num_display_entries: 4,
-            num_edge_entries: 2,
-            prev_text: "&larr; Anterior",
-            next_text: "Siguiente &rarr;",
-            prev_show_always: false,
-            next_show_always: false
-        });
-    }
-    $(document).ready(function() {
-        initPagination();
-    });
 
-</script>
-
+</style>
 <script type="text/javascript">
     $(function() {
-        var inst = $("#ins").val();
-        inst = inst.replace(/\n/gi, "<br/>");
-
-        $("#insp").append(inst);
-
-
-
         var validator = $("#formResponderE").bind("invalid-form.validate", function() {
             alert("usted ha dejado de contestar " + validator.numberOfInvalids() + " preguntas, por favor contestelas todas.");
         })
@@ -72,229 +45,148 @@
                         $('#myModalGracias').on('hidden', function() {
                             location = "<%=request.getContextPath()%>/#inicio";
                         });
-
                     } //fin success
-                }); //fin $.ajax    
+                }); //fin $.ajax
             }
         });
-        $("button")
-                .popover({trigger: "hover", placement: 'top'});
+        $("button").popover({trigger: "hover", placement: 'right'});
+    });
+</script>
 
-        $("#guardar").click(function(e) {
-            e.preventDefault();
-            $(this).button('loading');
-            $.ajax({
-                type: 'POST',
-                url: "<%=request.getContextPath()%>/controladorF?action=guardarE",
-                data: $("#formResponderE").serialize(),
-                success: function() {
-                    $("#guardar").button('reset');
-                    marcacion = new Date();
-                    Hora = marcacion.getHours();
-                    Minutos = marcacion.getMinutes();
-                    Segundos = marcacion.getSeconds();
-                    if (Hora <= 9)
-                        Hora = "0" + Hora;
-                    if (Minutos <= 9)
-                        Minutos = "0" + Minutos;
-                    if (Segundos <= 9)
-                        Segundos = "0" + Segundos;
-                    var Dia = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
-                    var Mes = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-                    var Hoy = new Date();
-                    var Anio = Hoy.getFullYear();
-                    var Fecha = Dia[Hoy.getDay()] + " " + Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
-                    $("#spanGuardado").show();
-                    $("#hora2").html(" " + Fecha);
-                } //fin success
+<br>
+<div class="hero-unit">
+    <div style="margin-left: -30px;">
+        <div id="conte" class="span12" style="text-align: justify">
+            <div class="row">
+                <table class="table table-striped table-bordered" style="font-weight: bold;">
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;">ESCUELA NAVAL DE CADETES "ALMIRANTE PADILLA"
+                                <!--<br/><span id="spanprograma">PROGRAMA: _PROGRAMA_</span>-->
+                                <br/>${encuesta.getNombre()}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <p class="insp">${encuesta.getObjetivo()}</p>
+                <p class="insp">${encuesta.getInstrucciones()}</p>
+                <br/>
+            </div>
+            <form id="formResponderE" method="POST">
+                <c:forEach items="${encuesta.getPreguntaList()}" var="pregunta" varStatus="status">
+
+                    <div class="row" id="pregunta${pregunta.id}">
+                        <div class="span10">
+                            <p style="font-weight: bold;">${status.index+1} ${pregunta.getPregunta()}</p>
+
+
+                            <table class="table">
+                                <c:choose>
+                                    <c:when test="${pregunta.getTipo()=='1'}">
+                                        <thead>
+                                            <tr>
+                                                <th class="span3"></th>
+                                                <th class="span2" style="font-size: 12px">1:Muy bajo</th>
+                                                <th class="span2" style="font-size: 12px">2:Bajo</th>
+                                                <th class="span2" style="font-size: 12px">3:Medio</th>
+                                                <th class="span2" style="font-size: 12px">4:Alto</th>
+                                                <th class="span2" style="font-size: 12px">5:Muy alto</th>
+                                                <th class="span2" style="font-size: 12px">NS/NR</th>
+                                            </tr>
+                                        </thead>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo()=='2'}">
+                                        <thead>
+                                            <tr>
+                                                <th class="span3"></th>
+                                                <th class="span2" style="font-size: 12px">1:En ningún grado</th>
+                                                <th class="span2" style="font-size: 12px">2:En bajo grado</th>
+                                                <th class="span2" style="font-size: 12px">3:Aceptablemente</th>
+                                                <th class="span2" style="font-size: 12px">4:En alto grado</th>
+                                                <th class="span2" style="font-size: 12px">5:Totalmente</th>
+                                                <th class="span2" style="font-size: 12px">NS/NR</th>
+                                            </tr>
+                                        </thead>
+                                    </c:when>
+                                    <c:when test="${pregunta.getTipo()=='3'}">
+                                        <thead>
+                                            <tr>
+                                                <th class="span3"></th>
+                                                <th class="span2" style="font-size: 12px">1:Muy mala</th>
+                                                <th class="span2" style="font-size: 12px">2:Mala</th>
+                                                <th class="span2" style="font-size: 12px">3:Regular</th>
+                                                <th class="span2" style="font-size: 12px">4:Buena</th>
+                                                <th class="span2" style="font-size: 12px">5:Excelente</th>
+                                                <th class="span2" style="font-size: 12px">NS/NR</th>
+                                            </tr>
+                                        </thead>
+                                    </c:when>
+                                </c:choose>
+                                <tbody>
+                                    <c:choose>
+                                        <c:when test="${fn:length(pregunta.preguntaList)!= 0}">
+                                            <c:forEach items="${pregunta.preguntaList}" var="sub">
+                                                <tr>
+                                                    <td>${sub.getPregunta()}</td>
+                                                    <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${sub.id}" value="1" /></label></td>
+                                                    <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${sub.id}" value="2" /></label></td>
+                                                    <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${sub.id}" value="3" /></label></td>
+                                                    <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${sub.id}" value="4" /></label></td>
+                                                    <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${sub.id}" value="5" /></label></td>
+                                                    <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${sub.id}" value="0" /></label></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <tr>
+                                                <td></td>
+                                                <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${pregunta.id}" value="1" /></label></td>
+                                                <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${pregunta.id}" value="2" /></label></td>
+                                                <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${pregunta.id}" value="3" /></label></td>
+                                                <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${pregunta.id}" value="4" /></label></td>
+                                                <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${pregunta.id}" value="5" /></label></td>
+                                                <td><label class="radio"><input type="radio" class="{required:true}" name="pregunta${pregunta.id}" value="0" /></label></td>
+                                            </tr>
+                                        </c:otherwise>        
+                                    </c:choose>
+
+                                </tbody>
+                            </table>
+                        </div> 
+                    </div>
+                </c:forEach>  
+                <div class="row"> 
+                    <div class="span2">
+                        <div style="text-align: left; margin-top: 22px;">
+                            <button class="btn btn-primary" data-content="Env&iacute;a la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer."  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
+                        </div>    
+                    </div>
+                </div>
+            </form>    
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(function() {
+            $("p").html(function(busca, reemplaza) {
+                return reemplaza.replace('_PROGRAMA_', '${programa.nombre}');
+            });
+            $("#spanprograma").html(function(busca, reemplaza) {
+                return reemplaza.replace('_PROGRAMA_', '${programa.nombre}');
             });
 
+
+            setTimeout(function() {
+                $("#printEnlace").click(function() {
+                    $('.hero-unit').printArea();
+                    return false;
+                });
+            }, 1000);
+
+            //se activa cuando una pregunta que condiciona a otra es contestada
+
+
+
         });
-
-    });
-</script>
-<style type="text/css">
-    label.error{
-        color:#B94A48;
-    }
-</style>
-<div class="container">  
-    <table class="table table-bordered table-striped" style="font-weight: bold;">
-        <tbody>
-            <tr>
-                <td rowspan="3" style="width: 25%; text-align: center;"><img src="<%=request.getContextPath()%>/img/LogoU.png"></td>
-                <td style="width: 50%; text-align: center;">UNIVERSIDAD DE CARTAGENA</td>
-                <td style="width: 25%;">CÓDIGO: ${encuesta.getCodigo()}</td>
-            </tr>
-            <tr>
-                <td style="width: 50%; text-align: center;">AUTOEVALUACIÓN Y ACREDITACIÓN</td>
-                <td>VERSIÓN: ${encuesta.getVersion()}</td>
-            </tr>
-            <tr>
-                <td style="width: 50%; text-align: center;">${encuesta.getNombre()}</td>
-                <td>FECHA: ${encuesta.getFecha()}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="row">
-        <div class="span12">
-            <h3>Objetivo:</h3>
-            <p style="text-align: justify;">${encuesta.getObjetivo()}</p>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="span12">
-            <h3>Instrucciones:</h3>
-            <textarea id="ins" style="display: none;" rows="9" class="span8">${encuesta.getInstrucciones()}</textarea>
-            <p id="insp" style="text-align: justify;"></p>
-        </div>
-    </div>
-    <form id="formResponderE" method="POST">
-        <table id="preguntas" class="table table-striped table-condensed" style="width: 100%;">
-            <tbody>
-                <c:choose>
-                    <c:when test="${respuestas == null}">
-                        <c:forEach items="${encuesta.preguntaList}" var="pregunta" varStatus="status">
-                            <c:choose>
-                                <c:when test="${pregunta.getTipo() == '2'}">
-                                    <tr>
-                                        <td>${status.count}</td>   
-                                        <td><p>${pregunta.pregunta}</p></td>
-                                        <td>
-                                            <textarea name="pregunta${pregunta.getId()}" id="pregunta${pregunta.getId()}" cols="8" rows="2" class="required" maxlength="1000"></textarea>
-                                        </td>
-                                    </tr>
-                                </c:when>
-                                <c:when test="${pregunta.getTipo() == '1'}">
-                                    <tr>
-                                        <td>${status.count}</td>   
-                                        <td><p>${pregunta.getPregunta()}</p></td>
-                                        <td>
-                                            <select id="pregunta${pregunta.getId()}" name="pregunta${pregunta.getId()}" class="span1 {required:true}">
-                                                <option></option>  
-                                                <option value="5">5</option>
-                                                <option value="4">4</option>  
-                                                <option value="3">3</option>  
-                                                <option value="2">2</option>  
-                                                <option value="1">1</option>  
-                                                <option value="0">0</option>  
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </c:when>    
-                            </c:choose>
-                        </c:forEach>                   
-                    </c:when>
-                    <c:otherwise>
-                        <c:forEach items="${respuestas}" var="resultado" varStatus="status">
-                            <c:choose>
-                                <c:when test="${resultado.preguntaId.tipo != '1'}">
-                                    <tr>
-                                        <td>${status.count}</td>   
-                                        <td><p>${resultado.preguntaId.pregunta}</p></td>
-                                        <td>
-                                            <textarea name="pregunta${resultado.preguntaId.getId()}" id="pregunta${resultado.preguntaId.getId()}" cols="8" rows="2" maxlength="1000">${resultado.getRespuestaAbierta()}</textarea>
-                                        </td>
-                                    </tr>
-                                </c:when>
-                                <c:otherwise>
-                                    <tr>
-                                        <td>${status.count}</td>   
-                                        <td><p>${resultado.preguntaId.pregunta}</p></td>
-                                        <td>
-                                            <select id="pregunta${resultado.preguntaId.id}" name="pregunta${resultado.preguntaId.id}" class="span1 {required:true}">
-                                                <option></option>  
-                                                <c:choose>
-                                                    <c:when test="${resultado.respuesta == '5'}">
-                                                        <option selected="selected" value="5">5</option>      
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="5">5</option>      
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${resultado.respuesta == '4'}">
-                                                        <option selected="selected" value="4">4</option>      
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="4">4</option>      
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${resultado.respuesta  == '3'}">
-                                                        <option selected="selected" value="3">3</option>      
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="3">3</option>      
-                                                    </c:otherwise>
-                                                </c:choose>        
-                                                <c:choose>
-                                                    <c:when test="${resultado.respuesta == '2'}">
-                                                        <option selected="selected" value="2">2</option>      
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="2">2</option>      
-                                                    </c:otherwise>
-                                                </c:choose>
-
-                                                <c:choose>
-                                                    <c:when test="${resultado.respuesta  == '1'}">
-                                                        <option selected="selected" value="1">1</option>      
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="1">1</option>      
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${resultado.respuesta  == '0'}">
-                                                        <option selected="selected" value="0">0</option>      
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="0">0</option>      
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </c:otherwise>    
-                            </c:choose>
-                        </c:forEach>
-                    </c:otherwise> 
-                </c:choose>
-
-            </tbody>
-        </table>
-        <label>Observaciones y/o comentarios</label>
-        <textarea rows="4" class="input-block-level"  placeholder="Observaciones y/o comentarios" name="observaciones" maxlength="1999">${encabezado.comentarios}</textarea>
-        <div class="row"> 
-            <div class="span5">
-                <div class="pagination"></div>
-            </div>
-            <div class="span5" style="margin-top: 5px;">
-                <div style="margin-top: 22px;">
-                    <div class="span1" id="spanGuardado" style=" display: none">
-                        <span class="label label-info" style="margin-left: 0px">Guardado:</span>
-                    </div>
-                    <p class="help-block" id="hora2"></p>
-                </div>
-            </div>
-            <div class="span2">
-                <div style="text-align: right; margin-top: 22px;">
-                    <button class="btn" id="guardar" data-content="Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee." value="1" data-original-title="Guardar encuesta" type="button" data-loading-text="Guardando..." autocomplete="off">Guardar</button>
-                    <button class="btn btn-primary" data-content="Env&iacute;a la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer."  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-<script type="text/javascript">
-    $(function() {
-    <c:forEach items="${palabras}" var="pregunta">
-        $('#preguntas').html($('#preguntas').html().replace(/(${pregunta.palabra})/g
-                , '<a href="#" data-toggle="tooltip" title="${pregunta.significado}">$1</a>'));
-    </c:forEach> 
-    });
-    $('a[data-toggle="tooltip"]').tooltip();
-</script>
+    </script>
