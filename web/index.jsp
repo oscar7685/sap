@@ -81,12 +81,6 @@
                     <h2 class="form-signin-heading">Ingresar</h2>
                     <input type="text" placeholder="Usuario" name="codigo" id="codigo" class="input-block-level {required:true}">
                     <input type="password" placeholder="Contraseña" name="clave" id="pass" class="input-block-level {required:true}" >
-                    <label>Perfil de ingreso</label>
-                    <select id="perfilIngreso" name="perfilIngreso" class="input-block-level {required:true}">
-                        <option>Comite central</option>
-                        <option>Comite programa</option>
-                        <option selected="selected">Fuente</option>
-                    </select>
                     <label class="checkbox">
                         <input type="checkbox" name="recordar" value="remember-me"> Recordar
                     </label>

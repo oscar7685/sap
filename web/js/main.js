@@ -18,7 +18,7 @@ $(function() {
             this.timer = setTimeout(function() {
                 $.ajax({
                     url: '/sap/loginController',
-                    data: 'un=' + $('#codigo').val() + '&pw=' + $('#pass').val() + '&tp=' + $('#perfilIngreso :selected').val(),
+                    data: 'un=' + $('#codigo').val() + '&pw=' + $('#pass').val(),
                     type: 'post',
                     success: function(msg) {
 
