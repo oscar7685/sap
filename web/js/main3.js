@@ -1,5 +1,5 @@
 $(function() {
-    location = "/sap/#inicio";
+    location = "/sap/#perfil";
     /*$(document).ajaxStart(function() {
      
      });*/
@@ -76,7 +76,7 @@ $(function() {
                 }); //fin del $.ajax
 
             } else {
-                if (hash === "#inicio") {
+                if (hash === "#inicio" || hash === "#perfil") {
                     var url3 = "/sap/" + hash;
                     url3 = url3.replace('#', "controladorF?action=") + "CC";
                     $("div.ui-layout-center").empty();

@@ -309,6 +309,8 @@ public class loginController extends HttpServlet {
                             session.setAttribute("encuesta", asignacionEncuesta.getEncuestaId());
                         }
                     }
+                } else {
+                    out.print(1); //contrasena incorrecta
                 }
             } else if (usuario != null && usuario.size() > 1) {//SI ESTA MAS DE UNA VEZ EN LA MUESTRA
                 out.print(2);

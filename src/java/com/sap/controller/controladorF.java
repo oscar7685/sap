@@ -157,6 +157,11 @@ public class controladorF extends HttpServlet {
                             RequestDispatcher rd = request.getRequestDispatcher(url);
                             rd.forward(request, response);
 
+                        }else if (action.equals("perfilCC")) {
+                            String url = "/WEB-INF/vista/fuente/perfil.jsp";
+                            RequestDispatcher rd = request.getRequestDispatcher(url);
+                            rd.forward(request, response);
+
                         } else {
                             if (action.equals("contrasena")) {
                                 String url = "/WEB-INF/vista/comitePrograma/contrasena.jsp";
