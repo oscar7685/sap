@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pregunta.findByPregunta", query = "SELECT p FROM Pregunta p WHERE p.pregunta = :pregunta"),
     @NamedQuery(name = "Pregunta.findByTipo", query = "SELECT p FROM Pregunta p WHERE p.tipo = :tipo"),
     @NamedQuery(name = "Pregunta.findByModelo", query = "SELECT p FROM Pregunta p WHERE p.modeloId = :modelo")})
-public class Pregunta implements Serializable {
+public class Pregunta implements Serializable, Comparable<Pregunta> {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +83,9 @@ public class Pregunta implements Serializable {
     private Pregunta preguntaPadre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
     private List<Respuesta> respuestaList;
+    @Size(max = 100)
+    @Column(name = "repetir")
+    private String repetir;
 
     public Pregunta() {
     }
@@ -206,6 +210,14 @@ public class Pregunta implements Serializable {
         this.preguntaPadre = preguntaPadre;
     }
 
+    public String getRepetir() {
+        return repetir;
+    }
+
+    public void setRepetir(String repetir) {
+        this.repetir = repetir;
+    }
+
     @XmlTransient
     public List<Respuesta> getRespuestaList() {
         return respuestaList;
@@ -236,8 +248,18 @@ public class Pregunta implements Serializable {
     }
 
     @Override
+        public int compareTo(Pregunta o) {
+        if (id < o.id) {
+            return -1;
+        }
+        if (id > o.id) {
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
     public String toString() {
         return "com.sap.entity.Pregunta[ id=" + id + " ]";
     }
-    
 }

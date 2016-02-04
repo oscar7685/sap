@@ -5,6 +5,7 @@
 package com.sap.controller;
 
 import com.sap.ejb.EncabezadoFacade;
+import com.sap.ejb.EncuestaFacade;
 import com.sap.ejb.GlosarioFacade;
 import com.sap.ejb.ProgramaFacade;
 import com.sap.ejb.ResultadoevaluacionFacade;
@@ -19,6 +20,9 @@ import com.sap.entity.Programa;
 import com.sap.entity.Resultadoevaluacion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -36,6 +40,8 @@ import org.apache.log4j.Logger;
  */
 public class controladorF extends HttpServlet {
 
+    @EJB
+    private EncuestaFacade encuestaFacade;
     @EJB
     private ProgramaFacade programaFacade;
     @EJB
@@ -71,24 +77,243 @@ public class controladorF extends HttpServlet {
 
             } else {
                 if (action.equals("responderEncuestaF")) {
+
+                    List<String> encuestaCombinar = new ArrayList<String>();
+                    List<String> programasSeleccionados = new ArrayList<String>();
+
+                    String programasEstudiantes[] = request.getParameterValues("ms1");
+                    String docentesPlanta[] = request.getParameterValues("ms2");
+                    String docentesCatedra[] = request.getParameterValues("ms3");
+                    String egresados[] = request.getParameterValues("ms4");
+                    String directivo[] = request.getParameterValues("ms5");
+                    String administrativo[] = request.getParameterValues("ms6");
+                    String empleador = request.getParameter("empleador");
+
+
+
+
+
+
+                    if (empleador != null && empleador.equals("on")) {
+                        encuestaCombinar.add("11");
+                    }
+
+                    if (programasEstudiantes != null && programasEstudiantes.length > 0) {
+                        for (int i = 0; i < programasEstudiantes.length; i++) {
+                            String programa = programasEstudiantes[i];
+                            if (!programasSeleccionados.contains(programa)) {
+                                programasSeleccionados.add(programa);
+                            }
+                            Programa paux = programaFacade.find(Integer.parseInt(programa));
+                            if (paux.getTipoformacion().equals("Universitaria")) {
+                                if (!encuestaCombinar.contains("1")) {
+                                    encuestaCombinar.add("1");
+                                }
+                                if (!encuestaCombinar.contains("12")) {
+                                    encuestaCombinar.add("12");
+                                }
+                            } else if (paux.getTipoformacion().equals("Especializacion")) {
+                                if (!encuestaCombinar.contains("3")) {
+                                    encuestaCombinar.add("3");
+                                }
+                                if (!encuestaCombinar.contains("24")) {
+                                    encuestaCombinar.add("24");
+                                }
+                            } else if (paux.getTipoformacion().equals("Maestria")) {
+                                if (!encuestaCombinar.contains("2")) {
+                                    encuestaCombinar.add("2");
+                                }
+                                if (!encuestaCombinar.contains("18")) {
+                                    encuestaCombinar.add("18");
+                                }
+                            }
+
+                        }
+                    }
+
+                    if (docentesPlanta != null && docentesPlanta.length > 0) {
+                        for (int i = 0; i < docentesPlanta.length; i++) {
+                            String programa = docentesPlanta[i];
+                            if (!programasSeleccionados.contains(programa)) {
+                                programasSeleccionados.add(programa);
+                            }
+                            Programa paux = programaFacade.find(Integer.parseInt(programa));
+                            if (!encuestaCombinar.contains("4")) {
+                                encuestaCombinar.add("4");
+                            }
+                            if (paux.getTipoformacion().equals("Universitaria")) {
+                                if (!encuestaCombinar.contains("13")) {
+                                    encuestaCombinar.add("13");
+                                }
+
+                            } else if (paux.getTipoformacion().equals("Especializacion")) {
+                                if (!encuestaCombinar.contains("26")) {
+                                    encuestaCombinar.add("26");
+                                }
+
+                            } else if (paux.getTipoformacion().equals("Maestria")) {
+                                if (!encuestaCombinar.contains("19")) {
+                                    encuestaCombinar.add("19");
+                                }
+                            }
+                        }
+                    }
+
+                    if (docentesCatedra != null && docentesCatedra.length > 0) {
+                        for (int i = 0; i < docentesCatedra.length; i++) {
+                            String programa = docentesCatedra[i];
+                            if (!programasSeleccionados.contains(programa)) {
+                                programasSeleccionados.add(programa);
+                            }
+                            Programa paux = programaFacade.find(Integer.parseInt(programa));
+                            if (!encuestaCombinar.contains("5")) {
+                                encuestaCombinar.add("5");
+                            }
+                            if (paux.getTipoformacion().equals("Universitaria")) {
+                                if (!encuestaCombinar.contains("14")) {
+                                    encuestaCombinar.add("14");
+                                }
+
+                            } else if (paux.getTipoformacion().equals("Especializacion")) {
+                                if (!encuestaCombinar.contains("27")) {
+                                    encuestaCombinar.add("27");
+                                }
+
+                            } else if (paux.getTipoformacion().equals("Maestria")) {
+                                if (!encuestaCombinar.contains("20")) {
+                                    encuestaCombinar.add("20");
+                                }
+                            }
+                        }
+                    }
+                    if (egresados != null && egresados.length > 0) {
+                        for (int i = 0; i < egresados.length; i++) {
+                            String programa = egresados[i];
+                            if (!programasSeleccionados.contains(programa)) {
+                                programasSeleccionados.add(programa);
+                            }
+                            Programa paux = programaFacade.find(Integer.parseInt(programa));
+                            if (paux.getTipoformacion().equals("Universitaria")) {
+                                if (!encuestaCombinar.contains("8")) {
+                                    encuestaCombinar.add("8");
+                                }
+                                if (!encuestaCombinar.contains("17")) {
+                                    encuestaCombinar.add("17");
+                                }
+                            } else if (paux.getTipoformacion().equals("Especializacion")) {
+                                if (!encuestaCombinar.contains("10")) {
+                                    encuestaCombinar.add("10");
+                                }
+                                if (!encuestaCombinar.contains("30")) {
+                                    encuestaCombinar.add("30");
+                                }
+                            } else if (paux.getTipoformacion().equals("Maestria")) {
+                                if (!encuestaCombinar.contains("9")) {
+                                    encuestaCombinar.add("9");
+                                }
+                                if (!encuestaCombinar.contains("23")) {
+                                    encuestaCombinar.add("23");
+                                }
+                            }
+
+                        }
+                    }
+
+                    if (directivo != null && directivo.length > 0) {
+                        for (int i = 0; i < directivo.length; i++) {
+                            String programa = directivo[i];
+                            Programa paux = programaFacade.find(Integer.parseInt(programa));
+                            if (!encuestaCombinar.contains("6")) {
+                                encuestaCombinar.add("6");
+                            }
+                            if (paux.getTipoformacion().equals("Universitaria")) {
+                                if (!programasSeleccionados.contains(programa)) {
+                                    programasSeleccionados.add(programa);
+                                }
+                                if (!encuestaCombinar.contains("15")) {
+                                    encuestaCombinar.add("15");
+                                }
+
+                            } else if (paux.getTipoformacion().equals("Especializacion")) {
+                                if (!programasSeleccionados.contains(programa)) {
+                                    programasSeleccionados.add(programa);
+                                }
+                                if (!encuestaCombinar.contains("28")) {
+                                    encuestaCombinar.add("28");
+                                }
+
+                            } else if (paux.getTipoformacion().equals("Maestria")) {
+                                if (!programasSeleccionados.contains(programa)) {
+                                    programasSeleccionados.add(programa);
+                                }
+                                if (!encuestaCombinar.contains("21")) {
+                                    encuestaCombinar.add("21");
+                                }
+                            }
+                        }
+                    }
+
+                    if (administrativo != null && administrativo.length > 0) {
+                        for (int i = 0; i < administrativo.length; i++) {
+                            String programa = administrativo[i];
+                            Programa paux = programaFacade.find(Integer.parseInt(programa));
+                            if (!encuestaCombinar.contains("7")) {
+                                encuestaCombinar.add("7");
+                            }
+                            if (paux.getTipoformacion().equals("Universitaria")) {
+                                if (!programasSeleccionados.contains(programa)) {
+                                    programasSeleccionados.add(programa);
+                                }
+                                if (!encuestaCombinar.contains("16")) {
+                                    encuestaCombinar.add("16");
+                                }
+
+                            } else if (paux.getTipoformacion().equals("Especializacion")) {
+                                if (!programasSeleccionados.contains(programa)) {
+                                    programasSeleccionados.add(programa);
+                                }
+                                if (!encuestaCombinar.contains("29")) {
+                                    encuestaCombinar.add("29");
+                                }
+
+                            } else if (paux.getTipoformacion().equals("Maestria")) {
+                                if (!programasSeleccionados.contains(programa)) {
+                                    programasSeleccionados.add(programa);
+                                }
+                                if (!encuestaCombinar.contains("22")) {
+                                    encuestaCombinar.add("22");
+                                }
+                            }
+                        }
+                    }
+                    List<Pregunta> preguntas = new ArrayList<Pregunta>();
+                    for (int i = 0; i < encuestaCombinar.size(); i++) {
+                        Encuesta aux = encuestaFacade.find(Integer.parseInt(encuestaCombinar.get(i)));
+                        List<Pregunta> auxP = aux.getPreguntaList();
+                        for (Pregunta x : auxP) {
+                            if (!preguntas.contains(x)) {
+                                preguntas.add(x);
+                            }
+                        }
+                    }
+                    Collections.sort(preguntas);
+                    List<Programa> programasS = new ArrayList<Programa>();
+                    for (int i = 0; i < programasSeleccionados.size(); i++) {
+                        Programa paux = programaFacade.find(Integer.parseInt(programasSeleccionados.get(i)));
+                        programasS.add(paux);
+                    }
+
                     String url = "/WEB-INF/vista/fuente/responderEncuesta.jsp";
+                    System.out.println("programasS: "+programasS);
+                    session.setAttribute("preguntas", preguntas);
+                    session.setAttribute("programas", programasS);
                     Proceso p = (Proceso) session.getAttribute("proceso");
                     Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
                     Fuente fuente = (Fuente) session.getAttribute("fuente");
+
+
                     Encuesta encuesta = (Encuesta) session.getAttribute("encuesta");
                     List<Encabezado> encabExistentes = encabezadoFacade.findByVars(p, encuesta, fuente, persona);
-                    List<Glosario> palabras = glosarioFacade.findAll();
-                    Encabezado enc = null;
-                    if (encabExistentes != null && encabExistentes.size() > 0) {
-                        for (int i = 0; i < encabExistentes.size(); i++) {
-                            enc = encabExistentes.get(i);
-                        }
-                    }
-                    if (enc != null) {
-                        session.setAttribute("respuestas", resultadoevaluacionFacade.findByEncabezado(enc));
-                        session.setAttribute("encabezado", enc);
-                    }
-                    session.setAttribute("palabras", palabras);
                     RequestDispatcher rd = request.getRequestDispatcher(url);
                     rd.forward(request, response);
                 } else {

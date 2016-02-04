@@ -63,7 +63,8 @@
                         <tr>
                             <td style="text-align: center;">ESCUELA NAVAL DE CADETES "ALMIRANTE PADILLA"
                                 <!--<br/><span id="spanprograma">PROGRAMA: _PROGRAMA_</span>-->
-                                <br/>${encuesta.getNombre()}</td>
+                                <br/>
+                                <%--${encuesta.getNombre()}--%></td>
                         </tr>
                     </tbody>
                 </table>
@@ -73,10 +74,10 @@
                 <br/>
             </div>
             <form id="formResponderE" method="POST">
-                <c:forEach items="${encuesta.getPreguntaList()}" var="pregunta" varStatus="status">
+                <c:forEach items="${preguntas}" var="pregunta" varStatus="status">
 
                     <div class="row" id="pregunta${pregunta.id}">
-                        <div class="span10">
+                        <div class="span12">
                             <p style="font-weight: bold;">${status.index+1} ${pregunta.getPregunta()}</p>
 
 
@@ -167,26 +168,4 @@
     </div>
 
 
-    <script type="text/javascript">
-        $(function() {
-            $("p").html(function(busca, reemplaza) {
-                return reemplaza.replace('_PROGRAMA_', '${programa.nombre}');
-            });
-            $("#spanprograma").html(function(busca, reemplaza) {
-                return reemplaza.replace('_PROGRAMA_', '${programa.nombre}');
-            });
-
-
-            setTimeout(function() {
-                $("#printEnlace").click(function() {
-                    $('.hero-unit').printArea();
-                    return false;
-                });
-            }, 1000);
-
-            //se activa cuando una pregunta que condiciona a otra es contestada
-
-
-
-        });
-    </script>
+    

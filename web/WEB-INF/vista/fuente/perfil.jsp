@@ -19,7 +19,11 @@
             <div>
                 <select name="ms1" id="ms1" multiple="multiple" class="form-control">
                     <c:forEach items="${programas}" var="row" varStatus="iter">
-                        <option value="${row.id}">${row.nombre}</option>
+                        <c:choose>
+                            <c:when test="${row.id != 1}">
+                                <option value="${row.id}">${row.nombre}</option>
+                            </c:when>
+                        </c:choose>
                     </c:forEach>
                 </select>
             </div>    
@@ -33,7 +37,11 @@
             <div>
                 <select name="ms2"  id="ms2" multiple="multiple" class="form-control">
                     <c:forEach items="${programas}" var="row" varStatus="iter">
-                        <option value="${row.id}">${row.nombre}</option>
+                        <c:choose>
+                            <c:when test="${row.id != 1}">
+                                <option value="${row.id}">${row.nombre}</option>
+                            </c:when>
+                        </c:choose>
                     </c:forEach>
                 </select>
             </div>    
@@ -47,7 +55,11 @@
             <div>
                 <select name="ms3" id="ms3" multiple="multiple" class="form-control">
                     <c:forEach items="${programas}" var="row" varStatus="iter">
-                        <option value="${row.id}">${row.nombre}</option>
+                        <c:choose>
+                            <c:when test="${row.id != 1}">
+                                <option value="${row.id}">${row.nombre}</option>
+                            </c:when>
+                        </c:choose>
                     </c:forEach>
                 </select>
             </div>    
@@ -61,7 +73,11 @@
             <div>
                 <select name="ms4"  id="ms4" multiple="multiple" class="form-control">
                     <c:forEach items="${programas}" var="row" varStatus="iter">
-                        <option value="${row.id}">${row.nombre}</option>
+                        <c:choose>
+                            <c:when test="${row.id != 1}">
+                                <option value="${row.id}">${row.nombre}</option>
+                            </c:when>
+                        </c:choose>
                     </c:forEach>
                 </select>
             </div>    
@@ -137,15 +153,21 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCC?action=crearCaracteristica",
+                    url: "/sap/controladorF?action=responderEncuestaF",
                     data: $("#seleccionPerfil").serialize(),
                     beforeSend: function() {
                         var a = $("#seleccionPerfil").serialize();
                         if (a === null || a.length === 0)
                             $("#modalSeleccionPerfil").modal("show");
                     },
-                    success: function() {
-                        location = "/sap/#listarCaracteristicas";
+                    success: function(data) {
+                        $("div.ui-layout-center").empty();
+                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                        $("#contenido").hide();
+                        $("#contenido").append(data);
+                        $("#contenido").show(400, function() {
+                            $("#dancing-dots-text").remove();
+                        });
                     } //fin success
                 }); //fin $.ajax    
             }
