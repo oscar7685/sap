@@ -6,6 +6,7 @@ package com.sap.controller;
 
 import com.sap.ejb.EncabezadoFacade;
 import com.sap.ejb.GlosarioFacade;
+import com.sap.ejb.ProgramaFacade;
 import com.sap.ejb.ResultadoevaluacionFacade;
 import com.sap.entity.Encabezado;
 import com.sap.entity.Encuesta;
@@ -14,6 +15,7 @@ import com.sap.entity.Glosario;
 import com.sap.entity.Muestrapersona;
 import com.sap.entity.Pregunta;
 import com.sap.entity.Proceso;
+import com.sap.entity.Programa;
 import com.sap.entity.Resultadoevaluacion;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,6 +36,8 @@ import org.apache.log4j.Logger;
  */
 public class controladorF extends HttpServlet {
 
+    @EJB
+    private ProgramaFacade programaFacade;
     @EJB
     private GlosarioFacade glosarioFacade;
     @EJB
@@ -157,7 +161,8 @@ public class controladorF extends HttpServlet {
                             RequestDispatcher rd = request.getRequestDispatcher(url);
                             rd.forward(request, response);
 
-                        }else if (action.equals("perfilCC")) {
+                        } else if (action.equals("perfilCC")) {
+                            session.setAttribute("programas", programaFacade.findAll());
                             String url = "/WEB-INF/vista/fuente/perfil.jsp";
                             RequestDispatcher rd = request.getRequestDispatcher(url);
                             rd.forward(request, response);
