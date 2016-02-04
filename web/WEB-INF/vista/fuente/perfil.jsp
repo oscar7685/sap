@@ -6,10 +6,10 @@
     }
 </style>
 <div  class="span10 offset2" style="text-align: justify">
-    <div class="span8">
-        <br/>
-        <h2>Selección del perfil</h2>
-        <br/>
+    <br/>
+    <h2>Selección del perfil</h2>
+    <br/>
+    <form name="seleccionPerfil" id="seleccionPerfil">
         <div>
             <div class="form-control">
                 <label>
@@ -17,7 +17,7 @@
                 </label>
             </div>
             <div>
-                <select id="ms1" multiple="multiple" class="form-control">
+                <select name="ms1" id="ms1" multiple="multiple" class="form-control">
                     <c:forEach items="${programas}" var="row" varStatus="iter">
                         <option value="${row.id}">${row.nombre}</option>
                     </c:forEach>
@@ -31,7 +31,7 @@
                 </label>
             </div>
             <div>
-                <select id="ms2" multiple="multiple" class="form-control">
+                <select name="ms2"  id="ms2" multiple="multiple" class="form-control">
                     <c:forEach items="${programas}" var="row" varStatus="iter">
                         <option value="${row.id}">${row.nombre}</option>
                     </c:forEach>
@@ -45,7 +45,7 @@
                 </label>
             </div>
             <div>
-                <select id="ms3" multiple="multiple" class="form-control">
+                <select name="ms3" id="ms3" multiple="multiple" class="form-control">
                     <c:forEach items="${programas}" var="row" varStatus="iter">
                         <option value="${row.id}">${row.nombre}</option>
                     </c:forEach>
@@ -59,7 +59,7 @@
                 </label>
             </div>
             <div>
-                <select id="ms4" multiple="multiple" class="form-control">
+                <select name="ms4"  id="ms4" multiple="multiple" class="form-control">
                     <c:forEach items="${programas}" var="row" varStatus="iter">
                         <option value="${row.id}">${row.nombre}</option>
                     </c:forEach>
@@ -73,7 +73,7 @@
                 </label>
             </div>
             <div>
-                <select id="ms5" multiple="multiple" class="form-control">
+                <select name="ms5"  id="ms5" multiple="multiple" class="form-control">
                     <c:forEach items="${programas}" var="row" varStatus="iter">
                         <option value="${row.id}">${row.nombre}</option>
                     </c:forEach>
@@ -87,7 +87,7 @@
                 </label>
             </div>
             <div>
-                <select id="ms6" multiple="multiple" class="form-control">
+                <select name="ms6" id="ms6" multiple="multiple" class="form-control">
                     <c:forEach items="${programas}" var="row" varStatus="iter">
                         <option value="${row.id}">${row.nombre}</option>
                     </c:forEach>
@@ -97,12 +97,13 @@
         <div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox"> <h4>Empleador</h4>
-                    
+                    <input name="empleador" type="checkbox"> <h4>Empleador</h4>
                 </label>
             </div>
         </div>
-    </div>
+        <button class="btn btn-large btn-primary" type="submit" id="crearPerfil">Continuar</button>
+    </form>
+
 </div> 
 <script src="<%=request.getContextPath()%>/js/multiple-select.js"></script>
 <script>
@@ -131,5 +132,24 @@
             width: '100%',
             selectAll: false
         });
+
+        $("#seleccionPerfil").validate({
+            submitHandler: function() {
+                $.ajax({
+                    type: 'POST',
+                    url: "/sap/controladorCC?action=crearCaracteristica",
+                    data: $("#seleccionPerfil").serialize(),
+                    beforeSend: function() {
+                        var a = $("#seleccionPerfil").serialize();
+                        if (a === null || a.length === 0)
+                            $("#modalSeleccionPerfil").modal("show");
+                    },
+                    success: function() {
+                        location = "/sap/#listarCaracteristicas";
+                    } //fin success
+                }); //fin $.ajax    
+            }
+        });
+
     });
 </script>

@@ -113,3 +113,15 @@
         <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
     </div>
 </div>
+<div class="modal hide fade" id="modalSeleccionPerfil">
+    <div class="modal-header">
+        <a data-dismiss="modal" style="margin-top: 0px; padding: 0px" class="close">×</a>
+        <h3>Atención</h3>
+    </div>
+    <div class="modal-body">
+        Debe seleccionar al menos un perfil para diligenciar la encuesta.
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+    </div>
+</div>
