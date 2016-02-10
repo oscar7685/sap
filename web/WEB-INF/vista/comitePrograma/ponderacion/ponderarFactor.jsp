@@ -96,10 +96,10 @@
                     setTimeout(function() {
                         $.ajax({
                             type: 'POST',
-                            url: "/sap/controladorCP?action=ponderarFactor",
+                            url: "/sapnaval/controladorCP?action=ponderarFactor",
                             data: $("#formPonderarFactor").serialize(),
                             success: function() {
-                                location = "/sap/#listPonderacionFactor";
+                                location = "/sapnaval/#listPonderacionFactor";
                             } //fin success
                         }); //fin $.ajax    
                     }, 400);

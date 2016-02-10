@@ -6,16 +6,16 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=crearProceso",
+                    url: "/sapnaval/controladorCP?action=crearProceso",
                     data: $("#formCrearProceso").serialize(),
                     success: function(data) {
                         $("#dancing-dots-text").remove();
                         if (data == 1) {
-                            location = "/sap/#controlPanel";
+                            location = "/sapnaval/#controlPanel";
                         }
                         if (data == 0) {
                             $('#modalCc3').modal();
-                            location = "/sap/#controlPanel";
+                            location = "/sapnaval/#controlPanel";
                         }
                     } //fin success
                 }); //fin $.ajax    

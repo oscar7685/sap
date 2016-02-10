@@ -94,10 +94,10 @@
                     setTimeout(function() {
                         $.ajax({
                             type: 'POST',
-                            url: "/sap/controladorCP?action=editPonderarFactor",
+                            url: "/sapnaval/controladorCP?action=editPonderarFactor",
                             data: $("#formEditPonderarFactor").serialize(),
                             success: function() {
-                                location = "/sap/#listPonderacionFactor";
+                                location = "/sapnaval/#listPonderacionFactor";
                             } //fin success
                         }); //fin $.ajax 
                     }, 400);

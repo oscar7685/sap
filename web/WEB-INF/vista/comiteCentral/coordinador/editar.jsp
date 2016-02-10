@@ -98,10 +98,10 @@
         if (elt.tagsinput('items').length){
                 $.ajax({
                  type: 'POST',
-                 url: "/sap/controladorCC?action=editarCoordinador",
+                 url: "/sapnaval/controladorCC?action=editarCoordinador",
                  data: $("#formEditarCoordinador").serialize(),
                  success: function() {
-                 location = "/sap/#listarCoordinadores";
+                 location = "/sapnaval/#listarCoordinadores";
                  } //fin success
                  }); //fin $.ajax
         } else{

@@ -3,7 +3,7 @@ $(function() {
         $('#ModalAcercaDe').modal("show");
     });
 
-    location = "/sap/#inicio";
+    location = "/sapnaval/#inicio";
     $('#close1').on("click", function() {
         $(this).parent().hide();
     });
@@ -17,14 +17,14 @@ $(function() {
         submitHandler: function() {
             this.timer = setTimeout(function() {
                 $.ajax({
-                    url: '/sap/loginController',
+                    url: '/sapnaval/loginController',
                     data: 'un=' + $('#codigo').val() + '&pw=' + $('#pass').val(),
                     type: 'post',
                     success: function(msg) {
 
                         if (msg === '0')
                         {
-                            document.location = '/sap/';
+                            document.location = '/sapnaval/';
 
 
                         } else {

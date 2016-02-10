@@ -11,10 +11,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=editarObjetivo2",
+                    url: "/sapnaval/controladorCP?action=editarObjetivo2",
                     data: $("#formEditarObjetivo").serialize(),
                     success: function() {
-                        location = "/sap/#listarObjetivos&${hallazgo.idhallazgo}";
+                        location = "/sapnaval/#listarObjetivos&${hallazgo.idhallazgo}";
                     } //fin success
                 }); //fin $.ajax    */
             }
@@ -37,7 +37,7 @@
                             <li><a href="<%=request.getContextPath()%>/#editarHallazgo&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${hallazgo.hallazgo}">Hallazgo</a> <span class="divider">/</span></li>
                             <li><a href="<%=request.getContextPath()%>/#listarObjetivos&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar objetivos">Objetivos</a> <span class="divider">/</span></li>
                             <li>Editar</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
+                            <a id="printEnlace" target="_blank" href="/sapnaval/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
 
                         <form id="formEditarObjetivo" class="form-horizontal" method="post">
@@ -61,7 +61,7 @@
                     <div class="tab-pane" id="profile">
                         <ul class="breadcrumb">
                             <li>Fortalezas</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
+                            <a id="printEnlace" target="_blank" href="/sapnaval/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
                         <h3>Listado de  Fortalezas</h3>
                         <c:choose>

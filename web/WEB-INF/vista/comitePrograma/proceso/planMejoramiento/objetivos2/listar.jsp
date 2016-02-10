@@ -21,7 +21,7 @@
                     <div class="tab-pane" id="home">
                         <ul class="breadcrumb">
                             <li>Hallazgos</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
+                            <a id="printEnlace" target="_blank" href="/sapnaval/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
                         <h3>Listado de  Hallazgos</h3>
                         <c:choose>
@@ -62,7 +62,7 @@
                             <li><a href="<%=request.getContextPath()%>/#listarFortalezas" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar fortalezas">Fortalezas</a> <span class="divider">/</span></li>
                             <li><a href="<%=request.getContextPath()%>/#editarFortaleza&${fortaleza.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${fortaleza.hallazgo}">Fortaleza</a> <span class="divider">/</span></li>
                             <li>Objetivos</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
+                            <a id="printEnlace" target="_blank" href="/sapnaval/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
                         <h3>Listado de  Objetivos</h3>
                         <c:choose>

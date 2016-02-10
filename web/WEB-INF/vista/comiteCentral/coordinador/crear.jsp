@@ -95,10 +95,10 @@
         if (elt.tagsinput('items').length){
                 $.ajax({
                  type: 'POST',
-                 url: "/sap/controladorCC?action=crearCoordinador",
+                 url: "/sapnaval/controladorCC?action=crearCoordinador",
                  data: $("#formCrearCoordinador").serialize(),
                  success: function() {
-                 location = "/sap/#listarCoordinadores";
+                 location = "/sapnaval/#listarCoordinadores";
                  } //fin success
                  }); //fin $.ajax
         } else{

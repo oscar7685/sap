@@ -30,7 +30,7 @@
                 success: function() {
                     $('#myModalCP').modal();
                     $('#myModalCP').on('hidden', function() {
-                        location = "/sap/#inicio";
+                        location = "/sapnaval/#inicio";
                     });
                 } //fin success
             }); //fin $.ajax

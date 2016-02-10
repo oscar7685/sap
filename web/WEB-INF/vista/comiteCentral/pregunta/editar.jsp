@@ -27,10 +27,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCC?action=editarPregunta",
+                    url: "/sapnaval/controladorCC?action=editarPregunta",
                     data: $("#formEditarPregunta").serialize(),
                     success: function() {
-                        location = "/sap/#listarPreguntas";
+                        location = "/sapnaval/#listarPreguntas";
                     } //fin success
                 }); //fin $.ajax    
             }

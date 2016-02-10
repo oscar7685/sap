@@ -2,7 +2,7 @@ $(function() {
     var urlx;
 
 
-    location = "/sap/#inicio";
+    location = "/sapnaval/#inicio";
     $(document).ajaxStart(function() {
         if ($("div.ui-layout-center").find('div#contenido').length === 0) {
             $("div.ui-layout-center").append("<div id='contenido'></div>");
@@ -138,8 +138,8 @@ $(function() {
     $(window).hashchange(function() {
         hash = location.hash;
         if (hash === "#CerrarSesion") {
-            $.post('/sap/loginController?action=CerrarSesion', function() {
-                location = "/sap";
+            $.post('/sapnaval/loginController?action=CerrarSesion', function() {
+                location = "/sapnaval";
 
             });//fin post
 
@@ -148,14 +148,14 @@ $(function() {
 
             var cual = hash.split("&");
             hash = cual[0];
-            var url3 = "/sap/controladorCC?action=";
+            var url3 = "/sapnaval/controladorCC?action=";
             url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
 
             urlx = url3;
 
 
         } else if (hash === "#todosResultados") {
-            var url3 = "/sap/" + hash;
+            var url3 = "/sapnaval/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
             $.ajax({
@@ -176,14 +176,14 @@ $(function() {
 
             var cual = hash.split("&");
             hash = cual[0];
-            var url3 = "/sap/controladorCC?action=";
+            var url3 = "/sapnaval/controladorCC?action=";
             url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
 
             urlx = url3;
 
             /* */
         } else if (hash === "#preparedCrearProceso") {
-            var url3 = "/sap/" + hash;
+            var url3 = "/sapnaval/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
             $.ajax({
@@ -200,7 +200,7 @@ $(function() {
             }); //fin del $.ajax
         } else {
             if (hash === "#inicio") {
-                var url3 = "/sap/" + hash;
+                var url3 = "/sapnaval/" + hash;
                 url3 = url3.replace('#', "controladorCC?action=") + "CC";
                 $("div.ui-layout-center").empty();
                 $.ajax({
@@ -224,7 +224,7 @@ $(function() {
                         || hash.indexOf("#editarPregunta") !== -1) {
                     var cual = hash.split("&");
                     hash = cual[0];
-                    var url3 = "/sap/controladorCC?action=";
+                    var url3 = "/sapnaval/controladorCC?action=";
                     url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
                     $("div.ui-layout-center").empty();
                     $.ajax({
@@ -250,7 +250,7 @@ $(function() {
 
                 } else {
                     if (hash === "#crearModelo" || hash === "#crearPrograma" || hash === "#listarProgramas" || hash === "#listarModelo" || hash === "#listarCoordinadores" || hash === "#crearCoordinador" || hash === "#controlPanel") {
-                        var url3 = "/sap/" + hash;
+                        var url3 = "/sapnaval/" + hash;
                         url3 = url3.replace('#', "controladorCC?action=") + "CC";
                         $("div.ui-layout-center").empty();
                         $.ajax({
@@ -277,7 +277,7 @@ $(function() {
                                 || hash === "#listarIndicadores" || hash === "#crearIndicador"
                                 || hash === "#listarPreguntas" || hash === "#crearPregunta"
                                 || hash === "#listarEncuestas" || hash === "#crearEncuesta") {
-                            var url3 = "/sap/" + hash;
+                            var url3 = "/sapnaval/" + hash;
                             url3 = url3.replace('#', "controladorCC?action=") + "CC";
                             $("div.ui-layout-center").empty();
                             $.ajax({
@@ -300,7 +300,7 @@ $(function() {
                             if (hash.indexOf("#editarModelo") !== -1 || hash.indexOf("#editarCoordinador") !== -1 || hash.indexOf("#editarPrograma") !== -1) {
                                 var cual = hash.split("&");
                                 hash = cual[0];
-                                var url3 = "/sap/controladorCC?action=";
+                                var url3 = "/sapnaval/controladorCC?action=";
                                 url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
                                 $("div.ui-layout-center").empty();
                                 $.ajax({
@@ -325,7 +325,7 @@ $(function() {
                                 if (hash.indexOf("#verProcesos") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
-                                    var url3 = "/sap/controladorCC?action=";
+                                    var url3 = "/sapnaval/controladorCC?action=";
                                     url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
                                     $("div.ui-layout-center").empty();
                                     $("div.ui-layout-west").empty();
@@ -354,7 +354,7 @@ $(function() {
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
                                         || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta" || hash === "#crear2Meta" || hash === "#listarFortalezas"
                                         || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd") {
-                                    var url3 = "/sap/" + hash;
+                                    var url3 = "/sapnaval/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
                                     $.ajax({
@@ -388,7 +388,7 @@ $(function() {
                                 } else if (hash.indexOf("#verPProceso") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
-                                    var url3 = "/sap/controladorCP?action=";
+                                    var url3 = "/sapnaval/controladorCP?action=";
                                     url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
                                     $("div.ui-layout-center").empty();
                                     $.ajax({
@@ -408,12 +408,12 @@ $(function() {
                                             $("#contenido").show(200, function() {
                                                 $("#dancing-dots-text").remove();
                                             });
-                                            //location = "/sap/#inicio";
+                                            //location = "/sapnaval/#inicio";
 
                                         } //fin success
                                     }); //fin del $.ajax
                                 } else if (hash === "#preparedEvaluador") {
-                                    var url3 = "/sap/" + hash;
+                                    var url3 = "/sapnaval/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     //$("div.ui-layout-center").empty();
                                     $.ajax({
@@ -429,7 +429,7 @@ $(function() {
                                     }); //fin del $.ajax
                                     actualizaEnlaces(hash);
                                 } else if (hash === "#preparedPonderarFactor") {
-                                    var url3 = "/sap/" + hash;
+                                    var url3 = "/sapnaval/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
                                     $.ajax({
@@ -453,7 +453,7 @@ $(function() {
                                         //fin success
                                     }); //fin del $.ajax
                                 } else if (hash === "#listPonderacionCara") {
-                                    var url3 = "/sap/" + hash;
+                                    var url3 = "/sapnaval/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
                                     $.ajax({
@@ -462,10 +462,10 @@ $(function() {
                                         success: function(data)
                                         {
                                             if (data == 1) {
-                                                location = "/sap/#listPonderacionCara2";
+                                                location = "/sapnaval/#listPonderacionCara2";
                                             } else {
                                                 $('#modalCp3').modal();
-                                                location = "/sap/#listPonderacionFactor";
+                                                location = "/sapnaval/#listPonderacionFactor";
                                             }
                                             actualizaEnlaces(hash);
                                         }
@@ -475,7 +475,7 @@ $(function() {
                                         || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 || hash.indexOf("#encuestaXaleatoria") !== -1 || hash.indexOf("#detallePFactor") !== -1 || hash.indexOf("#detallePCaracteristica") !== -1 || hash.indexOf("#detallePIndicador") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
-                                    var url3 = "/sap/controladorCP?action=";
+                                    var url3 = "/sapnaval/controladorCP?action=";
                                     url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
                                     $("div.ui-layout-center").empty();
                                     $.ajax({
@@ -495,7 +495,7 @@ $(function() {
                                         || hash.indexOf("#verMetas") !== -1 || hash.indexOf("#ver2Metas") !== -1 || hash.indexOf("#editarObjetivo") !== -1 || hash.indexOf("#editar2Objetivo") !== -1 || hash.indexOf("#editarMeta") !== -1 || hash.indexOf("#editar2Meta") !== -1 || hash.indexOf("#listar2Objetivos") !== -1) {
                                     var cual = hash.split("&");
                                     hash = cual[0];
-                                    var url3 = "/sap/controladorCP?action=";
+                                    var url3 = "/sapnaval/controladorCP?action=";
                                     url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
                                     $("div.ui-layout-center").empty();
                                     $.ajax({
@@ -511,7 +511,7 @@ $(function() {
                                     }); //fin del $.ajax
                                 } else {
                                     if (hash === "#contrasena") {
-                                        var url3 = "/sap/" + hash;
+                                        var url3 = "/sapnaval/" + hash;
                                         url3 = url3.replace('#', "controladorCP?action=");
                                         $("div.ui-layout-center").empty();
                                         $.ajax({
@@ -583,7 +583,7 @@ $(function() {
     });
 
     $('#modalCpb1').click(function() {
-        var url3 = "/sap/" + "controladorCP?action=iniciarProceso";
+        var url3 = "/sapnaval/" + "controladorCP?action=iniciarProceso";
         url3 = url3.replace('#', "controladorCP?action=");
         $("div.ui-layout-center").empty();
         $.ajax({

@@ -10,10 +10,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=crear2Objetivo2",
+                    url: "/sapnaval/controladorCP?action=crear2Objetivo2",
                     data: $("#formCrearObjetivo").serialize(),
                     success: function() {
-                        location = "/sap/#listar2Objetivos&${fortaleza.idhallazgo}";
+                        location = "/sapnaval/#listar2Objetivos&${fortaleza.idhallazgo}";
                     } //fin success
                 }); //fin $.ajax    */
             }
@@ -33,7 +33,7 @@
                     <div class="tab-pane" id="home">
                         <ul class="breadcrumb">
                             <li>Hallazgos</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
+                            <a id="printEnlace" target="_blank" href="/sapnaval/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
                         <h3>Listado de  Hallazgos</h3>
                         <c:choose>
@@ -75,7 +75,7 @@
                             <li><a href="<%=request.getContextPath()%>/#editarFortaleza&${fortaleza.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${fortaleza.hallazgo}">Fortaleza</a> <span class="divider">/</span></li>
                             <li><a href="<%=request.getContextPath()%>/#listar2Objetivos&${fortaleza.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar objetivos">Objetivos</a> <span class="divider">/</span></li>
                             <li>Crear</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
+                            <a id="printEnlace" target="_blank" href="/sapnaval/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
                         <form id="formCrearObjetivo" class="form-horizontal" method="post">
                             <fieldset>

@@ -31,7 +31,7 @@
                 success: function() {
                     $('#myModalIN').modal();
                     $('#myModalIN').on('hidden', function() {
-                        location = "/sap/#listarEvaluarNum";
+                        location = "/sapnaval/#listarEvaluarNum";
                     });
                 } //fin success
             }); //fin $.ajax

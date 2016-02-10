@@ -82,10 +82,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCC?action=editarFactor",
+                    url: "/sapnaval/controladorCC?action=editarFactor",
                     data: $("#formEditarFactor").serialize(),
                     success: function() {
-                        location = "/sap/#listarFactores";
+                        location = "/sapnaval/#listarFactores";
                     } //fin success
                 }); //fin $.ajax    
             }

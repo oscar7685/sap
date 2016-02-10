@@ -54,7 +54,7 @@
 </script>
 
 <br>
-<div class="hero-unit">
+<div class="container">
     <div style="margin-left: -30px;">
         <div id="conte" class="span12" style="text-align: justify">
             <div class="row">

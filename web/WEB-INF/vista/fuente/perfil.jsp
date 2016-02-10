@@ -153,7 +153,7 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorF?action=responderEncuestaF",
+                    url: "/sapnaval/controladorF?action=responderEncuestaF",
                     data: $("#seleccionPerfil").serialize(),
                     beforeSend: function() {
                         var a = $("#seleccionPerfil").serialize();

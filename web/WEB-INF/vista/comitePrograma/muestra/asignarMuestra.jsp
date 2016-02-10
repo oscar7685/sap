@@ -5,9 +5,9 @@
         $("#botonGenerarMuestra").click(function() {
             $.ajax({
                 type: 'POST',
-                url: "/sap/controladorCP?action=generarMuestra",
+                url: "/sapnaval/controladorCP?action=generarMuestra",
                 success: function() {
-                    location = "/sap/#listMuestra";
+                    location = "/sapnaval/#listMuestra";
                 } //fin success
             }); //fin $.ajax    
 
@@ -15,9 +15,9 @@
         $("#botonGenerarMuestraCenso").click(function() {
             $.ajax({
                 type: 'POST',
-                url: "/sap/controladorCP?action=generarMuestraCenso",
+                url: "/sapnaval/controladorCP?action=generarMuestraCenso",
                 success: function() {
-                    location = "/sap/#listMuestra";
+                    location = "/sapnaval/#listMuestra";
                 } //fin success
             }); //fin $.ajax    
 
