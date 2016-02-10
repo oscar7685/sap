@@ -43,7 +43,7 @@
                         $("#dancing-dots-text").remove();
                         $("#myModalGracias").modal();
                         $('#myModalGracias').on('hidden', function() {
-                            location = "<%=request.getContextPath()%>/#inicio";
+                            location = "<%=request.getContextPath()%>/#perfil";
                         });
                     } //fin success
                 }); //fin $.ajax
