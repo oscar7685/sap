@@ -118,7 +118,6 @@ public class controladorF extends HttpServlet {
                             if (!pregunta2.contains(paux)) {
                                 pregunta2.add(paux);
                             }
-
                             if (!pregunta11.contains(paux)) {
                                 pregunta11.add(paux);
                             }
@@ -137,15 +136,15 @@ public class controladorF extends HttpServlet {
                             if (!pregunta30.contains(paux)) {
                                 pregunta30.add(paux);
                             }
+                            if (!pregunta32.contains(paux)) {
+                                pregunta32.add(paux);
+                            }
 
                             if (paux.getTipoformacion().equals("Universitaria")) {
 
 
                                 if (!pregunta50.contains(paux)) {
                                     pregunta50.add(paux);
-                                }
-                                if (!pregunta32.contains(paux)) {
-                                    pregunta32.add(paux);
                                 }
                                 if (!pregunta16.contains(paux)) {
                                     pregunta16.add(paux);
@@ -212,6 +211,9 @@ public class controladorF extends HttpServlet {
                             if (!pregunta30.contains(paux)) {
                                 pregunta30.add(paux);
                             }
+                            if (!pregunta32.contains(paux)) {
+                                pregunta32.add(paux);
+                            }
                             if (!encuestaCombinar.contains("4")) {
                                 encuestaCombinar.add("4");
                             }
@@ -220,9 +222,6 @@ public class controladorF extends HttpServlet {
 
                                 if (!pregunta50.contains(paux)) {
                                     pregunta50.add(paux);
-                                }
-                                if (!pregunta32.contains(paux)) {
-                                    pregunta32.add(paux);
                                 }
                                 if (!pregunta25.contains(paux)) {
                                     pregunta25.add(paux);
@@ -274,17 +273,16 @@ public class controladorF extends HttpServlet {
                             if (!pregunta30.contains(paux)) {
                                 pregunta30.add(paux);
                             }
+                            if (!pregunta32.contains(paux)) {
+                                pregunta32.add(paux);
+                            }
                             if (!encuestaCombinar.contains("5")) {
                                 encuestaCombinar.add("5");
                             }
                             if (paux.getTipoformacion().equals("Universitaria")) {
 
-
                                 if (!pregunta50.contains(paux)) {
                                     pregunta50.add(paux);
-                                }
-                                if (!pregunta32.contains(paux)) {
-                                    pregunta32.add(paux);
                                 }
                                 if (!pregunta25.contains(paux)) {
                                     pregunta25.add(paux);
@@ -389,6 +387,9 @@ public class controladorF extends HttpServlet {
                                 if (!pregunta21.contains(paux)) {
                                     pregunta21.add(paux);
                                 }
+                                if (!pregunta32.contains(paux)) {
+                                    pregunta32.add(paux);
+                                }
                             } else if (paux.getTipoformacion().equals("Maestria")) {
                                 if (!pregunta2.contains(paux)) {
                                     pregunta2.add(paux);
@@ -407,6 +408,9 @@ public class controladorF extends HttpServlet {
                                 }
                                 if (!encuestaCombinar.contains("21")) {
                                     encuestaCombinar.add("21");
+                                }
+                                if (!pregunta32.contains(paux)) {
+                                    pregunta32.add(paux);
                                 }
                             }
                         }
