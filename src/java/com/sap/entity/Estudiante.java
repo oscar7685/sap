@@ -55,6 +55,11 @@ public class Estudiante implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "anio")
     private String anio;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "tipo")
+    private String tipo;
     @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona personaId;
@@ -64,19 +69,6 @@ public class Estudiante implements Serializable {
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "tipo")
-    private String tipo;
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
 
     public Estudiante() {
     }
@@ -85,11 +77,12 @@ public class Estudiante implements Serializable {
         this.id = id;
     }
 
-    public Estudiante(String id, String semestre, String periodo, String anio) {
+    public Estudiante(String id, String semestre, String periodo, String anio, String tipo) {
         this.id = id;
         this.semestre = semestre;
         this.periodo = periodo;
         this.anio = anio;
+        this.tipo = tipo;
     }
 
     public String getId() {
@@ -122,6 +115,14 @@ public class Estudiante implements Serializable {
 
     public void setAnio(String anio) {
         this.anio = anio;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Persona getPersonaId() {

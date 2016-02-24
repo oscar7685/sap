@@ -1,6 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
@@ -67,9 +66,9 @@ public class Proceso implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
-    private List<Muestra> muestraList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Hallazgo> hallazgoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Muestra> muestraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacionfactor> ponderacionfactorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
@@ -82,6 +81,8 @@ public class Proceso implements Serializable {
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Programa programaId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Participante> participanteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacionindicador> ponderacionindicadorList;
 
@@ -148,21 +149,21 @@ public class Proceso implements Serializable {
     }
 
     @XmlTransient
-    public List<Muestra> getMuestraList() {
-        return muestraList;
-    }
-
-    public void setMuestraList(List<Muestra> muestraList) {
-        this.muestraList = muestraList;
-    }
-
-    @XmlTransient
     public List<Hallazgo> getHallazgoList() {
         return hallazgoList;
     }
 
     public void setHallazgoList(List<Hallazgo> hallazgoList) {
         this.hallazgoList = hallazgoList;
+    }
+
+    @XmlTransient
+    public List<Muestra> getMuestraList() {
+        return muestraList;
+    }
+
+    public void setMuestraList(List<Muestra> muestraList) {
+        this.muestraList = muestraList;
     }
 
     @XmlTransient
@@ -206,6 +207,15 @@ public class Proceso implements Serializable {
 
     public void setProgramaId(Programa programaId) {
         this.programaId = programaId;
+    }
+
+    @XmlTransient
+    public List<Participante> getParticipanteList() {
+        return participanteList;
+    }
+
+    public void setParticipanteList(List<Participante> participanteList) {
+        this.participanteList = participanteList;
     }
 
     @XmlTransient

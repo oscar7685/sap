@@ -39,6 +39,11 @@ public class Egresado implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "tipo")
+    private String tipo;
     @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona personaId;
@@ -48,19 +53,6 @@ public class Egresado implements Serializable {
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "tipo")
-    private String tipo;
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
 
     public Egresado() {
     }
@@ -69,12 +61,25 @@ public class Egresado implements Serializable {
         this.id = id;
     }
 
+    public Egresado(Integer id, String tipo) {
+        this.id = id;
+        this.tipo = tipo;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Persona getPersonaId() {
@@ -125,4 +130,5 @@ public class Egresado implements Serializable {
     public String toString() {
         return "com.sap.entity.Egresado[ id=" + id + " ]";
     }
+    
 }

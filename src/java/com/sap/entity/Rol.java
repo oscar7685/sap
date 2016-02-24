@@ -5,32 +5,34 @@
 package com.sap.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Ususario
  */
 @Entity
-@Table(name = "muestraegresado", catalog = "sapnaval", schema = "")
+@Table(name = "rol", catalog = "sapnaval", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Muestraegresado.findAll", query = "SELECT m FROM Muestraegresado m"),
-    @NamedQuery(name = "Muestraegresado.findByMuestraPersonaId", query = "SELECT m FROM Muestraegresado m WHERE m.muestrapersonaId = :muestrapersona"),
-    @NamedQuery(name = "Muestraegresado.findById", query = "SELECT m FROM Muestraegresado m WHERE m.id = :id")})
-public class Muestraegresado implements Serializable {
+    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r"),
+    @NamedQuery(name = "Rol.findById", query = "SELECT r FROM Rol r WHERE r.id = :id"),
+    @NamedQuery(name = "Rol.findByRol", query = "SELECT r FROM Rol r WHERE r.rol = :rol")})
+public class Rol implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,16 +40,15 @@ public class Muestraegresado implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 45)
-    @Column(name = "tipo")
-    private String tipo;
-    @JoinColumn(name = "muestrapersona_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Muestrapersona muestrapersonaId;
+    @Column(name = "rol")
+    private String rol;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolId")
+    private List<ParticipanteHasRol> participanteHasRolList;
 
-    public Muestraegresado() {
+    public Rol() {
     }
 
-    public Muestraegresado(Integer id) {
+    public Rol(Integer id) {
         this.id = id;
     }
 
@@ -59,20 +60,21 @@ public class Muestraegresado implements Serializable {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getRol() {
+        return rol;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
-    public Muestrapersona getMuestrapersonaId() {
-        return muestrapersonaId;
+    @XmlTransient
+    public List<ParticipanteHasRol> getParticipanteHasRolList() {
+        return participanteHasRolList;
     }
 
-    public void setMuestrapersonaId(Muestrapersona muestrapersonaId) {
-        this.muestrapersonaId = muestrapersonaId;
+    public void setParticipanteHasRolList(List<ParticipanteHasRol> participanteHasRolList) {
+        this.participanteHasRolList = participanteHasRolList;
     }
 
     @Override
@@ -85,10 +87,10 @@ public class Muestraegresado implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Muestraegresado)) {
+        if (!(object instanceof Rol)) {
             return false;
         }
-        Muestraegresado other = (Muestraegresado) object;
+        Rol other = (Rol) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,7 +99,7 @@ public class Muestraegresado implements Serializable {
 
     @Override
     public String toString() {
-        return "com.sap.entity.Muestraegresado[ id=" + id + " ]";
+        return "com.sap.entity.Rol[ id=" + id + " ]";
     }
     
 }

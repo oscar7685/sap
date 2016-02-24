@@ -45,7 +45,7 @@
                                 <li ><a href="#"><i class="icon-info-sign"></i> Acerca de</a></li>
                                 <li class="dropdown loggining"> 
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="icon-user"></i> ${persona.nombre}
+                                        <i class="icon-user"></i> Evaluador
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu">
@@ -107,7 +107,7 @@
     </div>
     <div class="modal-body">
         La encuesta se ha enviado correctamente.
-        Muchas gracias por participar del proceso de autoevaluaci&oacute;n del programa ${programa.nombre}.
+        Muchas gracias por participar del proceso de autoevaluaci&oacute;n.
     </div>
     <div class="modal-footer">
         <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>

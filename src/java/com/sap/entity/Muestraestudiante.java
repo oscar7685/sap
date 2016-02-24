@@ -62,26 +62,18 @@ public class Muestraestudiante implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "anio")
     private String anio;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "tipo")
+    private String tipo;
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Programa programaId;
     @JoinColumn(name = "muestrapersona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestrapersona muestrapersonaId;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "tipo")
-    private String tipo;
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-    
     public Muestraestudiante() {
     }
 
@@ -89,12 +81,13 @@ public class Muestraestudiante implements Serializable {
         this.id = id;
     }
 
-    public Muestraestudiante(Integer id, String codigo, String semestre, String periodo, String anio) {
+    public Muestraestudiante(Integer id, String codigo, String semestre, String periodo, String anio, String tipo) {
         this.id = id;
         this.codigo = codigo;
         this.semestre = semestre;
         this.periodo = periodo;
         this.anio = anio;
+        this.tipo = tipo;
     }
 
     public Integer getId() {
@@ -135,6 +128,14 @@ public class Muestraestudiante implements Serializable {
 
     public void setAnio(String anio) {
         this.anio = anio;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Programa getProgramaId() {

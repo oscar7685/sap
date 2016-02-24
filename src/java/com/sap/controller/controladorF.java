@@ -7,17 +7,25 @@ package com.sap.controller;
 import com.sap.ejb.EncabezadoFacade;
 import com.sap.ejb.EncuestaFacade;
 import com.sap.ejb.GlosarioFacade;
+import com.sap.ejb.ParticipanteFacade;
+import com.sap.ejb.ParticipanteHasRolFacade;
 import com.sap.ejb.ProgramaFacade;
+import com.sap.ejb.RespuestasFacade;
 import com.sap.ejb.ResultadoevaluacionFacade;
+import com.sap.ejb.RolFacade;
 import com.sap.entity.Encabezado;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Fuente;
 import com.sap.entity.Glosario;
 import com.sap.entity.Muestrapersona;
+import com.sap.entity.Participante;
+import com.sap.entity.ParticipanteHasRol;
 import com.sap.entity.Pregunta;
 import com.sap.entity.Proceso;
 import com.sap.entity.Programa;
+import com.sap.entity.Respuestas;
 import com.sap.entity.Resultadoevaluacion;
+import com.sap.entity.Rol;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -40,6 +48,14 @@ import org.apache.log4j.Logger;
  */
 public class controladorF extends HttpServlet {
 
+    @EJB
+    private RespuestasFacade respuestasFacade;
+    @EJB
+    private RolFacade rolFacade;
+    @EJB
+    private ParticipanteHasRolFacade participanteHasRolFacade;
+    @EJB
+    private ParticipanteFacade participanteFacade;
     @EJB
     private EncuestaFacade encuestaFacade;
     @EJB
@@ -80,6 +96,8 @@ public class controladorF extends HttpServlet {
 
                     List<String> encuestaCombinar = new ArrayList<String>();
 
+                    List<Encuesta> encuestasCombinadas = new ArrayList<Encuesta>();
+                    List<Programa> programasSeleccionados = new ArrayList<Programa>();
 
                     String programasEstudiantes[] = request.getParameterValues("ms1");
                     String docentesPlanta[] = request.getParameterValues("ms2");
@@ -87,9 +105,14 @@ public class controladorF extends HttpServlet {
                     String egresados[] = request.getParameterValues("ms4");
                     String directivo[] = request.getParameterValues("ms5");
                     String administrativo[] = request.getParameterValues("ms6");
+
                     String empleador = request.getParameter("empleador");
-
-
+                    Participante parti1 = new Participante();
+                    Proceso p = (Proceso) session.getAttribute("Proceso");
+                    parti1.setProcesoId(p);
+                    participanteFacade.create(parti1);
+                    List<Participante> auxP1 = participanteFacade.findUltimo("idparticipante");
+                    Participante recienCreado = auxP1.get(0);
 
                     List<Programa> pregunta2 = new ArrayList<Programa>();
                     List<Programa> pregunta11 = new ArrayList<Programa>();
@@ -108,6 +131,12 @@ public class controladorF extends HttpServlet {
 
                     if (empleador != null && empleador.equals("on")) {
                         encuestaCombinar.add("11");
+                        ParticipanteHasRol partRol = new ParticipanteHasRol();
+                        partRol.setParticipanteIdparticipante(recienCreado);
+                        //partRol.setProgramaId(paux);
+                        Rol r12 = rolFacade.find(Integer.parseInt("6"));
+                        partRol.setRolId(r12);
+                        participanteHasRolFacade.create(partRol);
                     }
 
                     if (programasEstudiantes != null && programasEstudiantes.length > 0) {
@@ -141,7 +170,12 @@ public class controladorF extends HttpServlet {
                             }
 
                             if (paux.getTipoformacion().equals("Universitaria")) {
-
+                                ParticipanteHasRol partRol = new ParticipanteHasRol();
+                                partRol.setParticipanteIdparticipante(recienCreado);
+                                partRol.setProgramaId(paux);
+                                Rol r12 = rolFacade.find(Integer.parseInt("1"));
+                                partRol.setRolId(r12);
+                                participanteHasRolFacade.create(partRol);
 
                                 if (!pregunta50.contains(paux)) {
                                     pregunta50.add(paux);
@@ -159,8 +193,12 @@ public class controladorF extends HttpServlet {
                                     encuestaCombinar.add("12");
                                 }
                             } else if (paux.getTipoformacion().equals("Especializacion")) {
-
-
+                                ParticipanteHasRol partRol = new ParticipanteHasRol();
+                                partRol.setParticipanteIdparticipante(recienCreado);
+                                partRol.setProgramaId(paux);
+                                Rol r12 = rolFacade.find(Integer.parseInt("7"));
+                                partRol.setRolId(r12);
+                                participanteHasRolFacade.create(partRol);
                                 if (!pregunta23.contains(paux)) {
                                     pregunta23.add(paux);
                                 }
@@ -171,6 +209,12 @@ public class controladorF extends HttpServlet {
                                     encuestaCombinar.add("24");
                                 }
                             } else if (paux.getTipoformacion().equals("Maestria")) {
+                                ParticipanteHasRol partRol = new ParticipanteHasRol();
+                                partRol.setParticipanteIdparticipante(recienCreado);
+                                partRol.setProgramaId(paux);
+                                Rol r12 = rolFacade.find(Integer.parseInt("8"));
+                                partRol.setRolId(r12);
+                                participanteHasRolFacade.create(partRol);
                                 if (!pregunta24.contains(paux)) {
                                     pregunta24.add(paux);
                                 }
@@ -190,6 +234,13 @@ public class controladorF extends HttpServlet {
                             String programa = docentesPlanta[i];
 
                             Programa paux = programaFacade.find(Integer.parseInt(programa));
+                            ParticipanteHasRol partRol = new ParticipanteHasRol();
+                            partRol.setParticipanteIdparticipante(recienCreado);
+                            partRol.setProgramaId(paux);
+                            Rol r12 = rolFacade.find(Integer.parseInt("2"));
+                            partRol.setRolId(r12);
+                            participanteHasRolFacade.create(partRol);
+
                             if (!pregunta2.contains(paux)) {
                                 pregunta2.add(paux);
                             }
@@ -252,6 +303,12 @@ public class controladorF extends HttpServlet {
                             String programa = docentesCatedra[i];
 
                             Programa paux = programaFacade.find(Integer.parseInt(programa));
+                            ParticipanteHasRol partRol = new ParticipanteHasRol();
+                            partRol.setParticipanteIdparticipante(recienCreado);
+                            partRol.setProgramaId(paux);
+                            Rol r12 = rolFacade.find(Integer.parseInt("11"));
+                            partRol.setRolId(r12);
+                            participanteHasRolFacade.create(partRol);
                             if (!pregunta2.contains(paux)) {
                                 pregunta2.add(paux);
                             }
@@ -313,6 +370,12 @@ public class controladorF extends HttpServlet {
 
                             Programa paux = programaFacade.find(Integer.parseInt(programa));
                             if (paux.getTipoformacion().equals("Universitaria")) {
+                                ParticipanteHasRol partRol = new ParticipanteHasRol();
+                                partRol.setParticipanteIdparticipante(recienCreado);
+                                partRol.setProgramaId(paux);
+                                Rol r12 = rolFacade.find(Integer.parseInt("4"));
+                                partRol.setRolId(r12);
+                                participanteHasRolFacade.create(partRol);
                                 if (!encuestaCombinar.contains("8")) {
                                     encuestaCombinar.add("8");
                                 }
@@ -320,6 +383,12 @@ public class controladorF extends HttpServlet {
                                     encuestaCombinar.add("17");
                                 }
                             } else if (paux.getTipoformacion().equals("Especializacion")) {
+                                ParticipanteHasRol partRol = new ParticipanteHasRol();
+                                partRol.setParticipanteIdparticipante(recienCreado);
+                                partRol.setProgramaId(paux);
+                                Rol r12 = rolFacade.find(Integer.parseInt("9"));
+                                partRol.setRolId(r12);
+                                participanteHasRolFacade.create(partRol);
                                 if (!encuestaCombinar.contains("10")) {
                                     encuestaCombinar.add("10");
                                 }
@@ -327,6 +396,12 @@ public class controladorF extends HttpServlet {
                                     encuestaCombinar.add("30");
                                 }
                             } else if (paux.getTipoformacion().equals("Maestria")) {
+                                ParticipanteHasRol partRol = new ParticipanteHasRol();
+                                partRol.setParticipanteIdparticipante(recienCreado);
+                                partRol.setProgramaId(paux);
+                                Rol r12 = rolFacade.find(Integer.parseInt("10"));
+                                partRol.setRolId(r12);
+                                participanteHasRolFacade.create(partRol);
                                 if (!encuestaCombinar.contains("9")) {
                                     encuestaCombinar.add("9");
                                 }
@@ -342,6 +417,13 @@ public class controladorF extends HttpServlet {
                         for (int i = 0; i < directivo.length; i++) {
                             String programa = directivo[i];
                             Programa paux = programaFacade.find(Integer.parseInt(programa));
+                            ParticipanteHasRol partRol = new ParticipanteHasRol();
+                            partRol.setParticipanteIdparticipante(recienCreado);
+                            partRol.setProgramaId(paux);
+                            Rol r12 = rolFacade.find(Integer.parseInt("5"));
+                            partRol.setRolId(r12);
+                            participanteHasRolFacade.create(partRol);
+
                             if (!encuestaCombinar.contains("6")) {
                                 encuestaCombinar.add("6");
                             }
@@ -420,6 +502,12 @@ public class controladorF extends HttpServlet {
                         for (int i = 0; i < administrativo.length; i++) {
                             String programa = administrativo[i];
                             Programa paux = programaFacade.find(Integer.parseInt(programa));
+                            ParticipanteHasRol partRol = new ParticipanteHasRol();
+                            partRol.setParticipanteIdparticipante(recienCreado);
+                            partRol.setProgramaId(paux);
+                            Rol r12 = rolFacade.find(Integer.parseInt("3"));
+                            partRol.setRolId(r12);
+                            participanteHasRolFacade.create(partRol);
                             if (!encuestaCombinar.contains("7")) {
                                 encuestaCombinar.add("7");
                             }
@@ -461,14 +549,8 @@ public class controladorF extends HttpServlet {
                     }
                     Collections.sort(preguntas);
 
-                    for (int i = 0; i < pregunta19.size(); i++) {
-                        System.out.println("pregunta19: " + pregunta19.get(i).getNombre());
-                    }
-
-
-
-
                     String url = "/WEB-INF/vista/fuente/responderEncuesta.jsp";
+                    session.setAttribute("participante", recienCreado);
                     session.setAttribute("preguntas", preguntas);
                     session.setAttribute("pregunta2", pregunta2);
                     session.setAttribute("pregunta11", pregunta11);
@@ -485,7 +567,6 @@ public class controladorF extends HttpServlet {
                     session.setAttribute("pregunta50", pregunta50);
 
 
-                    Proceso p = (Proceso) session.getAttribute("proceso");
                     Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
                     Fuente fuente = (Fuente) session.getAttribute("fuente");
 
@@ -497,67 +578,423 @@ public class controladorF extends HttpServlet {
                 } else {
                     if (RESPONDER.equals(request.getParameter("action"))) {
 
-                        Proceso p = (Proceso) session.getAttribute("proceso");
-                        Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
-                        Fuente fuente = (Fuente) session.getAttribute("fuente");
-                        Encuesta encuesta = (Encuesta) session.getAttribute("encuesta");
-                        List<Pregunta> preguntas = encuesta.getPreguntaList();
-                        String estado = "terminado";
+                        Participante part78 = (Participante) session.getAttribute("participante");
 
-                        if (RESPONDER.equals(request.getParameter("action"))) {
-                            estado = "terminado";
-                        }
-                        List<Encabezado> encabExistentes = encabezadoFacade.findByVars(p, encuesta, fuente, persona);
-                        Encabezado enc = null;
+                        List<Pregunta> allPreguntas = (List<Pregunta>) session.getAttribute("preguntas");
+                        List<Programa> programasP2 = (List<Programa>) session.getAttribute("pregunta2");
+                        List<Programa> programasP11 = (List<Programa>) session.getAttribute("pregunta11");
+                        List<Programa> programasP16 = (List<Programa>) session.getAttribute("pregunta16");
+                        List<Programa> programasP19 = (List<Programa>) session.getAttribute("pregunta19");
+                        List<Programa> programasP20 = (List<Programa>) session.getAttribute("pregunta20");
+                        List<Programa> programasP21 = (List<Programa>) session.getAttribute("pregunta21");
+                        List<Programa> programasP22 = (List<Programa>) session.getAttribute("pregunta22");
+                        List<Programa> programasP23 = (List<Programa>) session.getAttribute("pregunta23");
+                        List<Programa> programasP24 = (List<Programa>) session.getAttribute("pregunta24");
+                        List<Programa> programasP25 = (List<Programa>) session.getAttribute("pregunta25");
+                        List<Programa> programasP30 = (List<Programa>) session.getAttribute("pregunta30");
+                        List<Programa> programasP32 = (List<Programa>) session.getAttribute("pregunta32");
+                        List<Programa> programasP50 = (List<Programa>) session.getAttribute("pregunta50");
+
+                        for (Pregunta pregunta : allPreguntas) {
 
 
-                        if (enc == null) {
-                            enc = new Encabezado();
-                            enc.setProcesoId(p);
-                            enc.setEncuestaId(encuesta);
-                            enc.setEstado(estado);
-                            enc.setFuenteId(fuente);
-                            enc.setMuestrapersonaId(persona);
-                            enc.setFecha(new Date(new java.util.Date().getTime()));
-                            encabezadoFacade.create(enc);
+                            if (!("si").equals(pregunta.getRepetir())) {
+                                if (pregunta.getPreguntaList().isEmpty()) {
+                                    Respuestas raux = new Respuestas();
+                                    raux.setParticipanteIdparticipante(part78);
+                                    raux.setPreguntaId(pregunta);
+                                    String respuesta = (String) request.getParameter("pregunta" + pregunta.getId());
+                                    raux.setRespuesta(Integer.parseInt(respuesta));
+                                    respuestasFacade.create(raux);
+                                } else {
+                                    for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                        Respuestas raux = new Respuestas();
+                                        raux.setParticipanteIdparticipante(part78);
+                                        raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                        String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                        raux.setRespuesta(Integer.parseInt(respuesta));
+                                        respuestasFacade.create(raux);
 
-                            Encabezado recienCreado = encabezadoFacade.findByUltimo();
-                            try {
-                                for (Pregunta pregunta : preguntas) {
+                                    }
+                                }
+                            } else {
+                                //21, 24, 25
+                                if (pregunta.getCodigo().equals("21")) {
+                                    if (programasP21.size() > 0) {
+                                        for (Programa programa : programasP21) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta);
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getId() + "programa" + programa.getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            raux.setProgramaId(programa);
+                                            respuestasFacade.create(raux);
+                                        }
+                                    } else {
+                                        Respuestas raux = new Respuestas();
+                                        raux.setParticipanteIdparticipante(part78);
+                                        raux.setPreguntaId(pregunta);
+                                        String respuesta = (String) request.getParameter("pregunta" + pregunta.getId());
+                                        raux.setRespuesta(Integer.parseInt(respuesta));
+                                        respuestasFacade.create(raux);
+                                    }
+                                }
+                                if (pregunta.getCodigo().equals("24")) {
+                                    if (programasP24.size() > 0) {
+                                        for (Programa programa : programasP24) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta);
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getId() + "programa" + programa.getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            raux.setProgramaId(programa);
+                                            respuestasFacade.create(raux);
+                                        }
+                                    } else {
+                                        Respuestas raux = new Respuestas();
+                                        raux.setParticipanteIdparticipante(part78);
+                                        raux.setPreguntaId(pregunta);
+                                        String respuesta = (String) request.getParameter("pregunta" + pregunta.getId());
+                                        raux.setRespuesta(Integer.parseInt(respuesta));
+                                        respuestasFacade.create(raux);
+                                    }
+                                }
+                                if (pregunta.getCodigo().equals("25")) {
+                                    if (programasP25.size() > 0) {
+                                        for (Programa programa : programasP25) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta);
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getId() + "programa" + programa.getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            raux.setProgramaId(programa);
+                                            respuestasFacade.create(raux);
+                                        }
+                                    } else {
+                                        Respuestas raux = new Respuestas();
+                                        raux.setParticipanteIdparticipante(part78);
+                                        raux.setPreguntaId(pregunta);
+                                        String respuesta = (String) request.getParameter("pregunta" + pregunta.getId());
+                                        raux.setRespuesta(Integer.parseInt(respuesta));
+                                        respuestasFacade.create(raux);
+                                    }
+                                }
 
-                                    if (pregunta.getPreguntaList() != null && pregunta.getPreguntaList().size() > 0) {
-
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Resultadoevaluacion re = new Resultadoevaluacion();
-                                            re.setEncabezadoId(recienCreado);
-                                            re.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta1 = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            re.setRespuesta(respuesta1);
-                                            re.setRespuestaAbierta(null);
-                                            resultadoevaluacionFacade.create(re);
+                                if (pregunta.getCodigo().equals("2")) {
+                                    if (programasP2.size() > 0) {
+                                        for (Programa programa : programasP2) {
+                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                                Respuestas raux = new Respuestas();
+                                                raux.setParticipanteIdparticipante(part78);
+                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
+                                                raux.setRespuesta(Integer.parseInt(respuesta));
+                                                raux.setProgramaId(programa);
+                                                respuestasFacade.create(raux);
+                                            }
 
                                         }
                                     } else {
-                                        Resultadoevaluacion re = new Resultadoevaluacion();
-                                        re.setEncabezadoId(recienCreado);
-                                        re.setPreguntaId(pregunta);
-                                        String respuesta1 = (String) request.getParameter("pregunta" + pregunta.getId());
-                                        re.setRespuesta(respuesta1);
-                                        re.setRespuestaAbierta(null);
-                                        resultadoevaluacionFacade.create(re);
+                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            respuestasFacade.create(raux);
+                                        }
                                     }
                                 }
-                            } catch (Exception e) {
-                                LOGGER.error("Ha ocurrido un error guardando las repuestas: ", e);
-                            }
+                                if (pregunta.getCodigo().equals("11")) {
+                                    if (programasP11.size() > 0) {
+                                        for (Programa programa : programasP11) {
+                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                                Respuestas raux = new Respuestas();
+                                                raux.setParticipanteIdparticipante(part78);
+                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
+                                                raux.setRespuesta(Integer.parseInt(respuesta));
+                                                raux.setProgramaId(programa);
+                                                respuestasFacade.create(raux);
+                                            }
 
-                            recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
-                            encabezadoFacade.edit(recienCreado);
-                            if (RESPONDER.equals(request.getParameter("action"))) {
-                                session.setAttribute("encuesta", null);
-                            }
+                                        }
+                                    } else {
+                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            respuestasFacade.create(raux);
+                                        }
+                                    }
+                                }
+                                if (pregunta.getCodigo().equals("16")) {
+                                    if (programasP16.size() > 0) {
+                                        for (Programa programa : programasP16) {
+                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                                Respuestas raux = new Respuestas();
+                                                raux.setParticipanteIdparticipante(part78);
+                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
+                                                raux.setRespuesta(Integer.parseInt(respuesta));
+                                                raux.setProgramaId(programa);
+                                                respuestasFacade.create(raux);
+                                            }
 
+                                        }
+                                    } else {
+                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            respuestasFacade.create(raux);
+                                        }
+                                    }
+                                }
+                                if (pregunta.getCodigo().equals("19")) {
+                                    if (programasP19.size() > 0) {
+                                        for (Programa programa : programasP19) {
+                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                                Respuestas raux = new Respuestas();
+                                                raux.setParticipanteIdparticipante(part78);
+                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
+                                                raux.setRespuesta(Integer.parseInt(respuesta));
+                                                raux.setProgramaId(programa);
+                                                respuestasFacade.create(raux);
+                                            }
+
+                                        }
+                                    } else {
+                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            respuestasFacade.create(raux);
+                                        }
+                                    }
+                                }
+                                if (pregunta.getCodigo().equals("20")) {
+                                    if (programasP20.size() > 0) {
+                                        for (Programa programa : programasP20) {
+                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                                Respuestas raux = new Respuestas();
+                                                raux.setParticipanteIdparticipante(part78);
+                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
+                                                raux.setRespuesta(Integer.parseInt(respuesta));
+                                                raux.setProgramaId(programa);
+                                                respuestasFacade.create(raux);
+                                            }
+
+                                        }
+                                    } else {
+                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            respuestasFacade.create(raux);
+                                        }
+                                    }
+                                }
+                                if (pregunta.getCodigo().equals("22")) {
+                                    if (programasP22.size() > 0) {
+                                        for (Programa programa : programasP22) {
+                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                                Respuestas raux = new Respuestas();
+                                                raux.setParticipanteIdparticipante(part78);
+                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
+                                                raux.setRespuesta(Integer.parseInt(respuesta));
+                                                raux.setProgramaId(programa);
+                                                respuestasFacade.create(raux);
+                                            }
+
+                                        }
+                                    } else {
+                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            respuestasFacade.create(raux);
+                                        }
+                                    }
+                                }
+                                if (pregunta.getCodigo().equals("23")) {
+                                    if (programasP23.size() > 0) {
+                                        for (Programa programa : programasP23) {
+                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                                Respuestas raux = new Respuestas();
+                                                raux.setParticipanteIdparticipante(part78);
+                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
+                                                raux.setRespuesta(Integer.parseInt(respuesta));
+                                                raux.setProgramaId(programa);
+                                                respuestasFacade.create(raux);
+                                            }
+
+                                        }
+                                    } else {
+                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            respuestasFacade.create(raux);
+                                        }
+                                    }
+                                }
+                                if (pregunta.getCodigo().equals("30")) {
+                                    if (programasP30.size() > 0) {
+                                        for (Programa programa : programasP30) {
+                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                                Respuestas raux = new Respuestas();
+                                                raux.setParticipanteIdparticipante(part78);
+                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
+                                                raux.setRespuesta(Integer.parseInt(respuesta));
+                                                raux.setProgramaId(programa);
+                                                respuestasFacade.create(raux);
+                                            }
+
+                                        }
+                                    } else {
+                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            respuestasFacade.create(raux);
+                                        }
+                                    }
+                                }
+                                if (pregunta.getCodigo().equals("32")) {
+                                    if (programasP32.size() > 0) {
+                                        for (Programa programa : programasP32) {
+                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                                Respuestas raux = new Respuestas();
+                                                raux.setParticipanteIdparticipante(part78);
+                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
+                                                raux.setRespuesta(Integer.parseInt(respuesta));
+                                                raux.setProgramaId(programa);
+                                                respuestasFacade.create(raux);
+                                            }
+
+                                        }
+                                    } else {
+                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            respuestasFacade.create(raux);
+                                        }
+                                    }
+                                }
+                                if (pregunta.getCodigo().equals("50")) {
+                                    if (programasP50.size() > 0) {
+                                        for (Programa programa : programasP50) {
+                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                                Respuestas raux = new Respuestas();
+                                                raux.setParticipanteIdparticipante(part78);
+                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
+                                                raux.setRespuesta(Integer.parseInt(respuesta));
+                                                raux.setProgramaId(programa);
+                                                respuestasFacade.create(raux);
+                                            }
+
+                                        }
+                                    } else {
+                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                                            Respuestas raux = new Respuestas();
+                                            raux.setParticipanteIdparticipante(part78);
+                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                            raux.setRespuesta(Integer.parseInt(respuesta));
+                                            respuestasFacade.create(raux);
+                                        }
+                                    }
+                                }
+
+                            }
                         }
+
+
+                        /*  Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
+                         Fuente fuente = (Fuente) session.getAttribute("fuente");
+                         Encuesta encuesta = (Encuesta) session.getAttribute("encuesta");
+                         List<Pregunta> preguntas = encuesta.getPreguntaList();
+                         String estado = "terminado";
+
+                         if (RESPONDER.equals(request.getParameter("action"))) {
+                         estado = "terminado";
+                         }
+                         List<Encabezado> encabExistentes = encabezadoFacade.findByVars(p, encuesta, fuente, persona);
+                         Encabezado enc = null;
+
+
+                         if (enc == null) {
+                         enc = new Encabezado();
+                         enc.setProcesoId(p);
+                         enc.setEncuestaId(encuesta);
+                         enc.setEstado(estado);
+                         enc.setFuenteId(fuente);
+                         enc.setMuestrapersonaId(persona);
+                         enc.setFecha(new Date(new java.util.Date().getTime()));
+                         encabezadoFacade.create(enc);
+
+                         Encabezado recienCreado = encabezadoFacade.findByUltimo();
+                         try {
+                         for (Pregunta pregunta : preguntas) {
+
+                         if (pregunta.getPreguntaList() != null && pregunta.getPreguntaList().size() > 0) {
+
+                         for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
+                         Resultadoevaluacion re = new Resultadoevaluacion();
+                         re.setEncabezadoId(recienCreado);
+                         re.setPreguntaId(pregunta.getPreguntaList().get(i));
+                         String respuesta1 = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                         re.setRespuesta(respuesta1);
+                         re.setRespuestaAbierta(null);
+                         resultadoevaluacionFacade.create(re);
+
+                         }
+                         } else {
+                         Resultadoevaluacion re = new Resultadoevaluacion();
+                         re.setEncabezadoId(recienCreado);
+                         re.setPreguntaId(pregunta);
+                         String respuesta1 = (String) request.getParameter("pregunta" + pregunta.getId());
+                         re.setRespuesta(respuesta1);
+                         re.setRespuestaAbierta(null);
+                         resultadoevaluacionFacade.create(re);
+                         }
+                         }
+                         } catch (Exception e) {
+                         LOGGER.error("Ha ocurrido un error guardando las repuestas: ", e);
+                         }
+
+                         recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
+                         encabezadoFacade.edit(recienCreado);
+                         if (RESPONDER.equals(request.getParameter("action"))) {
+                         session.setAttribute("encuesta", null);
+                         }
+
+                         }*/
                     } else {
                         if (action.equals("inicioCC")) {
                             String url = "/WEB-INF/vista/fuente/inicio.jsp";

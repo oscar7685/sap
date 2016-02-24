@@ -14,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -59,28 +58,22 @@ public class Indicador implements Serializable {
     @Size(min = 1, max = 2000)
     @Column(name = "nombre")
     private String nombre;
-    @JoinTable(name = "instrumentohasindicador", joinColumns = {
-        @JoinColumn(name = "indicador_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "instrumento_id", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "indicadorList")
     private List<Instrumento> instrumentoList;
-    @JoinTable(name = "procesohasindicador", joinColumns = {
-        @JoinColumn(name = "indicador_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "proceso_id", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "indicadorList")
     private List<Proceso> procesoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "indicadorId")
-    private List<Ponderacionindicador> ponderacionindicadorList;
+    private List<Numericadocumental> numericadocumentalList;
     @OneToMany(mappedBy = "indicadorId")
     private List<Pregunta> preguntaList;
-    @JoinColumn(name = "caracteristica_id", referencedColumnName = "id")
-    @ManyToOne
-    private Caracteristica caracteristicaId;
     @JoinColumn(name = "modelo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Modelo modeloId;
+    @JoinColumn(name = "caracteristica_id", referencedColumnName = "id")
+    @ManyToOne
+    private Caracteristica caracteristicaId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "indicadorId")
-    private List<Numericadocumental> numericadocumentalList;
+    private List<Ponderacionindicador> ponderacionindicadorList;
 
     public Indicador() {
     }
@@ -138,12 +131,12 @@ public class Indicador implements Serializable {
     }
 
     @XmlTransient
-    public List<Ponderacionindicador> getPonderacionindicadorList() {
-        return ponderacionindicadorList;
+    public List<Numericadocumental> getNumericadocumentalList() {
+        return numericadocumentalList;
     }
 
-    public void setPonderacionindicadorList(List<Ponderacionindicador> ponderacionindicadorList) {
-        this.ponderacionindicadorList = ponderacionindicadorList;
+    public void setNumericadocumentalList(List<Numericadocumental> numericadocumentalList) {
+        this.numericadocumentalList = numericadocumentalList;
     }
 
     @XmlTransient
@@ -155,14 +148,6 @@ public class Indicador implements Serializable {
         this.preguntaList = preguntaList;
     }
 
-    public Caracteristica getCaracteristicaId() {
-        return caracteristicaId;
-    }
-
-    public void setCaracteristicaId(Caracteristica caracteristicaId) {
-        this.caracteristicaId = caracteristicaId;
-    }
-
     public Modelo getModeloId() {
         return modeloId;
     }
@@ -171,13 +156,21 @@ public class Indicador implements Serializable {
         this.modeloId = modeloId;
     }
 
-    @XmlTransient
-    public List<Numericadocumental> getNumericadocumentalList() {
-        return numericadocumentalList;
+    public Caracteristica getCaracteristicaId() {
+        return caracteristicaId;
     }
 
-    public void setNumericadocumentalList(List<Numericadocumental> numericadocumentalList) {
-        this.numericadocumentalList = numericadocumentalList;
+    public void setCaracteristicaId(Caracteristica caracteristicaId) {
+        this.caracteristicaId = caracteristicaId;
+    }
+
+    @XmlTransient
+    public List<Ponderacionindicador> getPonderacionindicadorList() {
+        return ponderacionindicadorList;
+    }
+
+    public void setPonderacionindicadorList(List<Ponderacionindicador> ponderacionindicadorList) {
+        this.ponderacionindicadorList = ponderacionindicadorList;
     }
 
     @Override

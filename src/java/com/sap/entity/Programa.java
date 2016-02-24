@@ -66,6 +66,8 @@ public class Programa implements Serializable {
         @JoinColumn(name = "representante_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Representante> representanteList;
+    @OneToMany(mappedBy = "programaId")
+    private List<Respuestas> respuestasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
     private List<Administrativo> administrativoList;
     @JoinColumn(name = "facultad_id", referencedColumnName = "id")
@@ -85,6 +87,8 @@ public class Programa implements Serializable {
     private List<Empleador> empleadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaId")
     private List<Docente> docenteList;
+    @OneToMany(mappedBy = "programaId")
+    private List<ParticipanteHasRol> participanteHasRolList;
 
     public Programa() {
     }
@@ -145,6 +149,15 @@ public class Programa implements Serializable {
 
     public void setRepresentanteList(List<Representante> representanteList) {
         this.representanteList = representanteList;
+    }
+
+    @XmlTransient
+    public List<Respuestas> getRespuestasList() {
+        return respuestasList;
+    }
+
+    public void setRespuestasList(List<Respuestas> respuestasList) {
+        this.respuestasList = respuestasList;
     }
 
     @XmlTransient
@@ -225,6 +238,15 @@ public class Programa implements Serializable {
 
     public void setDocenteList(List<Docente> docenteList) {
         this.docenteList = docenteList;
+    }
+
+    @XmlTransient
+    public List<ParticipanteHasRol> getParticipanteHasRolList() {
+        return participanteHasRolList;
+    }
+
+    public void setParticipanteHasRolList(List<ParticipanteHasRol> participanteHasRolList) {
+        this.participanteHasRolList = participanteHasRolList;
     }
 
     @Override

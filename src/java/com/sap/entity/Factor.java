@@ -80,15 +80,6 @@ public class Factor implements Serializable {
         return id;
     }
 
-    public int CantiIndicadores() {
-        int cantInd = 0;
-        List<Caracteristica> caracteristicas = this.getCaracteristicaList();
-        for (int i = 0; i < caracteristicas.size(); i++) {
-            cantInd += caracteristicas.get(i).getIndicadorList().size();
-        }
-        return cantInd;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }
