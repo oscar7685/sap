@@ -33,12 +33,18 @@ public class CaracteristicaFacade extends AbstractFacade<Caracteristica> {
     public CaracteristicaFacade() {
         super(Caracteristica.class);
     }
-    
-     public List findByModelo(Modelo m) {
+
+    public List findByModelo(Modelo m) {
         Query q = em.createNamedQuery("Caracteristica.findByModelo");
         q.setParameter("modelo", m);
         return q.getResultList();
-}
+    }
+
+    public List findByModeloOptimizada(Modelo m) {
+        Query q = em.createNamedQuery("Caracteristica.findByModeloOptimizada");
+        q.setParameter("modelo", m);
+        return q.getResultList();
+    }
 
     public List findByFactor(Factor f) {
         Query q = em.createNamedQuery("Caracteristica.findByFactor");

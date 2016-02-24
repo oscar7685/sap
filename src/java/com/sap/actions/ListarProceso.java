@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 public class ListarProceso implements Action {
 
     ProcesoFacade procesoFacade = lookupProcesoFacadeBean();
-    private final static Logger LOGGER = Logger.getLogger(ListarProceso.class);
+    private final Logger LOGGER = Logger.getLogger(ListarProceso.class);
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {

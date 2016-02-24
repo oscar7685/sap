@@ -4,10 +4,14 @@
  */
 package com.sap.ejb;
 
+import com.sap.entity.Pregunta;
 import com.sap.entity.Respuestas;
+import com.sap.entity.Rol;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -21,6 +25,13 @@ public class RespuestasFacade extends AbstractFacade<Respuestas> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    public List findByPreguntaRol(Pregunta p, Rol r) {
+        Query q = em.createNamedQuery("Respuestas.findByPreguntaRol");
+        q.setParameter("idPregunta", p);
+        q.setParameter("idRol", r);
+        return q.getResultList();
     }
 
     public RespuestasFacade() {

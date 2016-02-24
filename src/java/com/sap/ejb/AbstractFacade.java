@@ -18,8 +18,8 @@ import org.apache.log4j.Logger;
  * @author Ususario
  */
 public abstract class AbstractFacade<T> {
-
-    private final static Logger LOGGER = Logger.getLogger(AbstractFacade.class);
+    
+    private final Logger LOGGER = Logger.getLogger(AbstractFacade.class);
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {

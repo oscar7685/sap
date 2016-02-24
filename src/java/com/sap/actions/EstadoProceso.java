@@ -45,7 +45,7 @@ public class EstadoProceso implements Action {
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
         Proceso p = (Proceso) sesion.getAttribute("Proceso");
-        Muestra m = p.getMuestraList().get(0);
+        /*Muestra m = p.getMuestraList().get(0);
         int totalMuestra = muestrapersonaFacade.countByProperty("muestraId", m);
         int totalEst = muestraestudianteFacade.countByProperty("muestrapersonaId.muestraId", m);
         int totalDoc = muestradocenteFacade.countByProperty("muestrapersonaId.muestraId", m);
@@ -91,7 +91,7 @@ public class EstadoProceso implements Action {
         sesion.setAttribute("totalAdm", totalAdm);
         sesion.setAttribute("terminadosAdm", terminadosAdm);
         sesion.setAttribute("totalDir", totalDir);
-        sesion.setAttribute("terminadosDir", terminadosDir);
+        sesion.setAttribute("terminadosDir", terminadosDir);*/
         return "/WEB-INF/vista/comitePrograma/proceso/informe/estadoProceso.jsp";
     }
 

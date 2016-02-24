@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
  */
 public class cpController extends HttpServlet {
 
-    private final static Logger LOGGER = Logger.getLogger(cpController.class);
+    private final Logger LOGGER = Logger.getLogger(cpController.class);
 
     /**
      * Processes requests for both HTTP

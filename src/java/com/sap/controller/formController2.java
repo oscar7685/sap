@@ -89,7 +89,7 @@ public class formController2 extends HttpServlet {
     private PonderacioncaracteristicaFacade PonderacioncaracteristicaFacade;
     @EJB
     private MuestraFacade muestraFacade;
-    private final static Logger LOGGER = Logger.getLogger(formController2.class);
+    private final Logger LOGGER = Logger.getLogger(formController2.class);
 
     /**
      * Processes requests for both HTTP

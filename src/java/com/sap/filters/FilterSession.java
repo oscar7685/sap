@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
  */
 public class FilterSession implements Filter {
 
-    private final static Logger LOGGER = Logger.getLogger(FilterSession.class);
+    private final Logger LOGGER = Logger.getLogger(FilterSession.class);
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently

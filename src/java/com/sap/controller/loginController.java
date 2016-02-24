@@ -51,7 +51,7 @@ import org.apache.log4j.Logger;
  */
 public class loginController extends HttpServlet {
 
-    private final static Logger LOGGER = Logger.getLogger(loginController.class);
+    private final Logger LOGGER = Logger.getLogger(loginController.class);
     @EJB
     private EncabezadoFacade encabezadoFacade;
     @EJB

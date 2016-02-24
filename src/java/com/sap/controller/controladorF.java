@@ -68,7 +68,7 @@ public class controladorF extends HttpServlet {
     private EncabezadoFacade encabezadoFacade;
     private final static String RESPONDER = "responderE";
     private final static String GUARDAR = "guardarE";
-    private final static Logger LOGGER = Logger.getLogger(controladorF.class);
+    private final Logger LOGGER = Logger.getLogger(controladorF.class);
 
     /**
      * Processes requests for both HTTP

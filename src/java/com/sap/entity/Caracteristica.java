@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Caracteristica.findByCodigo", query = "SELECT c FROM Caracteristica c WHERE c.codigo = :codigo"),
     @NamedQuery(name = "Caracteristica.findByNombre", query = "SELECT c FROM Caracteristica c WHERE c.nombre = :nombre"),
     @NamedQuery(name = "Caracteristica.findByFactor", query = "SELECT c FROM Caracteristica c WHERE c.factorId = :factor"),
+    @NamedQuery(name = "Caracteristica.findByModeloOptimizada", query = "SELECT c FROM Caracteristica c LEFT JOIN FETCH c.factorId WHERE c.modeloId = :modelo and size(c.preguntaList) > 0 "),
     @NamedQuery(name = "Caracteristica.findByModelo", query = "SELECT c FROM Caracteristica c WHERE c.modeloId = :modelo")})
 public class Caracteristica implements Serializable {
     private static final long serialVersionUID = 1L;

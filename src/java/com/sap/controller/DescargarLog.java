@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
  */
 public class DescargarLog extends HttpServlet {
 
-    private final static Logger LOGGER = Logger.getLogger(DescargarLog.class);
+    private final Logger LOGGER = Logger.getLogger(DescargarLog.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
