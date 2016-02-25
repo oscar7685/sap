@@ -40,7 +40,7 @@ public class ResultadosInstitucionales implements Action {
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        String url = "NA";
+        String url = "/WEB-INF/vista/comitePrograma/proceso/informe/dmaInstitucional.jsp";
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
         Modelo m = modeloFacade.find(Integer.parseInt("1"));
@@ -81,7 +81,8 @@ public class ResultadosInstitucionales implements Action {
                 }
             }
         }
-
+        sesion.setAttribute("resultados", resultados);
+        sesion.setAttribute("caractesticas", caractesticas);
         return url;
     }
 
