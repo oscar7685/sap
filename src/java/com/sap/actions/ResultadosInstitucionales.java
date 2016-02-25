@@ -47,6 +47,7 @@ public class ResultadosInstitucionales implements Action {
         List<Caracteristica> caractesticas = caracteristicaFacade.findByModeloOptimizada(m);
 
         String[][] resultados = new String[258][12];
+        String[][] cerillos = new String[258][12];
         List<Rol> roles = rolFacade.findAll();
         for (Caracteristica caracteristica : caractesticas) {
             if (caracteristica.getPreguntaList().size() > 0) {
@@ -56,32 +57,59 @@ public class ResultadosInstitucionales implements Action {
                         for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
                             for (Rol rol : roles) {
                                 List<Respuestas> rs = respuestasFacade.findByPreguntaRol(pregunta.getPreguntaList().get(i), rol);
-                                int unos = 0, dos = 0, tres = 0, cuatros = 0, cincos = 0, ceros = 0;
+                                int cuatros = 0, cincos = 0, ceros = 0;
                                 for (Respuestas respuestas : rs) {
                                     if (respuestas.getRespuesta() == 0) {
                                         ceros++;
-                                    } else if (respuestas.getRespuesta() == 1) {
-                                        unos++;
-                                    } else if (respuestas.getRespuesta() == 2) {
-                                        dos++;
-                                    } else if (respuestas.getRespuesta() == 3) {
-                                        tres++;
                                     } else if (respuestas.getRespuesta() == 4) {
                                         cuatros++;
                                     } else if (respuestas.getRespuesta() == 5) {
                                         cincos++;
                                     }
                                 }
-                                resultados[pregunta.getPreguntaList().get(i).getId()][1] = "" + rs.size() + "," + cincos + "," + cuatros + "," + tres + "," + dos + "," + unos + "," + ceros;
+                                if (rs.isEmpty()) {
+                                    resultados[pregunta.getPreguntaList().get(i).getId()][rol.getId()] = "NA";
+                                } else {
+                                    double dma = (double) ((cincos + cuatros) * 100) / rs.size();
+                                    double cerosPorcentaje = (double) ((ceros) * 100) / rs.size();
+                                    resultados[pregunta.getPreguntaList().get(i).getId()][rol.getId()] = "" + dma + "";
+                                    cerillos[pregunta.getPreguntaList().get(i).getId()][rol.getId()] = "" + cerosPorcentaje;
+                                }
+                                //resultados[pregunta.getPreguntaList().get(i).getId()][1] = "" + rs.size() + "," + cincos + "," + cuatros + "," + tres + "," + dos + "," + unos + "," + ceros;
                                 //System.out.println(rs.size() + "," + cincos + "," + cuatros + "," + tres + "," + dos + "," + unos + "," + ceros);
                             }
 
+                        }
+                    } else {
+                        for (Rol rol : roles) {
+                            List<Respuestas> rs = respuestasFacade.findByPreguntaRol(pregunta, rol);
+                            int cuatros = 0, cincos = 0, ceros = 0;
+                            for (Respuestas respuestas : rs) {
+                                if (respuestas.getRespuesta() == 0) {
+                                    ceros++;
+                                } else if (respuestas.getRespuesta() == 4) {
+                                    cuatros++;
+                                } else if (respuestas.getRespuesta() == 5) {
+                                    cincos++;
+                                }
+                            }
+                            if (rs.isEmpty()) {
+                                resultados[pregunta.getId()][rol.getId()] = "NA";
+                            } else {
+                                double dma = (double) ((cincos + cuatros) * 100) / rs.size();
+                                double cerosPorcentaje = (double) ((ceros) * 100) / rs.size();
+                                resultados[pregunta.getId()][rol.getId()] = "" + dma + "";
+                                cerillos[pregunta.getId()][rol.getId()] = "" + cerosPorcentaje;
+                            }
+                            //resultados[pregunta.getPreguntaList().get(i).getId()][1] = "" + rs.size() + "," + cincos + "," + cuatros + "," + tres + "," + dos + "," + unos + "," + ceros;
+                            //System.out.println(rs.size() + "," + cincos + "," + cuatros + "," + tres + "," + dos + "," + unos + "," + ceros);
                         }
                     }
                 }
             }
         }
         sesion.setAttribute("resultados", resultados);
+        sesion.setAttribute("cerillos", cerillos);
         sesion.setAttribute("caractesticas", caractesticas);
         return url;
     }
