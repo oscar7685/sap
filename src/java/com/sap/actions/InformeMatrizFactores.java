@@ -201,7 +201,7 @@ public class InformeMatrizFactores implements Action{
     private ResultadoevaluacionFacade lookupResultadoevaluacionFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ResultadoevaluacionFacade) c.lookup("java:global/sap/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
+            return (ResultadoevaluacionFacade) c.lookup("java:global/sapnaval/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -211,7 +211,7 @@ public class InformeMatrizFactores implements Action{
     private NumericadocumentalFacade lookupNumericadocumentalFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (NumericadocumentalFacade) c.lookup("java:global/sap/NumericadocumentalFacade!com.sap.ejb.NumericadocumentalFacade");
+            return (NumericadocumentalFacade) c.lookup("java:global/sapnaval/NumericadocumentalFacade!com.sap.ejb.NumericadocumentalFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -221,7 +221,7 @@ public class InformeMatrizFactores implements Action{
     private PonderacioncaracteristicaFacade lookupPonderacioncaracteristicaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (PonderacioncaracteristicaFacade) c.lookup("java:global/sap/PonderacioncaracteristicaFacade!com.sap.ejb.PonderacioncaracteristicaFacade");
+            return (PonderacioncaracteristicaFacade) c.lookup("java:global/sapnaval/PonderacioncaracteristicaFacade!com.sap.ejb.PonderacioncaracteristicaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -231,7 +231,7 @@ public class InformeMatrizFactores implements Action{
     private PonderacionfactorFacade lookupPonderacionfactorFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (PonderacionfactorFacade) c.lookup("java:global/sap/PonderacionfactorFacade!com.sap.ejb.PonderacionfactorFacade");
+            return (PonderacionfactorFacade) c.lookup("java:global/sapnaval/PonderacionfactorFacade!com.sap.ejb.PonderacionfactorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

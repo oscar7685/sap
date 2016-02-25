@@ -51,7 +51,7 @@ public class ListarProgramasPorLineamiento implements Action {
     private ProgramaFacade lookupProgramaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ProgramaFacade) c.lookup("java:global/sap/ProgramaFacade!com.sap.ejb.ProgramaFacade");
+            return (ProgramaFacade) c.lookup("java:global/sapnaval/ProgramaFacade!com.sap.ejb.ProgramaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

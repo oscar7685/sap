@@ -86,7 +86,7 @@ public class EncuestaAleatoria implements Action {
     private EncabezadoFacade lookupEncabezadoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (EncabezadoFacade) c.lookup("java:global/sap/EncabezadoFacade!com.sap.ejb.EncabezadoFacade");
+            return (EncabezadoFacade) c.lookup("java:global/sapnaval/EncabezadoFacade!com.sap.ejb.EncabezadoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -96,7 +96,7 @@ public class EncuestaAleatoria implements Action {
     private ResultadoevaluacionFacade lookupResultadoevaluacionFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ResultadoevaluacionFacade) c.lookup("java:global/sap/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
+            return (ResultadoevaluacionFacade) c.lookup("java:global/sapnaval/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

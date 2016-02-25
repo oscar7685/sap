@@ -37,7 +37,7 @@ public class ListPonderacionInd implements Action {
     private PonderacionindicadorFacade lookupPonderacionindicadorFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (PonderacionindicadorFacade) c.lookup("java:global/sap/PonderacionindicadorFacade!com.sap.ejb.PonderacionindicadorFacade");
+            return (PonderacionindicadorFacade) c.lookup("java:global/sapnaval/PonderacionindicadorFacade!com.sap.ejb.PonderacionindicadorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

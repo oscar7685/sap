@@ -176,7 +176,7 @@ public class InformeMatrizCaracteristicas implements Action {
     private ResultadoevaluacionFacade lookupResultadoevaluacionFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ResultadoevaluacionFacade) c.lookup("java:global/sap/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
+            return (ResultadoevaluacionFacade) c.lookup("java:global/sapnaval/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -186,7 +186,7 @@ public class InformeMatrizCaracteristicas implements Action {
     private NumericadocumentalFacade lookupNumericadocumentalFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (NumericadocumentalFacade) c.lookup("java:global/sap/NumericadocumentalFacade!com.sap.ejb.NumericadocumentalFacade");
+            return (NumericadocumentalFacade) c.lookup("java:global/sapnaval/NumericadocumentalFacade!com.sap.ejb.NumericadocumentalFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -196,7 +196,7 @@ public class InformeMatrizCaracteristicas implements Action {
     private PonderacioncaracteristicaFacade lookupPonderacioncaracteristicaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (PonderacioncaracteristicaFacade) c.lookup("java:global/sap/PonderacioncaracteristicaFacade!com.sap.ejb.PonderacioncaracteristicaFacade");
+            return (PonderacioncaracteristicaFacade) c.lookup("java:global/sapnaval/PonderacioncaracteristicaFacade!com.sap.ejb.PonderacioncaracteristicaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

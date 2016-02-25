@@ -84,7 +84,7 @@ public class CrearMeta2 implements Action {
     private MetasFacade lookupMetasFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MetasFacade) c.lookup("java:global/sap/MetasFacade!com.sap.ejb.MetasFacade");
+            return (MetasFacade) c.lookup("java:global/sapnaval/MetasFacade!com.sap.ejb.MetasFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -94,7 +94,7 @@ public class CrearMeta2 implements Action {
     private ObjetivosFacade lookupObjetivosFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ObjetivosFacade) c.lookup("java:global/sap/ObjetivosFacade!com.sap.ejb.ObjetivosFacade");
+            return (ObjetivosFacade) c.lookup("java:global/sapnaval/ObjetivosFacade!com.sap.ejb.ObjetivosFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

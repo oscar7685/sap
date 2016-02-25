@@ -139,7 +139,7 @@ public class DetallePIndicador implements Action {
     private IndicadorFacade lookupIndicadorFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (IndicadorFacade) c.lookup("java:global/sap/IndicadorFacade!com.sap.ejb.IndicadorFacade");
+            return (IndicadorFacade) c.lookup("java:global/sapnaval/IndicadorFacade!com.sap.ejb.IndicadorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -149,7 +149,7 @@ public class DetallePIndicador implements Action {
     private ResultadoevaluacionFacade lookupResultadoevaluacionFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ResultadoevaluacionFacade) c.lookup("java:global/sap/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
+            return (ResultadoevaluacionFacade) c.lookup("java:global/sapnaval/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

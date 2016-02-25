@@ -49,7 +49,7 @@ public class Crear2Objetivo2 implements Action {
     private ObjetivosFacade lookupObjetivosFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ObjetivosFacade) c.lookup("java:global/sap/ObjetivosFacade!com.sap.ejb.ObjetivosFacade");
+            return (ObjetivosFacade) c.lookup("java:global/sapnaval/ObjetivosFacade!com.sap.ejb.ObjetivosFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -59,7 +59,7 @@ public class Crear2Objetivo2 implements Action {
     private HallazgoFacade lookupHallazgoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (HallazgoFacade) c.lookup("java:global/sap/HallazgoFacade!com.sap.ejb.HallazgoFacade");
+            return (HallazgoFacade) c.lookup("java:global/sapnaval/HallazgoFacade!com.sap.ejb.HallazgoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

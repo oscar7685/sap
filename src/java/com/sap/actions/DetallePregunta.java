@@ -100,7 +100,7 @@ public class DetallePregunta implements Action {
     private ResultadoevaluacionFacade lookupResultadoevaluacionFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ResultadoevaluacionFacade) c.lookup("java:global/sap/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
+            return (ResultadoevaluacionFacade) c.lookup("java:global/sapnaval/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -110,7 +110,7 @@ public class DetallePregunta implements Action {
     private PreguntaFacade lookupPreguntaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (PreguntaFacade) c.lookup("java:global/sap/PreguntaFacade!com.sap.ejb.PreguntaFacade");
+            return (PreguntaFacade) c.lookup("java:global/sapnaval/PreguntaFacade!com.sap.ejb.PreguntaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

@@ -115,7 +115,7 @@ public class DetallePCaracteristica implements Action {
     private CaracteristicaFacade lookupCaracteristicaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (CaracteristicaFacade) c.lookup("java:global/sap/CaracteristicaFacade!com.sap.ejb.CaracteristicaFacade");
+            return (CaracteristicaFacade) c.lookup("java:global/sapnaval/CaracteristicaFacade!com.sap.ejb.CaracteristicaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -125,7 +125,7 @@ public class DetallePCaracteristica implements Action {
     private ResultadoevaluacionFacade lookupResultadoevaluacionFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ResultadoevaluacionFacade) c.lookup("java:global/sap/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
+            return (ResultadoevaluacionFacade) c.lookup("java:global/sapnaval/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

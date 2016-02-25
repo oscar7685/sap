@@ -53,7 +53,7 @@ public class IniciarProceso implements Action {
     private PonderacionfactorFacade lookupPonderacionfactorFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (PonderacionfactorFacade) c.lookup("java:global/sap/PonderacionfactorFacade!com.sap.ejb.PonderacionfactorFacade");
+            return (PonderacionfactorFacade) c.lookup("java:global/sapnaval/PonderacionfactorFacade!com.sap.ejb.PonderacionfactorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -63,7 +63,7 @@ public class IniciarProceso implements Action {
     private PonderacioncaracteristicaFacade lookupPonderacioncaracteristicaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (PonderacioncaracteristicaFacade) c.lookup("java:global/sap/PonderacioncaracteristicaFacade!com.sap.ejb.PonderacioncaracteristicaFacade");
+            return (PonderacioncaracteristicaFacade) c.lookup("java:global/sapnaval/PonderacioncaracteristicaFacade!com.sap.ejb.PonderacioncaracteristicaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -73,7 +73,7 @@ public class IniciarProceso implements Action {
     private MuestraFacade lookupMuestraFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MuestraFacade) c.lookup("java:global/sap/MuestraFacade!com.sap.ejb.MuestraFacade");
+            return (MuestraFacade) c.lookup("java:global/sapnaval/MuestraFacade!com.sap.ejb.MuestraFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -83,7 +83,7 @@ public class IniciarProceso implements Action {
     private ProcesoFacade lookupProcesoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ProcesoFacade) c.lookup("java:global/sap/ProcesoFacade!com.sap.ejb.ProcesoFacade");
+            return (ProcesoFacade) c.lookup("java:global/sapnaval/ProcesoFacade!com.sap.ejb.ProcesoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

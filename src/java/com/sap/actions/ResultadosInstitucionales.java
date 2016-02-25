@@ -117,7 +117,7 @@ public class ResultadosInstitucionales implements Action {
     private CaracteristicaFacade lookupCaracteristicaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (CaracteristicaFacade) c.lookup("java:global/sap/CaracteristicaFacade!com.sap.ejb.CaracteristicaFacade");
+            return (CaracteristicaFacade) c.lookup("java:global/sapnaval/CaracteristicaFacade!com.sap.ejb.CaracteristicaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -127,7 +127,7 @@ public class ResultadosInstitucionales implements Action {
     private ModeloFacade lookupModeloFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ModeloFacade) c.lookup("java:global/sap/ModeloFacade!com.sap.ejb.ModeloFacade");
+            return (ModeloFacade) c.lookup("java:global/sapnaval/ModeloFacade!com.sap.ejb.ModeloFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -137,7 +137,7 @@ public class ResultadosInstitucionales implements Action {
     private RespuestasFacade lookupRespuestasFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (RespuestasFacade) c.lookup("java:global/sap/RespuestasFacade!com.sap.ejb.RespuestasFacade");
+            return (RespuestasFacade) c.lookup("java:global/sapnaval/RespuestasFacade!com.sap.ejb.RespuestasFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -147,7 +147,7 @@ public class ResultadosInstitucionales implements Action {
     private RolFacade lookupRolFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (RolFacade) c.lookup("java:global/sap/RolFacade!com.sap.ejb.RolFacade");
+            return (RolFacade) c.lookup("java:global/sapnaval/RolFacade!com.sap.ejb.RolFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

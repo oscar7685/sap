@@ -35,7 +35,7 @@ public class PreparedPonderarFactor implements Action {
     private FactorFacade lookupFactorFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (FactorFacade) c.lookup("java:global/sap/FactorFacade!com.sap.ejb.FactorFacade");
+            return (FactorFacade) c.lookup("java:global/sapnaval/FactorFacade!com.sap.ejb.FactorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

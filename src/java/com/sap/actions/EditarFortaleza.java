@@ -36,7 +36,7 @@ public class EditarFortaleza implements Action {
     private HallazgoFacade lookupHallazgoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (HallazgoFacade) c.lookup("java:global/sap/HallazgoFacade!com.sap.ejb.HallazgoFacade");
+            return (HallazgoFacade) c.lookup("java:global/sapnaval/HallazgoFacade!com.sap.ejb.HallazgoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
