@@ -61,7 +61,7 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            45
+            60
         </session-timeout>
     </session-config>
     <error-page>

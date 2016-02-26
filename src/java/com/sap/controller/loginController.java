@@ -173,7 +173,7 @@ public class loginController extends HttpServlet {
                         session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
                         SessionCountListener sessionCountListener = new SessionCountListener();
                         session.setAttribute("cantidad", sessionCountListener.getCount());
-                        session.setAttribute("representantesLogueados", sessionCountListener.representantesLogueados);
+//                        session.setAttribute("representantesLogueados", sessionCountListener.representantesLogueados);
                         out.print(0);
                     } else {
                         /*COMITE PROGRAMA*/
@@ -184,7 +184,7 @@ public class loginController extends HttpServlet {
                             out.print(0);
                             session.setAttribute("tipoLogin", "Comite programa");
                             session.setAttribute("representante", r);
-                            SessionCountListener.representantesLogueados.add(r);
+                            //SessionCountListener.representantesLogueados.add(r);
                             if (r.getProgramaList() != null && r.getProgramaList().size() == 1) {
                                 session.setAttribute("Programa", r.getProgramaList().get(0));
                                 List procesos = (List) procesoFacade.findByPrograma(r.getProgramaList().get(0));

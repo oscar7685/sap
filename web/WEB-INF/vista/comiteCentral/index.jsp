@@ -133,9 +133,9 @@
                         <ul class="nav nav-list">  
                             <li class="nav-header">¿Qui&eacute;n est&aacute; en l&iacute;nea&quest;</li>
                             <li><a href="#"><i class="icon-group"></i> Hay ${cantidad} persona(s) en linea</a></li>
-                                <c:forEach items="${representantesLogueados}" var="representante" varStatus="index" end="1">
+                               <%-- <c:forEach items="${representantesLogueados}" var="representante" varStatus="index" end="1">
                                 <li><a href="#"><i class="icon-user"></i> ${representante.nombre}</a></li>
-                                </c:forEach>
+                                </c:forEach> --%>
                             </ui>
                     </div>
 

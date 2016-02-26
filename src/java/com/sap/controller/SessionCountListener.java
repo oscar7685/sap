@@ -13,7 +13,7 @@ import javax.servlet.http.*;
 public class SessionCountListener implements HttpSessionListener, ServletContextListener {
 
     private static int numberOfSessionsCount = 0;
-    public static List<Representante> representantesLogueados = new ArrayList<Representante>();
+    //public static List<Representante> representantesLogueados = new ArrayList<Representante>();
 
     public void sessionCreated(final HttpSessionEvent event) {
         SessionCountListener.numberOfSessionsCount++;
@@ -21,10 +21,10 @@ public class SessionCountListener implements HttpSessionListener, ServletContext
 
     public void sessionDestroyed(final HttpSessionEvent event) {
         SessionCountListener.numberOfSessionsCount--;
-        Representante r = (Representante) event.getSession().getAttribute("representante");
+        /*Representante r = (Representante) event.getSession().getAttribute("representante");
         if (r != null) {
             SessionCountListener.representantesLogueados.remove(r);
-        }
+        }*/
     }
 
     public static final int getCount() {

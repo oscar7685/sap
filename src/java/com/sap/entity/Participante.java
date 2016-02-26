@@ -5,6 +5,7 @@
 package com.sap.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -19,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -46,7 +49,32 @@ public class Participante implements Serializable {
     private Proceso procesoId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "participanteIdparticipante")
     private List<ParticipanteHasRol> participanteHasRolList;
+    @Column(name = "fechainicio")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechainicio;
+    
+    @Column(name = "fechafinal")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechafinal;
 
+    public Date getFechafinal() {
+        return fechafinal;
+    }
+
+    public void setFechafinal(Date fechafinal) {
+        this.fechafinal = fechafinal;
+    }
+
+    public Date getFechainicio() {
+        return fechainicio;
+    }
+
+    public void setFechainicio(Date fechainicio) {
+        this.fechainicio = fechainicio;
+    }
+
+    
+    
     public Participante() {
     }
 

@@ -110,6 +110,7 @@ public class controladorF extends HttpServlet {
                     Participante parti1 = new Participante();
                     Proceso p = (Proceso) session.getAttribute("Proceso");
                     parti1.setProcesoId(p);
+                    parti1.setFechainicio(new Date());
                     participanteFacade.create(parti1);
                     List<Participante> auxP1 = participanteFacade.findUltimo("idparticipante");
                     Participante recienCreado = auxP1.get(0);
@@ -579,7 +580,8 @@ public class controladorF extends HttpServlet {
                     if (RESPONDER.equals(request.getParameter("action"))) {
 
                         Participante part78 = (Participante) session.getAttribute("participante");
-
+                        part78.setFechafinal(new Date());
+                        participanteFacade.edit(part78);
                         List<Pregunta> allPreguntas = (List<Pregunta>) session.getAttribute("preguntas");
                         List<Programa> programasP2 = (List<Programa>) session.getAttribute("pregunta2");
                         List<Programa> programasP11 = (List<Programa>) session.getAttribute("pregunta11");
