@@ -29,19 +29,26 @@
             <th class="span1">FACTOR</th>
             <th class="span1">CARACTERISTICA</th>
             <th class="span4">PREGUNTA</th>
-            <th class="span1">Estudiantes Pregrado</th>
-            <th class="span1">Estudiantes Maestría y Doctorado</th>
-            <th class="span1">Estudiantes Especialización</th>
+            <th class="span1">Estudiantes</th>
             <th class="span1">Profesores Planta</th>
             <th class="span1">Profesores Cátedra</th>
             <th class="span1">Directivos</th>
             <th class="span1">Administrativos</th>
-            <th class="span1">Egresados Pregrado</th>
-            <th class="span1">Egresados Maestría y Doctorado</th>
-            <th class="span1">Egresados Especialización</th>
+            <th class="span1">Egresados</th>
             <th class="span1">Empleadores</th>
         </tr>
     </thead>
+    <c:choose>
+        <c:when test="${tipoF == 'Universitaria'}">
+            <c:set var="itms" value="1,2,11,5,3,4,6"></c:set>
+        </c:when>
+        <c:when test="${tipoF == 'Maestria'}">
+            <c:set var="itms" value="8,2,11,5,3,10,6"></c:set>
+        </c:when>
+        <c:otherwise>
+            <c:set var="itms" value="7,2,11,5,3,9,6"></c:set>
+        </c:otherwise>
+    </c:choose>
     <tbody>
         <c:forEach items="${caractesticas}" var="caracteristica" varStatus="status">
             <c:forEach items="${caracteristica.preguntaList}" var="pregunta" varStatus="status1">
@@ -56,7 +63,7 @@
                         <c:forEach items="${pregunta.preguntaList}" var="sub" varStatus="status2">
                             <tr>
                                 <td>${sub.pregunta}</td>
-                                <c:forTokens items="1,8,7,2,11,5,3,4,10,9,6" delims="," var="rol">
+                                <c:forTokens items="${itms}" delims="," var="rol">
                                     <c:choose>
                                         <c:when test="${resultados[sub.id][rol] == -1}">
                                             <td>NA</td>
@@ -83,7 +90,7 @@
                             <td>Factor ${caracteristica.factorId.codigo}. ${caracteristica.factorId.nombre}</td>
                             <td>Caracteristica ${caracteristica.codigo}. ${caracteristica.nombre}</td>
                             <td style="font-weight: bold;">${pregunta.pregunta}</td>
-                            <c:forTokens items="1,8,7,2,11,5,3,4,10,9,6" delims="," var="rol">
+                            <c:forTokens items="${itms}" delims="," var="rol">
                                 <c:choose>
                                     <c:when test="${resultados[pregunta.id][rol]==-1}">
                                         <td>NA</td>

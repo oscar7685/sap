@@ -5,6 +5,7 @@
 package com.sap.actions;
 
 import com.sap.ejb.MuestraFacade;
+import com.sap.ejb.RespuestasFacade;
 import com.sap.entity.Muestra;
 import com.sap.entity.Proceso;
 import com.sap.interfaz.Action;
@@ -24,7 +25,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author acreditacion
  */
-public class ListMuestra implements Action{
+public class ListMuestra implements Action {
+
+    RespuestasFacade respuestasFacade = lookupRespuestasFacadeBean();
     MuestraFacade muestraFacade = lookupMuestraFacadeBean();
 
     @Override
@@ -33,21 +36,24 @@ public class ListMuestra implements Action{
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
         String url;
         List<Muestra> lm = muestraFacade.findByList("procesoId", proceso);
+        List contestados = respuestasFacade.findByContestados();
 
-            Muestra m = null;
-            if (!lm.isEmpty()) {
-                Iterator i = lm.iterator();
-                while (i.hasNext()) {
-                    m = (Muestra) i.next();
-                    sesion.setAttribute("Muestra", m);
-                }
-                url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";
-                } else {
-                sesion.setAttribute("Muestra", m);
-                url = "/WEB-INF/vista/comitePrograma/muestra/asignarMuestra.jsp";
+        /*    Muestra m = null;
+         if (!lm.isEmpty()) {
+         Iterator i = lm.iterator();
+         while (i.hasNext()) {
+         m = (Muestra) i.next();
+         sesion.setAttribute("Muestra", m);
+         }
+         url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";
+         } else {
+         sesion.setAttribute("Muestra", m);
+         url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";
                 
-            }
-            return url;
+         }*/
+        url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";
+         sesion.setAttribute("contestados", contestados);
+        return url;
     }
 
     private MuestraFacade lookupMuestraFacadeBean() {
@@ -59,5 +65,14 @@ public class ListMuestra implements Action{
             throw new RuntimeException(ne);
         }
     }
-    
+
+    private RespuestasFacade lookupRespuestasFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (RespuestasFacade) c.lookup("java:global/sapnaval/RespuestasFacade!com.sap.ejb.RespuestasFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 }

@@ -6,12 +6,14 @@ package com.sap.actions;
 
 import com.sap.ejb.CaracteristicaFacade;
 import com.sap.ejb.ModeloFacade;
+import com.sap.ejb.ProgramaFacade;
 import com.sap.ejb.RespuestasFacade;
 import com.sap.ejb.RolFacade;
 import com.sap.entity.Caracteristica;
 import com.sap.entity.Modelo;
 import com.sap.entity.Pregunta;
 import com.sap.entity.Proceso;
+import com.sap.entity.Programa;
 import com.sap.entity.Respuestas;
 import com.sap.entity.Rol;
 import com.sap.interfaz.Action;
@@ -31,8 +33,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author acreditacion
  */
-public class ResultadosInstitucionales implements Action {
+public class ResultadosxProgramas implements Action {
 
+    ProgramaFacade programaFacade = lookupProgramaFacadeBean();
     RolFacade rolFacade = lookupRolFacadeBean();
     RespuestasFacade respuestasFacade = lookupRespuestasFacadeBean();
     ModeloFacade modeloFacade = lookupModeloFacadeBean();
@@ -40,10 +43,21 @@ public class ResultadosInstitucionales implements Action {
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        String url = "/WEB-INF/vista/comitePrograma/proceso/informe/dmaInstitucional.jsp";
+        String url = "/WEB-INF/vista/comitePrograma/proceso/informe/dmaProgramas.jsp";
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        Modelo m = modeloFacade.find(Integer.parseInt("1"));
+        String programaid = (String) request.getParameter("programaId");
+        Programa prog = programaFacade.find(Integer.parseInt(programaid));
+        String tipoF = prog.getTipoformacion();
+        Modelo m = null;
+        if (tipoF.equals("Universitaria")) {
+            m = modeloFacade.find(Integer.parseInt("2"));
+        } else if (tipoF.equals("Maestria")) {
+            m = modeloFacade.find(Integer.parseInt("3"));
+        } else {
+            m = modeloFacade.find(Integer.parseInt("4"));
+        }
+
         List<Caracteristica> caractesticas = caracteristicaFacade.findByModeloOptimizada(m);
 
         String[][] resultados = new String[258][12];
@@ -56,7 +70,13 @@ public class ResultadosInstitucionales implements Action {
                     if (pregunta.getPreguntaList().size() > 0) {
                         for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
                             for (Rol rol : roles) {
-                                List<Respuestas> rs = respuestasFacade.findByPreguntaRol(pregunta.getPreguntaList().get(i), rol);
+                                List<Respuestas> rs = null;
+                                if (pregunta.getPreguntaList().get(i).getPreguntaPadre().getRepetir().equals("si")) {
+                                    rs = respuestasFacade.findByPreguntaRol(pregunta.getPreguntaList().get(i), rol, prog);
+                                } else {
+                                    rs = respuestasFacade.findByPreguntaRol(pregunta.getPreguntaList().get(i), rol);
+                                }
+
                                 int cuatros = 0, cincos = 0, ceros = 0;
                                 for (Respuestas respuestas : rs) {
                                     if (respuestas.getRespuesta() == 0) {
@@ -82,7 +102,13 @@ public class ResultadosInstitucionales implements Action {
                         }
                     } else {
                         for (Rol rol : roles) {
-                            List<Respuestas> rs = respuestasFacade.findByPreguntaRol(pregunta, rol);
+                            List<Respuestas> rs = null;
+                            if (pregunta.getRepetir().equals("si")) {
+                                rs = respuestasFacade.findByPreguntaRol(pregunta, rol, prog);
+                            } else {
+                                rs = respuestasFacade.findByPreguntaRol(pregunta, rol);
+                            }
+
                             int cuatros = 0, cincos = 0, ceros = 0;
                             for (Respuestas respuestas : rs) {
                                 if (respuestas.getRespuesta() == 0) {
@@ -110,6 +136,7 @@ public class ResultadosInstitucionales implements Action {
         }
         sesion.setAttribute("resultados", resultados);
         sesion.setAttribute("cerillos", cerillos);
+        sesion.setAttribute("tipoF", tipoF);
         sesion.setAttribute("caractesticas", caractesticas);
         return url;
     }
@@ -148,6 +175,16 @@ public class ResultadosInstitucionales implements Action {
         try {
             Context c = new InitialContext();
             return (RolFacade) c.lookup("java:global/sapnaval/RolFacade!com.sap.ejb.RolFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ProgramaFacade lookupProgramaFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (ProgramaFacade) c.lookup("java:global/sapnaval/ProgramaFacade!com.sap.ejb.ProgramaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

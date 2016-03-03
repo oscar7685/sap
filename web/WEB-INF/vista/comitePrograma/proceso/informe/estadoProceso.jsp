@@ -19,13 +19,10 @@
         var Anio = Hoy.getFullYear();
         var Fecha = Dia[Hoy.getDay()] + " " + Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
         $("#horaEstado").html(" " + Fecha);
-
         $(".printEnlace").click(function() {
             $('#conte').jqprint();
             return false;
         });
-
-
         $("#lineamientos").change(function() {
             var tipoLineamiento = $("#lineamientos").val();
             if (tipoLineamiento > 2) {
@@ -39,7 +36,6 @@
                             $("#dancing-dots-text").remove();
                             $("#divPrograma").show();
                         }, 200);
-
                     }
                 });
             } else {
@@ -54,17 +50,27 @@
                             setTimeout(function() {
                                 $("#dancing-dots-text").remove();
                             }, 200);
-
                         }
                     });
                 }
             }
         });
-
+        $("#programa").change(function() {
+            $.ajax({
+                type: 'POST',
+                url: "/sapnaval/controladorCP?action=resultadosxProgramas&programaId=" + $("#programa").val(),
+                success: function(data) {
+                    /*$("#resultados").empty();
+                     $("#resultados").html(data);
+                     setTimeout(function() {
+                     $("#dancing-dots-text").remove();
+                     }, 200);
+                     */
+                }
+            });
+        });
 
     });
-
-
 
 
 </script>

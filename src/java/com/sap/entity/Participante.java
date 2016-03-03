@@ -52,7 +52,6 @@ public class Participante implements Serializable {
     @Column(name = "fechainicio")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechainicio;
-    
     @Column(name = "fechafinal")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechafinal;
