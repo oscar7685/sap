@@ -60,12 +60,12 @@
                 type: 'POST',
                 url: "/sapnaval/controladorCP?action=resultadosxProgramas&programaId=" + $("#programa").val(),
                 success: function(data) {
-                    /*$("#resultados").empty();
+                    $("#resultados").empty();
                      $("#resultados").html(data);
                      setTimeout(function() {
                      $("#dancing-dots-text").remove();
                      }, 200);
-                     */
+                     
                 }
             });
         });

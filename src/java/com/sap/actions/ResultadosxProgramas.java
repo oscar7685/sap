@@ -71,7 +71,7 @@ public class ResultadosxProgramas implements Action {
                         for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
                             for (Rol rol : roles) {
                                 List<Respuestas> rs = null;
-                                if (pregunta.getPreguntaList().get(i).getPreguntaPadre().getRepetir().equals("si")) {
+                                if ("si".equals(pregunta.getPreguntaList().get(i).getRepetir())) {
                                     rs = respuestasFacade.findByPreguntaRol(pregunta.getPreguntaList().get(i), rol, prog);
                                 } else {
                                     rs = respuestasFacade.findByPreguntaRol(pregunta.getPreguntaList().get(i), rol);
@@ -103,7 +103,7 @@ public class ResultadosxProgramas implements Action {
                     } else {
                         for (Rol rol : roles) {
                             List<Respuestas> rs = null;
-                            if (pregunta.getRepetir().equals("si")) {
+                            if ("si".equals(pregunta.getRepetir())) {
                                 rs = respuestasFacade.findByPreguntaRol(pregunta, rol, prog);
                             } else {
                                 rs = respuestasFacade.findByPreguntaRol(pregunta, rol);
