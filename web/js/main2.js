@@ -373,7 +373,7 @@ $(function() {
                                             if (hash === "#listPonderacionCara2") {
                                                 hash = "#listPonderacionCara";
                                             }
-                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental") {
+                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental" || hash === "#estadoProceso") {
                                                 setTimeout(function() {
                                                     $("#west-closer").trigger("click");
                                                 }, 500);

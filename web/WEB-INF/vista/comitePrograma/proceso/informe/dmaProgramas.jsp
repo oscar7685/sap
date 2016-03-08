@@ -177,7 +177,7 @@
                     </c:when>    
                     <c:when test="${fn:length(pregunta.preguntaList)== 0 && pregunta.id > 130 && pregunta.id < 141}">
                         <tr>
-                            <td style="font-weight: bold;">${pregunta.pregunta}</td>
+                            <td>${pregunta.pregunta}</td>
                             <c:forTokens items="${itms}" delims="," var="rol">
                                 <c:choose>
                                     <c:when test="${resultados[pregunta.id][rol]==-1}">
