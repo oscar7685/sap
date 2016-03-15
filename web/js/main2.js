@@ -328,18 +328,18 @@ $(function() {
                                     var url3 = "/sapnaval/controladorCC?action=";
                                     url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
                                     $("div.ui-layout-center").empty();
-                                    $("div.ui-layout-west").empty();
+                                    $("div.ui-layout-content").empty();
                                     $.ajax({
                                         type: "POST",
                                         url: url3,
                                         success: function(data)
                                         {
-                                            $("div.ui-layout-west").append(data);
+                                            $("div.ui-layout-content").append(data);
                                             setTimeout(function() {
                                                 $("#dancing-dots-text").remove();
                                                 myLayout.addCloseBtn("#west-closer", "west");
                                             }, 200);
-
+                                            
                                         } //fin success
                                     }); //fin del $.ajax
 
@@ -353,7 +353,7 @@ $(function() {
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
                                         || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta" || hash === "#crear2Meta" || hash === "#listarFortalezas"
-                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd") {
+                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd" || hash === "#graficasDMA") {
                                     var url3 = "/sapnaval/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
