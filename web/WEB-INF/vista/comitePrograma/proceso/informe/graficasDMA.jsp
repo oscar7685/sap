@@ -63,19 +63,32 @@
             } else {
                 if (factor === "-2") {
                     todos++;
-                } else if (caracteristica === "-2") {
+                }
+                if (caracteristica === "-2") {
                     todos++;
-                } else if (pregunta === "-2") {
+                }
+                if (pregunta === "-2") {
                     todos++;
-                } else if (grupo === "-2") {
+                }
+                if (grupo === "-2") {
                     todos++;
                 }
 
                 if (todos > 1) {
                     alert("No puede haber mas de un campo seleccionado con la opcion todos!!");
                 } else {
-                    
-
+                    $.ajax({
+                        type: 'POST',
+                        url: "/sapnaval/controladorCP?action=graficarDMA",
+                        data: $("#resultadosDinamicos").serialize(),
+                        success: function(data) {
+                            $("#barras").empty();
+                            $("#barras").html(data);
+                            setTimeout(function() {
+                                $("#dancing-dots-text").remove();
+                            }, 200);
+                        }
+                    });
                 }
             }
         });

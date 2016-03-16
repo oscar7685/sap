@@ -4,6 +4,8 @@
  */
 package com.sap.ejb;
 
+import com.sap.entity.Encuesta;
+import com.sap.entity.Factor;
 import com.sap.entity.Pregunta;
 import com.sap.entity.Programa;
 import com.sap.entity.Respuestas;
@@ -33,6 +35,17 @@ public class RespuestasFacade extends AbstractFacade<Respuestas> {
         Query q = em.createNamedQuery("Respuestas.findByPreguntaRol");
         q.setParameter("idPregunta", p);
         q.setParameter("idRol", r);
+        return q.getResultList();
+    }
+    
+    public List findByEncuesta(Encuesta e) {
+        Query q = em.createNamedQuery("Respuestas.findByEncuesta");
+        q.setParameter("idEncuesta", e);
+        return q.getResultList();
+    }
+    public List findByFactor(Factor f) {
+        Query q = em.createNamedQuery("Respuestas.findByFactor");
+        q.setParameter("idFactor", f);
         return q.getResultList();
     }
 
