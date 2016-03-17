@@ -100,11 +100,36 @@ public class GraficarDMA implements Action {
                     titulo = "CARACTERISTICAS ";
                     if (ejeY.isEmpty()) {
                         List<Caracteristica> ca2 = caracteristicaFacade.findByModeloOptimizada(m);
+                        int total = 0;
+                        int total5y4 = 0;
+
                         for (Caracteristica ca1 : ca2) {
                             ejeY.add("" + ca1.getNombre());
+
+                            List<Integer> rs = respuestasFacade.findByCaracteristica2(ca1);
+                            total += rs.size();
+                            int cuatros = 0, cincos = 0;
+                            for (Integer respuestas : rs) {
+                                if (respuestas == 4) {
+                                    cuatros++;
+                                } else if (respuestas == 5) {
+                                    cincos++;
+                                }
+                            }
+                            if (rs.isEmpty()) {
+                                ejeX.add("NA");
+                            } else {
+                                total5y4 += cincos + cuatros;
+                                double dma = (double) ((cincos + cuatros) * 100) / rs.size();
+                                dma = Math.rint(dma * 100) / 100;
+                                ejeX.add("" + dma);
+                            }
                         }
+                        double dma = (double) ((total5y4) * 100) / total;
+                        dma = Math.rint(dma * 100) / 100;
+                        ejeX.add("" + dma);
+                        ejeY.add("TOTAL CARACTERISTICAS");
                     }
-                    ejeY.add("TOTAL CARACTERISTICAS");
                 }
             }
         }
@@ -114,7 +139,7 @@ public class GraficarDMA implements Action {
                     Factor fac = factorFacade.find(Integer.parseInt(factor));
                     titulo = "FACTOR " + fac.getCodigo() + " " + fac.getNombre();
                     ejeY.add("TOTAL FACTOR");
-                } else {
+                } else {//escogieron la opcion todos en factores
                     titulo = "FACTORES ";
                     if (ejeY.isEmpty()) {
                         int total = 0;
@@ -123,13 +148,13 @@ public class GraficarDMA implements Action {
                         for (Factor factor1 : fa2) {
                             ejeY.add("" + factor1.getNombre());
 
-                            List<Respuestas> rs = respuestasFacade.findByFactor(factor1);
+                            List<Integer> rs = respuestasFacade.findByFactor2(factor1);
                             total += rs.size();
                             int cuatros = 0, cincos = 0;
-                            for (Respuestas respuestas : rs) {
-                                if (respuestas.getRespuesta() == 4) {
+                            for (Integer respuestas : rs) {
+                                if (respuestas == 4) {
                                     cuatros++;
-                                } else if (respuestas.getRespuesta() == 5) {
+                                } else if (respuestas == 5) {
                                     cincos++;
                                 }
                             }

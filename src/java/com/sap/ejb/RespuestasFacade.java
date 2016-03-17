@@ -4,6 +4,7 @@
  */
 package com.sap.ejb;
 
+import com.sap.entity.Caracteristica;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Factor;
 import com.sap.entity.Pregunta;
@@ -37,18 +38,42 @@ public class RespuestasFacade extends AbstractFacade<Respuestas> {
         q.setParameter("idRol", r);
         return q.getResultList();
     }
-    
+
     public List findByEncuesta(Encuesta e) {
         Query q = em.createNamedQuery("Respuestas.findByEncuesta");
         q.setParameter("idEncuesta", e);
         return q.getResultList();
     }
+
     public List findByFactor(Factor f) {
         Query q = em.createNamedQuery("Respuestas.findByFactor");
         q.setParameter("idFactor", f);
         return q.getResultList();
     }
 
+    public List findByFactor2(Factor f) {
+        Query q = em.createNativeQuery("select respuestas.respuesta from respuestas\n"
+                + "inner join pregunta on pregunta.id = respuestas.pregunta_id\n"
+                + "left join pregunta as padre on padre.id = pregunta.pregunta_padre\n"
+                + "inner join pregunta_has_caracteristica on (pregunta_has_caracteristica.pregunta_id =  pregunta.id  or pregunta_has_caracteristica.pregunta_id  = padre.id)\n"
+                + "inner join caracteristica on caracteristica.id = pregunta_has_caracteristica.caracteristica_id\n"
+                + "where caracteristica.factor_id = '"+f.getId()+"'");
+        //q.setParameter("idFactor", f);
+        return q.getResultList();
+    }
+    
+    public List findByCaracteristica2(Caracteristica c) {
+        Query q = em.createNativeQuery("select respuestas.respuesta from respuestas\n"
+                + "inner join pregunta on pregunta.id = respuestas.pregunta_id\n"
+                + "left join pregunta as padre on padre.id = pregunta.pregunta_padre\n"
+                + "inner join pregunta_has_caracteristica on (pregunta_has_caracteristica.pregunta_id =  pregunta.id  or pregunta_has_caracteristica.pregunta_id  = padre.id)\n"
+                + "inner join caracteristica on caracteristica.id = pregunta_has_caracteristica.caracteristica_id\n"
+                + "where caracteristica.id = '"+c.getId()+"'");
+        //q.setParameter("idFactor", f);
+        return q.getResultList();
+    }
+    
+    
     public List findByPreguntaRol(Pregunta p, Rol r, Programa prog) {
         Query q = em.createNamedQuery("Respuestas.findByPreguntaRolxPrograma");
         q.setParameter("idPregunta", p);
