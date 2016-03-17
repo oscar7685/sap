@@ -144,7 +144,7 @@ public class GraficarDMA implements Action {
                     if (ejeY.isEmpty()) {
                         int total = 0;
                         int total5y4 = 0;
-                        List<Factor> fa2 = factorFacade.findByModelo(m);
+                        List<Factor> fa2 = factorFacade.findByModeloOptimizada(m);
                         for (Factor factor1 : fa2) {
                             ejeY.add("" + factor1.getNombre());
 

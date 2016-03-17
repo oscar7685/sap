@@ -36,5 +36,10 @@ public class FactorFacade extends AbstractFacade<Factor> {
         q.setParameter("modelo", m);
         return q.getResultList();
 }
+    public List findByModeloOptimizada(Modelo m) {
+        Query q = em.createNamedQuery("Factor.findByModeloOptimizada");
+        q.setParameter("modelo", m);
+        return q.getResultList();
+}
     
 }

@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Factor.findById", query = "SELECT f FROM Factor f WHERE f.id = :id"),
     @NamedQuery(name = "Factor.findByCodigo", query = "SELECT f FROM Factor f WHERE f.codigo = :codigo"),
     @NamedQuery(name = "Factor.findByNombre", query = "SELECT f FROM Factor f WHERE f.nombre = :nombre"),
+    @NamedQuery(name = "Factor.findByModeloOptimizada", query = "SELECT DISTINCT f FROM Factor f JOIN f.caracteristicaList ca WHERE f.modeloId = :modelo and size(ca.preguntaList)> 0"),
     @NamedQuery(name = "Factor.findByModelo", query = "SELECT f FROM Factor f WHERE f.modeloId = :modelo")})
 public class Factor implements Serializable {
 
