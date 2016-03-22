@@ -28,8 +28,7 @@
             <c:when test="${cum4>0}">
                 <c:choose>
                     <c:when test="${caracteristicas.size()!=status.index+1}">
-                    '${caracteristica2.codigo}-${caracteristica2.nombre}',</c:when>
-                    <c:otherwise>
+                    '${caracteristica2.codigo}-${caracteristica2.nombre}',</c:when>                    <c:otherwise>
                                 '${caracteristica2.codigo}-${caracteristica2.nombre}'
                     </c:otherwise>
                 </c:choose>    
@@ -112,13 +111,11 @@
                             {
                             y: ${cumplimiento[status33.index]},
                                     color: '#DB843D'
-                            },</c:when>
-                            <c:otherwise>
+                            },</c:when>                            <c:otherwise>
                                 {
                                 y: ${cumplimiento[status33.index]},
                                         color: '#AA4643'
-                                },</c:otherwise>
-                        </c:choose>
+                                },</c:otherwise>                        </c:choose>
 
 
 

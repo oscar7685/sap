@@ -24,6 +24,7 @@
                 $("#pregunta").html("<option value='-1'>Vacio</option>");
             } else {
                 $("#caracteristica").html("<option value='-1'>Vacio</option><option value='-2'>Todos</option>");
+                $("#pregunta").html("<option value='-1'>Vacio</option><option value='-2'>Todos</option>");
             }
 
 

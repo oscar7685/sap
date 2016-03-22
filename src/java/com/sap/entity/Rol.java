@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Rol.findById", query = "SELECT r FROM Rol r WHERE r.id = :id"),
     @NamedQuery(name = "Rol.findByRol", query = "SELECT r FROM Rol r WHERE r.rol = :rol")})
 public class Rol implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +43,8 @@ public class Rol implements Serializable {
     @Size(max = 45)
     @Column(name = "rol")
     private String rol;
+    @Column(name = "idencuesta1")
+    private String idencuesta1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolId")
     private List<ParticipanteHasRol> participanteHasRolList;
 
@@ -50,6 +53,14 @@ public class Rol implements Serializable {
 
     public Rol(Integer id) {
         this.id = id;
+    }
+
+    public String getIdencuesta1() {
+        return idencuesta1;
+    }
+
+    public void setIdencuesta1(String idencuesta1) {
+        this.idencuesta1 = idencuesta1;
     }
 
     public Integer getId() {
@@ -101,5 +112,4 @@ public class Rol implements Serializable {
     public String toString() {
         return "com.sap.entity.Rol[ id=" + id + " ]";
     }
-    
 }

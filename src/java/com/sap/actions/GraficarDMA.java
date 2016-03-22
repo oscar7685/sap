@@ -60,158 +60,426 @@ public class GraficarDMA implements Action {
         String caracteristica = request.getParameter("caracteristica");
         String pregunta = request.getParameter("pregunta");
         String grupo = request.getParameter("grupo");
+
         String aux = "";
         String titulo = "";
         List<String> ejeY = new ArrayList<String>();
         List<String> ejeX = new ArrayList<String>();
+        int[] relacionEncuestaRol = {0, 1, 8, 7, 2, 11, 5, 3, 4, 9, 10, 6};
+        double dmaX = 0.0;
+        int total = 0;
+        double total5y4 = 0.0;
+        double dmaTotal = 0.0;
+        double total5y4Caracteristicas = 0.0;
+        double dmaTotalCaracteristicas = 0.0;
+        double total5y4Factores = 0.0;
+        double dmaTotalFactores = 0.0;
 
-        if (!"-1".equals(grupo)) {
-            if ("-2".equals(grupo)) {
-                for (int i = 1; i < 12; i++) {
-                    Encuesta enc = encuestaFacade.find(i);
-                    aux = enc.getNombre().replace("ENCUESTA A ", "");
-                    ejeY.add("" + aux);
+
+
+        //-1 vacio , -2 todos
+
+
+        if ("-2".equals(factor)) {//valores vs factores
+            titulo = "FACTORES";
+            List<Factor> fs = factorFacade.findByModeloOptimizada(m);
+            for (Factor factor1 : fs) {
+                ejeY.add(" " + factor1.getCodigo() + " " + factor1.getNombre());
+                List<Caracteristica> cs = caracteristicaFacade.findByFactor(factor1);
+                for (Caracteristica caracteristica1 : cs) {
+                    List<Pregunta> ps = caracteristica1.getPreguntaList();
+                    for (Pregunta pregunta1 : ps) {
+                        if (pregunta1.getPreguntaList().size() > 0) {
+                            for (int i = 0; i < pregunta1.getPreguntaList().size(); i++) {
+                                Pregunta pregaux = pregunta1.getPreguntaList().get(i);
+                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregaux.getId());
+                                if (dmaTotalyCeros.size() > 0) {
+                                    for (Object[] objects : dmaTotalyCeros) {
+                                        total5y4Factores += (double) (Double.parseDouble(objects[0].toString()));
+                                        dmaTotalFactores += Long.parseLong(objects[1].toString());
+                                        total5y4 += Double.parseDouble(objects[0].toString());
+                                        total += Long.parseLong(objects[1].toString());
+                                    }
+                                }
+                            }
+                        } else {
+                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregunta1.getId());
+                            if (dmaTotalyCeros.size() > 0) {
+                                for (Object[] objects : dmaTotalyCeros) {
+                                    total5y4Factores += (double) (Double.parseDouble(objects[0].toString()));
+                                    dmaTotalFactores += Long.parseLong(objects[1].toString());
+                                    total5y4 += Double.parseDouble(objects[0].toString());
+                                    total += Long.parseLong(objects[1].toString());
+                                }
+                            }
+                        }
+                    }
                 }
-            } else {
-                Encuesta enc = encuestaFacade.find(Integer.parseInt(grupo));
-                aux = enc.getNombre().replace("ENCUESTA A ", "");
-                ejeY.add("" + aux);
-
-            }
-        }
-
-        if (!"-1".equals(pregunta)) {
-            if (!"-2".equals(pregunta)) {
-                Pregunta preg = preguntaFacade.find(Integer.parseInt(pregunta));
-                if (preg.getPreguntaPadre() != null) {
-                    titulo = preg.getPreguntaPadre().getPregunta() + " " + preg.getPregunta();
-                }
-                ejeY.add("TOTAL PREGUNTA");
-            }
-        }
-
-        if ("".equals(titulo)) {
-            if (!"-1".equals(caracteristica)) {
-                if (!"-2".equals(caracteristica)) {
-                    Caracteristica car = caracteristicaFacade.find(Integer.parseInt(caracteristica));
-                    titulo = "CARACTERISTICA " + car.getCodigo() + " " + car.getNombre();
-                    ejeY.add("TOTAL CARACTERISTICA");
+                if (dmaTotalFactores > 0.0) {
+                    dmaX = (double) ((total5y4Factores * 100) / dmaTotalFactores);
+                    dmaX = Math.rint(dmaX * 100) / 100;
+                    ejeX.add("" + dmaX);
                 } else {
-                    titulo = "CARACTERISTICAS ";
-                    if (ejeY.isEmpty()) {
-                        List<Caracteristica> ca2 = caracteristicaFacade.findByModeloOptimizada(m);
-                        int total = 0;
-                        int total5y4 = 0;
+                    ejeX.add("0.0");
+                }
+                total5y4Factores = 0.0;
+                dmaTotalFactores = 0.0;
+            }
+            ejeY.add("TOTAL FACTORES");
+            dmaTotal = (double) (total5y4 * 100 / total);
+            dmaTotal = Math.rint(dmaTotal * 100) / 100;
+            ejeX.add("" + dmaTotal);
 
-                        for (Caracteristica ca1 : ca2) {
-                            ejeY.add("" + ca1.getNombre());
-
-                            List<Integer> rs = respuestasFacade.findByCaracteristica2(ca1);
-                            total += rs.size();
-                            int cuatros = 0, cincos = 0;
-                            for (Integer respuestas : rs) {
-                                if (respuestas == 4) {
-                                    cuatros++;
-                                } else if (respuestas == 5) {
-                                    cincos++;
+        } else if ("-1".equals(factor)) {
+            if ("-2".equals(caracteristica)) { //valores vs caracteristicas
+                titulo = "CARACTERISTICAS";
+                List<Caracteristica> cs = caracteristicaFacade.findByModeloOptimizada(m);
+                for (Caracteristica caracteristica1 : cs) {
+                    ejeY.add(" " + caracteristica1.getCodigo() + " " + caracteristica1.getNombre());
+                    List<Pregunta> ps = caracteristica1.getPreguntaList();
+                    for (Pregunta pregunta1 : ps) {
+                        if (pregunta1.getPreguntaList().size() > 0) {
+                            for (int i = 0; i < pregunta1.getPreguntaList().size(); i++) {
+                                Pregunta pregaux = pregunta1.getPreguntaList().get(i);
+                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregaux.getId());
+                                if (dmaTotalyCeros.size() > 0) {
+                                    for (Object[] objects : dmaTotalyCeros) {
+                                        total5y4Caracteristicas += (double) (Double.parseDouble(objects[0].toString()));
+                                        dmaTotalCaracteristicas += Long.parseLong(objects[1].toString());
+                                        total5y4 += Double.parseDouble(objects[0].toString());
+                                        total += Long.parseLong(objects[1].toString());
+                                    }
                                 }
                             }
-                            if (rs.isEmpty()) {
-                                ejeX.add("NA");
-                            } else {
-                                total5y4 += cincos + cuatros;
-                                double dma = (double) ((cincos + cuatros) * 100) / rs.size();
-                                dma = Math.rint(dma * 100) / 100;
-                                ejeX.add("" + dma);
-                            }
-                        }
-                        double dma = (double) ((total5y4) * 100) / total;
-                        dma = Math.rint(dma * 100) / 100;
-                        ejeX.add("" + dma);
-                        ejeY.add("TOTAL CARACTERISTICAS");
-                    }
-                }
-            }
-        }
-        if ("".equals(titulo)) {
-            if (!"-1".equals(factor)) {
-                if (!"-2".equals(factor)) {
-                    Factor fac = factorFacade.find(Integer.parseInt(factor));
-                    titulo = "FACTOR " + fac.getCodigo() + " " + fac.getNombre();
-                    ejeY.add("TOTAL FACTOR");
-                } else {//escogieron la opcion todos en factores
-                    titulo = "FACTORES ";
-                    if (ejeY.isEmpty()) {
-                        int total = 0;
-                        int total5y4 = 0;
-                        List<Factor> fa2 = factorFacade.findByModeloOptimizada(m);
-                        for (Factor factor1 : fa2) {
-                            ejeY.add("" + factor1.getNombre());
-
-                            List<Integer> rs = respuestasFacade.findByFactor2(factor1);
-                            total += rs.size();
-                            int cuatros = 0, cincos = 0;
-                            for (Integer respuestas : rs) {
-                                if (respuestas == 4) {
-                                    cuatros++;
-                                } else if (respuestas == 5) {
-                                    cincos++;
+                        } else {
+                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregunta1.getId());
+                            if (dmaTotalyCeros.size() > 0) {
+                                for (Object[] objects : dmaTotalyCeros) {
+                                    total5y4Caracteristicas += (double) (Double.parseDouble(objects[0].toString()));
+                                    dmaTotalCaracteristicas += Long.parseLong(objects[1].toString());
+                                    total5y4 += Double.parseDouble(objects[0].toString());
+                                    total += Long.parseLong(objects[1].toString());
                                 }
                             }
-                            if (rs.isEmpty()) {
-                                ejeX.add("NA");
-                            } else {
-                                total5y4 += cincos + cuatros;
-                                double dma = (double) ((cincos + cuatros) * 100) / rs.size();
-                                dma = Math.rint(dma * 100) / 100;
-                                ejeX.add("" + dma);
-                            }
-
-
-                        }
-                        double dma = (double) ((total5y4) * 100) / total;
-                        dma = Math.rint(dma * 100) / 100;
-                        ejeX.add("" + dma);
-                        ejeY.add("TOTAL FACTORES");
-                    }
-                }
-            }
-        }
-        if ("".equals(titulo)) {
-            if (!"-2".equals(grupo)) {
-                Encuesta enc = encuestaFacade.find(Integer.parseInt(grupo));
-                titulo = "GRUPO " + enc.getNombre().replace("ENCUESTA A ", "");
-            } else {
-                titulo = "GRUPOS";
-                ejeY.add("TOTAL GRUPOS");
-
-                int total = 0;
-                int total5y4 = 0;
-                for (int i = 1; i < 12; i++) {
-                    Encuesta enc = encuestaFacade.find(i);
-                    List<Respuestas> rs = respuestasFacade.findByEncuesta(enc);
-                    total += rs.size();
-                    int cuatros = 0, cincos = 0;
-                    for (Respuestas respuestas : rs) {
-                        if (respuestas.getRespuesta() == 4) {
-                            cuatros++;
-                        } else if (respuestas.getRespuesta() == 5) {
-                            cincos++;
                         }
                     }
-                    if (rs.isEmpty()) {
-                        ejeX.add("NA");
+                    if (dmaTotalCaracteristicas > 0.0) {
+                        dmaX = (double) ((total5y4Caracteristicas * 100) / dmaTotalCaracteristicas);
+                        dmaX = Math.rint(dmaX * 100) / 100;
+                        ejeX.add("" + dmaX);
                     } else {
-                        total5y4 += cincos + cuatros;
-                        double dma = (double) ((cincos + cuatros) * 100) / rs.size();
-                        dma = Math.rint(dma * 100) / 100;
-                        ejeX.add("" + dma);
+                        ejeX.add("0.0");
+                    }
+                    total5y4Caracteristicas = 0.0;
+                    dmaTotalCaracteristicas = 0.0;
+                }
+
+                ejeY.add("TOTAL CARACTERISTICAS");
+                dmaTotal = (double) (total5y4 * 100 / total);
+                dmaTotal = Math.rint(dmaTotal * 100) / 100;
+                ejeX.add("" + dmaTotal);
+
+            } else if ("-1".equals(caracteristica)) {
+                if ("-2".equals(pregunta)) { // valores vs preguntas
+                    titulo = "PREGUNTAS";
+                    List<Factor> fs = factorFacade.findByModeloOptimizada(m);
+                    for (Factor factor1 : fs) {
+                        List<Caracteristica> cs = caracteristicaFacade.findByFactor(factor1);
+                        for (Caracteristica caracteristica1 : cs) {
+                            List<Pregunta> ps = caracteristica1.getPreguntaList();
+                            for (Pregunta pregunta1 : ps) {
+                                if (pregunta1.getPreguntaList().size() > 0) {
+                                    for (int i = 0; i < pregunta1.getPreguntaList().size(); i++) {
+                                        Pregunta pregaux = pregunta1.getPreguntaList().get(i);
+                                        ejeY.add("" + pregunta1.getPregunta() + " " + pregaux.getPregunta());
+                                        List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregaux.getId());
+                                        if (dmaTotalyCeros.size() > 0) {
+                                            for (Object[] objects : dmaTotalyCeros) {
+                                                dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                                dmaX = Math.rint(dmaX * 100) / 100;
+                                                total5y4 += Double.parseDouble(objects[0].toString());
+                                                total += Long.parseLong(objects[1].toString());
+                                                ejeX.add("" + dmaX);
+                                            }
+                                        } else {
+                                            ejeX.add("0.0");
+                                        }
+                                    }
+                                } else {
+                                    ejeY.add("" + pregunta1.getPregunta());
+                                    List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregunta1.getId());
+                                    if (dmaTotalyCeros.size() > 0) {
+                                        for (Object[] objects : dmaTotalyCeros) {
+                                            dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                            dmaX = Math.rint(dmaX * 100) / 100;
+                                            total5y4 += Double.parseDouble(objects[0].toString());
+                                            total += Long.parseLong(objects[1].toString());
+                                            ejeX.add("" + dmaX);
+                                        }
+                                    } else {
+                                        ejeX.add("0.0");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ejeY.add("TOTAL PREGUNTA");
+                    dmaTotal = (double) (total5y4 * 100 / total);
+                    dmaTotal = Math.rint(dmaTotal * 100) / 100;
+                    ejeX.add("" + dmaTotal);
+                } else if ("-1".equals(pregunta)) {
+                    if ("-2".equals(grupo)) { // valores vs grupos
+                        titulo = "GRUPOS";
+                        for (int i = 1; i < 12; i++) {
+                            Encuesta enc = encuestaFacade.find(i);
+                            aux = enc.getNombre().replace("ENCUESTA A ", "");
+                            ejeY.add("" + aux);
+                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByRolYEncuesta(relacionEncuestaRol[i], i);
+                            if (dmaTotalyCeros.size() > 0) {
+                                for (Object[] objects : dmaTotalyCeros) {
+                                    dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                    dmaX = Math.rint(dmaX * 100) / 100;
+                                    total5y4 += Double.parseDouble(objects[0].toString());
+                                    total += Long.parseLong(objects[1].toString());
+                                    ejeX.add("" + dmaX);
+                                }
+                            } else {
+                                ejeX.add("0.0");
+                            }
+                        }
+                        ejeY.add("TOTAL GRUPOS");
+                        dmaTotal = (double) (total5y4 * 100 / total);
+                        dmaTotal = Math.rint(dmaTotal * 100) / 100;
+                        ejeX.add("" + dmaTotal);
+                    } else if (!"-1".equals(grupo)) { //  valores vs grupo seleccionado
+                        titulo = "GRUPOS";
+                        for (int i = 1; i < 12; i++) {
+                            Encuesta enc = encuestaFacade.find(i);
+                            aux = enc.getNombre().replace("ENCUESTA A ", "");
+                            if (grupo.equals("" + i)) {
+                                ejeY.add("" + aux);
+                            }
+                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByRolYEncuesta(relacionEncuestaRol[i], i);
+                            if (dmaTotalyCeros.size() > 0) {
+                                for (Object[] objects : dmaTotalyCeros) {
+                                    dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                    dmaX = Math.rint(dmaX * 100) / 100;
+                                    total5y4 += Double.parseDouble(objects[0].toString());
+                                    total += Long.parseLong(objects[1].toString());
+                                    if (grupo.equals("" + i)) {
+                                        ejeX.add("" + dmaX);
+                                    }
+
+                                }
+                            } else {
+                                if (grupo.equals("" + i)) {
+                                    ejeX.add("0.0");
+                                }
+                            }
+                        }
+                        ejeY.add("TOTAL GRUPOS");
+                        dmaTotal = (double) (total5y4 * 100 / total);
+                        dmaTotal = Math.rint(dmaTotal * 100) / 100;
+                        ejeX.add("" + dmaTotal);
+
                     }
                 }
-                double dma = (double) ((total5y4) * 100) / total;
-                dma = Math.rint(dma * 100) / 100;
-                ejeX.add("" + dma);
+            }
+        } else {//factor seleccionado
+            if ("-2".equals(caracteristica)) {      //valores vs caracteristicas de un factor especifico
+            } else if ("-1".equals(caracteristica)) {//vacio en caracteristica
+                if ("-2".equals(grupo)) { //factor vs grupos
+                    Factor fa = factorFacade.find(Integer.parseInt(factor));
+                    titulo = fa.getNombre();
+                    for (int i = 1; i < 12; i++) {
+                        Encuesta enc = encuestaFacade.find(i);
+                        aux = enc.getNombre().replace("ENCUESTA A ", "");
+                        ejeY.add("" + aux);
+                        List<Object[]> dmaTotalyCeros = respuestasFacade.findByFactoryRol(fa.getId(), relacionEncuestaRol[i]);
+                        if (dmaTotalyCeros.size() > 0) {
+                            for (Object[] objects : dmaTotalyCeros) {
+                                dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                dmaX = Math.rint(dmaX * 100) / 100;
+                                total5y4 += Double.parseDouble(objects[0].toString());
+                                total += Long.parseLong(objects[1].toString());
+                                ejeX.add("" + dmaX);
+                            }
+                        } else {
+                            ejeX.add("0.0");
+                        }
+                    }
+                    ejeY.add("TOTAL FACTOR");
+                    if (total > 0.0) {
+                        dmaTotal = (double) (total5y4 * 100 / total);
+                        dmaTotal = Math.rint(dmaTotal * 100) / 100;
+                        ejeX.add("" + dmaTotal);
+                    } else {
+                        ejeX.add("0.0");
+                    }
+                } else if ("-1".equals(grupo)) { // factor vs valores
+                } else { //factor vs grupo
+                }
+            } else { //caracteristica seleccionada
+                if ("-2".equals(pregunta)) { //valores vs preguntas de una caracteristica especifica
+                } else if ("-1".equals(pregunta)) {//vacio en pregunta
+                    if ("-2".equals(grupo)) { //caracteristica vs grupos
 
+                        Caracteristica ca = caracteristicaFacade.find(Integer.parseInt(caracteristica));
+                        titulo = ca.getNombre();
+                        for (int i = 1; i < 12; i++) {
+                            Encuesta enc = encuestaFacade.find(i);
+                            aux = enc.getNombre().replace("ENCUESTA A ", "");
+                            ejeY.add("" + aux);
+                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByCaracteristicayRol(ca.getId(), relacionEncuestaRol[i]);
+                            if (dmaTotalyCeros.size() > 0) {
+                                for (Object[] objects : dmaTotalyCeros) {
+                                    dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                    dmaX = Math.rint(dmaX * 100) / 100;
+                                    total5y4 += Double.parseDouble(objects[0].toString());
+                                    total += Long.parseLong(objects[1].toString());
+                                    ejeX.add("" + dmaX);
+                                }
+                            } else {
+                                ejeX.add("0.0");
+                            }
+                        }
+                        ejeY.add("TOTAL CARACTERISTICA");
+                        if (total > 0.0) {
+                            dmaTotal = (double) (total5y4 * 100 / total);
+                            dmaTotal = Math.rint(dmaTotal * 100) / 100;
+                            ejeX.add("" + dmaTotal);
+                        } else {
+                            ejeX.add("0.0");
+                        }
+                    } else if ("-1".equals(grupo)) { // caracteristica vs valores
+                    } else { //caracteristica vs grupo
+                    }
+                } else { //pregunta seleccionada
+                    if ("-2".equals(grupo)) { //pregunta vs grupos
+                        Pregunta preg = preguntaFacade.find(Integer.parseInt(pregunta));
+                        Pregunta pregaux = preg;
+                        if (preg.getPreguntaPadre() != null) {
+                            pregaux = preg.getPreguntaPadre();
+                        }
+                        if (preg.getPreguntaPadre() != null) {
+                            titulo = preg.getPreguntaPadre().getPregunta() + " " + preg.getPregunta();
+                        } else {
+                            titulo = preg.getPregunta();
+                        }
+
+                        for (int i = 1; i < 12; i++) {
+                            Encuesta enc = encuestaFacade.find(i);
+                            aux = enc.getNombre().replace("ENCUESTA A ", "");
+                            ejeY.add("" + aux);
+                            if (enc.getPreguntaList().contains(pregaux)) {
+                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPreguntayRol(preg.getId(), relacionEncuestaRol[i]);
+                                if (dmaTotalyCeros.size() > 0) {
+                                    for (Object[] objects : dmaTotalyCeros) {
+                                        dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                        dmaX = Math.rint(dmaX * 100) / 100;
+                                        total5y4 += Double.parseDouble(objects[0].toString());
+                                        total += Long.parseLong(objects[1].toString());
+                                        ejeX.add("" + dmaX);
+                                    }
+                                } else {
+                                    ejeX.add("0.0");
+                                }
+                            } else {
+                                ejeX.add("0.0");
+                            }
+                        }
+                        ejeY.add("TOTAL PREGUNTA");
+                        dmaTotal = (double) (total5y4 * 100 / total);
+                        dmaTotal = Math.rint(dmaTotal * 100) / 100;
+                        ejeX.add("" + dmaTotal);
+
+                    } else if ("-1".equals(grupo)) { // pregunta vs valores
+                        Pregunta preg = preguntaFacade.find(Integer.parseInt(pregunta));
+                        Pregunta pregaux = preg;
+                        if (preg.getPreguntaPadre() != null) {
+                            pregaux = preg.getPreguntaPadre();
+                        }
+                        if (preg.getPreguntaPadre() != null) {
+                            titulo = preg.getPreguntaPadre().getPregunta() + " " + preg.getPregunta();
+                        } else {
+                            titulo = preg.getPregunta();
+                        }
+
+                        for (int i = 1; i < 12; i++) {
+                            Encuesta enc = encuestaFacade.find(i);
+                            aux = enc.getNombre().replace("ENCUESTA A ", "");
+                            if (enc.getPreguntaList().contains(pregaux)) {
+                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPreguntayRol(preg.getId(), relacionEncuestaRol[i]);
+                                if (dmaTotalyCeros.size() > 0) {
+                                    for (Object[] objects : dmaTotalyCeros) {
+                                        //dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                        // dmaX = Math.rint(dmaX * 100) / 100;
+                                        total5y4 += Double.parseDouble(objects[0].toString());
+                                        total += Long.parseLong(objects[1].toString());
+                                        // ejeX.add("" + dmaX);
+                                    }
+                                } else {
+                                    // ejeX.add("0.0");
+                                }
+                            } else {
+                                //  ejeX.add("0.0");
+                            }
+                        }
+                        ejeY.add("TOTAL PREGUNTA");
+                        dmaTotal = (double) (total5y4 * 100 / total);
+                        dmaTotal = Math.rint(dmaTotal * 100) / 100;
+                        ejeX.add("" + dmaTotal);
+
+                    } else { //pregunta vs grupo
+                        Pregunta preg = preguntaFacade.find(Integer.parseInt(pregunta));
+                        Pregunta pregaux = preg;
+                        if (preg.getPreguntaPadre() != null) {
+                            pregaux = preg.getPreguntaPadre();
+                        }
+                        if (preg.getPreguntaPadre() != null) {
+                            titulo = preg.getPreguntaPadre().getPregunta() + " " + preg.getPregunta();
+                        } else {
+                            titulo = preg.getPregunta();
+                        }
+
+                        for (int i = 1; i < 12; i++) {
+                            Encuesta enc = encuestaFacade.find(i);
+                            aux = enc.getNombre().replace("ENCUESTA A ", "");
+                            if (grupo.equals("" + i)) {
+                                ejeY.add("" + aux);
+                            }
+
+                            // 
+                            if (enc.getPreguntaList().contains(pregaux)) {
+                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPreguntayRol(preg.getId(), relacionEncuestaRol[i]);
+                                if (dmaTotalyCeros.size() > 0) {
+                                    for (Object[] objects : dmaTotalyCeros) {
+                                        dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                        dmaX = Math.rint(dmaX * 100) / 100;
+                                        total5y4 += Double.parseDouble(objects[0].toString());
+                                        total += Long.parseLong(objects[1].toString());
+                                        if (grupo.equals("" + i)) {
+                                            ejeX.add("" + dmaX);
+                                        }
+                                        //
+                                    }
+                                } else {
+                                    if (grupo.equals("" + i)) {
+                                        ejeX.add("0.0");
+                                    }
+                                }
+                            } else {
+                                if (grupo.equals("" + i)) {
+                                    ejeX.add("0.0");
+                                }
+                            }
+                        }
+                        ejeY.add("TOTAL PREGUNTA");
+                        dmaTotal = (double) (total5y4 * 100 / total);
+                        dmaTotal = Math.rint(dmaTotal * 100) / 100;
+                        ejeX.add("" + dmaTotal);
+                    }
+                }
             }
         }
 

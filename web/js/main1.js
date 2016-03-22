@@ -100,7 +100,7 @@ $(function() {
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>' +
-                '<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Ponderar Indicadores</a></li>' +
+                /*'<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Ponderar Indicadores</a></li>' +*/
                 '<li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>' +
                 //  '<li class="divider"></li>' +
                 //'<li><a href="#iniciarProceso"><i class="icon-play-sign"></i> Ejecutar proceso</a></li>' +
@@ -116,7 +116,7 @@ $(function() {
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Caracter&iacute;sticas</a></li>' +
-                '<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Indicadores</a></li>' +
+               /* '<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Indicadores</a></li>' +*/
                 '<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 ' <li><a href = "#preparedInfoNumerica"><i class = "icon-file-alt"></i> Informaci&oacute;n Num&eacute;rica</a></li>' +
@@ -136,7 +136,7 @@ $(function() {
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
-                 '<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Indicadores</a></li>' +
+                /*'<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Indicadores</a></li>' +*/
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 ' <li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
                 ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +

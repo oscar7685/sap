@@ -49,18 +49,20 @@ public class ResultadosInstitucionales implements Action {
         Modelo m = modeloFacade.find(Integer.parseInt("1"));
         List<Caracteristica> caractesticas = caracteristicaFacade.findByModeloOptimizada(m);
 
+        List<List<Encuesta>> encuestas = new ArrayList<List<Encuesta>>(); //preguntasxencuestas
+
         String[][] resultados = new String[258][12];
         String[][] cerillos = new String[258][12];
+
+        int[] relacionEncuestaRol = {0, 1, 8, 7, 2, 11, 5, 3, 4, 9, 10, 6};
+
         List<Rol> roles = rolFacade.findAll();
-        
+
         for (int i = 0; i < 258; i++) {
             for (int j = 0; j < 12; j++) {
-               resultados[i][j] = "-1";
+                resultados[i][j] = "-1";
             }
-            
         }
-        
-        
         for (Caracteristica caracteristica : caractesticas) {
             if (caracteristica.getPreguntaList().size() > 0) {
                 List<Pregunta> preguntas = caracteristica.getPreguntaList();
@@ -68,32 +70,12 @@ public class ResultadosInstitucionales implements Action {
                     if (pregunta.getPreguntaList().size() > 0) {
 
                         List<Encuesta> encuestasDondeAplica = encuestaFacade.findByPreguntaYModelo(m, pregunta);
+                        encuestas.add(encuestasDondeAplica);
 
                         for (Encuesta encuesta : encuestasDondeAplica) {
                             Rol rol = null;
-                            if (encuesta.getId() == 1) {
-                                rol = rolFacade.find(1);
-                            } else if (encuesta.getId() == 2) {
-                                rol = rolFacade.find(8);
-                            } else if (encuesta.getId() == 3) {
-                                rol = rolFacade.find(7);
-                            } else if (encuesta.getId() == 4) {
-                                rol = rolFacade.find(2);
-                            } else if (encuesta.getId() == 5) {
-                                rol = rolFacade.find(11);
-                            } else if (encuesta.getId() == 6) {
-                                rol = rolFacade.find(5);
-                            } else if (encuesta.getId() == 7) {
-                                rol = rolFacade.find(3);
-                            } else if (encuesta.getId() == 8) {
-                                rol = rolFacade.find(4);
-                            } else if (encuesta.getId() == 9) {
-                                rol = rolFacade.find(9);
-                            } else if (encuesta.getId() == 10) {
-                                rol = rolFacade.find(10);
-                            } else if (encuesta.getId() == 11) {
-                                rol = rolFacade.find(6);
-                            }
+                            rol = rolFacade.find(relacionEncuestaRol[encuesta.getId()]);
+
                             for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
 
                                 List<Respuestas> rs = respuestasFacade.findByPreguntaRol(pregunta.getPreguntaList().get(i), rol);
@@ -108,7 +90,7 @@ public class ResultadosInstitucionales implements Action {
                                     }
                                 }
                                 if (rs.isEmpty()) {
-                                   // resultados[pregunta.getPreguntaList().get(i).getId()][rol.getId()] = "-1";
+                                    // resultados[pregunta.getPreguntaList().get(i).getId()][rol.getId()] = "-1";
                                 } else {
                                     double dma = (double) ((cincos + cuatros) * 100) / rs.size();
                                     double cerosPorcentaje = (double) ((ceros) * 100) / rs.size();
@@ -123,31 +105,10 @@ public class ResultadosInstitucionales implements Action {
 
                     } else {
                         List<Encuesta> encuestasDondeAplica = encuestaFacade.findByPreguntaYModelo(m, pregunta);
+                        encuestas.add(encuestasDondeAplica);
                         for (Encuesta encuesta : encuestasDondeAplica) {
                             Rol rol = null;
-                            if (encuesta.getId() == 1) {
-                                rol = rolFacade.find(1);
-                            } else if (encuesta.getId() == 2) {
-                                rol = rolFacade.find(4);
-                            } else if (encuesta.getId() == 3) {
-                                rol = rolFacade.find(7);
-                            } else if (encuesta.getId() == 4) {
-                                rol = rolFacade.find(8);
-                            } else if (encuesta.getId() == 5) {
-                                rol = rolFacade.find(6);
-                            } else if (encuesta.getId() == 6) {
-                                rol = rolFacade.find(11);
-                            } else if (encuesta.getId() == 7) {
-                                rol = rolFacade.find(3);
-                            } else if (encuesta.getId() == 8) {
-                                rol = rolFacade.find(2);
-                            } else if (encuesta.getId() == 9) {
-                                rol = rolFacade.find(9);
-                            } else if (encuesta.getId() == 10) {
-                                rol = rolFacade.find(10);
-                            } else if (encuesta.getId() == 11) {
-                                rol = rolFacade.find(5);
-                            }
+                            rol = rolFacade.find(relacionEncuestaRol[encuesta.getId()]);
 
                             List<Respuestas> rs = respuestasFacade.findByPreguntaRol(pregunta, rol);
                             int cuatros = 0, cincos = 0, ceros = 0;
@@ -161,7 +122,7 @@ public class ResultadosInstitucionales implements Action {
                                 }
                             }
                             if (rs.isEmpty()) {
-                               // resultados[pregunta.getId()][rol.getId()] = "-1";
+                                // resultados[pregunta.getId()][rol.getId()] = "-1";
                             } else {
                                 double dma = (double) ((cincos + cuatros) * 100) / rs.size();
                                 double cerosPorcentaje = (double) ((ceros) * 100) / rs.size();
@@ -177,7 +138,9 @@ public class ResultadosInstitucionales implements Action {
         }
         sesion.setAttribute("resultados", resultados);
         sesion.setAttribute("cerillos", cerillos);
+        
         sesion.setAttribute("caractesticas", caractesticas);
+        sesion.setAttribute("encuestas", encuestas);
         return url;
     }
 
