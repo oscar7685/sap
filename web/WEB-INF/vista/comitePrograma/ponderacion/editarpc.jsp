@@ -18,7 +18,7 @@
                     url: "/sapnaval/controladorCP?action=editPonderarCara",
                     data: $("#formEditPonderarCara").serialize(),
                     success: function() {
-                        location = "/sapnaval/#listPonderacionCara";
+                        location = "/sapnaval/#listPonderacionCara2";
                     } //fin success
                 }); //fin $.ajax    
             }

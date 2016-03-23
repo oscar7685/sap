@@ -24,7 +24,7 @@
                     <li class="nav-header">Proceso de Autoevaluación</li>
                     <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                     <li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>
-                    <li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Características</a></li>
+                    <li><a href="#listPonderacionCara2"><i class="icon-list-ol"></i> Ponderar Características</a></li>
                      <!--<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Ponderar Indicadores</a></li>-->
                     <li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>
                 </ul>
@@ -39,7 +39,7 @@
                     <li class="nav-header">Proceso de Autoevaluación</li>
                     <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                     <li><a href="#listPonderacionFactor"><i class="icon-list"></i> Factores</a></li>
-                    <li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>
+                    <li><a href="#listPonderacionCara2"><i class="icon-list"></i> Características</a></li>
                     <!--<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>-->
                     <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
                     <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>
@@ -59,7 +59,7 @@
                     <li class="nav-header">Proceso de Autoevaluación</li>
                     <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
                     <li><a href="#listPonderacionFactor"><i class="icon-list"></i> Factores</a></li>
-                    <li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>
+                    <li><a href="#listPonderacionCara2"><i class="icon-list"></i> Características</a></li>
                     <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
                     <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>
                     <li><a href="#preparedInfoDocumental"><i class="icon-file-alt"></i> Información Documental</a></li>
