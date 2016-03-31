@@ -90,7 +90,6 @@
                 $("input[name^='ponderacion']").each(function() {
                     suma += Number($(this).val());
 
-
                 });
                 if (suma === 100) {
                     setTimeout(function() {

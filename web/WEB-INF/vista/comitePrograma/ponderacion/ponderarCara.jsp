@@ -10,28 +10,70 @@
     }
 </style>
 <script type="text/javascript">
+    var sum = 0;
+    var sapo = 0;
     $(function() {
+        $("a[data-dismiss='alert']").click(function(e) {
+            $(this).parent("div").hide();
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
         $("#formPonderarCara").validate({
+            errorElement: "em"
+                    ,
+            highlight: function(element, errorClass) {
+                $(element).parent("td").find("div").addClass("in");
+                $(element).parent("td").find("div").show();
+            }, unhighlight: function(element, errorClass, validClass) {
+                $(element).parent("td").find("div").removeClass("in");
+                $(element).parent("td").find("div").hide();
+            }, errorPlacement: function(error, element) {
+                error.appendTo($(element).parent("td").find("div"));
+            },
             submitHandler: function() {
-                $.ajax({
-                    type: 'POST',
-                    url: "/sapnaval/controladorCP?action=ponderarCara",
-                    data: $("#formPonderarCara").serialize(),
-                    success: function() {
-                        location = "/sapnaval/#listPonderacionCara2";
-                    } //fin success
-                }); //fin $.ajax    
-            }
+
+    <c:forEach items="${listFactores}" var="factAux" varStatus="statusfactAux">
+                sum = 0;
+                $(".factorX${factAux.id}").each(function(index, element) {
+                    sum += Number($(this).val());
+                });
+                if (sum === 100) {
+                    $("#factorId${factAux.id}").html("" + sum);
+                    $("#factorId${factAux.id}").parents("tr").removeClass();
+                    $("#factorId${factAux.id}").parents("tr").addClass("success");
+                } else {
+                    $("#factorId${factAux.id}").html("" + sum);
+                    $("#factorId${factAux.id}").parents("tr").removeClass();
+                    $("#factorId${factAux.id}").parents("tr").addClass("error");
+                    sapo = 1;
+                }
+    </c:forEach>
+
+                    if (sapo === 0) {
+                        $.ajax({
+                            type: 'POST',
+                            url: "/sapnaval/controladorCP?action=ponderarCara",
+                            data: $("#formPonderarCara").serialize(),
+                            success: function() {
+                                location = "/sapnaval/#listPonderacionCara2";
+                            } //fin success
+                        }); //fin $.ajax 
+                    } else {
+                        $(".alert-error").show();
+                        $('div.ui-layout-center').animate({scrollTop: 10}, 500);
+                    }
+                }
+            });
+            $("#popover").popover({
+                trigger: 'hover',
+                placement: 'bottom',
+                html: true,
+                content: function() {
+                    return '<img src="<%=request.getContextPath()%>/img/escalaCaract.png" />';
+                }
+            });
         });
-        $("#popover").popover({
-            trigger: 'hover',
-            placement: 'bottom',
-            html: true,
-            content: function() {
-                return '<img src="<%=request.getContextPath()%>/img/escalaCaract.png" />';
-            }
-        });
-    });
 </script>
 <div class="hero-unit">
     <div class="row">
@@ -40,12 +82,18 @@
                 <form id="formPonderarCara" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Ponderación de Características <i id="popover" class="icon-question-sign" rel="popover" data-title="Escala nivel de importancia"></i></legend>
+                        <div class="alert alert-block alert-error" style="display:none" id="PonderacionCaracteristicas">
+                            <a href="#" data-dismiss="alert" class="close">×</a>
+                            <h4 class="alert-heading">Ha ocurrido un error!</h4>
+                            <p>La suma de la ponderacion de las caracteristicas de cada factor debe ser 100.</p>
+                            <a class="btn btn-danger" data-dismiss="alert" href="#">Cerrar</a>
+                        </div>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Característica</th>
-                                    <th>Nivel de importancia</th>
+                                    <th>Ponderación</th>
                                     <th>Justificacion</th>
                                 </tr>
                             </thead>
@@ -55,9 +103,9 @@
                                     <c:choose>
                                         <c:when test="${row.factorId.id != idfactor}">
                                             <tr class="info">
-                                                <td colspan="4">Factor ${row.factorId.codigo}: ${row.factorId.nombre}</td>   
-                                                <c:set var="idfactor" value="${row.factorId.id}"></c:set>
-                                            </tr>   
+                                                <td colspan="4">Factor ${row.factorId.codigo}: ${row.factorId.nombre} -> <strong id="factorId${row.factorId.id}"></strong></td>   
+                                                    <c:set var="idfactor" value="${row.factorId.id}"></c:set>
+                                                </tr>   
                                         </c:when>
                                     </c:choose>
                                     <tr id="PonderacionCaracteristica${iter.index+1}">    
@@ -68,28 +116,11 @@
                                             <c:out value="${row.nombre}"/>
                                         </td>
                                         <td>
-                                            <select class="span1 {required:true}" id="ponderacion${row.id}" name="importancia${row.id}">
-                                                <option value=""></option>
-                                                <option value="1">1.0</option>
-                                                <option value="1.5">1.5</option>
-                                                <option value="2">2.0</option>
-                                                <option value="2.5">2.5</option>
-                                                <option value="3">3.0</option>
-                                                <option value="3.5">3.5</option>
-                                                <option value="4">4.0</option>
-                                                <option value="4.5">4.5</option>
-                                                <option value="5">5.0</option>
-                                                <option value="5.5">5.5</option>
-                                                <option value="6">6.0</option>
-                                                <option value="6.5">6.5</option>
-                                                <option value="7">7.0</option>
-                                                <option value="7.5">7.5</option>
-                                                <option value="8">8.0</option>
-                                                <option value="8.5">8.5</option>
-                                                <option value="9">9.0</option>
-                                                <option value="9.5">9.5</option>
-                                                <option value="10">10.0</option>
-                                            </select>
+                                            <input id="ponderacion${row.factorId.codigo}-${row.id}" name="importancia${row.id}" class="factorX${row.factorId.id} span1 {required:true,number:true}" type="text">
+                                            <div class='alert alert-error fade' style="display: none">
+                                                <a data-dismiss='alert' class='close'>×</a>  
+                                                <strong>Error!</strong>
+                                            </div>
                                             <input type="hidden"  value="${row.id}" name="id${row.id}">
                                         </td>
                                         <td>

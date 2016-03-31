@@ -5,6 +5,7 @@
 package com.sap.actions;
 
 import com.sap.ejb.CaracteristicaFacade;
+import com.sap.ejb.FactorFacade;
 import com.sap.entity.Modelo;
 import com.sap.interfaz.Action;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class PreparedPonderarCara implements Action {
+    FactorFacade factorFacade = lookupFactorFacadeBean();
     CaracteristicaFacade caracteristicaFacade = lookupCaracteristicaFacadeBean();
 
     @Override
@@ -29,6 +31,7 @@ public class PreparedPonderarCara implements Action {
         HttpSession sesion = request.getSession();
         Modelo modelo = (Modelo) sesion.getAttribute("Modelo");
         sesion.setAttribute("listCara", caracteristicaFacade.findByModelo(modelo));
+        sesion.setAttribute("listFactores", factorFacade.findByModelo(modelo));
         return  "/WEB-INF/vista/comitePrograma/ponderacion/ponderarCara.jsp";
     }
 
@@ -36,6 +39,16 @@ public class PreparedPonderarCara implements Action {
         try {
             Context c = new InitialContext();
             return (CaracteristicaFacade) c.lookup("java:global/sapnaval/CaracteristicaFacade!com.sap.ejb.CaracteristicaFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private FactorFacade lookupFactorFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (FactorFacade) c.lookup("java:global/sapnaval/FactorFacade!com.sap.ejb.FactorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
