@@ -5,6 +5,7 @@
 package com.sap.actions;
 
 import com.sap.ejb.PonderacioncaracteristicaFacade;
+import com.sap.ejb.PonderacionfactorFacade;
 import com.sap.entity.Proceso;
 import com.sap.interfaz.Action;
 import java.io.IOException;
@@ -21,15 +22,17 @@ import javax.servlet.http.HttpSession;
  *
  * @author acreditacion
  */
-public class ListPonderacionCara2 implements Action{
+public class CalificarCaracteristicas implements Action {
     PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade = lookupPonderacioncaracteristicaFacadeBean();
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        sesion.setAttribute("listPonderacionCara", ponderacioncaracteristicaFacade.findByList("procesoId", proceso));
-        return "/WEB-INF/vista/comitePrograma/ponderacion/listarpc.jsp";
+        
+       
+
+        return "NA";
     }
 
     private PonderacioncaracteristicaFacade lookupPonderacioncaracteristicaFacadeBean() {
@@ -41,5 +44,4 @@ public class ListPonderacionCara2 implements Action{
             throw new RuntimeException(ne);
         }
     }
-    
 }

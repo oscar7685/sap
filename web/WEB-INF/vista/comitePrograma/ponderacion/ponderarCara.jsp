@@ -32,7 +32,7 @@
                 error.appendTo($(element).parent("td").find("div"));
             },
             submitHandler: function() {
-
+                 sapo = 0;
     <c:forEach items="${listFactores}" var="factAux" varStatus="statusfactAux">
                 sum = 0;
                 $(".factorX${factAux.id}").each(function(index, element) {
@@ -49,7 +49,7 @@
                     sapo = 1;
                 }
     </c:forEach>
-
+                console.log("SAPO: "+sapo);
                     if (sapo === 0) {
                         $.ajax({
                             type: 'POST',
@@ -116,7 +116,7 @@
                                             <c:out value="${row.nombre}"/>
                                         </td>
                                         <td>
-                                            <input id="ponderacion${row.factorId.codigo}-${row.id}" name="importancia${row.id}" class="factorX${row.factorId.id} span1 {required:true,number:true}" type="text">
+                                            <input id="ponderacion${row.factorId.codigo}-${row.id}" name="ponderacionC${row.id}" class="factorX${row.factorId.id} span1 {required:true,number:true}" type="text">
                                             <div class='alert alert-error fade' style="display: none">
                                                 <a data-dismiss='alert' class='close'>×</a>  
                                                 <strong>Error!</strong>

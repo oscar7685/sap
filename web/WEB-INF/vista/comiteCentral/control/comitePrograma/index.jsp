@@ -42,8 +42,8 @@
                     <li><a href="#listPonderacionCara2"><i class="icon-list"></i> Características</a></li>
                     <!--<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>-->
                     <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
-                    <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>
-                    <li><a href="#preparedInfoDocumental"><i class="icon-file-alt"></i> Información Documental</a></li>
+                    <li><a href="#calificarCaracteristicas"><i class="icon-check"></i> Evaluar Caracteristica</a></li>
+                    <li><a href="#subirAdjunto"><i class="icon-file-alt"></i> Anexos</a></li>
                     <li class="nav-header">Informes</li>
                     <li><a  id="informeEncuesta"  href="#estadoProceso"><i class="icon-table"></i> Informe DMA</a></li>
                     <li><a href="#graficasDMA"><i class="icon-bar-chart"></i> Graficas DMA</a></li>
@@ -61,8 +61,8 @@
                     <li><a href="#listPonderacionFactor"><i class="icon-list"></i> Factores</a></li>
                     <li><a href="#listPonderacionCara2"><i class="icon-list"></i> Características</a></li>
                     <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
-                    <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>
-                    <li><a href="#preparedInfoDocumental"><i class="icon-file-alt"></i> Información Documental</a></li>
+                    <li><a href="#calificarCaracteristicas"><i class="icon-check"></i> Evaluar Caracteristica</a></li>
+                    <li><a href="#subirAdjunto"><i class="icon-file-alt"></i> Anexos</a></li>
                     <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
                     <li class="divider"></li>
                     <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>

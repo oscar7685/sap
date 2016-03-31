@@ -116,7 +116,7 @@ $(function() {
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Caracter&iacute;sticas</a></li>' +
-               /* '<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Indicadores</a></li>' +*/
+                /* '<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Indicadores</a></li>' +*/
                 '<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 ' <li><a href = "#preparedInfoNumerica"><i class = "icon-file-alt"></i> Informaci&oacute;n Num&eacute;rica</a></li>' +
@@ -138,8 +138,8 @@ $(function() {
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
                 /*'<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Indicadores</a></li>' +*/
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
-                ' <li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
-                ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
+                '<li><a href="#calificarCaracteristicas"><i class="icon-check"></i> Evaluar Caracteristica</a></li>' +
+                '<li><a href="#subirAdjunto"><i class="icon-file-alt"></i> Anexos</a></li>' +
                 ' <li class = "nav-header"> Estado del proceso </li>' +
                 ' <li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
                 ' <li class="divider"></li>' +
@@ -169,7 +169,7 @@ $(function() {
                 || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                 || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                 || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                || hash === "#comentarios" || hash === "#todosResultados" || hash === "#listPonderacionInd" ) {
+                || hash === "#comentarios" || hash === "#todosResultados" || hash === "#listPonderacionInd" || "#calificarCaracteristicas") {
             var url3 = "/sapnaval/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();

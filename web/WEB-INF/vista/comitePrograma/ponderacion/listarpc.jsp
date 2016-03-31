@@ -32,7 +32,6 @@
                         <thead>
                         <th>C&oacute;digo</th>    
                         <th>Característica</th>
-                        <th>Nivel de importancia</th>
                         <th>Ponderaci&oacute;n</th>
                         <th>Justificaci&oacute;n</th>
                         </thead>
@@ -44,9 +43,6 @@
                                     </td>
                                     <td>   
                                         <c:out value="${row.caracteristicaId.nombre}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row.nivelimportancia}"/>
                                     </td>
                                     <td>   
                                         <c:out value="${row.ponderacion}"/>
