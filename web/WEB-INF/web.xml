@@ -39,6 +39,10 @@
         <servlet-name>DescargarLog</servlet-name>
         <servlet-class>com.sap.controller.DescargarLog</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Subir</servlet-name>
+        <servlet-class>com.sap.controller.Subir</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -58,6 +62,10 @@
     <servlet-mapping>
         <servlet-name>DescargarLog</servlet-name>
         <url-pattern>/DescargarLog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Subir</servlet-name>
+        <url-pattern>/Subir</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

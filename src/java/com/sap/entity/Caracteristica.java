@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ususario
+ * @author acreditacion
  */
 @Entity
 @Table(name = "caracteristica", catalog = "sapnaval", schema = "")
@@ -57,12 +58,17 @@ public class Caracteristica implements Serializable {
     @Size(min = 1, max = 500)
     @Column(name = "nombre")
     private String nombre;
-    @ManyToMany(mappedBy = "caracteristicaList")
+    @JoinTable(name = "pregunta_has_caracteristica", joinColumns = {
+        @JoinColumn(name = "caracteristica_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "pregunta_id", referencedColumnName = "id")})
+    @ManyToMany
     private List<Pregunta> preguntaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
     private List<Hallazgo> hallazgoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
+    private List<Evaluarcaracteristica> evaluarcaracteristicaList;
     @OneToMany(mappedBy = "caracteristicaId")
     private List<Indicador> indicadorList;
     @JoinColumn(name = "modelo_id", referencedColumnName = "id")
@@ -134,6 +140,15 @@ public class Caracteristica implements Serializable {
 
     public void setHallazgoList(List<Hallazgo> hallazgoList) {
         this.hallazgoList = hallazgoList;
+    }
+
+    @XmlTransient
+    public List<Evaluarcaracteristica> getEvaluarcaracteristicaList() {
+        return evaluarcaracteristicaList;
+    }
+
+    public void setEvaluarcaracteristicaList(List<Evaluarcaracteristica> evaluarcaracteristicaList) {
+        this.evaluarcaracteristicaList = evaluarcaracteristicaList;
     }
 
     @XmlTransient

@@ -6,12 +6,13 @@ package com.sap.actions;
 
 import com.sap.ejb.CaracteristicaFacade;
 import com.sap.ejb.EvaluarcaracteristicaFacade;
-import com.sap.ejb.PonderacioncaracteristicaFacade;
-import com.sap.ejb.PonderacionfactorFacade;
+import com.sap.entity.Caracteristica;
+import com.sap.entity.Evaluarcaracteristica;
 import com.sap.entity.Modelo;
 import com.sap.entity.Proceso;
 import com.sap.interfaz.Action;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author acreditacion
  */
-public class CalificarCaracteristicas implements Action {
+public class EvaluarCara implements Action {
 
     CaracteristicaFacade caracteristicaFacade = lookupCaracteristicaFacadeBean();
     EvaluarcaracteristicaFacade evaluarcaracteristicaFacade = lookupEvaluarcaracteristicaFacadeBean();
@@ -34,15 +35,17 @@ public class CalificarCaracteristicas implements Action {
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        Modelo m = proceso.getModeloId();
-        if (evaluarcaracteristicaFacade.findByList("procesoId", proceso).isEmpty()) {
-            sesion.setAttribute("listCara", caracteristicaFacade.findByModelo(m));
-            return "/WEB-INF/vista/comitePrograma/proceso/evaluarCaracteristicas.jsp";
-        } else {
-            sesion.setAttribute("listEvaluacionCara", evaluarcaracteristicaFacade.findByList("procesoId", proceso));
-            return "/WEB-INF/vista/comitePrograma/proceso/listEvaluacionCara.jsp";
-        }
+        List<Caracteristica> caracteristicas = (List<Caracteristica>) sesion.getAttribute("listCara");
 
+        for (Caracteristica caracteristica : caracteristicas) {
+            String evaluacionC = request.getParameter("evaluacionC" + caracteristica.getId());
+            Evaluarcaracteristica e = new Evaluarcaracteristica();
+            e.setCaracteristicaId(caracteristica);
+            e.setProcesoId(proceso);
+            e.setEvaluacion(Float.parseFloat(evaluacionC));
+            evaluarcaracteristicaFacade.create(e);
+        }
+        return "NA";
     }
 
     private EvaluarcaracteristicaFacade lookupEvaluarcaracteristicaFacadeBean() {

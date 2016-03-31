@@ -66,21 +66,23 @@ public class Proceso implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
-    private List<Hallazgo> hallazgoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Muestra> muestraList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Hallazgo> hallazgoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacionfactor> ponderacionfactorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Encabezado> encabezadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Numericadocumental> numericadocumentalList;
-    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Modelo modeloId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Evaluarcaracteristica> evaluarcaracteristicaList;
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Programa programaId;
+    @JoinColumn(name = "modelo_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Modelo modeloId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Participante> participanteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
@@ -149,21 +151,21 @@ public class Proceso implements Serializable {
     }
 
     @XmlTransient
-    public List<Hallazgo> getHallazgoList() {
-        return hallazgoList;
-    }
-
-    public void setHallazgoList(List<Hallazgo> hallazgoList) {
-        this.hallazgoList = hallazgoList;
-    }
-
-    @XmlTransient
     public List<Muestra> getMuestraList() {
         return muestraList;
     }
 
     public void setMuestraList(List<Muestra> muestraList) {
         this.muestraList = muestraList;
+    }
+
+    @XmlTransient
+    public List<Hallazgo> getHallazgoList() {
+        return hallazgoList;
+    }
+
+    public void setHallazgoList(List<Hallazgo> hallazgoList) {
+        this.hallazgoList = hallazgoList;
     }
 
     @XmlTransient
@@ -193,12 +195,13 @@ public class Proceso implements Serializable {
         this.numericadocumentalList = numericadocumentalList;
     }
 
-    public Modelo getModeloId() {
-        return modeloId;
+    @XmlTransient
+    public List<Evaluarcaracteristica> getEvaluarcaracteristicaList() {
+        return evaluarcaracteristicaList;
     }
 
-    public void setModeloId(Modelo modeloId) {
-        this.modeloId = modeloId;
+    public void setEvaluarcaracteristicaList(List<Evaluarcaracteristica> evaluarcaracteristicaList) {
+        this.evaluarcaracteristicaList = evaluarcaracteristicaList;
     }
 
     public Programa getProgramaId() {
@@ -207,6 +210,14 @@ public class Proceso implements Serializable {
 
     public void setProgramaId(Programa programaId) {
         this.programaId = programaId;
+    }
+
+    public Modelo getModeloId() {
+        return modeloId;
+    }
+
+    public void setModeloId(Modelo modeloId) {
+        this.modeloId = modeloId;
     }
 
     @XmlTransient
