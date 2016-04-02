@@ -43,6 +43,10 @@
         <servlet-name>Subir</servlet-name>
         <servlet-class>com.sap.controller.Subir</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DescargarAnexo</servlet-name>
+        <servlet-class>com.sap.controller.DescargarAnexo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -66,6 +70,10 @@
     <servlet-mapping>
         <servlet-name>Subir</servlet-name>
         <url-pattern>/Subir</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DescargarAnexo</servlet-name>
+        <url-pattern>/DescargarAnexo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -57,7 +57,7 @@ $(function() {
         }
 
     }).bind('fileuploaddone', function(e, data) {
-
+        $("#dancing-dots-text").remove();
     });
 
     if (window.location.hostname === '127.0.0.1') {

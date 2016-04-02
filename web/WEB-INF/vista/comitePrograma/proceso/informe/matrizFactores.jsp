@@ -190,10 +190,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <div class="btn-group offset7">
-                <a class="btn active" style="cursor:default;">Todo</a>
-                <a class="btn" href="#informeMatrizFactoresP">S&oacute;lo percepci&oacute;n</a>
-            </div>
             <legend>Matriz de Calidad de Factores</legend>
             <ul class="breadcrumb">
                 <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>
@@ -230,7 +226,7 @@
                                                 <a href="#detalleFactor&${factor.getId()}" data="${factor.nombre}">${factor.nombre}</a>
                                             </td>
                                             <td>   
-                                                <c:out value="${ponderacionesF.get(indice2).ponderacion}"/>
+                                                ${ponderacionesF.get(indice2).ponderacion} %
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index]}"/>
@@ -263,7 +259,7 @@
                                 </td>
 
                                 <td>   
-                                    100
+                                    100 %
                                 </td>
                                     
                                 <td>   

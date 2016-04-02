@@ -47,6 +47,8 @@
                     <li class="nav-header">Informes</li>
                     <li><a  id="informeEncuesta"  href="#estadoProceso"><i class="icon-table"></i> Informe DMA</a></li>
                     <li><a href="#graficasDMA"><i class="icon-bar-chart"></i> Graficas DMA</a></li>
+                    <li><a href="#informeMatrizFactores"><i class="icon-bar-chart"></i> Matriz factores</a></li>
+                    <li><a href="#informeMatrizCaracteristicas"><i class="icon-bar-chart"></i> Matriz caracter&iacute;sticas</a></li>
                 </ul>
             </div>
         </c:when>

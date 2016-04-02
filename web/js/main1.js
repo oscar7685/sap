@@ -154,6 +154,7 @@ $(function() {
 
     $(window).hashchange(function() {
         var hash = location.hash;
+        console.log("hash:_"+hash);
         if (hash === "#CerrarSesion") {
             $.post('/sapnaval/loginController?action=CerrarSesion', function() {
                 location = "/sapnaval";
@@ -169,7 +170,7 @@ $(function() {
                 || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                 || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                 || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                || hash === "#comentarios" || hash === "#todosResultados" || hash === "#listPonderacionInd" || "#calificarCaracteristicas" || "#listEvaluacionCara" || "#editarEvaluacionCara" || "#subirAdjunto") {
+                || hash === "#comentarios" || hash === "#todosResultados" || hash === "#listPonderacionInd" || hash ==="#calificarCaracteristicas" || hash ==="#listEvaluacionCara" || hash ==="#editarEvaluacionCara" || hash ==="#subirAdjunto") {
             var url3 = "/sapnaval/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -348,6 +349,7 @@ $(function() {
             }); //fin del $.ajax
         } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1
                 || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 || hash.indexOf("#encuestaXaleatoria") !== -1 || hash.indexOf("#detallePFactor") !== -1 || hash.indexOf("#detallePCaracteristica") !== -1 || hash.indexOf("#detallePIndicador") !== -1) {
+            
             var cual = hash.split("&");
             hash = cual[0];
             var url3 = "/sapnaval/controladorCP?action=";

@@ -71,13 +71,12 @@ public class Subir extends HttpServlet {
     @Override
      protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter writer = response.getWriter();
-        System.out.println("jajajaja11");
+       
         HttpSession sesion = request.getSession();
 
         Proceso r = (Proceso) sesion.getAttribute("Proceso");
         try {
-            String str = request.getSession().getServletContext().getRealPath("/file/");
-            System.out.println("existe 1: "+str);
+            String str = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/com/sap/files/anexos");
             // nos quedamos solo con el nombre y descartamos el path
             File fichero = new File(str);
             String[] ficheros = fichero.list();
@@ -90,11 +89,11 @@ public class Subir extends HttpServlet {
                     if (!aux.equals("")) {
                         if (elementos[1].equals("pdf")) {
                             if (elemento2[0].equals("" + r.getId())) {
-                                aux += ",{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/file/" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + "pdf2.png" + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
+                                aux += ",{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/DescargarAnexo?f=" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + "pdf2.png" + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
                             }
                         } else {
                             if (elemento2[0].equals("" + r.getId())) {
-                                aux += ",{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/file/" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + ficheros[i] + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
+                                aux += ",{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/DescargarAnexo?f=" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + ficheros[i] + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
                             }
 
                         }
@@ -102,12 +101,12 @@ public class Subir extends HttpServlet {
                     } else {
                         if (elementos[1].equals("pdf")) {
                             if (elemento2[0].equals("" + r.getId())) {
-                                aux += "{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/file/" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + "pdf2.png" + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
+                                aux += "{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/DescargarAnexo?f=" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + "pdf2.png" + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
                             }
 
                         } else {
                             if (elemento2[0].equals("" + r.getId())) {
-                                aux += "{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/file/" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + ficheros[i] + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
+                                aux += "{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/DescargarAnexo?f=" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + ficheros[i] + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
                             }
 
                         }
@@ -138,7 +137,7 @@ public class Subir extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String file = (String) request.getParameter("file");
-        String str = request.getSession().getServletContext().getRealPath("/file/");
+        String str = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/com/sap/files/anexos");
         String str2 = request.getSession().getServletContext().getRealPath("/thumbnails/");
         File fichero1 = new File(str + "\\" + file);
         File fichero2 = new File(str2 + "\\" + file);
@@ -157,7 +156,6 @@ public class Subir extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("jajajaja22");
         if (!ServletFileUpload.isMultipartContent(request)) {
             throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
         }
@@ -177,7 +175,7 @@ public class Subir extends HttpServlet {
                     FileItem actual = null;
                     actual = item;
                     String fileName = actual.getName();
-                    String str = request.getSession().getServletContext().getRealPath("/file/");
+                    String str = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/com/sap/files/anexos");
                     String str2 = request.getSession().getServletContext().getRealPath("/thumbnails/");
 
                     fileName = "" + r.getId() + "-" + fileName;
@@ -205,16 +203,16 @@ public class Subir extends HttpServlet {
                             String elementos[] = ficheros[i].split("\\.");
                             if (!aux.equals("")) {
                                 if (elementos[1].equals("pdf")) {
-                                    aux += ",{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/file/" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + "pdf2.png" + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
+                                    aux += ",{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/DescargarAnexo?f=" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + "pdf2.png" + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
                                 } else {
-                                    aux += ",{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/file/" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + ficheros[i] + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
+                                    aux += ",{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/DescargarAnexo?f=" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + ficheros[i] + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
                                 }
 
                             } else {
                                 if (elementos[1].equals("pdf")) {
-                                    aux += "{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/file/" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + "pdf2.png" + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
+                                    aux += "{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/DescargarAnexo?f=" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + "pdf2.png" + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
                                 } else {
-                                    aux += "{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/file/" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + ficheros[i] + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
+                                    aux += "{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/sapnaval/DescargarAnexo?f=" + ficheros[i] + "\",\"thumbnailUrl\":\"/sapnaval/thumbnails/" + ficheros[i] + "\",\"deleteUrl\":\"/sapnaval/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
                                 }
 
                             }

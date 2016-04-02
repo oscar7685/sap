@@ -137,6 +137,7 @@ $(function() {
     var hash;
     $(window).hashchange(function() {
         hash = location.hash;
+        console.log("hash2:_" + hash);
         if (hash === "#CerrarSesion") {
             $.post('/sapnaval/loginController?action=CerrarSesion', function() {
                 location = "/sapnaval";
@@ -353,7 +354,8 @@ $(function() {
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
                                         || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta" || hash === "#crear2Meta" || hash === "#listarFortalezas"
-                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd" || hash === "#graficasDMA" || "#calificarCaracteristicas" || "#listEvaluacionCara" || "#editarEvaluacionCara" || "#subirAdjunto") {
+                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd" || hash === "#graficasDMA" || hash ==="#calificarCaracteristicas" || hash ==="#listEvaluacionCara" || hash ==="#editarEvaluacionCara" || hash ==="#subirAdjunto") {
+                                    console.log("entro donde no era:_" + hash);
                                     var url3 = "/sapnaval/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
@@ -473,6 +475,7 @@ $(function() {
                                     }); //fin del $.ajax
                                 } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1
                                         || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 || hash.indexOf("#encuestaXaleatoria") !== -1 || hash.indexOf("#detallePFactor") !== -1 || hash.indexOf("#detallePCaracteristica") !== -1 || hash.indexOf("#detallePIndicador") !== -1) {
+                                    console.log("entra aca!!:_" + hash);
                                     var cual = hash.split("&");
                                     hash = cual[0];
                                     var url3 = "/sapnaval/controladorCP?action=";

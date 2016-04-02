@@ -193,10 +193,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <div class="btn-group offset7">
-                <a class="btn active" style="cursor:default;">Todo</a>
-                <a class="btn" href="#informeMatrizCaracteristicasP">S&oacute;lo percepci&oacute;n</a>
-            </div>
             <legend>Matriz de Calidad de Caracteristicas</legend>
             <ul class="breadcrumb">
                 <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
@@ -210,7 +206,6 @@
                         <thead>
                         <th>Id</th>
                         <th>Caracteristica</th>
-                        <th>Nivel de importacia</th>
                         <th>Ponderacion caracteristica</th>
                         <th>Grado de Cumplimiento</th>
                         <th>Evaluacion teniendo en cuenta ponderacion</th>
@@ -228,13 +223,10 @@
                                                 ${caracteristica.codigo}
                                             </td>
                                             <td style="text-align: left">   
-                                                <a href="#detalleCaracteristica&${caracteristica.id}" data="${caracteristica.nombre}">${caracteristica.nombre}</a> 
+                                                ${caracteristica.nombre}
                                             </td>
                                             <td>   
-                                                ${ponderacionesC.get(indice).nivelimportancia}
-                                            </td>
-                                            <td>   
-                                                ${ponderacionesC.get(indice).ponderacion}
+                                                ${ponderacionesC.get(indice).ponderacion} %
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimiento[iter.index]}"/>

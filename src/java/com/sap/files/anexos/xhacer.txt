@@ -1,6 +1,5 @@
 mostrar alerta si mas del 30% responde que no sabe en una pregunta
 mostrar la desviacion estandar en el promedio de respuesta
-sacar los resultados con promedio x fuente
 
 
 
