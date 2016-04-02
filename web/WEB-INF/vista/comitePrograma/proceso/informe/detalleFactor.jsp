@@ -12,8 +12,8 @@
     $('.tool').tooltip().click(function(e){
     $(this).tooltip('hide');
     });
-   var chart;
-   $(document).ready(function() {
+    var chart;
+    $(document).ready(function() {
     chart = new Highcharts.Chart({
     chart: {
     renderTo: 'grafica',
@@ -21,73 +21,73 @@
             margin: [ 50, 30, 100, 50]
     },
             title: {
-    text: '${caracteristicasDF.get(0).getFactorId().nombre}'
-    },
+            text: '${caracteristicasDF.get(0).getFactorId().nombre}'
+            },
             xAxis: {
-    categories: [
+            categories: [
     <c:forEach items="${caracteristicasDF}" var="caracteristica2" varStatus="status2">
         <fmt:parseNumber var="cum4"  value="${cumplimientoDF[status2.index]}" />
         <c:choose>
             <c:when test="${cum4>0}">
                 <c:choose>
                     <c:when test="${caracteristicasDF.size()!=status.index+1}">
-                    '${caracteristica2.codigo}-${caracteristica2.nombre}',</c:when><c:otherwise>
-                            '${caracteristica2.codigo}-${caracteristica2.nombre}'
+            '${caracteristica2.codigo}-${caracteristica2.nombre}',</c:when><c:otherwise>
+                        '${caracteristica2.codigo}-${caracteristica2.nombre}'
                     </c:otherwise>
-                </c:choose>    
-            </c:when>             
+                </c:choose>
+            </c:when>
         </c:choose>
 
 
     </c:forEach>
-        ],
-                labels: {
-        formatter: function() {
-        var partes = this.value.split("-");
-                return "" + partes[0];
-        },
-                rotation: - 45,
-                align: 'right',
-                style: {
-        fontSize: '12px',
-                fontFamily: 'Verdana, sans-serif'
-        }
-        }
-        },
-                plotOptions: {
-        series: {
-        cursor: 'pointer',
-                point: {
-        events: {
-        click: function() {
-        var partes2 = this.category.split("-");
-                var a = $("a[data='" + partes2[1] + "']");
-                location = a.attr("href");
-        }
-        }
-        }
-        }
-        },
-                yAxis: {
-        min: 0,
-                max: 5,
-                title: {
-        text: 'Grado de cumplimiento'
-        }
-        },
-                legend: {
-        enabled: false
-        },
-                tooltip: {
-        formatter: function() {
-        return '<b>' + this.x + '</b><br/>' +
-                'Cumplimiento: ' + Highcharts.numberFormat(this.y, 1) +
-                '';
-        }
-        },
-                series: [{
-        name: 'Caracteristicas',
-                data: [
+                                    ],
+                                            labels: {
+                                            formatter: function() {
+                                            var partes = this.value.split("-");
+                                            return "" + partes[0];
+                                            },
+                                                    rotation: - 45,
+                                                    align: 'right',
+                                                    style: {
+                                                    fontSize: '12px',
+                                                            fontFamily: 'Verdana, sans-serif'
+                                                    }
+                                            }
+                                    },
+                                    plotOptions: {
+                                    series: {
+                                    cursor: 'pointer',
+                                            point: {
+                                            events: {
+                                            click: function() {
+                                            var partes2 = this.category.split("-");
+                                            var a = $("a[data='" + partes2[1] + "']");
+                                            location = a.attr("href");
+                                            }
+                                            }
+                                            }
+                                    }
+                                    },
+                                    yAxis: {
+                                    min: 0,
+                                            max: 100,
+                                            title: {
+                                            text: 'Grado de cumplimiento'
+                                            }
+                                    },
+                                    legend: {
+                                    enabled: false
+                                    },
+                                    tooltip: {
+                                    formatter: function() {
+                                    return '<b>' + this.x + '</b><br/>' +
+                                            'Cumplimiento: ' + Highcharts.numberFormat(this.y, 1) +
+                                            '';
+                                    }
+                                    },
+                                    series: [{
+                                    name: 'Caracteristicas',
+                                            data: [
     <c:forEach items="${caracteristicasDF}" var="caracteristica4" varStatus="status33">
         <fmt:parseNumber var="cum5"  value="${cumplimientoDF[status33.index]}" />
         <c:choose>
@@ -96,95 +96,95 @@
                     <c:when test="${caracteristicasDF.size()!=status33.index+1}">
                         <c:choose>
                             <c:when test="${cumplimientoDF[status33.index]>=4.5}">
-                            {
-                            y: ${cumplimientoDF[status33.index]},
-                                    color: '#89A54E'
-                            },</c:when>
+                                            {
+                                            y: ${cumplimientoDF[status33.index]},
+                                                    color: '#89A54E'
+                                            },</c:when>
                             <c:when test="${cumplimientoDF[status33.index]<4.5 && cumplimientoDF[status33.index]>=4.0}">
-                            {
-                            y: ${cumplimientoDF[status33.index]},
-                                    color: '#80699B'
-                            },</c:when>
+                                            {
+                                            y: ${cumplimientoDF[status33.index]},
+                                                    color: '#80699B'
+                                            },</c:when>
                             <c:when test="${cumplimientoDF[status33.index]<4.0 && cumplimientoDF[status33.index]>=3.0}">
-                            {
-                            y: ${cumplimientoDF[status33.index]},
-                                    color: '#3D96AE'
-                            },</c:when>
+                                            {
+                                            y: ${cumplimientoDF[status33.index]},
+                                                    color: '#3D96AE'
+                                            },</c:when>
                             <c:when test="${cumplimientoDF[status33.index]<3.0 && cumplimientoDF[status33.index]>=2.0}">
-                            {
-                            y: ${cumplimientoDF[status33.index]},
-                                    color: '#DB843D'
-                            },</c:when><c:otherwise>
-                            {
-                            y: ${cumplimientoDF[status33.index]},
-                                    color: '#AA4643'
-                            },</c:otherwise></c:choose>                    </c:when>
+                                            {
+                                            y: ${cumplimientoDF[status33.index]},
+                                                    color: '#DB843D'
+                                            },</c:when><c:otherwise>
+                                            {
+                                            y: ${cumplimientoDF[status33.index]},
+                                                    color: '#AA4643'
+                                            },</c:otherwise></c:choose>                    </c:when>
                     <c:otherwise>
                         <c:choose>
                             <c:when test="${cumplimientoDF[status33.index]>=4.5}">
-                            {
-                            y: ${cumplimientoDF[status33.index]},
-                                    color: '#89A54E'
-                            }
+                                            {
+                                            y: ${cumplimientoDF[status33.index]},
+                                                    color: '#89A54E'
+                                            }
 
                             </c:when>
                             <c:when test="${cumplimientoDF[status33.index]<4.5 && cumplimientoDF[status33.index]>=4.0}">
-                                {
-                                y: ${cumplimientoDF[status33.index]},
-                                        color: '#80699B'
-                                }
+                                            {
+                                            y: ${cumplimientoDF[status33.index]},
+                                                    color: '#80699B'
+                                            }
 
                             </c:when>
                             <c:when test="${cumplimientoDF[status33.index]<4.0 && cumplimientoDF[status33.index]>=3.0}">
-                                {
-                                y: ${cumplimientoDF[status33.index]},
-                                        color: '#3D96AE'
-                                }
+                                            {
+                                            y: ${cumplimientoDF[status33.index]},
+                                                    color: '#3D96AE'
+                                            }
 
                             </c:when>
                             <c:when test="${cumplimientoDF[status33.index]<3.0 && cumplimientoDF[status33.index]>=2.0}">
-                                {
-                                y: ${cumplimientoDF[status33.index]},
-                                        color: '#DB843D'
-                                }
+                                            {
+                                            y: ${cumplimientoDF[status33.index]},
+                                                    color: '#DB843D'
+                                            }
 
                             </c:when>
                             <c:otherwise>
-                                {
-                                y: ${cumplimientoDF[status33.index]},
-                                        color: '#AA4643'
-                                }
+                                            {
+                                            y: ${cumplimientoDF[status33.index]},
+                                                    color: '#AA4643'
+                                            }
                             </c:otherwise>
                         </c:choose>
                     </c:otherwise>
-                </c:choose>      
-            </c:when>             
+                </c:choose>
+            </c:when>
         </c:choose>
 
 
     </c:forEach>
 
 
-        ],
-                dataLabels: {
-        enabled: true,
-                rotation: - 90,
-                color: '#FFFFFF',
-                align: 'right',
-                x: - 3,
-                y: 10,
-                formatter: function() {
-        return this.y;
-        },
-                style: {
-        fontSize: '13px',
-                fontFamily: 'Verdana, sans-serif'
-        }
-        }
-        }]
-        });
-        });
-        });
+                                            ],
+                                            dataLabels: {
+                                            enabled: true,
+                                                    rotation: - 90,
+                                                    color: '#FFFFFF',
+                                                    align: 'right',
+                                                    x: - 3,
+                                                    y: 10,
+                                                    formatter: function() {
+                                                    return this.y;
+                                                    },
+                                                    style: {
+                                                    fontSize: '13px',
+                                                            fontFamily: 'Verdana, sans-serif'
+                                                    }
+                                            }
+                                    }]
+                            });
+                            });
+                            });
 </script>
 <div class="hero-unit">
     <div class="row">
@@ -202,13 +202,10 @@
 
                     <table class="table table-striped table-bordered table-condensed inicial">
                         <thead>
-                        <th>C&oacute;digo</th>
+                        <th>Calificación Factor</th>
                         <th>Caracteristica</th>
-                        <th>Ponderacion caracteristica</th>
-                        <th>Grado de Cumplimiento</th>
-                        <th>Evaluacion teniendo en cuenta ponderacion</th>
-                        <th>Logro ideal</th>
-                        <th>Relacion con el logro ideal</th>
+                        <th>Calificación Caracteristica</th>
+                        <th>Ponderacion de caracteristica</th>
                         </thead>
                         <tbody>
                             <c:set var="indice" value="0"></c:set>
@@ -217,26 +214,20 @@
                                 <c:choose>
                                     <c:when test="${cum>0}"> 
                                         <tr>
+                                            <c:if test="${iter.first}">
+                                                <td rowspan="${caracteristicasDF.size()}" style="vertical-align: middle;text-align: center;">   
+                                                    ${cumplimientoF}
+                                                </td>
+                                            </c:if>
+
                                             <td style="text-align: left">   
-                                                ${caracteristica.codigo}
+                                                ${caracteristica.codigo}. ${caracteristica.nombre}
                                             </td>
-                                            <td style="text-align: left">   
-                                               ${caracteristica.nombre}
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoDF[iter.index]}"/>%
                                             </td>
                                             <td>   
                                                 ${ponderacionesCDF.get(indice).ponderacion} %
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoDF[iter.index]}"/>
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoDF[iter.index] * ponderacionesCDF.get(indice).ponderacion}"/>
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesCDF.get(indice).ponderacion}"/>
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoDF[iter.index] * 20}"/>%
                                             </td>
                                         </tr>
                                         <c:set var="indice" value="${indice+1}"></c:set>

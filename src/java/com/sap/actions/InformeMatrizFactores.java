@@ -54,10 +54,6 @@ public class InformeMatrizFactores implements Action {
         float sumaPon;
         float suma2;
 
-        float calificacionNum;
-        float calificacionDoc;
-        float calificacionPer;
-
         List<Ponderacionfactor> ponderacionesF = new ArrayList<Ponderacionfactor>();
         List<Factor> factores = mod.getFactorList();
         float cumplimientoF[] = new float[factores.size()];
@@ -88,7 +84,7 @@ public class InformeMatrizFactores implements Action {
         sesion.setAttribute("factores", factores);
         sesion.setAttribute("ponderacionesF", ponderacionesF);
         sesion.setAttribute("cumplimientoF", cumplimientoF);
-
+        
         return "/WEB-INF/vista/comitePrograma/proceso/informe/matrizFactores.jsp";
     }
 

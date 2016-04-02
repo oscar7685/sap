@@ -17,7 +17,7 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sapnaval/controladorCP?action=editarEvaluacionCara",
+                    url: "/sapnaval/controladorCP?action=editarEvaluacionCara2",
                     data: $("#formEditarEvaluacionCara").serialize(),
                     success: function() {
                         location = "/sapnaval/#listEvaluacionCara";
@@ -62,7 +62,7 @@
                                             <c:out value="${row.caracteristicaId.nombre}"/>
                                         </td>
                                         <td>
-                                            <input value="${row.evaluacion}" name="evaluacionC${row.caracteristicaId.id}" class="span1 {required:true,number:true, max: 5}" type="text">
+                                            <input value="${row.evaluacion}" name="evaluacionC${row.caracteristicaId.id}" class="span1 {required:true,number:true, max: 100}" type="text">
                                             <div class='alert alert-error fade' style="display: none">
                                                 <a data-dismiss='alert' class='close'>×</a>  
                                                 <strong>Error!</strong>

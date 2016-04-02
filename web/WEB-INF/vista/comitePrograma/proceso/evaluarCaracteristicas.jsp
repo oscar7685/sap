@@ -62,7 +62,7 @@
                                             <c:out value="${row.nombre}"/>
                                         </td>
                                         <td>
-                                            <input id="evaluacion{row.factorId.codigo}-${row.id}" name="evaluacionC${row.id}" class="factorX${row.factorId.id} span1 {required:true,number:true, max: 5}" type="text">
+                                            <input id="evaluacion{row.factorId.codigo}-${row.id}" name="evaluacionC${row.id}" class="factorX${row.factorId.id} span1 {required:true,number:true, max: 100}" type="text">
                                             <div class='alert alert-error fade' style="display: none">
                                                 <a data-dismiss='alert' class='close'>×</a>  
                                                 <strong>Error!</strong>

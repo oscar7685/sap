@@ -9,7 +9,7 @@
 </style>
 <script type="text/javascript">
     var chart;
-            $(document).ready(function() {
+    $(document).ready(function() {
     chart = new Highcharts.Chart({
     chart: {
     renderTo: 'grafica',
@@ -17,73 +17,73 @@
             margin: [ 50, 30, 100, 50]
     },
             title: {
-    text: 'Matriz de calidad de factores'
-    },
+            text: 'Matriz de calidad de factores'
+            },
             xAxis: {
-    categories: [
+            categories: [
     <c:forEach items="${factores}" var="factorG" varStatus="status">
         <fmt:parseNumber var="cum3"  value="${cumplimientoF[status.index]}" />
         <c:choose>
             <c:when test="${cum3>0}">
                 <c:choose>
                     <c:when test="${factores.size()!=status.index+1}">
-                    '${factorG.codigo}-${factorG.nombre}',</c:when><c:otherwise>
-                            '${factorG.codigo}-${factorG.nombre}'
+            '${factorG.codigo}-${factorG.nombre}',</c:when><c:otherwise>
+                        '${factorG.codigo}-${factorG.nombre}'
                     </c:otherwise>
-                </c:choose> 
+                </c:choose>
             </c:when>
         </c:choose>
 
 
     </c:forEach>
-        ],
-                labels: {
-        formatter: function() {
-        var partes = this.value.split("-");
-                return "Factor " + partes[0];
-        },
-                rotation: - 45,
-                align: 'right',
-                style: {
-        fontSize: '12px',
-                fontFamily: 'Verdana, sans-serif'
-        }
-        }
-        },
-                plotOptions: {
-        series: {
-        cursor: 'pointer',
-                point: {
-        events: {
-        click: function() {
-        var partes2 = this.category.split("-");
-                var a = $("a[data='" + partes2[1] + "']");
-                location = a.attr("href");
-        }
-        }
-        }
-        }
-        },
-                yAxis: {
-        min: 0,
-                max: 5,
-                title: {
-        text: 'Grado de cumplimiento'
-        }
-        },
-                legend: {
-        enabled: false
-        },
-                tooltip: {
-        formatter: function() {
-        return '<b>' + this.x + '</b><br/>' +
-                'Cumplimiento: ' + Highcharts.numberFormat(this.y, 1) +
-                '';
-        }
-        },
-                series: [{
-        name: 'Factores',
-                data: [
+                                    ],
+                                            labels: {
+                                            formatter: function() {
+                                            var partes = this.value.split("-");
+                                            return "Factor " + partes[0];
+                                            },
+                                                    rotation: - 45,
+                                                    align: 'right',
+                                                    style: {
+                                                    fontSize: '12px',
+                                                            fontFamily: 'Verdana, sans-serif'
+                                                    }
+                                            }
+                                    },
+                                    plotOptions: {
+                                    series: {
+                                    cursor: 'pointer',
+                                            point: {
+                                            events: {
+                                            click: function() {
+                                            var partes2 = this.category.split("-");
+                                            var a = $("a[data='" + partes2[1] + "']");
+                                            location = a.attr("href");
+                                            }
+                                            }
+                                            }
+                                    }
+                                    },
+                                    yAxis: {
+                                    min: 0,
+                                            max: 100,
+                                            title: {
+                                            text: 'Grado de cumplimiento'
+                                            }
+                                    },
+                                    legend: {
+                                    enabled: false
+                                    },
+                                    tooltip: {
+                                    formatter: function() {
+                                    return '<b>' + this.x + '</b><br/>' +
+                                            'Cumplimiento: ' + Highcharts.numberFormat(this.y, 1) +
+                                            '';
+                                    }
+                                    },
+                                    series: [{
+                                    name: 'Factores',
+                                            data: [
     <c:forEach items="${factores}" var="fact" varStatus="status">
         <fmt:parseNumber var="cum4"  value="${cumplimientoF[status.index]}" />
         <c:choose>
@@ -91,99 +91,95 @@
                 <c:choose>
                     <c:when test="${factores.size()!=status.index+1}">
                         <c:choose>
-                            <c:when test="${cumplimientoF[status.index]>=4.5}">
-                            {
-                            y: ${cumplimientoF[status.index]},
-                                    color: '#89A54E'
-                            },</c:when>
-                            <c:when test="${cumplimientoF[status.index]<4.5 && cumplimientoF[status.index]>=4.0}">
-                            {
-                            y: ${cumplimientoF[status.index]},
-                                    color: '#80699B'
-                            },</c:when>
-                            <c:when test="${cumplimientoF[status.index]<4.0 && cumplimientoF[status.index]>=3.0}">
-                            {
-                            y: ${cumplimientoF[status.index]},
-                                    color: '#3D96AE'
-                            },</c:when>
-                            <c:when test="${cumplimientoF[status.index]<3.0 && cumplimientoF[status.index]>=2.0}">
-                            {
-                            y: ${cumplimientoF[status.index]},
-                                    color: '#DB843D'
-                            },</c:when><c:otherwise>
-                            {
-                            y: ${cumplimientoF[status.index]},
-                                    color: '#AA4643'
-                            },</c:otherwise></c:choose></c:when>
+                            <c:when test="${cumplimientoF[status.index]>=90.0}">
+                                            {
+                                            y: ${cumplimientoF[status.index]},
+                                                    color: '#89A54E'
+                                            },</c:when>
+                            <c:when test="${cumplimientoF[status.index]<90.0 && cumplimientoF[status.index]>=80.0}">
+                                            {
+                                            y: ${cumplimientoF[status.index]},
+                                                    color: '#80699B'
+                                            },</c:when>
+                            <c:when test="${cumplimientoF[status.index]<80.0 && cumplimientoF[status.index]>=60.0}">
+                                            {
+                                            y: ${cumplimientoF[status.index]},
+                                                    color: '#3D96AE'
+                                            },</c:when>
+                            <c:when test="${cumplimientoF[status.index]<60.0 && cumplimientoF[status.index]>=40.0}">
+                                            {
+                                            y: ${cumplimientoF[status.index]},
+                                                    color: '#DB843D'
+                                            },</c:when><c:otherwise>
+                                            {
+                                            y: ${cumplimientoF[status.index]},
+                                                    color: '#AA4643'
+                                            },</c:otherwise></c:choose></c:when>
                     <c:otherwise>
                         <c:choose>
-                            <c:when test="${cumplimientoF[status.index]>=4.5}">
-                            {
-                            y: ${cumplimientoF[status.index]},
-                                    color: '#89A54E'
-                            }
+                            <c:when test="${cumplimientoF[status.index]>=90.0}">
+                                            {
+                                            y: ${cumplimientoF[status.index]},
+                                                    color: '#89A54E'
+                                            }
 
                             </c:when>
-                            <c:when test="${cumplimientoF[status.index]<4.5 && cumplimientoF[status.index]>=4.0}">
-                                {
-                                y: ${cumplimientoF[status.index]},
-                                        color: '#80699B'
-                                }
+                            <c:when test="${cumplimientoF[status.index]<90.0 && cumplimientoF[status.index]>=80.0}">
+                                            {
+                                            y: ${cumplimientoF[status.index]},
+                                                    color: '#80699B'
+                                            }
 
                             </c:when>
-                            <c:when test="${cumplimientoF[status.index]<4.0 && cumplimientoF[status.index]>=3.0}">
-                                {
-                                y: ${cumplimientoF[status.index]},
-                                        color: '#3D96AE'
-                                }
+                            <c:when test="${cumplimientoF[status.index]<80.0 && cumplimientoF[status.index]>=60.0}">
+                                            {
+                                            y: ${cumplimientoF[status.index]},
+                                                    color: '#3D96AE'
+                                            }
 
                             </c:when>
-                            <c:when test="${cumplimientoF[status.index]<3.0 && cumplimientoF[status.index]>=2.0}">
-                                {
-                                y: ${cumplimientoF[status.index]},
-                                        color: '#DB843D'
-                                }
+                            <c:when test="${cumplimientoF[status.index]<60.0 && cumplimientoF[status.index]>=40.0}">
+                                            {
+                                            y: ${cumplimientoF[status.index]},
+                                                    color: '#DB843D'
+                                            }
 
                             </c:when>
                             <c:otherwise>
-                                {
-                                y: ${cumplimientoF[status.index]},
-                                        color: '#AA4643'
-                                }
+                                            {
+                                            y: ${cumplimientoF[status.index]},
+                                                    color: '#AA4643'
+                                            }
                             </c:otherwise>
                         </c:choose>
 
-
-
-
-
                     </c:otherwise>
-                </c:choose>     
+                </c:choose>
             </c:when>
         </c:choose>
 
     </c:forEach>
 
 
-        ],
-                dataLabels: {
-        enabled: true,
-                rotation: - 90,
-                color: '#FFFFFF',
-                align: 'right',
-                x: 4,
-                y: 10,
-                formatter: function() {
-        return this.y;
-        },
-                style: {
-        fontSize: '13px',
-                fontFamily: 'Verdana, sans-serif'
-        }
-        }
-        }]
-        });
-        });
+                                            ],
+                                            dataLabels: {
+                                            enabled: true,
+                                                    rotation: - 90,
+                                                    color: '#FFFFFF',
+                                                    align: 'right',
+                                                    x: 4,
+                                                    y: 10,
+                                                    formatter: function() {
+                                                    return this.y;
+                                                    },
+                                                    style: {
+                                                    fontSize: '13px',
+                                                            fontFamily: 'Verdana, sans-serif'
+                                                    }
+                                            }
+                                    }]
+                            });
+                            });
 
 
 </script>
@@ -201,13 +197,10 @@
 
                     <table class="table table-striped table-bordered table-condensed inicial">
                         <thead>
-                        <th>Id Factor</th>
                         <th>Factor</th>
                         <th>Ponderacion Factor</th>
-                        <th>Grado de Cumplimiento</th>
-                        <th>Evaluacion teniendo en cuenta ponderacion</th>
-                        <th>Logro ideal</th>
-                        <th>Relacion con el logro ideal</th>
+                        <th>Calificación del factor</th>
+                        <th>Grado</th>
                         </thead>
                         <tbody>
                             <c:set var="indice2" value="0"></c:set>
@@ -219,134 +212,121 @@
                                     <c:when test="${cum2>0}"> 
                                         <tr>
                                             <td style="text-align: left">   
-                                                ${factor.codigo}
-                                            </td>
-
-                                            <td style="text-align: left">   
                                                 <a href="#detalleFactor&${factor.getId()}" data="${factor.nombre}">${factor.nombre}</a>
                                             </td>
                                             <td>   
                                                 ${ponderacionesF.get(indice2).ponderacion} %
                                             </td>
                                             <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index]}"/>
-                                                
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index]}"/>%
                                             </td>
                                             <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * ponderacionesF.get(indice2).ponderacion}"/>
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesF.get(indice2).ponderacion}"/>
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * 20}"/>%
-                                            </td>
-                                        </tr>
+                                                <c:if test="${cumplimientoF[iter2.index]  >= 90.0}"> A </c:if>        
+                                                <c:if test="${cumplimientoF[iter2.index]  < 90.0 && cumplimientoF[iter2.index]  >=80.0}"> B </c:if>        
+                                                <c:if test="${cumplimientoF[iter2.index]  < 80.0 && cumplimientoF[iter2.index]  >=60.0}"> C </c:if>        
+                                                <c:if test="${cumplimientoF[iter2.index]  < 60.0 && cumplimientoF[iter2.index]  >=40.0}"> D </c:if>        
+                                                <c:if test="${cumplimientoF[iter2.index]  < 40.0}"> E </c:if>        
+                                                </td>
+                                            </tr>
                                         <c:set var="final" value="${final+((ponderacionesF.get(indice2).ponderacion)*(cumplimientoF[iter2.index]))}"></c:set>
                                         <c:set var="ponderaciones" value="${ponderaciones+ponderacionesF.get(indice2).ponderacion}"></c:set>
                                         <c:set var="indice2" value="${indice2+1}"></c:set>
-                                        
+
                                     </c:when>
                                 </c:choose>       
                             </c:forEach>
                         </tbody>
                         <tfoot>
-                                <td>   
+                        <td style="text-align: left;font-weight: bold;">   
+                            Total
+                        </td>            
+                        <td>   
+                          ${ponderaciones} %  
+                        </td>
 
-                                </td>            
-                                <td style="text-align: left;font-weight: bold;">   
-                                    Total
-                                </td>
+                        <td>   
+                            <fmt:formatNumber type="number" maxFractionDigits="1" value="${(final/ponderaciones)}"/> %
+                        </td>
 
-                                <td>   
-                                    100 %
-                                </td>
-                                    
-                                <td>   
-                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${final/ponderaciones}"/>
-                                    
-                                </td>
-                                <td>   
-
-                                </td>
-                                <td>   
-
-                                </td>
-                                <td>   
-                                    <fmt:formatNumber type="number" maxFractionDigits="1" value="${(final/ponderaciones)*20}"/>%
-                                </td>
+                        <td>   
+                            <c:if test="${(final/ponderaciones) >= 90.0}"> A </c:if>        
+                            <c:if test="${(final/ponderaciones) < 90.0 && (final/ponderaciones) >=80.0}"> B </c:if>        
+                            <c:if test="${(final/ponderaciones) < 80.0 && (final/ponderaciones) >=60.0}"> C </c:if>        
+                            <c:if test="${(final/ponderaciones) < 60.0 && (final/ponderaciones) >=40.0}"> D </c:if>        
+                            <c:if test="${(final/ponderaciones) < 40.0}"> E </c:if>        
+                            </td>
                             </tfoot>
-                    </table>
-                    <br/>          
-                    <div id="grafica" style="height: 500px; margin: 0 auto" class="span10"></div>
+                        </table>
+                        <br/>          
+                        <div id="grafica" style="height: 500px; margin: 0 auto" class="span10"></div>
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Escala</th>
-                                <th>Descripci&oacute;n</th>
-                                <th>Grado de cumplimiento</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background-color: #89A54E;">
-                                <td>
-                                    4.5 a 5.0
-                                </td>
-                                <td>
-                                    Se cumple plenamente
-                                </td>
-                                <td>
-                                    90% a 100%
-                                </td>
-                            </tr>
-                            <tr style="background-color: #80699B;">
-                                <td>
-                                    4.0 a 4.4
-                                </td>
-                                <td>
-                                    Se cumple en alto grado
-                                </td>
-                                <td>
-                                    80% a 89%
-                                </td>
-                            </tr>
-                            <tr style="background-color: #3D96AE;">
-                                <td>
-                                    3.0 a 3.9
-                                </td>
-                                <td>
-                                    Se cumple en mediano grado
-                                </td>
-                                <td>
-                                    60% a 79%
-                                </td>
-                            </tr>
-                            <tr style="background-color: #DB843D;">
-                                <td>
-                                    2.0 a 2.9
-                                </td>
-                                <td>
-                                    Se cumple en bajo grado
-                                </td>
-                                <td>
-                                    40% - 59%
-                                </td>
-                            </tr>
-                            <tr style="background-color: #AA4643;">
-                                <td>
-                                    1.0 a 1.9
-                                </td>
-                                <td>
-                                    No se cumple
-                                </td>
-                                <td>
-                                    0% - 39%
-                                </td>
-                            </tr>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Escala</th>
+                                    <th>Descripci&oacute;n</th>
+                                    <th>Grado de cumplimiento</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color: #89A54E;">
+                                    <td>
+                                        A
+                                    </td>
+                                    <td>
+                                        Se cumple plenamente
+                                    </td>
+                                    <td>
+                                        90% a 100%
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #80699B;">
+                                    <td>
+                                        B
+                                    </td>
+                                    <td>
+                                        Se cumple en alto grado
+                                    </td>
+                                    <td>
+                                        80% a 89%
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #3D96AE;">
+                                    <td>
+                                        C
+                                    </td>
+                                    <td>
+                                        Se cumple en aceptablemente
+                                    </td>
+                                    <td>
+                                        60% a 79%
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #DB843D;">
+                                    <td>
+                                        D
+                                    </td>
+                                    <td>
+                                        Se cumple insatisfactoriamente
+                                    </td>
+                                    <td>
+                                        40% - 59%
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #AA4643;">
+                                    <td>
+                                        E
+                                    </td>
+                                    <td>
+                                        No se cumple
+                                    </td>
+                                    <td>
+                                        0% - 39%
+                                    </td>
+                                </tr>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
                 </c:when>
                 <c:otherwise>
                     No Existen Hay datos Registrados en el Sistema.
