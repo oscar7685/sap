@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ususario
+ * @author acreditacion
  */
 @Entity
 @Table(name = "hallazgo", catalog = "sapbd", schema = "")
@@ -42,22 +42,22 @@ public class Hallazgo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idhallazgo", nullable = false)
+    @Column(name = "idhallazgo")
     private Integer idhallazgo;
     @Size(max = 3000)
-    @Column(name = "hallazgo", length = 3000)
+    @Column(name = "hallazgo")
     private String hallazgo;
     @Size(max = 45)
-    @Column(name = "tipo", length = 45)
+    @Column(name = "tipo")
     private String tipo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hallazgoIdhallazgo")
-    private List<Objetivos> objetivosList;
-    @JoinColumn(name = "proceso_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private Proceso procesoId;
-    @JoinColumn(name = "caracteristica_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "caracteristica_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Caracteristica caracteristicaId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hallazgoIdhallazgo")
+    private List<Metas> metasList;
 
     public Hallazgo() {
     }
@@ -90,13 +90,12 @@ public class Hallazgo implements Serializable {
         this.tipo = tipo;
     }
 
-    @XmlTransient
-    public List<Objetivos> getObjetivosList() {
-        return objetivosList;
+    public Caracteristica getCaracteristicaId() {
+        return caracteristicaId;
     }
 
-    public void setObjetivosList(List<Objetivos> objetivosList) {
-        this.objetivosList = objetivosList;
+    public void setCaracteristicaId(Caracteristica caracteristicaId) {
+        this.caracteristicaId = caracteristicaId;
     }
 
     public Proceso getProcesoId() {
@@ -107,12 +106,13 @@ public class Hallazgo implements Serializable {
         this.procesoId = procesoId;
     }
 
-    public Caracteristica getCaracteristicaId() {
-        return caracteristicaId;
+    @XmlTransient
+    public List<Metas> getMetasList() {
+        return metasList;
     }
 
-    public void setCaracteristicaId(Caracteristica caracteristicaId) {
-        this.caracteristicaId = caracteristicaId;
+    public void setMetasList(List<Metas> metasList) {
+        this.metasList = metasList;
     }
 
     @Override

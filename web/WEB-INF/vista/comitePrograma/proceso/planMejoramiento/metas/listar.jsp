@@ -22,8 +22,6 @@
                         <ul class="breadcrumb">
                             <li><a href="<%=request.getContextPath()%>/#listarHallazgos" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar hallazgos">Hallazgos</a> <span class="divider">/</span></li>
                             <li><a href="<%=request.getContextPath()%>/#editarHallazgo&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${hallazgo.hallazgo}">Hallazgo</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#listarObjetivos&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar objetivos">Objetivos</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#editarObjetivo&${objetivo.idobjetivos}" class="tool" data-placement="top" rel="tooltip" data-original-title="${objetivo.objetivo}">Objetivo</a> <span class="divider">/</span></li>
                             <li>Metas</li>
                             <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
@@ -33,7 +31,7 @@
                                 <table class="table table-striped table-bordered table-condensed">
                                     <thead>
                                     <th>Metas</th>
-                                    <th>Estrategias</th>    
+                                    <th>Acciones</th>    
                                     <th>Indicador de Cumplimiento</th>    
                                     <th>Fecha Inicio</th>    
                                     <th>Fecha Final</th>    
@@ -48,7 +46,7 @@
                                                     <c:out value="${item.meta}"/>
                                                 </td>
                                                 <td>   
-                                                    <c:out value="${item.estrategia}"/>
+                                                    <c:out value="${item.actividad}"/>
                                                 </td>
                                                 <td>   
                                                     <c:out value="${item.indicadorCumplimiento}"/>
@@ -63,7 +61,7 @@
                                                     <c:out value="${item.responsable}"/>
                                                 </td>
                                                 <td>   
-                                                    <c:out value="${item.financiacion}"/>
+                                                    <c:out value="${item.recursos}"/>
                                                 </td>
                                                 
                                                 <td>   
@@ -75,7 +73,7 @@
                                 </table>
                             </c:when>
                             <c:otherwise>
-                                Aun no existen Metas para este Objetivo.<br/>
+                                Aun no existen Actividades para este Hallazgo.<br/>
                             </c:otherwise>
                         </c:choose>
                         <a href="#crearMeta" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear Meta</a>    

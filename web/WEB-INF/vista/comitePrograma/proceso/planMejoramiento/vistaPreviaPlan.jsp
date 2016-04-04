@@ -82,69 +82,52 @@
                                             <th colspan="8" style="text-align: center;">Formulación</th>   
                                         </tr>
                                         <tr>
-                                            <th>Objetivo</th>   
-                                            <th>Meta</th>   
-                                            <th>Estrategia</th>   
-                                            <th>Indicador de Cumplimiento</th>   
+                                            <th>Actividad</th>   
                                             <th>Inicio</th>   
                                             <th>Final</th>   
-                                            <th>Responsables</th>   
                                             <th>Recursos o Financiaci&oacute;n</th>   
+                                            <th>Responsables</th>   
+                                            <th>Meta</th>
+                                            <th>Indicador de Cumplimiento</th>   
+                                            <th></th>   
                                         </tr>
                                     </thead>
                                     <tbody>
-
-
                                         <!--objetivos-->
                                         <c:choose>
-                                            <c:when test="${item.objetivosList.size()==0}">
+                                            <c:when test="${item.metasList.size()==0}">
                                                 <tr>
                                                     <td colspan="8">No Existen registros hasta el momento</td>
                                                 </tr>    
                                             </c:when>
                                         </c:choose>
-                                        <c:forEach items="${item.objetivosList}" var="item2">
+                                        <c:forEach items="${item.metasList}" var="item3" varStatus="status">
                                             <tr>
-                                                <c:choose>
-                                                    <c:when test="${item2.metasList.size() == 0}">
-                                                        <!--no tiene metas-->
-                                                        <td>${item2.objetivo}</td>
-                                                        <td colspan="7"></td>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <td rowspan="${item2.metasList.size()}">${item2.objetivo}</td>
-                                                        <c:forEach items="${item2.metasList}" var="item3" varStatus="status">
-                                                            <c:choose>
-                                                                <c:when test="${status.index!=0}">
-                                                                <tr>    
-                                                                </c:when>
-                                                            </c:choose>
-                                                            <td>
-                                                                ${item3.meta}
-                                                            </td>
-                                                            <td>
-                                                                ${item3.estrategia}
-                                                            </td>
-                                                            <td>
-                                                                ${item3.indicadorCumplimiento}
-                                                            </td>
-                                                            <td>
-                                                                <fmt:formatDate pattern='dd/MM/yyyy' value='${item3.fechaInicio}' />
-                                                            </td>
-                                                            <td>
-                                                                <fmt:formatDate pattern='dd/MM/yyyy' value='${item3.fechaFinal}' />
-                                                            </td>
-                                                            <td>
-                                                                ${item3.responsable}
-                                                            </td>
-                                                            <td>
-                                                                ${item3.financiacion}
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </c:otherwise>
-                                            </c:choose>
-
+                                                <td>
+                                                    ${item3.actividad}
+                                                </td>
+                                                <td>
+                                                    <fmt:formatDate pattern='dd/MM/yyyy' value='${item3.fechaInicio}' />
+                                                </td>
+                                                <td>
+                                                    <fmt:formatDate pattern='dd/MM/yyyy' value='${item3.fechaFinal}' />
+                                                </td>
+                                                <td>
+                                                    ${item3.recursos}
+                                                </td>
+                                                <td>
+                                                    ${item3.responsable}
+                                                </td>
+                                                <td>
+                                                    ${item3.meta}
+                                                </td>
+                                                <td>
+                                                    ${item3.indicadorCumplimiento}
+                                                </td>
+                                                <td>
+                                                    <a>Ver Seguimientos</a>
+                                                </td>
+                                            </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>

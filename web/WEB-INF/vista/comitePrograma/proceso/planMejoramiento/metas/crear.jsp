@@ -22,7 +22,7 @@
                     url: "/sap/controladorCP?action=crearMeta2",
                     data: $("#formCrearMeta").serialize(),
                     success: function() {
-                        location = "/sap/#verMetas&${objetivo.idobjetivos}";
+                        location = "/sap/#verMetas&${hallazgo.idhallazgo}";
                     } //fin success
                 }); //fin $.ajax    */
             }

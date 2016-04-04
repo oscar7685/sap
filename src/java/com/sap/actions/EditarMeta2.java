@@ -61,10 +61,10 @@ public class EditarMeta2 implements Action {
         }
 
         m.setMeta(meta);
-        m.setEstrategia(estrategia);
+        m.setActividad(estrategia);
         m.setIndicadorCumplimiento(indicador);
         m.setResponsable(responsables);
-        m.setFinanciacion(recursos);
+        m.setRecursos(recursos);
         m.setFechaInicio(fechaI);
         m.setFechaFinal(fechaF);
 

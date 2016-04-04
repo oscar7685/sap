@@ -8,7 +8,9 @@ package com.sap.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,15 +20,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ususario
+ * @author acreditacion
  */
 @Entity
 @Table(name = "metas", catalog = "sapbd", schema = "")
@@ -34,21 +38,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Metas.findAll", query = "SELECT m FROM Metas m"),
     @NamedQuery(name = "Metas.findByIdmeta", query = "SELECT m FROM Metas m WHERE m.idmeta = :idmeta"),
-    @NamedQuery(name = "Metas.findByEstrategia", query = "SELECT m FROM Metas m WHERE m.estrategia = :estrategia"),
-    @NamedQuery(name = "Metas.findByMeta", query = "SELECT m FROM Metas m WHERE m.meta = :meta"),
-    @NamedQuery(name = "Metas.findByIndicadorCumplimiento", query = "SELECT m FROM Metas m WHERE m.indicadorCumplimiento = :indicadorCumplimiento"),
-    @NamedQuery(name = "Metas.findByResponsable", query = "SELECT m FROM Metas m WHERE m.responsable = :responsable"),
-    @NamedQuery(name = "Metas.findByFinanciacion", query = "SELECT m FROM Metas m WHERE m.financiacion = :financiacion"),
-    @NamedQuery(name = "Metas.findByEstado", query = "SELECT m FROM Metas m WHERE m.estado = :estado"),
-    @NamedQuery(name = "Metas.findByPorcentajeCumplimiento", query = "SELECT m FROM Metas m WHERE m.porcentajeCumplimiento = :porcentajeCumplimiento"),
-    @NamedQuery(name = "Metas.findByObservaciones", query = "SELECT m FROM Metas m WHERE m.observaciones = :observaciones"),
-    @NamedQuery(name = "Metas.findByEstadoInterno", query = "SELECT m FROM Metas m WHERE m.estadoInterno = :estadoInterno"),
+    @NamedQuery(name = "Metas.findByActividad", query = "SELECT m FROM Metas m WHERE m.actividad = :actividad"),
     @NamedQuery(name = "Metas.findByFechaInicio", query = "SELECT m FROM Metas m WHERE m.fechaInicio = :fechaInicio"),
     @NamedQuery(name = "Metas.findByFechaFinal", query = "SELECT m FROM Metas m WHERE m.fechaFinal = :fechaFinal"),
-    @NamedQuery(name = "Metas.findByFechaSeguimiento", query = "SELECT m FROM Metas m WHERE m.fechaSeguimiento = :fechaSeguimiento"),
-    @NamedQuery(name = "Metas.findByCorreos", query = "SELECT m FROM Metas m WHERE m.correos = :correos"),
-    @NamedQuery(name = "Metas.findByContinuarEnvio", query = "SELECT m FROM Metas m WHERE m.continuarEnvio = :continuarEnvio"),
-    @NamedQuery(name = "Metas.findByEnviarCorreoCada", query = "SELECT m FROM Metas m WHERE m.enviarCorreoCada = :enviarCorreoCada")})
+    @NamedQuery(name = "Metas.findByRecursos", query = "SELECT m FROM Metas m WHERE m.recursos = :recursos"),
+    @NamedQuery(name = "Metas.findByResponsable", query = "SELECT m FROM Metas m WHERE m.responsable = :responsable"),
+    @NamedQuery(name = "Metas.findByMeta", query = "SELECT m FROM Metas m WHERE m.meta = :meta"),
+    @NamedQuery(name = "Metas.findByIndicadorCumplimiento", query = "SELECT m FROM Metas m WHERE m.indicadorCumplimiento = :indicadorCumplimiento"),
+    @NamedQuery(name = "Metas.findByEstado", query = "SELECT m FROM Metas m WHERE m.estado = :estado"),
+    @NamedQuery(name = "Metas.findByPorcentajeCumplimiento", query = "SELECT m FROM Metas m WHERE m.porcentajeCumplimiento = :porcentajeCumplimiento"),
+    @NamedQuery(name = "Metas.findByObservaciones", query = "SELECT m FROM Metas m WHERE m.observaciones = :observaciones")})
 public class Metas implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -57,20 +56,26 @@ public class Metas implements Serializable {
     @Column(name = "idmeta")
     private Integer idmeta;
     @Size(max = 2000)
-    @Column(name = "estrategia")
-    private String estrategia;
+    @Column(name = "actividad")
+    private String actividad;
+    @Column(name = "fecha_inicio")
+    @Temporal(TemporalType.DATE)
+    private Date fechaInicio;
+    @Column(name = "fecha_final")
+    @Temporal(TemporalType.DATE)
+    private Date fechaFinal;
+    @Size(max = 2000)
+    @Column(name = "recursos")
+    private String recursos;
+    @Size(max = 2000)
+    @Column(name = "responsable")
+    private String responsable;
     @Size(max = 2000)
     @Column(name = "meta")
     private String meta;
     @Size(max = 2000)
     @Column(name = "indicador_cumplimiento")
     private String indicadorCumplimiento;
-    @Size(max = 2000)
-    @Column(name = "responsable")
-    private String responsable;
-    @Size(max = 2000)
-    @Column(name = "financiacion")
-    private String financiacion;
     @Size(max = 45)
     @Column(name = "estado")
     private String estado;
@@ -79,30 +84,11 @@ public class Metas implements Serializable {
     @Size(max = 45)
     @Column(name = "observaciones")
     private String observaciones;
-    @Size(max = 45)
-    @Column(name = "estado_interno")
-    private String estadoInterno;
-    @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
-    @Column(name = "fecha_final")
-    @Temporal(TemporalType.DATE)
-    private Date fechaFinal;
-    @Column(name = "fecha_seguimiento")
-    @Temporal(TemporalType.DATE)
-    private Date fechaSeguimiento;
-    @Size(max = 1000)
-    @Column(name = "correos")
-    private String correos;
-    @Size(max = 45)
-    @Column(name = "continuar_envio")
-    private String continuarEnvio;
-    @Size(max = 45)
-    @Column(name = "enviar_correo_cada")
-    private String enviarCorreoCada;
-    @JoinColumn(name = "objetivos_idobjetivos", referencedColumnName = "idobjetivos")
+    @JoinColumn(name = "hallazgo_idhallazgo", referencedColumnName = "idhallazgo")
     @ManyToOne(optional = false)
-    private Objetivos objetivosIdobjetivos;
+    private Hallazgo hallazgoIdhallazgo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "metasIdmeta")
+    private List<Seguimientos> seguimientosList;
 
     public Metas() {
     }
@@ -119,12 +105,44 @@ public class Metas implements Serializable {
         this.idmeta = idmeta;
     }
 
-    public String getEstrategia() {
-        return estrategia;
+    public String getActividad() {
+        return actividad;
     }
 
-    public void setEstrategia(String estrategia) {
-        this.estrategia = estrategia;
+    public void setActividad(String actividad) {
+        this.actividad = actividad;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFinal() {
+        return fechaFinal;
+    }
+
+    public void setFechaFinal(Date fechaFinal) {
+        this.fechaFinal = fechaFinal;
+    }
+
+    public String getRecursos() {
+        return recursos;
+    }
+
+    public void setRecursos(String recursos) {
+        this.recursos = recursos;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
     }
 
     public String getMeta() {
@@ -141,22 +159,6 @@ public class Metas implements Serializable {
 
     public void setIndicadorCumplimiento(String indicadorCumplimiento) {
         this.indicadorCumplimiento = indicadorCumplimiento;
-    }
-
-    public String getResponsable() {
-        return responsable;
-    }
-
-    public void setResponsable(String responsable) {
-        this.responsable = responsable;
-    }
-
-    public String getFinanciacion() {
-        return financiacion;
-    }
-
-    public void setFinanciacion(String financiacion) {
-        this.financiacion = financiacion;
     }
 
     public String getEstado() {
@@ -183,68 +185,21 @@ public class Metas implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public String getEstadoInterno() {
-        return estadoInterno;
+    public Hallazgo getHallazgoIdhallazgo() {
+        return hallazgoIdhallazgo;
     }
 
-    public void setEstadoInterno(String estadoInterno) {
-        this.estadoInterno = estadoInterno;
+    public void setHallazgoIdhallazgo(Hallazgo hallazgoIdhallazgo) {
+        this.hallazgoIdhallazgo = hallazgoIdhallazgo;
     }
 
-    public Date getFechaInicio() {
-        return fechaInicio;
+    @XmlTransient
+    public List<Seguimientos> getSeguimientosList() {
+        return seguimientosList;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public Date getFechaFinal() {
-        return fechaFinal;
-    }
-
-    public void setFechaFinal(Date fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
-
-    public Date getFechaSeguimiento() {
-        return fechaSeguimiento;
-    }
-
-    public void setFechaSeguimiento(Date fechaSeguimiento) {
-        this.fechaSeguimiento = fechaSeguimiento;
-    }
-
-    public String getCorreos() {
-        return correos;
-    }
-
-    public void setCorreos(String correos) {
-        this.correos = correos;
-    }
-
-    public String getContinuarEnvio() {
-        return continuarEnvio;
-    }
-
-    public void setContinuarEnvio(String continuarEnvio) {
-        this.continuarEnvio = continuarEnvio;
-    }
-
-    public String getEnviarCorreoCada() {
-        return enviarCorreoCada;
-    }
-
-    public void setEnviarCorreoCada(String enviarCorreoCada) {
-        this.enviarCorreoCada = enviarCorreoCada;
-    }
-
-    public Objetivos getObjetivosIdobjetivos() {
-        return objetivosIdobjetivos;
-    }
-
-    public void setObjetivosIdobjetivos(Objetivos objetivosIdobjetivos) {
-        this.objetivosIdobjetivos = objetivosIdobjetivos;
+    public void setSeguimientosList(List<Seguimientos> seguimientosList) {
+        this.seguimientosList = seguimientosList;
     }
 
     @Override

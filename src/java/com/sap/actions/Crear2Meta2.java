@@ -5,9 +5,7 @@
 package com.sap.actions;
 
 import com.sap.ejb.MetasFacade;
-import com.sap.ejb.ObjetivosFacade;
 import com.sap.entity.Metas;
-import com.sap.entity.Objetivos;
 import com.sap.interfaz.Action;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -27,13 +25,12 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class Crear2Meta2 implements Action {
+
     MetasFacade metasFacade = lookupMetasFacadeBean();
-    ObjetivosFacade objetivosFacade = lookupObjetivosFacadeBean();
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
-        Objetivos o = (Objetivos) sesion.getAttribute("objetivo");
         String meta = (String) request.getParameter("meta");
         String estrategia = (String) request.getParameter("estrategia");
         String indicador = (String) request.getParameter("indicador");
@@ -66,32 +63,18 @@ public class Crear2Meta2 implements Action {
 
         Metas m = new Metas();
         m.setMeta(meta);
-        m.setEstrategia(estrategia);
+        m.setActividad(estrategia);
         m.setIndicadorCumplimiento(indicador);
         m.setResponsable(responsables);
-        m.setFinanciacion(recursos);
-        m.setObjetivosIdobjetivos(o);
+        m.setRecursos(recursos);
         m.setFechaInicio(fechaI);
         m.setFechaFinal(fechaF);
 
         metasFacade.create(m);
 
         Metas recienCreado = metasFacade.findUltimo("idmeta").get(0);
-        List<Metas> metas = o.getMetasList();
-        metas.add(recienCreado);
-        o.setMetasList(metas);
-        objetivosFacade.edit(o);
-        return "NA";
-    }
 
-    private ObjetivosFacade lookupObjetivosFacadeBean() {
-        try {
-            Context c = new InitialContext();
-            return (ObjetivosFacade) c.lookup("java:global/sap/ObjetivosFacade!com.sap.ejb.ObjetivosFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
+        return "NA";
     }
 
     private MetasFacade lookupMetasFacadeBean() {

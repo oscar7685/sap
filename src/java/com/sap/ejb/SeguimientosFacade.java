@@ -6,17 +6,17 @@
 
 package com.sap.ejb;
 
-import com.sap.entity.Objetivos;
+import com.sap.entity.Seguimientos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Ususario
+ * @author acreditacion
  */
 @Stateless
-public class ObjetivosFacade extends AbstractFacade<Objetivos> {
+public class SeguimientosFacade extends AbstractFacade<Seguimientos> {
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class ObjetivosFacade extends AbstractFacade<Objetivos> {
         return em;
     }
 
-    public ObjetivosFacade() {
-        super(Objetivos.class);
+    public SeguimientosFacade() {
+        super(Seguimientos.class);
     }
     
 }
