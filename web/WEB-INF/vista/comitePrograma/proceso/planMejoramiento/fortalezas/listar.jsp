@@ -36,7 +36,7 @@
                                                 </td>
                                                 <td>   
                                                     <a href="#editarHallazgo&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
-                                                    <a href="#listarObjetivos&${item.idhallazgo}" title="Ver objetivos"><i class="icon-signin"></i></a>
+                                                    <a href="#verMetas&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -56,7 +56,7 @@
                             <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
                         <h3>Listado de  Fortalezas</h3>
-                      <c:choose>
+                        <c:choose>
                             <c:when test="${fn:length(listFortalezas)!= 0}">
                                 <table class="table table-striped table-bordered table-condensed">
                                     <thead>
@@ -75,7 +75,7 @@
                                                 </td>
                                                 <td>   
                                                     <a href="#editarFortaleza&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
-                                                    <a href="#listar2Objetivos&${item.idhallazgo}" title="Ver objetivos"><i class="icon-signin"></i></a>
+                                                    <a href="#verMetas&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
                                                 </td>
                                             </tr>
                                         </c:forEach>

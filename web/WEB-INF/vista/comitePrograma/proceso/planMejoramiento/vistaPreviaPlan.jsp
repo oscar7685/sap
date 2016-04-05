@@ -125,7 +125,7 @@
                                                     ${item3.indicadorCumplimiento}
                                                 </td>
                                                 <td>
-                                                    <a>Ver Seguimientos</a>
+                                                    <a href="#verSeguimientos&${item3.idmeta}"><i class="icon-eye-open"></i> Ver Seguimientos</a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
