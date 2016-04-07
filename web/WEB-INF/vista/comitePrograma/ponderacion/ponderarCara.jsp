@@ -39,17 +39,16 @@
                     sum += Number($(this).val());
                 });
                 if (sum === 100) {
-                    $("#factorId${factAux.id}").html("" + sum);
+                    $("#factorId${factAux.id}").html(" -> " + sum);
                     $("#factorId${factAux.id}").parents("tr").removeClass();
                     $("#factorId${factAux.id}").parents("tr").addClass("success");
                 } else {
-                    $("#factorId${factAux.id}").html("" + sum);
+                    $("#factorId${factAux.id}").html(" -> " + sum);
                     $("#factorId${factAux.id}").parents("tr").removeClass();
                     $("#factorId${factAux.id}").parents("tr").addClass("error");
                     sapo = 1;
                 }
     </c:forEach>
-                console.log("SAPO: "+sapo);
                     if (sapo === 0) {
                         $.ajax({
                             type: 'POST',
@@ -103,7 +102,7 @@
                                     <c:choose>
                                         <c:when test="${row.factorId.id != idfactor}">
                                             <tr class="info">
-                                                <td colspan="4">Factor ${row.factorId.codigo}: ${row.factorId.nombre} -> <strong id="factorId${row.factorId.id}"></strong></td>   
+                                                <td colspan="4">Factor ${row.factorId.codigo}: ${row.factorId.nombre}<strong id="factorId${row.factorId.id}"></strong></td>   
                                                     <c:set var="idfactor" value="${row.factorId.id}"></c:set>
                                                 </tr>   
                                         </c:when>

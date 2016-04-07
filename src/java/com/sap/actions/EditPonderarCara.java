@@ -30,6 +30,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class EditPonderarCara implements Action {
+
     PonderacionfactorFacade ponderacionfactorFacade = lookupPonderacionfactorFacadeBean();
     PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade = lookupPonderacioncaracteristicaFacadeBean();
 
@@ -44,62 +45,17 @@ public class EditPonderarCara implements Action {
         while (i.hasNext()) {
 
             Ponderacioncaracteristica pc = (Ponderacioncaracteristica) i.next();
-            Float importancia = Float.parseFloat(request.getParameter("importancia" + pc.getId()));
-            //Double ponderacion = Double.parseDouble(request.getParameter("ponderacion" + pc.getId()));
+            //Float importancia = Float.parseFloat(request.getParameter("importancia" + pc.getId()));
+            Double ponderacion = Double.parseDouble(request.getParameter("ponderacionC" + pc.getId()));
             String justificacion = request.getParameter("justificacion" + pc.getId());
 
             pc.setJustificacion(justificacion);
-            pc.setNivelimportancia(importancia);
-            //   pc.setPonderacion(ponderacion);
+            pc.setNivelimportancia(new Float("10"));
+            pc.setPonderacion(ponderacion);
 
             ponderacioncaracteristicaFacade.edit(pc);
         }
 
-        List lpc = ponderacioncaracteristicaFacade.findByList("procesoId", proceso);
-
-        i = lpc.iterator();
-
-        while (i.hasNext()) {
-            Ponderacioncaracteristica pc = (Ponderacioncaracteristica) i.next();
-
-            double vi = pc.getNivelimportancia();
-
-            Factor f = pc.getCaracteristicaId().getFactorId();
-
-            Ponderacionfactor pf = ponderacionfactorFacade.findBySingle2("factorId", f, "procesoId", proceso);
-
-            List suma0 = f.getCaracteristicaList();
-
-            Iterator i1 = suma0.iterator();
-
-            double suma = 0;
-
-            while (i1.hasNext()) {
-                Caracteristica c = (Caracteristica) i1.next();
-                Ponderacioncaracteristica pc1 = ponderacioncaracteristicaFacade.findBySingle2("caracteristicaId", c, "procesoId", proceso);
-                suma += pc1.getNivelimportancia();
-                //  System.out.println("Factor Id: " + f.getCodigo());
-                //  System.out.println("Caracteristica Id: " + c.getCodigo());
-            }
-
-            //System.out.println("Suma: " + suma);
-            double a = (100 * vi) / suma;
-            double b = ((pf.getPonderacion() * a) / 100);
-
-            double r;
-
-            int decimalPlaces = 2;
-            BigDecimal bde = new BigDecimal(b);
-
-// setScale is immutable
-            bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
-            r = bde.doubleValue();
-
-            pc.setPonderacion(r);
-
-            ponderacioncaracteristicaFacade.edit(pc);
-
-        }
         return "NA";
     }
 

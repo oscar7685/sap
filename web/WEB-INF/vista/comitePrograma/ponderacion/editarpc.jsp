@@ -10,18 +10,58 @@
     }
 </style>
 <script type="text/javascript">
+    var sum = 0;
+    var sapo = 0;
     $(function() {
+        $("a[data-dismiss='alert']").click(function(e) {
+            $(this).parent("div").hide();
+            e.preventDefault();
+            e.stopPropagation();
+        });
         $("#formEditPonderarCara").validate({
+            errorElement: "em"
+                    ,
+            highlight: function(element, errorClass) {
+                $(element).parent("td").find("div").addClass("in");
+                $(element).parent("td").find("div").show();
+            }, unhighlight: function(element, errorClass, validClass) {
+                $(element).parent("td").find("div").removeClass("in");
+                $(element).parent("td").find("div").hide();
+            }, errorPlacement: function(error, element) {
+                error.appendTo($(element).parent("td").find("div"));
+            },
             submitHandler: function() {
-                $.ajax({
-                    type: 'POST',
-                    url: "/sapnaval/controladorCP?action=editPonderarCara",
-                    data: $("#formEditPonderarCara").serialize(),
-                    success: function() {
-                        location = "/sapnaval/#listPonderacionCara2";
-                    } //fin success
-                }); //fin $.ajax    
-            }
+                 sapo = 0;
+    <c:forEach items="${listFactores}" var="factAux" varStatus="statusfactAux">
+                sum = 0;
+                $(".factorX${factAux.id}").each(function(index, element) {
+                    sum += Number($(this).val());
+                });
+                if (sum === 100) {
+                    $("#factorId${factAux.id}").html(" -> " + sum);
+                    $("#factorId${factAux.id}").parents("tr").removeClass();
+                    $("#factorId${factAux.id}").parents("tr").addClass("success");
+                } else {
+                    $("#factorId${factAux.id}").html(" -> " + sum);
+                    $("#factorId${factAux.id}").parents("tr").removeClass();
+                    $("#factorId${factAux.id}").parents("tr").addClass("error");
+                    sapo = 1;
+                }
+    </c:forEach>
+                    if (sapo === 0) {
+                        $.ajax({
+                            type: 'POST',
+                            url: "/sapnaval/controladorCP?action=editPonderarCara",
+                            data: $("#formEditPonderarCara").serialize(),
+                            success: function() {
+                                location = "/sapnaval/#listPonderacionCara2";
+                            } //fin success
+                        }); //fin $.ajax 
+                    } else {
+                        $(".alert-error").show();
+                        $('div.ui-layout-center').animate({scrollTop: 10}, 500);
+                    }
+                }
         });
 
         $("#popover").popover({
@@ -41,6 +81,12 @@
                 <form id="formEditPonderarCara" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Ponderación de Característica <i id="popover" class="icon-question-sign" rel="popover" data-title="Escala nivel de importancia"></i></legend>
+                        <div class="alert alert-block alert-error" style="display:none" id="PonderacionCaracteristicas">
+                            <a href="#" data-dismiss="alert" class="close">×</a>
+                            <h4 class="alert-heading">Ha ocurrido un error!</h4>
+                            <p>La suma de la ponderacion de las caracteristicas de cada factor debe ser 100.</p>
+                            <a class="btn btn-danger" data-dismiss="alert" href="#">Cerrar</a>
+                        </div>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -56,7 +102,7 @@
                                     <c:choose>
                                         <c:when test="${row.caracteristicaId.factorId.id != idfactor}">
                                             <tr class="info">
-                                                <td colspan="4">Factor ${row.caracteristicaId.factorId.codigo}: ${row.caracteristicaId.factorId.nombre}</td>   
+                                                <td colspan="4">Factor ${row.caracteristicaId.factorId.codigo}: ${row.caracteristicaId.factorId.nombre}<strong id="factorId${row.caracteristicaId.factorId.id}"></strong></td>   
                                                 <c:set var="idfactor" value="${row.caracteristicaId.factorId.id}"></c:set>
                                                 </tr>   
                                         </c:when>

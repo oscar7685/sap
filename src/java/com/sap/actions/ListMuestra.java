@@ -36,23 +36,25 @@ public class ListMuestra implements Action {
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
         String url;
         List<Muestra> lm = muestraFacade.findByList("procesoId", proceso);
-        List contestados = respuestasFacade.findByContestados();
+        if (proceso.getModeloId().getId() == 1) {
+            List contestados = respuestasFacade.findByContestados();
+            url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";
+            sesion.setAttribute("contestados", contestados);
+        } else {
+            Muestra m = null;
+            if (!lm.isEmpty()) {
+                Iterator i = lm.iterator();
+                while (i.hasNext()) {
+                    m = (Muestra) i.next();
+                    sesion.setAttribute("Muestra", m);
+                }
+                url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";
+            } else {
+                sesion.setAttribute("Muestra", m);
+                url = "/WEB-INF/vista/comitePrograma/muestra/asignarMuestra.jsp";
 
-        /*    Muestra m = null;
-         if (!lm.isEmpty()) {
-         Iterator i = lm.iterator();
-         while (i.hasNext()) {
-         m = (Muestra) i.next();
-         sesion.setAttribute("Muestra", m);
-         }
-         url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";
-         } else {
-         sesion.setAttribute("Muestra", m);
-         url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";
-                
-         }*/
-        url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";
-         sesion.setAttribute("contestados", contestados);
+            }
+        }
         return url;
     }
 
