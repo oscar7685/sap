@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Empleador.findAll", query = "SELECT e FROM Empleador e"),
     @NamedQuery(name = "Empleador.findById", query = "SELECT e FROM Empleador e WHERE e.id = :id"),
     @NamedQuery(name = "Empleador.findByEmpresa", query = "SELECT e FROM Empleador e WHERE e.empresa = :empresa"),
-    @NamedQuery(name = "Empleador.findByPrograma", query = "SELECT e FROM Empleador e where e.programaId =:programa"),
     @NamedQuery(name = "Empleador.findByCargo", query = "SELECT e FROM Empleador e WHERE e.cargo = :cargo")})
 public class Empleador implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -48,6 +47,9 @@ public class Empleador implements Serializable {
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Programa programaId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
     @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona personaId;
@@ -92,6 +94,14 @@ public class Empleador implements Serializable {
 
     public void setProgramaId(Programa programaId) {
         this.programaId = programaId;
+    }
+
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
+
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
     }
 
     public Persona getPersonaId() {

@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Docente.findAll", query = "SELECT d FROM Docente d"),
     @NamedQuery(name = "Docente.findById", query = "SELECT d FROM Docente d WHERE d.id = :id"),
-    @NamedQuery(name = "Docente.findByPrograma", query = "SELECT d FROM Docente d WHERE d.programaId = :programa"),
     @NamedQuery(name = "Docente.findByTipo", query = "SELECT d FROM Docente d WHERE d.tipo = :tipo")})
 public class Docente implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -41,12 +40,15 @@ public class Docente implements Serializable {
     @Size(max = 45)
     @Column(name = "tipo")
     private String tipo;
-    @JoinColumn(name = "persona_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Persona personaId;
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Programa programaId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
+    @JoinColumn(name = "persona_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Persona personaId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
@@ -74,20 +76,28 @@ public class Docente implements Serializable {
         this.tipo = tipo;
     }
 
-    public Persona getPersonaId() {
-        return personaId;
-    }
-
-    public void setPersonaId(Persona personaId) {
-        this.personaId = personaId;
-    }
-
     public Programa getProgramaId() {
         return programaId;
     }
 
     public void setProgramaId(Programa programaId) {
         this.programaId = programaId;
+    }
+
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
+
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
+    }
+
+    public Persona getPersonaId() {
+        return personaId;
+    }
+
+    public void setPersonaId(Persona personaId) {
+        this.personaId = personaId;
     }
 
     public Fuente getFuenteId() {

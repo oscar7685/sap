@@ -29,10 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Egresado.findAll", query = "SELECT e FROM Egresado e"),
-    @NamedQuery(name = "Egresado.findByPrograma", query = "SELECT e FROM Egresado e where e.programaId =:programa"),
-    @NamedQuery(name = "Egresado.findById", query = "SELECT e FROM Egresado e WHERE e.id = :id")})
+    @NamedQuery(name = "Egresado.findById", query = "SELECT e FROM Egresado e WHERE e.id = :id"),
+    @NamedQuery(name = "Egresado.findByTipo", query = "SELECT e FROM Egresado e WHERE e.tipo = :tipo")})
 public class Egresado implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +43,15 @@ public class Egresado implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tipo")
     private String tipo;
-    @JoinColumn(name = "persona_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Persona personaId;
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Programa programaId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
+    @JoinColumn(name = "persona_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Persona personaId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
@@ -82,20 +84,28 @@ public class Egresado implements Serializable {
         this.tipo = tipo;
     }
 
-    public Persona getPersonaId() {
-        return personaId;
-    }
-
-    public void setPersonaId(Persona personaId) {
-        this.personaId = personaId;
-    }
-
     public Programa getProgramaId() {
         return programaId;
     }
 
     public void setProgramaId(Programa programaId) {
         this.programaId = programaId;
+    }
+
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
+
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
+    }
+
+    public Persona getPersonaId() {
+        return personaId;
+    }
+
+    public void setPersonaId(Persona personaId) {
+        this.personaId = personaId;
     }
 
     public Fuente getFuenteId() {

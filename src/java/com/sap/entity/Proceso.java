@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sap.entity;
 
 import java.io.Serializable;
@@ -64,19 +63,29 @@ public class Proceso implements Serializable {
     @ManyToMany
     private List<Indicador> indicadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Administrativo> administrativoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Muestra> muestraList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Hallazgo> hallazgoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Estudiante> estudianteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacionfactor> ponderacionfactorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Directorprograma> directorprogramaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Encabezado> encabezadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Numericadocumental> numericadocumentalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Evaluarcaracteristica> evaluarcaracteristicaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Egresado> egresadoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Agenciagubernamental> agenciagubernamentalList;
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Programa programaId;
@@ -84,9 +93,13 @@ public class Proceso implements Serializable {
     @ManyToOne(optional = false)
     private Modelo modeloId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Empleador> empleadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Participante> participanteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Ponderacionindicador> ponderacionindicadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Docente> docenteList;
 
     public Proceso() {
     }
@@ -142,6 +155,15 @@ public class Proceso implements Serializable {
     }
 
     @XmlTransient
+    public List<Administrativo> getAdministrativoList() {
+        return administrativoList;
+    }
+
+    public void setAdministrativoList(List<Administrativo> administrativoList) {
+        this.administrativoList = administrativoList;
+    }
+
+    @XmlTransient
     public List<Ponderacioncaracteristica> getPonderacioncaracteristicaList() {
         return ponderacioncaracteristicaList;
     }
@@ -169,12 +191,30 @@ public class Proceso implements Serializable {
     }
 
     @XmlTransient
+    public List<Estudiante> getEstudianteList() {
+        return estudianteList;
+    }
+
+    public void setEstudianteList(List<Estudiante> estudianteList) {
+        this.estudianteList = estudianteList;
+    }
+
+    @XmlTransient
     public List<Ponderacionfactor> getPonderacionfactorList() {
         return ponderacionfactorList;
     }
 
     public void setPonderacionfactorList(List<Ponderacionfactor> ponderacionfactorList) {
         this.ponderacionfactorList = ponderacionfactorList;
+    }
+
+    @XmlTransient
+    public List<Directorprograma> getDirectorprogramaList() {
+        return directorprogramaList;
+    }
+
+    public void setDirectorprogramaList(List<Directorprograma> directorprogramaList) {
+        this.directorprogramaList = directorprogramaList;
     }
 
     @XmlTransient
@@ -204,6 +244,24 @@ public class Proceso implements Serializable {
         this.evaluarcaracteristicaList = evaluarcaracteristicaList;
     }
 
+    @XmlTransient
+    public List<Egresado> getEgresadoList() {
+        return egresadoList;
+    }
+
+    public void setEgresadoList(List<Egresado> egresadoList) {
+        this.egresadoList = egresadoList;
+    }
+
+    @XmlTransient
+    public List<Agenciagubernamental> getAgenciagubernamentalList() {
+        return agenciagubernamentalList;
+    }
+
+    public void setAgenciagubernamentalList(List<Agenciagubernamental> agenciagubernamentalList) {
+        this.agenciagubernamentalList = agenciagubernamentalList;
+    }
+
     public Programa getProgramaId() {
         return programaId;
     }
@@ -218,6 +276,15 @@ public class Proceso implements Serializable {
 
     public void setModeloId(Modelo modeloId) {
         this.modeloId = modeloId;
+    }
+
+    @XmlTransient
+    public List<Empleador> getEmpleadorList() {
+        return empleadorList;
+    }
+
+    public void setEmpleadorList(List<Empleador> empleadorList) {
+        this.empleadorList = empleadorList;
     }
 
     @XmlTransient
@@ -236,6 +303,15 @@ public class Proceso implements Serializable {
 
     public void setPonderacionindicadorList(List<Ponderacionindicador> ponderacionindicadorList) {
         this.ponderacionindicadorList = ponderacionindicadorList;
+    }
+
+    @XmlTransient
+    public List<Docente> getDocenteList() {
+        return docenteList;
+    }
+
+    public void setDocenteList(List<Docente> docenteList) {
+        this.docenteList = docenteList;
     }
 
     @Override

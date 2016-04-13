@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Estudiante.findById", query = "SELECT e FROM Estudiante e WHERE e.id = :id"),
     @NamedQuery(name = "Estudiante.findBySemestre", query = "SELECT e FROM Estudiante e WHERE e.semestre = :semestre"),
     @NamedQuery(name = "Estudiante.findByPeriodo", query = "SELECT e FROM Estudiante e WHERE e.periodo = :periodo"),
-    @NamedQuery(name = "Estudiante.cantEstudiantesEntre3y9ByPrograma", query = "SELECT COUNT(e) FROM Estudiante e WHERE e.programaId = :programa AND  (e.semestre='03' OR e.semestre='04' OR e.semestre='05' OR e.semestre='06' OR e.semestre='07' OR e.semestre='08' OR e.semestre='09')"),
-    @NamedQuery(name = "Estudiante.findByAnio", query = "SELECT e FROM Estudiante e WHERE e.anio = :anio")})
+    @NamedQuery(name = "Estudiante.findByAnio", query = "SELECT e FROM Estudiante e WHERE e.anio = :anio"),
+    @NamedQuery(name = "Estudiante.findByTipo", query = "SELECT e FROM Estudiante e WHERE e.tipo = :tipo")})
 public class Estudiante implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,12 +60,15 @@ public class Estudiante implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tipo")
     private String tipo;
-    @JoinColumn(name = "persona_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Persona personaId;
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Programa programaId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
+    @JoinColumn(name = "persona_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Persona personaId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
@@ -125,20 +128,28 @@ public class Estudiante implements Serializable {
         this.tipo = tipo;
     }
 
-    public Persona getPersonaId() {
-        return personaId;
-    }
-
-    public void setPersonaId(Persona personaId) {
-        this.personaId = personaId;
-    }
-
     public Programa getProgramaId() {
         return programaId;
     }
 
     public void setProgramaId(Programa programaId) {
         this.programaId = programaId;
+    }
+
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
+
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
+    }
+
+    public Persona getPersonaId() {
+        return personaId;
+    }
+
+    public void setPersonaId(Persona personaId) {
+        this.personaId = personaId;
     }
 
     public Fuente getFuenteId() {

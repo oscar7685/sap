@@ -148,95 +148,87 @@ public class loginController extends HttpServlet {
             String pw = (String) request.getParameter("pw");
             HttpSession session = request.getSession();
 
-            String realizarEncuesta = (String) request.getParameter("realizarEncuesta");
-
-            if (realizarEncuesta != null && realizarEncuesta.equals("OK")) {
-                session.setAttribute("tipoLogin", "Fuente");
-                session.setAttribute("Proceso", procesoFacade.find(1)); //temporal
-                out.print(0);
-
+            Representante r = null;
+            try {
+                r = representanteFacade.find(Integer.parseInt(un));
+            } catch (NumberFormatException e) {
+                LOGGER.error("codigo de representante es no numerico", e);
+            }
+            if (r == null) {
+                out.print(1); //no existe el usuario en ninguna parte
             } else {
-                Representante r = null;
-                try {
-                    r = representanteFacade.find(Integer.parseInt(un));
-                } catch (NumberFormatException e) {
-                    LOGGER.error("codigo de representante es no numerico", e);
-                }
-                if (r == null) {
-                    out.print(1); //no existe el usuario en ninguna parte
+                if (r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Credenciales validas");
+                    }
+                    session.setAttribute("tipoLogin", "Comite central");
+                    session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
+                    SessionCountListener sessionCountListener = new SessionCountListener();
+                    session.setAttribute("cantidad", sessionCountListener.getCount());
+//                        session.setAttribute("representantesLogueados", sessionCountListener.representantesLogueados);
+                    out.print(0);
                 } else {
-                    if (r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
+                    /*COMITE PROGRAMA*/
+                    if (r.getPassword().equals(pw) && r.getRol().equals("Comite programa")) {
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Credenciales validas");
                         }
-                        session.setAttribute("tipoLogin", "Comite central");
-                        session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
-                        SessionCountListener sessionCountListener = new SessionCountListener();
-                        session.setAttribute("cantidad", sessionCountListener.getCount());
-//                        session.setAttribute("representantesLogueados", sessionCountListener.representantesLogueados);
                         out.print(0);
-                    } else {
-                        /*COMITE PROGRAMA*/
-                        if (r.getPassword().equals(pw) && r.getRol().equals("Comite programa")) {
-                            if (LOGGER.isDebugEnabled()) {
-                                LOGGER.debug("Credenciales validas");
-                            }
-                            out.print(0);
-                            session.setAttribute("tipoLogin", "Comite programa");
-                            session.setAttribute("representante", r);
-                            //SessionCountListener.representantesLogueados.add(r);
-                            if (r.getProgramaList() != null && r.getProgramaList().size() == 1) {
-                                session.setAttribute("Programa", r.getProgramaList().get(0));
-                                List procesos = (List) procesoFacade.findByPrograma(r.getProgramaList().get(0));
-                                if (!procesos.isEmpty()) {
-                                    Iterator iter = procesos.iterator();
-                                    while (iter.hasNext()) {
-                                        Proceso p = (Proceso) iter.next();
-                                        if (p.getFechainicio().equals("En Configuración")) {
-                                            session.setAttribute("EstadoProceso", 1);
-                                            session.setAttribute("Proceso", p);
-                                            session.setAttribute("Modelo", p.getModeloId());
-                                        } else if (p.getFechacierre().equals("--")) {
-                                            session.setAttribute("EstadoProceso", 2);
-                                            session.setAttribute("Proceso", p);
-                                            session.setAttribute("Modelo", p.getModeloId());
+                        session.setAttribute("tipoLogin", "Comite programa");
+                        session.setAttribute("representante", r);
+                        //SessionCountListener.representantesLogueados.add(r);
+                        if (r.getProgramaList() != null && r.getProgramaList().size() == 1) {
+                            session.setAttribute("Programa", r.getProgramaList().get(0));
+                            List procesos = (List) procesoFacade.findByPrograma(r.getProgramaList().get(0));
+                            if (!procesos.isEmpty()) {
+                                Iterator iter = procesos.iterator();
+                                while (iter.hasNext()) {
+                                    Proceso p = (Proceso) iter.next();
+                                    if (p.getFechainicio().equals("En Configuración")) {
+                                        session.setAttribute("EstadoProceso", 1);
+                                        session.setAttribute("Proceso", p);
+                                        session.setAttribute("Modelo", p.getModeloId());
+                                    } else if (p.getFechacierre().equals("--")) {
+                                        session.setAttribute("EstadoProceso", 2);
+                                        session.setAttribute("Proceso", p);
+                                        session.setAttribute("Modelo", p.getModeloId());
 
-                                            /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
-                                            boolean tienePreguntasAbiertas = false;
-                                            List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
-                                            for (Pregunta pregunta : preguntasModelo) {
-                                                if (pregunta.getTipo().equals("2")) {
-                                                    tienePreguntasAbiertas = true;
-                                                    break;
-                                                }
+                                        /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
+                                        boolean tienePreguntasAbiertas = false;
+                                        List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
+                                        for (Pregunta pregunta : preguntasModelo) {
+                                            if (pregunta.getTipo().equals("2")) {
+                                                tienePreguntasAbiertas = true;
+                                                break;
                                             }
-                                            if (tienePreguntasAbiertas) {
-                                                session.setAttribute("abiertas", "true");
-                                            } else {
-                                                session.setAttribute("abiertas", "false");
-                                            }
-                                            /////////Termina 
-
-                                        } else {
-                                            session.setAttribute("EstadoProceso", 0);
-                                            //  session.setAttribute("Proceso", p);
-                                            //session.setAttribute("Modelo", p.getModeloId());
                                         }
-                                    }
-                                } else {
-                                    session.setAttribute("EstadoProceso", 0);
-                                }
-                            } else if (r.getProgramaList() != null && r.getProgramaList().size() > 1) {
-                                session.setAttribute("Programas", r.getProgramaList());
-                                session.setAttribute("EstadoProceso2", 4);
-                            }
+                                        if (tienePreguntasAbiertas) {
+                                            session.setAttribute("abiertas", "true");
+                                        } else {
+                                            session.setAttribute("abiertas", "false");
+                                        }
+                                        /////////Termina 
 
-                        } else {
-                            out.print(1); //ES REPRESENTANTE PERO LA CLAVE ESTA MALA
+                                    } else {
+                                        session.setAttribute("EstadoProceso", 0);
+                                        //  session.setAttribute("Proceso", p);
+                                        //session.setAttribute("Modelo", p.getModeloId());
+                                    }
+                                }
+                            } else {
+                                session.setAttribute("EstadoProceso", 0);
+                            }
+                        } else if (r.getProgramaList() != null && r.getProgramaList().size() > 1) {
+                            session.setAttribute("Programas", r.getProgramaList());
+                            session.setAttribute("EstadoProceso2", 4);
                         }
+
+                    } else {
+                        out.print(1); //ES REPRESENTANTE PERO LA CLAVE ESTA MALA
                     }
                 }
             }
+
 
 
             /*COMPROBAMOS SI ESTA EN LA MUESTRA Y SE ESTA UNA SOLA VEZ*/

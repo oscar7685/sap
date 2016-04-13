@@ -40,6 +40,9 @@ public class Agenciagubernamental implements Serializable {
     @Size(max = 500)
     @Column(name = "descripcion")
     private String descripcion;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
     @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona personaId;
@@ -68,6 +71,14 @@ public class Agenciagubernamental implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
+
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
     }
 
     public Persona getPersonaId() {

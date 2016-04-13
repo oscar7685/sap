@@ -75,36 +75,7 @@
 
         </header>
         <div class="inicio container">
-            <div class="row marketing">
-                <div class="col-lg-12">
-                    <div class="alert alert-info" role="alert" style="margin-top: 10px; margin-bottom: 10px;">
-                        <h4> <span class="icon-exclamation-sign" aria-hidden="true"></span>
-                            Antes de realizar la encuesta tenga en cuenta lo siguiente</h4>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <h4>Para procesos de Autoevaluación con fines de acreditación institucional ENAP</h4>
-                    <p><strong>1. Directivos:</strong> DENAP, SDEN, DAEN, CBEN, COEN, CLEN, PLEN.</p>
-                    <p><strong>2. Administrativos:</strong> CICEN, SAC, DIFEN, JADEN, CTEN, JSGEN, JDCSH, OCOMES, PAPEN, RELINT, BIEN, DPOS, oficiales BEN, Decanos de facultad, jefes de programa, coordinadores de autoevaluación, secretarias de la ENAP, personal de laboratorio, personal de informática, personal de simuladores, personal servicios generales.</p>
-                    <p><strong>3. Estudiantes:</strong> estudiantes activos programas de pregrado (excluye 1,1-1,2), posgrado.</p>
-                    <p><strong>4. Docentes:</strong> docentes e instructores militares, docentes a nomina (OD), docentes ocasionales, docentes cátedra.</p>
-                    <p><strong>5. Egresados:</strong> egresados pregrado y posgrado.</p>
-                    <p><strong>6. Empleadores:</strong> empleadores ARC, sector publico y privado.</p>
-                </div>
-                <div class="col-lg-6">
-                    <h4>Para procesos de Autoevaluación con fines de renovación de registro calificado y/o acreditación de programas ENAP (Pregrado y Posgrado)</h4>
-                    <p><strong>1. Directivos de programas:</strong> Decano académico, Decano de facultad, jefe de programa, coordinador de programa.</p>
-                    <p><strong>2. Administrativos de programas:</strong> Secretaria de facultad, secretario académico, jefe centro de investigaciones, jefe autoevaluación, jefe departamento informática, jefe bienestar universitario, jefe de biblioteca, jefe de estadística, jefe de posgrados.</p>
-                    <p><strong>3. Estudiantes:</strong> estudiantes activos sea programa de pregrado o posgrado.</p>
-                    <p><strong>4. Docentes:</strong> docentes e instructores militares, docentes a nomina (OD), docentes ocasionales, docentes cátedra.</p>
-                    <p><strong>5. Egresados:</strong> egresados pregrado y posgrado.</p>
-                    <p><strong>6. Empleadores:</strong> empleadores ARC, sector publico y privado.</p>
-                </div>
-                <div class="jumbotron">
-                    <p><a class="btn btn-lg btn-primary" href="#realizarEncuesta" role="button">Realizar encuesta <i class="icon-arrow-right"></i></a> </p>
-                </div>
-
-            </div>
+          
         </div>
          <!--<div class="container">-->
              <div class="row" id="login" style="display: none">

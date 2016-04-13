@@ -33,7 +33,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Muestra.findAll", query = "SELECT m FROM Muestra m"),
     @NamedQuery(name = "Muestra.findById", query = "SELECT m FROM Muestra m WHERE m.id = :id"),
-    @NamedQuery(name = "Muestra.findByFormula", query = "SELECT m FROM Muestra m WHERE m.formula = :formula")})
+    @NamedQuery(name = "Muestra.findByTipo", query = "SELECT m FROM Muestra m WHERE m.tipo = :tipo"),
+    @NamedQuery(name = "Muestra.findByError", query = "SELECT m FROM Muestra m WHERE m.error = :error"),
+    @NamedQuery(name = "Muestra.findByConfianza", query = "SELECT m FROM Muestra m WHERE m.confianza = :confianza"),
+    @NamedQuery(name = "Muestra.findByVarianza", query = "SELECT m FROM Muestra m WHERE m.varianza = :varianza")})
 public class Muestra implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,8 +45,15 @@ public class Muestra implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 500)
-    @Column(name = "formula")
-    private String formula;
+    @Column(name = "tipo")
+    private String tipo;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "error")
+    private Float error;
+    @Column(name = "confianza")
+    private Float confianza;
+    @Column(name = "varianza")
+    private Float varianza;
     @JoinColumn(name = "proceso_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Proceso procesoId;
@@ -65,12 +75,36 @@ public class Muestra implements Serializable {
         this.id = id;
     }
 
-    public String getFormula() {
-        return formula;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setFormula(String formula) {
-        this.formula = formula;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Float getError() {
+        return error;
+    }
+
+    public void setError(Float error) {
+        this.error = error;
+    }
+
+    public Float getConfianza() {
+        return confianza;
+    }
+
+    public void setConfianza(Float confianza) {
+        this.confianza = confianza;
+    }
+
+    public Float getVarianza() {
+        return varianza;
+    }
+
+    public void setVarianza(Float varianza) {
+        this.varianza = varianza;
     }
 
     public Proceso getProcesoId() {

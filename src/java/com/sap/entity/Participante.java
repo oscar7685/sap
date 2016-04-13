@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Participante.findAll", query = "SELECT p FROM Participante p"),
-    @NamedQuery(name = "Participante.findByIdparticipante", query = "SELECT p FROM Participante p WHERE p.idparticipante = :idparticipante")})
+    @NamedQuery(name = "Participante.findByIdparticipante", query = "SELECT p FROM Participante p WHERE p.idparticipante = :idparticipante"),
+    @NamedQuery(name = "Participante.findByFechainicio", query = "SELECT p FROM Participante p WHERE p.fechainicio = :fechainicio"),
+    @NamedQuery(name = "Participante.findByFechafinal", query = "SELECT p FROM Participante p WHERE p.fechafinal = :fechafinal")})
 public class Participante implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,6 +44,12 @@ public class Participante implements Serializable {
     @Basic(optional = false)
     @Column(name = "idparticipante")
     private Integer idparticipante;
+    @Column(name = "fechainicio")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechainicio;
+    @Column(name = "fechafinal")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechafinal;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "participanteIdparticipante")
     private List<Respuestas> respuestasList;
     @JoinColumn(name = "proceso_id", referencedColumnName = "id")
@@ -49,31 +57,7 @@ public class Participante implements Serializable {
     private Proceso procesoId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "participanteIdparticipante")
     private List<ParticipanteHasRol> participanteHasRolList;
-    @Column(name = "fechainicio")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechainicio;
-    @Column(name = "fechafinal")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechafinal;
 
-    public Date getFechafinal() {
-        return fechafinal;
-    }
-
-    public void setFechafinal(Date fechafinal) {
-        this.fechafinal = fechafinal;
-    }
-
-    public Date getFechainicio() {
-        return fechainicio;
-    }
-
-    public void setFechainicio(Date fechainicio) {
-        this.fechainicio = fechainicio;
-    }
-
-    
-    
     public Participante() {
     }
 
@@ -87,6 +71,22 @@ public class Participante implements Serializable {
 
     public void setIdparticipante(Integer idparticipante) {
         this.idparticipante = idparticipante;
+    }
+
+    public Date getFechainicio() {
+        return fechainicio;
+    }
+
+    public void setFechainicio(Date fechainicio) {
+        this.fechainicio = fechainicio;
+    }
+
+    public Date getFechafinal() {
+        return fechafinal;
+    }
+
+    public void setFechafinal(Date fechafinal) {
+        this.fechafinal = fechafinal;
     }
 
     @XmlTransient
