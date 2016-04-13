@@ -354,7 +354,7 @@
                             Egresados
                         </a>
                     </div>
-                    <div id="collapse3" class="accordion-body collapse">
+                    <div id="collapse4" class="accordion-body collapse">
                         <div class="accordion-inner">
                             <ul class="nav nav-tabs" id="myTabEgr">
                                 <li class="active"><a href="#poblacionegr" data-toggle="tab">Población egresados</a></li>
@@ -409,6 +409,130 @@
                         </div>
                     </div>
                 </div>
+                
+                 <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse5">
+                            Directivos
+                        </a>
+                    </div>
+                    <div id="collapse5" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <ul class="nav nav-tabs" id="myTabDir">
+                                <li class="active"><a href="#poblaciondir" data-toggle="tab">Población directivos</a></li>
+                                <li><a href="#muestradir" data-toggle="tab">Muestra directivos</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="poblaciondir">
+                                    <table id="tabladirectivo0" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Identificación</th>
+                                                <th>Nombre</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bodytabladirectivo0">
+                                            <c:choose>
+                                                <c:when test="${fn:length(poblacionDirectivo)!= 0}">
+                                                    <c:forEach items="${poblacionDirectivo}" var="pdirectivo" varStatus="iter55">
+                                                        <tr>
+                                                            <td>${pdirectivo.personaId.id}</td>
+                                                            <td>${pdirectivo.personaId.nombre}</td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </c:when>
+                                            </c:choose>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="muestradir">
+                                    <table id="tabladirectivo" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Identificación</th>
+                                                <th>Nombre</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bodytabladirectivo">
+                                            <c:choose>
+                                                <c:when test="${fn:length(listMuestraDirectivo)!= 0}">
+                                                    <c:forEach items="${listMuestraDirectivo}" var="directivo" varStatus="iter55">
+                                                        <tr>
+                                                            <td>${directivo.muestrapersonaId.cedula}</td>
+                                                            <td>${directivo.muestrapersonaId.nombre}</td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </c:when>
+                                            </c:choose>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                  <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse6">
+                            Empleadores
+                        </a>
+                    </div>
+                    <div id="collapse6" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <ul class="nav nav-tabs" id="myTabEmp">
+                                <li class="active"><a href="#poblacionemp" data-toggle="tab">Población empleadores</a></li>
+                                <li><a href="#muestraemp" data-toggle="tab">Muestra empleadores</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="poblacionemp">
+                                    <table id="tablaempleadores0" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Identificación</th>
+                                                <th>Nombre</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bodytablaempleadores0">
+                                            <c:choose>
+                                                <c:when test="${fn:length(poblacionEmpleador)!= 0}">
+                                                    <c:forEach items="${poblacionEmpleador}" var="pempleador" varStatus="iter55">
+                                                        <tr>
+                                                            <td>${pempleador.personaId.id}</td>
+                                                            <td>${pempleador.personaId.nombre}</td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </c:when>
+                                            </c:choose>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="muestraemp">
+                                    <table id="tablaempleadores" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Identificación</th>
+                                                <th>Nombre</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bodytablaempleadores">
+                                            <c:choose>
+                                                <c:when test="${fn:length(listMuestraEmpleador)!= 0}">
+                                                    <c:forEach items="${listMuestraEmpleador}" var="empleador" varStatus="iter55">
+                                                        <tr>
+                                                            <td>${empleador.muestrapersonaId.cedula}</td>
+                                                            <td>${empleador.muestrapersonaId.nombre}</td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </c:when>
+                                            </c:choose>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -421,7 +545,7 @@
 </div>    
 <script>
     $(function() {
-        //$('#myTab').tab('show');
+         $('#myTab li:first').addClass("active");
         //$("#accordion2").collapse();
     });
 </script>
