@@ -69,7 +69,8 @@ $(function() {
 
 
     var actualizaEnlaces = function(hash) {
-        $(".nav li").removeClass("active");
+        $(".ui-layout-west .nav li").removeClass("active");
+        $(".ui-layout-north .nav li").removeClass("active");
         $("a[href='" + hash + "']").parent().addClass("active");
     };
 
@@ -353,7 +354,7 @@ $(function() {
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
                                         || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta" || hash === "#crear2Meta" || hash === "#listarFortalezas"
-                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd" || hash === "#graficasDMA" || hash ==="#calificarCaracteristicas" || hash ==="#listEvaluacionCara" || hash ==="#editarEvaluacionCara" || hash ==="#editarEvaluacionCara2" || hash ==="#subirAdjunto") {
+                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd" || hash === "#graficasDMA" || hash === "#calificarCaracteristicas" || hash === "#listEvaluacionCara" || hash === "#editarEvaluacionCara" || hash === "#editarEvaluacionCara2" || hash === "#subirAdjunto") {
                                     var url3 = "/sapnaval/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();

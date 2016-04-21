@@ -109,7 +109,6 @@ public class GenerarMuestraCenso implements Action {
                 mp.setPassword(per.getPassword());
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
-                System.out.println("mp.toString()_ " + mp.toString());
                 muestrapersonaFacade.create(mp);
 
                 Muestraestudiante me = new Muestraestudiante();

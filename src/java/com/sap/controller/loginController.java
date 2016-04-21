@@ -137,12 +137,14 @@ public class loginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         String action = (String) request.getParameter("action");
+        String respuesta = "1";
+
         if (action != null) {
             request.getSession().invalidate();
         } else {
             response.setContentType("text/plain");
-            PrintWriter out = response.getWriter();
             /*parametros*/
             String un = (String) request.getParameter("un");
             String pw = (String) request.getParameter("pw");
@@ -155,7 +157,172 @@ public class loginController extends HttpServlet {
                 LOGGER.error("codigo de representante es no numerico", e);
             }
             if (r == null) {
-                out.print(1); //no existe el usuario en ninguna parte
+
+                /*COMPROBAMOS SI ESTA EN LA MUESTRA Y SE ESTA UNA SOLA VEZ*/
+                List<Muestrapersona> usuario = muestrapersonaFacade.findByCedula(un);
+                if (usuario != null && usuario.size() == 1) {
+                    //VARIABLES
+                    Fuente f = null;
+                    Muestrapersona Mpersona = null;
+                    Proceso proceso;
+
+                    //Estudiantes
+                    Muestraestudiante Mestudiante = null;
+                    List<Muestraestudiante> auxEstudiantes = null;
+                    //Docentes
+                    Muestradocente Mdocente = null;
+                    List<Muestradocente> auxDocentes = null;
+                    //Administrativo
+                    Muestraadministrativo Madministrativo = null;
+                    List<Muestraadministrativo> auxAdministrativos = null;
+                    //Egresado
+                    Muestraegresado Megresado = null;
+                    List<Muestraegresado> auxEgresados = null;
+                    //Directivo
+                    Muestradirector Mdirectivo = null;
+                    List<Muestradirector> auxDirectivo = null;
+                    //Empleador
+                    Muestraempleador Mempleador = null;
+                    List<Muestraempleador> auxEmpleadores = null;
+
+
+
+                    Mpersona = usuario.get(0);
+                    if (Mpersona != null && Mpersona.getPassword().equals(pw)) {
+                        //verificamos que tipo de fuente es
+                        auxEstudiantes = muestraestudianteFacade.findByMuestraPersona(Mpersona);
+                        if (auxEstudiantes == null || auxEstudiantes.isEmpty()) {//NO ES ESTUDIANTE
+                            auxDocentes = muestradocenteFacade.findByMuestraPersona(Mpersona);
+                            if (auxDocentes == null || auxDocentes.isEmpty()) { //NO ES DOCENTE
+                                auxEgresados = muestraegresadoFacade.findByMuestraPersona(Mpersona);
+                                if (auxEgresados == null || auxEgresados.isEmpty()) { //NO ES EGRESADO
+                                    auxAdministrativos = muestraadministrativoFacade.findByMuestraPersona(Mpersona);
+                                    if (auxAdministrativos == null || auxAdministrativos.isEmpty()) { //NO ES ADMINISTRATIVO
+                                        auxDirectivo = muestradirectorFacade.findByMuestraPersona(Mpersona);
+                                        if (auxDirectivo == null || auxDirectivo.isEmpty()) { //NO ES DIRECTIVO
+                                            auxEmpleadores = muestraempleadorFacade.findByMuestraPersona(Mpersona);
+                                            if (auxEmpleadores == null || auxEmpleadores.isEmpty()) { //NO ES EMPLEADOR
+                                                //no es nadie
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (auxEstudiantes != null && auxEstudiantes.size() == 1) {
+                            Mestudiante = auxEstudiantes.get(0);
+                            if (Mestudiante != null) {
+                                respuesta = "0";
+                                session.setAttribute("tipoLogin", "Fuente");
+                                session.setAttribute("programa", Mestudiante.getProgramaId());
+                                session.setAttribute("persona", Mpersona);
+
+                                if (Mestudiante.getTipo().equals("1")) {
+                                    f = fuenteFacade.find(1);
+                                    session.setAttribute("fuente", f);
+                                } else if (Mestudiante.getTipo().equals("7")) {
+                                    f = fuenteFacade.find(7);
+                                    session.setAttribute("fuente", f);
+                                } else if (Mestudiante.getTipo().equals("7")) {
+                                    f = fuenteFacade.find(8);
+                                    session.setAttribute("fuente", f);
+                                }
+
+                            }
+                        } else if (auxDocentes != null && auxDocentes.size() == 1) {
+                            Mdocente = auxDocentes.get(0);
+                            if (Mdocente != null) {
+                                respuesta = "0";
+                                session.setAttribute("tipoLogin", "Fuente");
+                                session.setAttribute("programa", Mdocente.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                                session.setAttribute("persona", Mpersona);
+
+                                if (Mdocente.getTipo().equals("2")) {
+                                    f = fuenteFacade.find(2);
+                                    session.setAttribute("fuente", f);
+                                } else if (Mdocente.getTipo().equals("11")) {
+                                    f = fuenteFacade.find(11);
+                                    session.setAttribute("fuente", f);
+                                }
+                            }
+                        } else if (auxAdministrativos != null && auxAdministrativos.size() == 1) {
+                            Madministrativo = auxAdministrativos.get(0);
+                            if (Madministrativo != null) {
+                                respuesta = "0";
+                                session.setAttribute("tipoLogin", "Fuente");
+                                session.setAttribute("programa", Madministrativo.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                                session.setAttribute("persona", Mpersona);
+
+                                f = fuenteFacade.find(3);
+                                session.setAttribute("fuente", f);
+
+                            }
+                        } else if (auxEgresados != null && auxEgresados.size() == 1) {
+                            Megresado = auxEgresados.get(0);
+                            if (Megresado != null) {
+                                respuesta = "0";
+                                session.setAttribute("tipoLogin", "Fuente");
+                                session.setAttribute("programa", Megresado.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                                session.setAttribute("persona", Mpersona);
+
+                                if (Megresado.getTipo().equals("4")) {
+                                    f = fuenteFacade.find(4);
+                                    session.setAttribute("fuente", f);
+                                } else if (Megresado.getTipo().equals("9")) {
+                                    f = fuenteFacade.find(9);
+                                    session.setAttribute("fuente", f);
+                                } else if (Megresado.getTipo().equals("10")) {
+                                    f = fuenteFacade.find(10);
+                                    session.setAttribute("fuente", f);
+                                }
+
+                            }
+                        } else if (auxDirectivo != null && auxDirectivo.size() == 1) {
+                            Mdirectivo = auxDirectivo.get(0);
+                            if (Mdirectivo != null) {
+                                respuesta = "0";
+                                session.setAttribute("tipoLogin", "Fuente");
+                                session.setAttribute("programa", Mdirectivo.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                                session.setAttribute("persona", Mpersona);
+
+                                f = fuenteFacade.find(5);
+                                session.setAttribute("fuente", f);
+
+                            }
+                        } else if (auxEmpleadores != null && auxEmpleadores.size() == 1) {
+                            Mempleador = auxEmpleadores.get(0);
+                            if (Mempleador != null) {
+                                respuesta = "0";
+                                session.setAttribute("tipoLogin", "Fuente");
+                                session.setAttribute("programa", Mempleador.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
+                                session.setAttribute("persona", Mpersona);
+
+                                f = fuenteFacade.find(6);
+                                session.setAttribute("fuente", f);
+
+                            }
+                        }
+
+                        proceso = Mpersona.getMuestraId().getProcesoId();
+                        if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
+                            Modelo m = proceso.getModeloId();
+                            session.setAttribute("proceso", proceso);
+                            Asignacionencuesta asignacionEncuesta = asignacionencuestaFacade.findBySingle2("modeloId", m, "fuenteId", f);
+
+                            List<Encabezado> encabExistentes =
+                                    encabezadoFacade.findByVars(proceso, asignacionEncuesta.getEncuestaId(), f, Mpersona);
+                            if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
+                            } else {
+                                session.setAttribute("encuesta", asignacionEncuesta.getEncuestaId());
+                            }
+                        }
+                    }
+                } else if (usuario != null && usuario.size() > 1) {//SI ESTA MAS DE UNA VEZ EN LA MUESTRA
+                    respuesta = "2";
+                    System.out.println("el usuario existe mas de una vez con un mismo numero de cedula");
+                }
+
             } else {
                 if (r.getPassword().equals(pw) && r.getRol().equals("Comite central")) {
                     if (LOGGER.isDebugEnabled()) {
@@ -166,14 +333,14 @@ public class loginController extends HttpServlet {
                     SessionCountListener sessionCountListener = new SessionCountListener();
                     session.setAttribute("cantidad", sessionCountListener.getCount());
 //                        session.setAttribute("representantesLogueados", sessionCountListener.representantesLogueados);
-                    out.print(0);
+                    respuesta = "0";
                 } else {
                     /*COMITE PROGRAMA*/
                     if (r.getPassword().equals(pw) && r.getRol().equals("Comite programa")) {
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Credenciales validas");
                         }
-                        out.print(0);
+                        respuesta = "1";
                         session.setAttribute("tipoLogin", "Comite programa");
                         session.setAttribute("representante", r);
                         //SessionCountListener.representantesLogueados.add(r);
@@ -193,22 +360,6 @@ public class loginController extends HttpServlet {
                                         session.setAttribute("Proceso", p);
                                         session.setAttribute("Modelo", p.getModeloId());
 
-                                        /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
-                                        boolean tienePreguntasAbiertas = false;
-                                        List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
-                                        for (Pregunta pregunta : preguntasModelo) {
-                                            if (pregunta.getTipo().equals("2")) {
-                                                tienePreguntasAbiertas = true;
-                                                break;
-                                            }
-                                        }
-                                        if (tienePreguntasAbiertas) {
-                                            session.setAttribute("abiertas", "true");
-                                        } else {
-                                            session.setAttribute("abiertas", "false");
-                                        }
-                                        /////////Termina 
-
                                     } else {
                                         session.setAttribute("EstadoProceso", 0);
                                         //  session.setAttribute("Proceso", p);
@@ -223,189 +374,11 @@ public class loginController extends HttpServlet {
                             session.setAttribute("EstadoProceso2", 4);
                         }
 
-                    } else {
-                        out.print(1); //ES REPRESENTANTE PERO LA CLAVE ESTA MALA
                     }
                 }
             }
-
-
-
-            /*COMPROBAMOS SI ESTA EN LA MUESTRA Y SE ESTA UNA SOLA VEZ*/
-            /*   List<Muestrapersona> usuario = muestrapersonaFacade.findByCedula(un);
-             if (usuario != null && usuario.size() == 1) {
-             //VARIABLES
-             Fuente f = null;
-             Muestrapersona Mpersona = null;
-             Proceso proceso;
-
-             //Estudiantes
-             Muestraestudiante Mestudiante = null;
-             List<Muestraestudiante> auxEstudiantes = null;
-             //Docentes
-             Muestradocente Mdocente = null;
-             List<Muestradocente> auxDocentes = null;
-             //Administrativo
-             Muestraadministrativo Madministrativo = null;
-             List<Muestraadministrativo> auxAdministrativos = null;
-             //Egresado
-             Muestraegresado Megresado = null;
-             List<Muestraegresado> auxEgresados = null;
-             //Directivo
-             Muestradirector Mdirectivo = null;
-             List<Muestradirector> auxDirectivo = null;
-             //Empleador
-             Muestraempleador Mempleador = null;
-             List<Muestraempleador> auxEmpleadores = null;
-
-
-
-             Mpersona = usuario.get(0);
-             if (Mpersona != null && Mpersona.getPassword().equals(pw)) {
-             //verificamos que tipo de fuente es
-             auxEstudiantes = muestraestudianteFacade.findByMuestraPersona(Mpersona);
-             if (auxEstudiantes == null || auxEstudiantes.isEmpty()) {//NO ES ESTUDIANTE
-             auxDocentes = muestradocenteFacade.findByMuestraPersona(Mpersona);
-             if (auxDocentes == null || auxDocentes.isEmpty()) { //NO ES DOCENTE
-             auxEgresados = muestraegresadoFacade.findByMuestraPersona(Mpersona);
-             if (auxEgresados == null || auxEgresados.isEmpty()) { //NO ES EGRESADO
-             auxAdministrativos = muestraadministrativoFacade.findByMuestraPersona(Mpersona);
-             if (auxAdministrativos == null || auxAdministrativos.isEmpty()) { //NO ES ADMINISTRATIVO
-             auxDirectivo = muestradirectorFacade.findByMuestraPersona(Mpersona);
-             if (auxDirectivo == null || auxDirectivo.isEmpty()) { //NO ES DIRECTIVO
-             auxEmpleadores = muestraempleadorFacade.findByMuestraPersona(Mpersona);
-             if (auxEmpleadores == null || auxEmpleadores.isEmpty()) { //NO ES EMPLEADOR
-             System.out.println("No es nadie");
-             out.print(1); //error! no es ninguna fuente 
-             }
-             }
-             }
-             }
-             }
-             }
-
-             if (auxEstudiantes != null && auxEstudiantes.size() == 1) {
-             Mestudiante = auxEstudiantes.get(0);
-             if (Mestudiante != null) {
-             out.print(0);
-             session.setAttribute("tipoLogin", "Fuente");
-             session.setAttribute("programa", Mestudiante.getProgramaId());
-             session.setAttribute("persona", Mpersona);
-
-             if (Mestudiante.getTipo().equals("pregrado")) {
-             f = fuenteFacade.find(1);
-             session.setAttribute("fuente", f);
-             } else if (Mestudiante.getTipo().equals("especializacion")) {
-             f = fuenteFacade.find(7);
-             session.setAttribute("fuente", f);
-             } else if (Mestudiante.getTipo().equals("maestria-doctorado")) {
-             f = fuenteFacade.find(8);
-             session.setAttribute("fuente", f);
-             }
-
-             }
-             } else if (auxDocentes != null && auxDocentes.size() == 1) {
-             Mdocente = auxDocentes.get(0);
-             if (Mdocente != null) {
-             out.print(0);
-             session.setAttribute("tipoLogin", "Fuente");
-             session.setAttribute("programa", Mdocente.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
-             session.setAttribute("persona", Mpersona);
-
-             if (Mdocente.getTipo().equals("planta")) {
-             f = fuenteFacade.find(2);
-             session.setAttribute("fuente", f);
-             } else if (Mdocente.getTipo().equals("catedra")) {
-             f = fuenteFacade.find(11);
-             session.setAttribute("fuente", f);
-             }
-             }
-             } else if (auxAdministrativos != null && auxAdministrativos.size() == 1) {
-             Madministrativo = auxAdministrativos.get(0);
-             if (Madministrativo != null) {
-             out.print(0);
-             session.setAttribute("tipoLogin", "Fuente");
-             session.setAttribute("programa", Madministrativo.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
-             session.setAttribute("persona", Mpersona);
-
-             f = fuenteFacade.find(3);
-             session.setAttribute("fuente", f);
-
-             }
-             } else if (auxEgresados != null && auxEgresados.size() == 1) {
-             Megresado = auxEgresados.get(0);
-             if (Megresado != null) {
-             out.print(0);
-             session.setAttribute("tipoLogin", "Fuente");
-             session.setAttribute("programa", Megresado.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
-             session.setAttribute("persona", Mpersona);
-
-             if (Megresado.getTipo().equals("pregrado")) {
-             f = fuenteFacade.find(4);
-             session.setAttribute("fuente", f);
-             } else if (Megresado.getTipo().equals("especializacion")) {
-             f = fuenteFacade.find(9);
-             session.setAttribute("fuente", f);
-             } else if (Megresado.getTipo().equals("maestria-doctorado")) {
-             f = fuenteFacade.find(10);
-             session.setAttribute("fuente", f);
-             }
-
-             }
-             } else if (auxDirectivo != null && auxDirectivo.size() == 1) {
-             Mdirectivo = auxDirectivo.get(0);
-             if (Mdirectivo != null) {
-             out.print(0);
-             session.setAttribute("tipoLogin", "Fuente");
-             session.setAttribute("programa", Mdirectivo.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
-             session.setAttribute("persona", Mpersona);
-
-             f = fuenteFacade.find(5);
-             session.setAttribute("fuente", f);
-
-             }
-             } else if (auxEmpleadores != null && auxEmpleadores.size() == 1) {
-             Mempleador = auxEmpleadores.get(0);
-             if (Mempleador != null) {
-             out.print(0);
-             session.setAttribute("tipoLogin", "Fuente");
-             session.setAttribute("programa", Mempleador.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
-             session.setAttribute("persona", Mpersona);
-
-             f = fuenteFacade.find(6);
-             session.setAttribute("fuente", f);
-
-             }
-             }
-
-             proceso = Mpersona.getMuestraId().getProcesoId();
-             if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
-             Modelo m = proceso.getModeloId();
-             session.setAttribute("proceso", proceso);
-             Asignacionencuesta asignacionEncuesta = asignacionencuestaFacade.findBySingle2("modeloId", m, "fuenteId", f);
-
-             List<Encabezado> encabExistentes =
-             encabezadoFacade.findByVars(proceso, asignacionEncuesta.getEncuestaId(), f, Mpersona);
-             if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
-             } else {
-             session.setAttribute("encuesta", asignacionEncuesta.getEncuestaId());
-             }
-             }
-             } else {
-             out.print(1); //contrasena incorrecta
-             }
-             } else if (usuario != null && usuario.size() > 1) {//SI ESTA MAS DE UNA VEZ EN LA MUESTRA
-             out.print(2);
-             System.out.println("el usuario existe mas de una vez con un mismo numero de cedula");
-             } else {
-             *//*VERIFICAMOS SI ES DEL COMITE CENTRAL*/
-
-
-            // }
-
-
-
         }
+        out.print(respuesta);
     }
 
     /**

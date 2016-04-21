@@ -1,5 +1,5 @@
 $(function() {
-    location = "/sapnaval/#perfil";
+    location = "/sapnaval/#inicio";
     /*$(document).ajaxStart(function() {
      
      });*/
@@ -76,8 +76,7 @@ $(function() {
                 }); //fin del $.ajax
 
             } else {
-                //if (hash === "#inicio" || hash === "#perfil") {
-                if (hash === "#perfil") {
+                if (hash === "#inicio" || hash === "#perfil") {
                     var url3 = "/sapnaval/" + hash;
                     url3 = url3.replace('#', "controladorF?action=") + "CC";
                     $("div.ui-layout-center").empty();

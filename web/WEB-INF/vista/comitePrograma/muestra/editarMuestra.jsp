@@ -83,36 +83,19 @@
                 url: "/sapnaval/controladorCP?action=editarMuestra",
                 data: $("#formEditarMuestra").serialize(),
                 success: function() {
-                    $("#listM").empty();
-                    $.ajax({
-                        type: 'POST',
-                        url: "/sapnaval/controladorCP?action=selectorListSemestre",
-                        data: $("#formListarMuestra").serialize(),
-                        success: function(datos) {
-                            $("#listM").append(datos);
-                            $("#contenido").show(200, function() {
-                                $("#dancing-dots-text").remove();
-                            });
-                        } //fin success
-                    }); //fin $.ajax    
+                    location = "#detalleProceso";
+                    setTimeout(function() {
+                        location = "#listMuestra";
+                    }, 200);
+
                 } //fin success
             }); //fin $.ajax    
 
         });
 
         $("#botonCancelar").click(function() {
-            $("#listM").empty();
-            $.ajax({
-                type: 'POST',
-                url: "/sapnaval/controladorCP?action=selectorListSemestre",
-                data: $("#formListarMuestra").serialize(),
-                success: function(datos) {
-                    $("#listM").append(datos);
-                    $("#contenido").show(200, function() {
-                        $("#dancing-dots-text").remove();
-                    });
-                } //fin success
-            }); //fin $.ajax    
+            $("#editM").hide();
+            $("#muestra").show();
         });
     });
 </script>

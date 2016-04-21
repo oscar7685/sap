@@ -37,6 +37,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class PreparedEditarMuestra implements Action {
+
     DirectorprogramaFacade directorprogramaFacade = lookupDirectorprogramaFacadeBean();
     MuestradirectorFacade muestradirectorFacade = lookupMuestradirectorFacadeBean();
     EmpleadorFacade empleadorFacade = lookupEmpleadorFacadeBean();
@@ -54,65 +55,69 @@ public class PreparedEditarMuestra implements Action {
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
-        Programa programa = (Programa) sesion.getAttribute("Programa");
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        String fuente = (String) sesion.getAttribute("selectorFuente");
-        if (fuente.equals("Estudiante")) {
-            List e = estudianteFacade.findByList2("programaId", programa, "semestre", sesion.getAttribute("Semestre"));
+        String fuente = request.getParameter("fuente");
+
+
+
+        if (fuente.equals("estudiantes")) {
+            sesion.setAttribute("selectorFuente", "Estudiante");
+            List e = estudianteFacade.findByList("procesoId", proceso);
             sesion.setAttribute("listPoblacion", e);
             List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
             sesion.setAttribute("listEncabezado", le);
-        } else {
-            if (fuente.equals("Docente")) {
-                Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                sesion.setAttribute("listMuestraSeleccionada", muestradocenteFacade.findByList("muestrapersonaId.muestraId", m));
-                sesion.setAttribute("Fuente", fuenteFacade.find(2));
-                List d = docenteFacade.findByList("programaId", programa);
-                sesion.setAttribute("listPoblacion", d);
-                List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                sesion.setAttribute("listEncabezado", le);
-            } else {
-                if (fuente.equals("Egresado")) {
-                    Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                    sesion.setAttribute("listMuestraSeleccionada", muestraegresadoFacade.findByList("muestrapersonaId.muestraId", m));
-                    sesion.setAttribute("Fuente", fuenteFacade.find(4));
-                    List eg = egresadoFacade.findByList("programaId", programa);
-                    sesion.setAttribute("listPoblacion", eg);
-                    List leg = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                    sesion.setAttribute("listEncabezado", leg);
-                } else {
-                    if (fuente.equals("Administrativo")) {
-                        Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                        sesion.setAttribute("listMuestraSeleccionada", muestraadministrativoFacade.findByList("muestrapersonaId.muestraId", m));
-                        sesion.setAttribute("Fuente", fuenteFacade.find(3));
-                        List eg = administrativoFacade.findByList("programaId", programa);
-                        sesion.setAttribute("listPoblacion", eg);
-                        List leg = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                        sesion.setAttribute("listEncabezado", leg);
-                    } else {
-                        if (fuente.equals("Empleador")) {
-                            Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                            sesion.setAttribute("listMuestraSeleccionada", muestraempleadorFacade.findByList("muestrapersonaId.muestraId", m));
-                            sesion.setAttribute("Fuente", fuenteFacade.find(6));
-                            List emp = empleadorFacade.findByList("programaId", programa);
-                            sesion.setAttribute("listPoblacion", emp);
-                            List lemp = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                            sesion.setAttribute("listEncabezado", lemp);
-                        } else {
-                            Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                            sesion.setAttribute("listMuestraSeleccionada", muestradirectorFacade.findByList("muestrapersonaId.muestraId", m));
-                            sesion.setAttribute("Fuente", fuenteFacade.find(5));
-                            List dir = directorprogramaFacade.findByList("programaId", programa);
-                            sesion.setAttribute("listPoblacion", dir);
-                            List ldir = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                            sesion.setAttribute("listEncabezado", ldir);
-                        }
-                    }
-                }
-            }
-
+        } else if (fuente.equals("docentes")) {
+            sesion.setAttribute("selectorFuente", "Docente");
+            Muestra m = (Muestra) sesion.getAttribute("Muestra");
+            sesion.setAttribute("listMuestraSeleccionada", muestradocenteFacade.findByList("muestrapersonaId.muestraId", m));
+            sesion.setAttribute("Fuente", fuenteFacade.find(2));
+            List d = docenteFacade.findByList("procesoId", proceso);
+            sesion.setAttribute("listPoblacion", d);
+            List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
+            sesion.setAttribute("listEncabezado", le);
+        } else if (fuente.equals("egresados")) {
+            sesion.setAttribute("selectorFuente", "Egresado");
+            Muestra m = (Muestra) sesion.getAttribute("Muestra");
+            sesion.setAttribute("listMuestraSeleccionada", muestraegresadoFacade.findByList("muestrapersonaId.muestraId", m));
+            sesion.setAttribute("Fuente", fuenteFacade.find(4));
+            List eg = egresadoFacade.findByList("procesoId", proceso);
+            sesion.setAttribute("listPoblacion", eg);
+            List leg = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
+            sesion.setAttribute("listEncabezado", leg);
+        } else if (fuente.equals("administrativos")) {
+            sesion.setAttribute("selectorFuente", "Administrativo");
+            Muestra m = (Muestra) sesion.getAttribute("Muestra");
+            sesion.setAttribute("listMuestraSeleccionada", muestraadministrativoFacade.findByList("muestrapersonaId.muestraId", m));
+            sesion.setAttribute("Fuente", fuenteFacade.find(3));
+            List eg = administrativoFacade.findByList("procesoId", proceso);
+            sesion.setAttribute("listPoblacion", eg);
+            List leg = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
+            sesion.setAttribute("listEncabezado", leg);
+        } else if (fuente.equals("empleadores")) {
+            sesion.setAttribute("selectorFuente", "Empleador");
+            Muestra m = (Muestra) sesion.getAttribute("Muestra");
+            sesion.setAttribute("listMuestraSeleccionada", muestraempleadorFacade.findByList("muestrapersonaId.muestraId", m));
+            sesion.setAttribute("Fuente", fuenteFacade.find(6));
+            List emp = empleadorFacade.findByList("procesoId", proceso);
+            sesion.setAttribute("listPoblacion", emp);
+            List lemp = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
+            sesion.setAttribute("listEncabezado", lemp);
+        } else if (fuente.equals("directivos")) {
+            sesion.setAttribute("selectorFuente", "Directivo");
+            Muestra m = (Muestra) sesion.getAttribute("Muestra");
+            sesion.setAttribute("listMuestraSeleccionada", muestradirectorFacade.findByList("muestrapersonaId.muestraId", m));
+            sesion.setAttribute("Fuente", fuenteFacade.find(5));
+            List dir = directorprogramaFacade.findByList("procesoId", proceso);
+            sesion.setAttribute("listPoblacion", dir);
+            List ldir = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
+            sesion.setAttribute("listEncabezado", ldir);
         }
-       return "/WEB-INF/vista/comitePrograma/muestra/editarMuestra.jsp";
+
+
+
+
+
+        return "/WEB-INF/vista/comitePrograma/muestra/editarMuestra.jsp";
     }
 
     private FuenteFacade lookupFuenteFacadeBean() {
