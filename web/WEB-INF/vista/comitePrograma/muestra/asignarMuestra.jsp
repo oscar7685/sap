@@ -376,15 +376,42 @@
                                                 <tr>
                                                     <th>Identificación</th>
                                                     <th>Nombre</th>
+                                                    <th>Tipo</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="bodytabladocente">
                                                 <c:choose>
-                                                    <c:when test="${fn:length(listMuestraDocente)!= 0}">
-                                                        <c:forEach items="${listMuestraDocente}" var="docente" varStatus="iter55">
-                                                            <tr>
-                                                                <td>${docente.muestrapersonaId.cedula}</td>
-                                                                <td>${docente.muestrapersonaId.nombre}</td>
+                                                    <c:when test="${fn:length(listMuestraDocenteCon)!= 0}">
+                                                        <c:forEach items="${listMuestraDocenteCon}" var="docente" varStatus="iter55">
+                                                            <tr class="terminadoC">
+                                                                <td style="background-color: #DFF0D8; color: #468847;">  ${docente.muestrapersonaId.cedula}</td>
+                                                                <td style="background-color: #DFF0D8; color: #468847;">  ${docente.muestrapersonaId.nombre}</td>
+                                                                <c:choose>
+                                                                    <c:when test="${docente.tipo== 2}">
+                                                                        <td style="background-color: #DFF0D8; color: #468847;">  PLANTA</td>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <td style="background-color: #DFF0D8; color: #468847;">  CÁTEDRA</td>
+                                                                    </c:otherwise>    
+                                                                </c:choose>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </c:when>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(listMuestraDocenteSin)!= 0}">
+                                                        <c:forEach items="${listMuestraDocenteSin}" var="docente" varStatus="iter55">
+                                                           <tr class="pendienteC">
+                                                                <td style="background-color: #F2DEDE; color: #B94A48;">${docente.muestrapersonaId.cedula}</td>
+                                                                <td style="background-color: #F2DEDE; color: #B94A48;">${docente.muestrapersonaId.nombre}</td>
+                                                                <c:choose>
+                                                                    <c:when test="${docente.tipo== 2}">
+                                                                        <td style="background-color: #F2DEDE; color: #B94A48;">PLANTA</td>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <td style="background-color: #F2DEDE; color: #B94A48;">CÁTEDRA</td>
+                                                                    </c:otherwise>    
+                                                                </c:choose>
                                                             </tr>
                                                         </c:forEach>
                                                     </c:when>

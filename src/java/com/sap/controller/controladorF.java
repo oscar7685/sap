@@ -97,7 +97,7 @@ public class controladorF extends HttpServlet {
                     Encuesta e = encuestaFacade.find(Integer.parseInt(idEncuesta));
 
                     List<Pregunta> preguntas = e.getPreguntaList();
-
+                    session.setAttribute("encuesta", e);
                     session.setAttribute("preguntas", preguntas);
                     String url = "/WEB-INF/vista/fuente/responderEncuesta.jsp";
                     RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -105,424 +105,60 @@ public class controladorF extends HttpServlet {
                 } else {
                     if (RESPONDER.equals(request.getParameter("action"))) {
 
-                        Participante part78 = (Participante) session.getAttribute("participante");
-                        part78.setFechafinal(new Date());
-                        participanteFacade.edit(part78);
-                        List<Pregunta> allPreguntas = (List<Pregunta>) session.getAttribute("preguntas");
-                        List<Programa> programasP2 = (List<Programa>) session.getAttribute("pregunta2");
-                        List<Programa> programasP11 = (List<Programa>) session.getAttribute("pregunta11");
-                        List<Programa> programasP16 = (List<Programa>) session.getAttribute("pregunta16");
-                        List<Programa> programasP19 = (List<Programa>) session.getAttribute("pregunta19");
-                        List<Programa> programasP20 = (List<Programa>) session.getAttribute("pregunta20");
-                        List<Programa> programasP21 = (List<Programa>) session.getAttribute("pregunta21");
-                        List<Programa> programasP22 = (List<Programa>) session.getAttribute("pregunta22");
-                        List<Programa> programasP23 = (List<Programa>) session.getAttribute("pregunta23");
-                        List<Programa> programasP24 = (List<Programa>) session.getAttribute("pregunta24");
-                        List<Programa> programasP25 = (List<Programa>) session.getAttribute("pregunta25");
-                        List<Programa> programasP30 = (List<Programa>) session.getAttribute("pregunta30");
-                        List<Programa> programasP32 = (List<Programa>) session.getAttribute("pregunta32");
-                        List<Programa> programasP50 = (List<Programa>) session.getAttribute("pregunta50");
+                        List<Pregunta> preguntas = (List<Pregunta>) session.getAttribute("preguntas");
+                        Encuesta e = (Encuesta) session.getAttribute("encuesta");
 
-                        for (Pregunta pregunta : allPreguntas) {
+                        Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
+                        Fuente fuente = (Fuente) session.getAttribute("fuente");
+                        String estado = "terminado";
 
+                        Encabezado enc = new Encabezado();
+                        enc.setProcesoId(persona.getMuestraId().getProcesoId());
+                        enc.setEncuestaId(e);
+                        enc.setEstado(estado);
+                        enc.setFuenteId(fuente);
+                        enc.setMuestrapersonaId(persona);
+                        enc.setFecha(new Date(new java.util.Date().getTime()));
+                        encabezadoFacade.create(enc);
 
-                            if (!("si").equals(pregunta.getRepetir())) {
-                                if (pregunta.getPreguntaList().isEmpty()) {
-                                    Respuestas raux = new Respuestas();
-                                    raux.setParticipanteIdparticipante(part78);
-                                    raux.setPreguntaId(pregunta);
-                                    String respuesta = (String) request.getParameter("pregunta" + pregunta.getId());
-                                    raux.setRespuesta(Integer.parseInt(respuesta));
-                                    respuestasFacade.create(raux);
-                                } else {
+                        Encabezado recienCreado = encabezadoFacade.findByUltimo();
+                        try {
+                            for (Pregunta pregunta : preguntas) {
+
+                                if (pregunta.getPreguntaList() != null && pregunta.getPreguntaList().size() > 0) {
+
                                     for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                        Respuestas raux = new Respuestas();
-                                        raux.setParticipanteIdparticipante(part78);
-                                        raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                        String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                        raux.setRespuesta(Integer.parseInt(respuesta));
-                                        respuestasFacade.create(raux);
+                                        Resultadoevaluacion re = new Resultadoevaluacion();
+                                        re.setEncabezadoId(recienCreado);
+                                        re.setPreguntaId(pregunta.getPreguntaList().get(i));
+                                        String respuesta1 = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
+                                        re.setRespuesta(respuesta1);
+                                        re.setRespuestaAbierta(null);
+                                        resultadoevaluacionFacade.create(re);
 
                                     }
+                                } else {
+                                    Resultadoevaluacion re = new Resultadoevaluacion();
+                                    re.setEncabezadoId(recienCreado);
+                                    re.setPreguntaId(pregunta);
+                                    String respuesta1 = (String) request.getParameter("pregunta" + pregunta.getId());
+                                    re.setRespuesta(respuesta1);
+                                    re.setRespuestaAbierta(null);
+                                    resultadoevaluacionFacade.create(re);
                                 }
-                            } else {
-                                //21, 24, 25
-                                if (pregunta.getCodigo().equals("21")) {
-                                    if (programasP21.size() > 0) {
-                                        for (Programa programa : programasP21) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta);
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getId() + "programa" + programa.getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            raux.setProgramaId(programa);
-                                            respuestasFacade.create(raux);
-                                        }
-                                    } else {
-                                        Respuestas raux = new Respuestas();
-                                        raux.setParticipanteIdparticipante(part78);
-                                        raux.setPreguntaId(pregunta);
-                                        String respuesta = (String) request.getParameter("pregunta" + pregunta.getId());
-                                        raux.setRespuesta(Integer.parseInt(respuesta));
-                                        respuestasFacade.create(raux);
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("24")) {
-                                    if (programasP24.size() > 0) {
-                                        for (Programa programa : programasP24) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta);
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getId() + "programa" + programa.getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            raux.setProgramaId(programa);
-                                            respuestasFacade.create(raux);
-                                        }
-                                    } else {
-                                        Respuestas raux = new Respuestas();
-                                        raux.setParticipanteIdparticipante(part78);
-                                        raux.setPreguntaId(pregunta);
-                                        String respuesta = (String) request.getParameter("pregunta" + pregunta.getId());
-                                        raux.setRespuesta(Integer.parseInt(respuesta));
-                                        respuestasFacade.create(raux);
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("25")) {
-                                    if (programasP25.size() > 0) {
-                                        for (Programa programa : programasP25) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta);
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getId() + "programa" + programa.getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            raux.setProgramaId(programa);
-                                            respuestasFacade.create(raux);
-                                        }
-                                    } else {
-                                        Respuestas raux = new Respuestas();
-                                        raux.setParticipanteIdparticipante(part78);
-                                        raux.setPreguntaId(pregunta);
-                                        String respuesta = (String) request.getParameter("pregunta" + pregunta.getId());
-                                        raux.setRespuesta(Integer.parseInt(respuesta));
-                                        respuestasFacade.create(raux);
-                                    }
-                                }
-
-                                if (pregunta.getCodigo().equals("2")) {
-                                    if (programasP2.size() > 0) {
-                                        for (Programa programa : programasP2) {
-                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                                Respuestas raux = new Respuestas();
-                                                raux.setParticipanteIdparticipante(part78);
-                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
-                                                raux.setRespuesta(Integer.parseInt(respuesta));
-                                                raux.setProgramaId(programa);
-                                                respuestasFacade.create(raux);
-                                            }
-
-                                        }
-                                    } else {
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            respuestasFacade.create(raux);
-                                        }
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("11")) {
-                                    if (programasP11.size() > 0) {
-                                        for (Programa programa : programasP11) {
-                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                                Respuestas raux = new Respuestas();
-                                                raux.setParticipanteIdparticipante(part78);
-                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
-                                                raux.setRespuesta(Integer.parseInt(respuesta));
-                                                raux.setProgramaId(programa);
-                                                respuestasFacade.create(raux);
-                                            }
-
-                                        }
-                                    } else {
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            respuestasFacade.create(raux);
-                                        }
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("16")) {
-                                    if (programasP16.size() > 0) {
-                                        for (Programa programa : programasP16) {
-                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                                Respuestas raux = new Respuestas();
-                                                raux.setParticipanteIdparticipante(part78);
-                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
-                                                raux.setRespuesta(Integer.parseInt(respuesta));
-                                                raux.setProgramaId(programa);
-                                                respuestasFacade.create(raux);
-                                            }
-
-                                        }
-                                    } else {
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            respuestasFacade.create(raux);
-                                        }
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("19")) {
-                                    if (programasP19.size() > 0) {
-                                        for (Programa programa : programasP19) {
-                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                                Respuestas raux = new Respuestas();
-                                                raux.setParticipanteIdparticipante(part78);
-                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
-                                                raux.setRespuesta(Integer.parseInt(respuesta));
-                                                raux.setProgramaId(programa);
-                                                respuestasFacade.create(raux);
-                                            }
-
-                                        }
-                                    } else {
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            respuestasFacade.create(raux);
-                                        }
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("20")) {
-                                    if (programasP20.size() > 0) {
-                                        for (Programa programa : programasP20) {
-                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                                Respuestas raux = new Respuestas();
-                                                raux.setParticipanteIdparticipante(part78);
-                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
-                                                raux.setRespuesta(Integer.parseInt(respuesta));
-                                                raux.setProgramaId(programa);
-                                                respuestasFacade.create(raux);
-                                            }
-
-                                        }
-                                    } else {
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            respuestasFacade.create(raux);
-                                        }
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("22")) {
-                                    if (programasP22.size() > 0) {
-                                        for (Programa programa : programasP22) {
-                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                                Respuestas raux = new Respuestas();
-                                                raux.setParticipanteIdparticipante(part78);
-                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
-                                                raux.setRespuesta(Integer.parseInt(respuesta));
-                                                raux.setProgramaId(programa);
-                                                respuestasFacade.create(raux);
-                                            }
-
-                                        }
-                                    } else {
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            respuestasFacade.create(raux);
-                                        }
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("23")) {
-                                    if (programasP23.size() > 0) {
-                                        for (Programa programa : programasP23) {
-                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                                Respuestas raux = new Respuestas();
-                                                raux.setParticipanteIdparticipante(part78);
-                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
-                                                raux.setRespuesta(Integer.parseInt(respuesta));
-                                                raux.setProgramaId(programa);
-                                                respuestasFacade.create(raux);
-                                            }
-
-                                        }
-                                    } else {
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            respuestasFacade.create(raux);
-                                        }
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("30")) {
-                                    if (programasP30.size() > 0) {
-                                        for (Programa programa : programasP30) {
-                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                                Respuestas raux = new Respuestas();
-                                                raux.setParticipanteIdparticipante(part78);
-                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
-                                                raux.setRespuesta(Integer.parseInt(respuesta));
-                                                raux.setProgramaId(programa);
-                                                respuestasFacade.create(raux);
-                                            }
-
-                                        }
-                                    } else {
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            respuestasFacade.create(raux);
-                                        }
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("32")) {
-                                    if (programasP32.size() > 0) {
-                                        for (Programa programa : programasP32) {
-                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                                Respuestas raux = new Respuestas();
-                                                raux.setParticipanteIdparticipante(part78);
-                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
-                                                raux.setRespuesta(Integer.parseInt(respuesta));
-                                                raux.setProgramaId(programa);
-                                                respuestasFacade.create(raux);
-                                            }
-
-                                        }
-                                    } else {
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            respuestasFacade.create(raux);
-                                        }
-                                    }
-                                }
-                                if (pregunta.getCodigo().equals("50")) {
-                                    if (programasP50.size() > 0) {
-                                        for (Programa programa : programasP50) {
-                                            for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                                Respuestas raux = new Respuestas();
-                                                raux.setParticipanteIdparticipante(part78);
-                                                raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                                String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId() + "programa" + programa.getId());
-                                                raux.setRespuesta(Integer.parseInt(respuesta));
-                                                raux.setProgramaId(programa);
-                                                respuestasFacade.create(raux);
-                                            }
-
-                                        }
-                                    } else {
-                                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                                            Respuestas raux = new Respuestas();
-                                            raux.setParticipanteIdparticipante(part78);
-                                            raux.setPreguntaId(pregunta.getPreguntaList().get(i));
-                                            String respuesta = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                                            raux.setRespuesta(Integer.parseInt(respuesta));
-                                            respuestasFacade.create(raux);
-                                        }
-                                    }
-                                }
-
                             }
+                        } catch (Exception ex) {
+                            LOGGER.error("Ha ocurrido un error guardando las repuestas: ", ex);
+                        }
+
+                        recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
+                        encabezadoFacade.edit(recienCreado);
+                        if (RESPONDER.equals(request.getParameter("action"))) {
+                            session.setAttribute("encuesta", null);
+                            session.setAttribute("preguntas", null);
                         }
 
 
-                        /*  Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
-                         Fuente fuente = (Fuente) session.getAttribute("fuente");
-                         Encuesta encuesta = (Encuesta) session.getAttribute("encuesta");
-                         List<Pregunta> preguntas = encuesta.getPreguntaList();
-                         String estado = "terminado";
-
-                         if (RESPONDER.equals(request.getParameter("action"))) {
-                         estado = "terminado";
-                         }
-                         List<Encabezado> encabExistentes = encabezadoFacade.findByVars(p, encuesta, fuente, persona);
-                         Encabezado enc = null;
-
-
-                         if (enc == null) {
-                         enc = new Encabezado();
-                         enc.setProcesoId(p);
-                         enc.setEncuestaId(encuesta);
-                         enc.setEstado(estado);
-                         enc.setFuenteId(fuente);
-                         enc.setMuestrapersonaId(persona);
-                         enc.setFecha(new Date(new java.util.Date().getTime()));
-                         encabezadoFacade.create(enc);
-
-                         Encabezado recienCreado = encabezadoFacade.findByUltimo();
-                         try {
-                         for (Pregunta pregunta : preguntas) {
-
-                         if (pregunta.getPreguntaList() != null && pregunta.getPreguntaList().size() > 0) {
-
-                         for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                         Resultadoevaluacion re = new Resultadoevaluacion();
-                         re.setEncabezadoId(recienCreado);
-                         re.setPreguntaId(pregunta.getPreguntaList().get(i));
-                         String respuesta1 = (String) request.getParameter("pregunta" + pregunta.getPreguntaList().get(i).getId());
-                         re.setRespuesta(respuesta1);
-                         re.setRespuestaAbierta(null);
-                         resultadoevaluacionFacade.create(re);
-
-                         }
-                         } else {
-                         Resultadoevaluacion re = new Resultadoevaluacion();
-                         re.setEncabezadoId(recienCreado);
-                         re.setPreguntaId(pregunta);
-                         String respuesta1 = (String) request.getParameter("pregunta" + pregunta.getId());
-                         re.setRespuesta(respuesta1);
-                         re.setRespuestaAbierta(null);
-                         resultadoevaluacionFacade.create(re);
-                         }
-                         }
-                         } catch (Exception e) {
-                         LOGGER.error("Ha ocurrido un error guardando las repuestas: ", e);
-                         }
-
-                         recienCreado.setResultadoevaluacionList(resultadoevaluacionFacade.findByEncabezado(recienCreado));
-                         encabezadoFacade.edit(recienCreado);
-                         if (RESPONDER.equals(request.getParameter("action"))) {
-                         session.setAttribute("encuesta", null);
-                         }
-
-                         }*/
                     } else {
                         if (action.equals("inicioCC")) {
                             String url = "/WEB-INF/vista/fuente/inicio.jsp";

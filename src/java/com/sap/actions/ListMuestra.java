@@ -76,7 +76,8 @@ public class ListMuestra implements Action {
                 sesion.setAttribute("listMuestraEstudiante", muestraestudianteFacade.findByList("muestrapersonaId.muestraId", m));
                 sesion.setAttribute("poblacionEstudiante", estudianteFacade.findByList("procesoId", proceso));
 
-                sesion.setAttribute("listMuestraDocente", muestradocenteFacade.findByList("muestrapersonaId.muestraId", m));
+                sesion.setAttribute("listMuestraDocenteCon", muestradocenteFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraDocenteSin", muestradocenteFacade.findByMuestraSinEncabezado(proceso));
                 sesion.setAttribute("poblacionDocente", docenteFacade.findByList("procesoId", proceso));
 
                 sesion.setAttribute("listMuestraEgresado", muestraegresadoFacade.findByList("muestrapersonaId.muestraId", m));

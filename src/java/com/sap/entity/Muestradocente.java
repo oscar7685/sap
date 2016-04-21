@@ -30,8 +30,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Muestradocente.findAll", query = "SELECT m FROM Muestradocente m"),
     @NamedQuery(name = "Muestradocente.findById", query = "SELECT m FROM Muestradocente m WHERE m.id = :id"),
     @NamedQuery(name = "Muestradocente.findByMuestraPersonaId", query = "SELECT m FROM Muestradocente m WHERE m.muestrapersonaId = :muestrapersona"),
+    @NamedQuery(name = "Muestradocente.findByMuestraConEncabezado", query = "SELECT m FROM Muestradocente m join m.muestrapersonaId mp join mp.encabezadoList en WHERE en.muestrapersonaId = mp and en.procesoId=:proceso"),
+    @NamedQuery(name = "Muestradocente.findByMuestraSinEncabezado", query = "SELECT m2 FROM Muestradocente m2 where m2.id NOT IN (SELECT m.id FROM Muestradocente m join m.muestrapersonaId mp join mp.encabezadoList en WHERE en.muestrapersonaId = mp and en.procesoId=:proceso) and m2.muestrapersonaId.muestraId.procesoId =:proceso"),
     @NamedQuery(name = "Muestradocente.findByTipo", query = "SELECT m FROM Muestradocente m WHERE m.tipo = :tipo")})
 public class Muestradocente implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,5 +103,4 @@ public class Muestradocente implements Serializable {
     public String toString() {
         return "com.sap.entity.Muestradocente[ id=" + id + " ]";
     }
-    
 }

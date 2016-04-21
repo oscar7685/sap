@@ -6,6 +6,7 @@ package com.sap.ejb;
 
 import com.sap.entity.Muestradocente;
 import com.sap.entity.Muestrapersona;
+import com.sap.entity.Proceso;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,6 +19,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class MuestradocenteFacade extends AbstractFacade<Muestradocente> {
+
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -29,6 +31,19 @@ public class MuestradocenteFacade extends AbstractFacade<Muestradocente> {
     public MuestradocenteFacade() {
         super(Muestradocente.class);
     }
+
+    public List findByMuestraConEncabezado(Proceso p) {
+        Query q = em.createNamedQuery("Muestradocente.findByMuestraConEncabezado");
+        q.setParameter("proceso", p);
+        return q.getResultList();
+    }
+
+    public List findByMuestraSinEncabezado(Proceso p) {
+        Query q = em.createNamedQuery("Muestradocente.findByMuestraSinEncabezado");
+        q.setParameter("proceso", p);
+        return q.getResultList();
+    }
+
     public List findByMuestraPersona(Muestrapersona p) {
         Query q = em.createNamedQuery("Muestradocente.findByMuestraPersonaId");
         q.setParameter("muestrapersona", p);
