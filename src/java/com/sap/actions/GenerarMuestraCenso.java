@@ -91,18 +91,14 @@ public class GenerarMuestraCenso implements Action {
 
         //********************************Estudiante
         // double aux = estudianteFacade.countByProperty("programaId", programa);
-
-        List<Estudiante> le = estudianteFacade.findByList("procesoId", proceso);
-
+        //ESTUDIANTES CADETES
+        List<Estudiante> le = estudianteFacade.findByList2("procesoId", proceso, "tipo", "CADETES");
         Iterator it = le.iterator();
-
         if (!le.isEmpty()) {
             while (it.hasNext()) {
                 Estudiante est = (Estudiante) it.next();
                 Persona per = est.getPersonaId();
-
                 Muestrapersona mp = new Muestrapersona();
-
                 mp.setCedula(per.getId());
                 mp.setNombre(per.getNombre());
                 mp.setApellido(per.getApellido());
@@ -119,74 +115,237 @@ public class GenerarMuestraCenso implements Action {
                 me.setMuestrapersonaId(mp);
                 me.setProgramaId(programa);
                 me.setTipo("" + est.getFuenteId().getId());
-
                 muestraestudianteFacade.create(me);
             }
         }
 
 
+        //ESTUDIANTES ESPECIALIZACION
+        List<Estudiante> le2 = estudianteFacade.findByList2("procesoId", proceso, "tipo", "ESPECIALIZACION");
 
-        //********************************Docente
+        for (Estudiante est : le2) {
+            Persona per = est.getPersonaId();
+            Muestrapersona mp = new Muestrapersona();
+            mp.setCedula(per.getId());
+            mp.setNombre(per.getNombre());
+            mp.setApellido(per.getApellido());
+            mp.setPassword(per.getPassword());
+            mp.setMail(per.getMail());
+            mp.setMuestraId(m);
+            muestrapersonaFacade.create(mp);
 
-        List<Docente> ld = docenteFacade.findByList("procesoId", proceso);
+            Muestraestudiante me = new Muestraestudiante();
+            me.setCodigo(est.getId());
+            me.setSemestre(est.getSemestre());
+            me.setPeriodo(est.getPeriodo());
+            me.setAnio(est.getAnio());
+            me.setMuestrapersonaId(mp);
+            me.setProgramaId(programa);
+            me.setTipo("" + est.getFuenteId().getId());
+            muestraestudianteFacade.create(me);
+        }
 
-        it = ld.iterator();
+        //ESTUDIANTES MAESTRIA
+        List<Estudiante> le3 = estudianteFacade.findByList2("procesoId", proceso, "tipo", "MAESTRIA");
 
-        if (!ld.isEmpty()) {
-            while (it.hasNext()) {
-                Docente doc = (Docente) it.next();
-                Persona per = doc.getPersonaId();
+        for (Estudiante est : le3) {
+            Persona per = est.getPersonaId();
+            Muestrapersona mp = new Muestrapersona();
+            mp.setCedula(per.getId());
+            mp.setNombre(per.getNombre());
+            mp.setApellido(per.getApellido());
+            mp.setPassword(per.getPassword());
+            mp.setMail(per.getMail());
+            mp.setMuestraId(m);
+            muestrapersonaFacade.create(mp);
 
+            Muestraestudiante me = new Muestraestudiante();
+            me.setCodigo(est.getId());
+            me.setSemestre(est.getSemestre());
+            me.setPeriodo(est.getPeriodo());
+            me.setAnio(est.getAnio());
+            me.setMuestrapersonaId(mp);
+            me.setProgramaId(programa);
+            me.setTipo("" + est.getFuenteId().getId());
+            muestraestudianteFacade.create(me);
+        }
+
+
+        //ESTUDIANTES OFICIALES
+        List<Estudiante> le4 = estudianteFacade.findByList2("procesoId", proceso, "tipo", "OFICIALES");
+
+        int N = le4.size();
+        double n = 0;
+        if (N != 0.0) {
+            n = (N * 0.9604) / (((N - 1) * 0.0025) + 0.9604);
+
+            int tamanioMuestra = (int) Math.floor(n);
+            List<Estudiante> ld = estudianteFacade.generarMuestra(programa, tamanioMuestra);
+            for (Estudiante est : ld) {
+                Persona per = est.getPersonaId();
                 Muestrapersona mp = new Muestrapersona();
-
                 mp.setCedula(per.getId());
                 mp.setNombre(per.getNombre());
                 mp.setApellido(per.getApellido());
                 mp.setPassword(per.getPassword());
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
+                muestrapersonaFacade.create(mp);
 
+                Muestraestudiante me = new Muestraestudiante();
+                me.setCodigo(est.getId());
+                me.setSemestre(est.getSemestre());
+                me.setPeriodo(est.getPeriodo());
+                me.setAnio(est.getAnio());
+                me.setMuestrapersonaId(mp);
+                me.setProgramaId(programa);
+                me.setTipo("" + est.getFuenteId().getId());
+                muestraestudianteFacade.create(me);
+            }
+
+        }
+
+
+
+
+
+
+
+
+        //********************************Docente
+        //DOCENTE MILITAR
+        List<Docente> le5 = docenteFacade.findByList2("procesoId", proceso, "tipo", "MILITAR");
+        int Nd = le5.size();
+        double nd = 0;
+        if (Nd != 0.0) {
+            nd = (Nd * 0.9604) / (((Nd - 1) * 0.0025) + 0.9604);
+
+            int tamanioMuestra1 = (int) Math.floor(nd);
+            List<Docente> ld = docenteFacade.generarMuestra(programa, tamanioMuestra1);
+            for (Docente doc : ld) {
+                Persona per = doc.getPersonaId();
+                Muestrapersona mp = new Muestrapersona();
+                mp.setCedula(per.getId());
+                mp.setNombre(per.getNombre());
+                mp.setApellido(per.getApellido());
+                mp.setPassword(per.getPassword());
+                mp.setMail(per.getMail());
+                mp.setMuestraId(m);
                 muestrapersonaFacade.create(mp);
 
                 Muestradocente md = new Muestradocente();
                 md.setTipo("" + doc.getFuenteId().getId());
                 md.setMuestrapersonaId(mp);
-
                 muestradocenteFacade.create(md);
             }
         }
+        //DOCENTE NOMINA
+        List<Docente> le6 = docenteFacade.findByList2("procesoId", proceso, "tipo", "NOMINA");
+        int Nd2 = le6.size();
+        double nd2 = 0;
+        if (Nd2 != 0.0) {
+            nd2 = (Nd2 * 0.9604) / (((Nd2 - 1) * 0.0025) + 0.9604);
 
-
-
-        //********************************Egresado
-        List<Egresado> leg = egresadoFacade.findByList("procesoId", proceso);
-
-        it = leg.iterator();
-
-        if (!leg.isEmpty()) {
-            while (it.hasNext()) {
-                Egresado eg = (Egresado) it.next();
-                Persona per = eg.getPersonaId();
-
+            int tamanioMuestra2 = (int) Math.floor(nd2);
+            List<Docente> ld2 = docenteFacade.generarMuestra(programa, tamanioMuestra2);
+            for (Docente doc : ld2) {
+                Persona per = doc.getPersonaId();
                 Muestrapersona mp = new Muestrapersona();
-
                 mp.setCedula(per.getId());
                 mp.setNombre(per.getNombre());
                 mp.setApellido(per.getApellido());
                 mp.setPassword(per.getPassword());
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
+                muestrapersonaFacade.create(mp);
 
+                Muestradocente md = new Muestradocente();
+                md.setTipo("" + doc.getFuenteId().getId());
+                md.setMuestrapersonaId(mp);
+                muestradocenteFacade.create(md);
+            }
+        }
+
+        //DOCENTE CATEDRA
+        List<Docente> leC = docenteFacade.findByList2("procesoId", proceso, "tipo", "CATEDRA");
+        int NdC = leC.size();
+        double ndC = 0;
+        if (NdC != 0.0) {
+            ndC = (NdC * 0.9604) / (((NdC - 1) * 0.0025) + 0.9604);
+
+            int tamanioMuestraC = (int) Math.floor(ndC);
+            List<Docente> ldC = docenteFacade.generarMuestra(programa, tamanioMuestraC);
+            for (Docente doc : ldC) {
+                Persona per = doc.getPersonaId();
+                Muestrapersona mp = new Muestrapersona();
+                mp.setCedula(per.getId());
+                mp.setNombre(per.getNombre());
+                mp.setApellido(per.getApellido());
+                mp.setPassword(per.getPassword());
+                mp.setMail(per.getMail());
+                mp.setMuestraId(m);
+                muestrapersonaFacade.create(mp);
+
+                Muestradocente md = new Muestradocente();
+                md.setTipo("" + doc.getFuenteId().getId());
+                md.setMuestrapersonaId(mp);
+                muestradocenteFacade.create(md);
+            }
+        }
+        //DOCENTE OCASIONALES
+        List<Docente> leO = docenteFacade.findByList2("procesoId", proceso, "tipo", "OCASIONALES");
+        int NdO = leO.size();
+        double ndO = 0;
+        if (NdO != 0.0) {
+            ndO = (NdO * 0.9604) / (((NdO - 1) * 0.0025) + 0.9604);
+
+            int tamanioMuestraO = (int) Math.floor(ndO);
+            List<Docente> ldO = docenteFacade.generarMuestra(programa, tamanioMuestraO);
+            for (Docente doc : ldO) {
+                Persona per = doc.getPersonaId();
+                Muestrapersona mp = new Muestrapersona();
+                mp.setCedula(per.getId());
+                mp.setNombre(per.getNombre());
+                mp.setApellido(per.getApellido());
+                mp.setPassword(per.getPassword());
+                mp.setMail(per.getMail());
+                mp.setMuestraId(m);
+                muestrapersonaFacade.create(mp);
+
+                Muestradocente md = new Muestradocente();
+                md.setTipo("" + doc.getFuenteId().getId());
+                md.setMuestrapersonaId(mp);
+                muestradocenteFacade.create(md);
+            }
+        }
+        //********************************Egresado
+        List<Egresado> leg = egresadoFacade.findByList("procesoId", proceso);
+
+        int NdEG = leg.size();
+        double ndEG = 0;
+        if (NdEG != 0.0) {
+            ndEG = (NdEG * 0.9604) / (((NdEG - 1) * 0.0025) + 0.9604);
+
+            int tamanioMuestraEG = (int) Math.floor(ndEG);
+            List<Egresado> ldEG = egresadoFacade.generarMuestra(programa, tamanioMuestraEG);
+
+            for (Egresado eg : ldEG) {
+                Persona per = eg.getPersonaId();
+                Muestrapersona mp = new Muestrapersona();
+                mp.setCedula(per.getId());
+                mp.setNombre(per.getNombre());
+                mp.setApellido(per.getApellido());
+                mp.setPassword(per.getPassword());
+                mp.setMail(per.getMail());
+                mp.setMuestraId(m);
                 muestrapersonaFacade.create(mp);
 
                 Muestraegresado meg = new Muestraegresado();
                 meg.setMuestrapersonaId(mp);
                 meg.setTipo("" + eg.getFuenteId().getId());
-
                 muestraegresadoFacade.create(meg);
             }
         }
-
 
         //********************************Director
         List<Directorprograma> ldp = directorprogramaFacade.findByList("procesoId", proceso);
@@ -222,31 +381,34 @@ public class GenerarMuestraCenso implements Action {
 
         List<Administrativo> lad = administrativoFacade.findByList("procesoId", proceso);
 
-        it = lad.iterator();
+        int NdAd = lad.size();
+        double ndAd = 0;
+        if (NdAd != 0.0) {
+            ndAd = (NdAd * 0.9604) / (((NdAd - 1) * 0.0025) + 0.9604);
 
-        if (!lad.isEmpty()) {
-            while (it.hasNext()) {
-                Administrativo ad = (Administrativo) it.next();
+            int tamanioMuestraAd = (int) Math.floor(ndAd);
+            List<Administrativo> ldAd = administrativoFacade.generarMuestra(programa, tamanioMuestraAd);
+
+            for (Administrativo ad : ldAd) {
                 Persona per = ad.getPersonaId();
-
                 Muestrapersona mp = new Muestrapersona();
-
                 mp.setCedula(per.getId());
                 mp.setNombre(per.getNombre());
                 mp.setApellido(per.getApellido());
                 mp.setPassword(per.getPassword());
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
-
                 muestrapersonaFacade.create(mp);
 
                 Muestraadministrativo mad = new Muestraadministrativo();
                 mad.setCargo(ad.getCargo());
                 mad.setMuestrapersonaId(mp);
-
                 muestraadministrativoFacade.create(mad);
             }
+
         }
+
+
 
 
 

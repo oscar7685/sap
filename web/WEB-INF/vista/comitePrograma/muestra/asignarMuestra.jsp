@@ -278,11 +278,11 @@
                         <div id="collapseOne" class="accordion-body collapse">
                             <div class="accordion-inner">
                                 <ul class="nav nav-tabs" id="myTab">
-                                    <li class="active"><a href="#poblacion" data-toggle="tab">Población estudiantes</a></li>
-                                    <li><a href="#muestra" data-toggle="tab">Muestra estudiantes</a></li>
+                                    <li class="active"><a href="#poblacionest" data-toggle="tab">Población estudiantes</a></li>
+                                    <li><a href="#muestraes" data-toggle="tab">Muestra estudiantes</a></li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="poblacion">
+                                    <div class="tab-pane active" id="poblacionest">
                                         <table id="tablaestudiante0" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
@@ -304,7 +304,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="tab-pane" id="muestra">
+                                    <div class="tab-pane" id="muestraes">
                                         <table id="tablaestudiante" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
