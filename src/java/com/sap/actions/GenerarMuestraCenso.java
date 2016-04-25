@@ -115,6 +115,7 @@ public class GenerarMuestraCenso implements Action {
                 me.setMuestrapersonaId(mp);
                 me.setProgramaId(programa);
                 me.setTipo("" + est.getFuenteId().getId());
+                me.setTp("" + est.getTipo());
                 muestraestudianteFacade.create(me);
             }
         }
@@ -142,6 +143,7 @@ public class GenerarMuestraCenso implements Action {
             me.setMuestrapersonaId(mp);
             me.setProgramaId(programa);
             me.setTipo("" + est.getFuenteId().getId());
+            me.setTp("" + est.getTipo());
             muestraestudianteFacade.create(me);
         }
 
@@ -167,6 +169,7 @@ public class GenerarMuestraCenso implements Action {
             me.setMuestrapersonaId(mp);
             me.setProgramaId(programa);
             me.setTipo("" + est.getFuenteId().getId());
+            me.setTp("" + est.getTipo());
             muestraestudianteFacade.create(me);
         }
 
@@ -180,7 +183,7 @@ public class GenerarMuestraCenso implements Action {
             n = (N * 0.9604) / (((N - 1) * 0.0025) + 0.9604);
 
             int tamanioMuestra = (int) Math.floor(n);
-            List<Estudiante> ld = estudianteFacade.generarMuestra(programa, tamanioMuestra);
+            List<Estudiante> ld = estudianteFacade.generarMuestra(proceso, tamanioMuestra, "OFICIALES");
             for (Estudiante est : ld) {
                 Persona per = est.getPersonaId();
                 Muestrapersona mp = new Muestrapersona();
@@ -199,6 +202,7 @@ public class GenerarMuestraCenso implements Action {
                 me.setAnio(est.getAnio());
                 me.setMuestrapersonaId(mp);
                 me.setProgramaId(programa);
+                me.setTp("" + est.getTipo());
                 me.setTipo("" + est.getFuenteId().getId());
                 muestraestudianteFacade.create(me);
             }
@@ -221,7 +225,7 @@ public class GenerarMuestraCenso implements Action {
             nd = (Nd * 0.9604) / (((Nd - 1) * 0.0025) + 0.9604);
 
             int tamanioMuestra1 = (int) Math.floor(nd);
-            List<Docente> ld = docenteFacade.generarMuestra(programa, tamanioMuestra1);
+            List<Docente> ld = docenteFacade.generarMuestra(proceso, tamanioMuestra1, "MILITAR");
             for (Docente doc : ld) {
                 Persona per = doc.getPersonaId();
                 Muestrapersona mp = new Muestrapersona();
@@ -236,6 +240,7 @@ public class GenerarMuestraCenso implements Action {
                 Muestradocente md = new Muestradocente();
                 md.setTipo("" + doc.getFuenteId().getId());
                 md.setMuestrapersonaId(mp);
+                md.setTp("" + doc.getTipo());
                 muestradocenteFacade.create(md);
             }
         }
@@ -247,7 +252,7 @@ public class GenerarMuestraCenso implements Action {
             nd2 = (Nd2 * 0.9604) / (((Nd2 - 1) * 0.0025) + 0.9604);
 
             int tamanioMuestra2 = (int) Math.floor(nd2);
-            List<Docente> ld2 = docenteFacade.generarMuestra(programa, tamanioMuestra2);
+            List<Docente> ld2 = docenteFacade.generarMuestra(proceso, tamanioMuestra2, "NOMINA");
             for (Docente doc : ld2) {
                 Persona per = doc.getPersonaId();
                 Muestrapersona mp = new Muestrapersona();
@@ -261,6 +266,7 @@ public class GenerarMuestraCenso implements Action {
 
                 Muestradocente md = new Muestradocente();
                 md.setTipo("" + doc.getFuenteId().getId());
+                md.setTp("" + doc.getTipo());
                 md.setMuestrapersonaId(mp);
                 muestradocenteFacade.create(md);
             }
@@ -274,7 +280,7 @@ public class GenerarMuestraCenso implements Action {
             ndC = (NdC * 0.9604) / (((NdC - 1) * 0.0025) + 0.9604);
 
             int tamanioMuestraC = (int) Math.floor(ndC);
-            List<Docente> ldC = docenteFacade.generarMuestra(programa, tamanioMuestraC);
+            List<Docente> ldC = docenteFacade.generarMuestra(proceso, tamanioMuestraC, "CATEDRA");
             for (Docente doc : ldC) {
                 Persona per = doc.getPersonaId();
                 Muestrapersona mp = new Muestrapersona();
@@ -289,6 +295,7 @@ public class GenerarMuestraCenso implements Action {
                 Muestradocente md = new Muestradocente();
                 md.setTipo("" + doc.getFuenteId().getId());
                 md.setMuestrapersonaId(mp);
+                md.setTp("" + doc.getTipo());
                 muestradocenteFacade.create(md);
             }
         }
@@ -300,7 +307,7 @@ public class GenerarMuestraCenso implements Action {
             ndO = (NdO * 0.9604) / (((NdO - 1) * 0.0025) + 0.9604);
 
             int tamanioMuestraO = (int) Math.floor(ndO);
-            List<Docente> ldO = docenteFacade.generarMuestra(programa, tamanioMuestraO);
+            List<Docente> ldO = docenteFacade.generarMuestra(proceso, tamanioMuestraO, "OCASIONALES");
             for (Docente doc : ldO) {
                 Persona per = doc.getPersonaId();
                 Muestrapersona mp = new Muestrapersona();
@@ -315,6 +322,7 @@ public class GenerarMuestraCenso implements Action {
                 Muestradocente md = new Muestradocente();
                 md.setTipo("" + doc.getFuenteId().getId());
                 md.setMuestrapersonaId(mp);
+                md.setTp("" + doc.getTipo());
                 muestradocenteFacade.create(md);
             }
         }
@@ -327,7 +335,7 @@ public class GenerarMuestraCenso implements Action {
             ndEG = (NdEG * 0.9604) / (((NdEG - 1) * 0.0025) + 0.9604);
 
             int tamanioMuestraEG = (int) Math.floor(ndEG);
-            List<Egresado> ldEG = egresadoFacade.generarMuestra(programa, tamanioMuestraEG);
+            List<Egresado> ldEG = egresadoFacade.generarMuestraX(proceso, tamanioMuestraEG);
 
             for (Egresado eg : ldEG) {
                 Persona per = eg.getPersonaId();
@@ -343,6 +351,7 @@ public class GenerarMuestraCenso implements Action {
                 Muestraegresado meg = new Muestraegresado();
                 meg.setMuestrapersonaId(mp);
                 meg.setTipo("" + eg.getFuenteId().getId());
+                meg.setTp("" + eg.getTipo());
                 muestraegresadoFacade.create(meg);
             }
         }
@@ -370,7 +379,7 @@ public class GenerarMuestraCenso implements Action {
 
                 Muestradirector mdp = new Muestradirector();
                 mdp.setMuestrapersonaId(mp);
-
+                
                 muestradirectorFacade.create(mdp);
             }
         }
@@ -387,7 +396,7 @@ public class GenerarMuestraCenso implements Action {
             ndAd = (NdAd * 0.9604) / (((NdAd - 1) * 0.0025) + 0.9604);
 
             int tamanioMuestraAd = (int) Math.floor(ndAd);
-            List<Administrativo> ldAd = administrativoFacade.generarMuestra(programa, tamanioMuestraAd);
+            List<Administrativo> ldAd = administrativoFacade.generarMuestraX(proceso, tamanioMuestraAd);
 
             for (Administrativo ad : ldAd) {
                 Persona per = ad.getPersonaId();
@@ -403,6 +412,7 @@ public class GenerarMuestraCenso implements Action {
                 Muestraadministrativo mad = new Muestraadministrativo();
                 mad.setCargo(ad.getCargo());
                 mad.setMuestrapersonaId(mp);
+                mad.setTp(ad.getCargo());
                 muestraadministrativoFacade.create(mad);
             }
 

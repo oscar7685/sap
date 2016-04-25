@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
  * @author Ususario
  */
 public abstract class AbstractFacade<T> {
-    
+
     private final Logger LOGGER = Logger.getLogger(AbstractFacade.class);
     private Class<T> entityClass;
 
@@ -66,13 +66,13 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
     public T findBySingle(String property, Object m) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass).setParameter("name", m).getSingleResult();
-}
-    
+    }
+
     public T findBySingle2(String property1, Object m1, String property2, Object m2) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -124,11 +124,11 @@ public abstract class AbstractFacade<T> {
         return q.getResultList();
     }
 
-    public List<T> generarMuestra(Object m, int tamanio) {
+    public List<T> generarMuestra(Object m, int tamanio, String tipo) {
         if (tamanio != 0) {
             javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
             cq.select(cq.from(entityClass));
-            Long size = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name", Long.class).setParameter("name", m).getSingleResult();
+            Long size = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() + " c WHERE c.procesoId = :name and c.tipo = :tipo", Long.class).setParameter("name", m).setParameter("tipo", tipo).getSingleResult();
             int size2 = size.intValue();
             Random random = new Random();
             List<T> lista = new ArrayList<T>();
@@ -136,7 +136,37 @@ public abstract class AbstractFacade<T> {
             int i = 0;
             while (i < tamanio) {
                 int aux = random.nextInt(size2);
-                Query q2 = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name", entityClass).setParameter("name", m);
+                Query q2 = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.procesoId = :name and c.tipo = :tipo", entityClass).setParameter("name", m).setParameter("tipo", tipo);
+                q2.setFirstResult(aux);
+                q2.setMaxResults(1);
+                if (!generated.contains(aux)) {
+                    generated.add(aux);
+                    lista.add((T) q2.getSingleResult());
+                    i++;
+                }
+
+            }
+            return lista;
+        } else {
+
+            return null;
+        }
+
+    }
+
+    public List<T> generarMuestraX(Object m, int tamanio) {
+        if (tamanio != 0) {
+            javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+            cq.select(cq.from(entityClass));
+            Long size = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() + " c WHERE c.procesoId = :name", Long.class).setParameter("name", m).getSingleResult();
+            int size2 = size.intValue();
+            Random random = new Random();
+            List<T> lista = new ArrayList<T>();
+            List<Integer> generated = new ArrayList<Integer>();
+            int i = 0;
+            while (i < tamanio) {
+                int aux = random.nextInt(size2);
+                Query q2 = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.procesoId = :name", entityClass).setParameter("name", m);
                 q2.setFirstResult(aux);
                 q2.setMaxResults(1);
                 if (!generated.contains(aux)) {
@@ -252,5 +282,17 @@ public abstract class AbstractFacade<T> {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " <> :name", entityClass).setParameter("name", m).getResultList();
+    }
+
+    public List findByMuestraConEncabezado(Proceso p) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery("SELECT m FROM "+ entityClass.getSimpleName() +" m join m.muestrapersonaId mp join mp.encabezadoList en WHERE en.muestrapersonaId = mp and en.procesoId=:proceso", entityClass).setParameter("proceso", p).getResultList();
+    }
+
+    public List findByMuestraSinEncabezado(Proceso p) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery("SELECT m2 FROM " + entityClass.getSimpleName() + " m2 where m2.id NOT IN (SELECT m.id FROM " + entityClass.getSimpleName() + " m join m.muestrapersonaId mp join mp.encabezadoList en WHERE en.muestrapersonaId = mp and en.procesoId=:proceso) and m2.muestrapersonaId.muestraId.procesoId =:proceso", entityClass).setParameter("proceso", p).getResultList();
     }
 }

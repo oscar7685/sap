@@ -32,18 +32,6 @@ public class MuestradocenteFacade extends AbstractFacade<Muestradocente> {
         super(Muestradocente.class);
     }
 
-    public List findByMuestraConEncabezado(Proceso p) {
-        Query q = em.createNamedQuery("Muestradocente.findByMuestraConEncabezado");
-        q.setParameter("proceso", p);
-        return q.getResultList();
-    }
-
-    public List findByMuestraSinEncabezado(Proceso p) {
-        Query q = em.createNamedQuery("Muestradocente.findByMuestraSinEncabezado");
-        q.setParameter("proceso", p);
-        return q.getResultList();
-    }
-
     public List findByMuestraPersona(Muestrapersona p) {
         Query q = em.createNamedQuery("Muestradocente.findByMuestraPersonaId");
         q.setParameter("muestrapersona", p);

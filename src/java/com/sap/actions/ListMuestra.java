@@ -71,29 +71,29 @@ public class ListMuestra implements Action {
             while (i.hasNext()) {
                 m = (Muestra) i.next();
                 sesion.setAttribute("Muestra", m);
-
-
-                sesion.setAttribute("listMuestraEstudiante", muestraestudianteFacade.findByList("muestrapersonaId.muestraId", m));
+                //ESTUDIANTES
+                sesion.setAttribute("listMuestraEstudianteCon", muestraestudianteFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraEstudianteSin", muestraestudianteFacade.findByMuestraSinEncabezado(proceso));
                 sesion.setAttribute("poblacionEstudiante", estudianteFacade.findByList("procesoId", proceso));
-
+                //DOCENTES
                 sesion.setAttribute("listMuestraDocenteCon", muestradocenteFacade.findByMuestraConEncabezado(proceso));
                 sesion.setAttribute("listMuestraDocenteSin", muestradocenteFacade.findByMuestraSinEncabezado(proceso));
                 sesion.setAttribute("poblacionDocente", docenteFacade.findByList("procesoId", proceso));
-
-                sesion.setAttribute("listMuestraEgresado", muestraegresadoFacade.findByList("muestrapersonaId.muestraId", m));
+                //EGRESADOS
+                sesion.setAttribute("listMuestraEgresadoCon", muestraegresadoFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraEgresadoSin", muestraegresadoFacade.findByMuestraSinEncabezado(proceso));
                 sesion.setAttribute("poblacionEgresado", egresadoFacade.findByList("procesoId", proceso));
-
-
-                sesion.setAttribute("listMuestraAdministrativo", muestraadministrativoFacade.findByList("muestrapersonaId.muestraId", m));
+                //ADMINISTRATIVOS
+                sesion.setAttribute("listMuestraAdministrativoCon", muestraadministrativoFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraAdministrativoSin", muestraadministrativoFacade.findByMuestraSinEncabezado(proceso));
                 sesion.setAttribute("poblacionAdministrativo", administrativoFacade.findByList("procesoId", proceso));
-
-
-                sesion.setAttribute("listMuestraDirectivo", muestradirectorFacade.findByList("muestrapersonaId.muestraId", m));
+                //DIRECTIVOS
+                sesion.setAttribute("listMuestraDirectivoCon", muestradirectorFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraDirectivoSin", muestradirectorFacade.findByMuestraSinEncabezado(proceso));
                 sesion.setAttribute("poblacionDirectivo", directorprogramaFacade.findByList("procesoId", proceso));
-
-
-
-                sesion.setAttribute("listMuestraEmpleador", muestraempleadorFacade.findByList("muestrapersonaId.muestraId", m));
+                //EMPLEADORES
+                sesion.setAttribute("listMuestraEmpleadorCon", muestraempleadorFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraEmpleadorSin", muestraempleadorFacade.findByMuestraSinEncabezado(proceso));
                 sesion.setAttribute("poblacionEmpleador", empleadorFacade.findByList("procesoId", proceso));
 
 

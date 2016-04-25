@@ -164,8 +164,8 @@ public class GenerarMuestra implements Action {
             n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
 
             tamanioMuestra = (int) Math.floor(n);
-
-            List<Docente> ld = docenteFacade.generarMuestra(programa, tamanioMuestra);
+            //no se está usando
+            List<Docente> ld = docenteFacade.generarMuestraX(programa, tamanioMuestra);
 
             it = ld.iterator();
 
@@ -204,8 +204,8 @@ public class GenerarMuestra implements Action {
             n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
 
             tamanioMuestra = (int) Math.floor(n);
-
-            List<Egresado> leg = egresadoFacade.generarMuestra(programa, tamanioMuestra);
+            //no se está usando
+            List<Egresado> leg = egresadoFacade.generarMuestraX(programa, tamanioMuestra);
 
             it = leg.iterator();
 
@@ -243,8 +243,8 @@ public class GenerarMuestra implements Action {
             n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
 
             tamanioMuestra = (int) Math.floor(n);
-
-            List<Directorprograma> ldp = directorprogramaFacade.generarMuestra(programa, tamanioMuestra);
+            //no se está usando
+            List<Directorprograma> ldp = directorprogramaFacade.generarMuestraX(programa, tamanioMuestra);
 
             it = ldp.iterator();
 
@@ -282,8 +282,8 @@ public class GenerarMuestra implements Action {
             n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
 
             tamanioMuestra = (int) Math.floor(n);
-
-            List<Administrativo> lad = administrativoFacade.generarMuestra(programa, tamanioMuestra);
+            //no se está usando
+            List<Administrativo> lad = administrativoFacade.generarMuestraX(programa, tamanioMuestra);
 
             it = lad.iterator();
 
@@ -322,8 +322,8 @@ public class GenerarMuestra implements Action {
             n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
 
             tamanioMuestra = (int) Math.floor(n);
-
-            List<Empleador> lem = empleadorFacade.generarMuestra(programa, tamanioMuestra);
+            //no se está usando
+            List<Empleador> lem = empleadorFacade.generarMuestraX(programa, tamanioMuestra);
 
             it = lem.iterator();
 

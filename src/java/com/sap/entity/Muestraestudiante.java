@@ -73,7 +73,17 @@ public class Muestraestudiante implements Serializable {
     @JoinColumn(name = "muestrapersona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestrapersona muestrapersonaId;
+    @Size(max = 45)
+    @Column(name = "tp")
+    private String tp;
 
+    public String getTp() {
+        return tp;
+    }
+
+    public void setTp(String tp) {
+        this.tp = tp;
+    }
     public Muestraestudiante() {
     }
 
