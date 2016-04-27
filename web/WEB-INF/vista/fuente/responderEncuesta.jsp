@@ -63,11 +63,6 @@
                         <tr>
                             <td style="text-align: center;">ESCUELA NAVAL DE CADETES "ALMIRANTE PADILLA"</td>
                         </tr>
-                        <tr>
-                            <td style="text-align: justify;">
-                            Actualmente la Escuela Nava de Cadetes "Almirante Padilla" se encuentra en proceso de autoevaluación con fines de Acreditación Institucional, identificando y valorando fortalezas y debilidades, mediante un proceso amplio y participativo de la Comunidad Educativa. Las preguntas que se registran a continuación tienen como objetivo primordial, obtener información pertinente y confiable sobre las condiciones de calidad y cumplimiento de cada uno de los factores estipulados por el Consejo Nacional de Acreditación.   
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
                 <br/>

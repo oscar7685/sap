@@ -40,7 +40,7 @@
                         <a class="brand" style="padding-top: 10px; padding-bottom: 5px;" href="#"><img src="css/images/SAPLETRAS.png"/></a>
                         <div class="nav-collapse collapse">
                             <ul class="nav barra" >
-                                <li class="active"><a href="#perfil"><i class="icon-home"></i> Inicio</a></li>
+                                <li class="active"><a href="#inicio"><i class="icon-home"></i> Inicio</a></li>
                                 <li><a href="#contacto"><i class="icon-phone"></i> Contacto</a></li>
                                 <li ><a href="#"><i class="icon-info-sign"></i> Acerca de</a></li>
                                 <li class="dropdown loggining"> 
