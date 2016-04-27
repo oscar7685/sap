@@ -52,7 +52,16 @@ public class Administrativo implements Serializable {
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
+    @Size(max = 45)
+    @Column(name = "tipo")
+    private String tipo;
 
+    public String getTipo() {
+        return tipo;
+    }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
     public Administrativo() {
     }
 

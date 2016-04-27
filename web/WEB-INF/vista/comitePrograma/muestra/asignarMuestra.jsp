@@ -311,6 +311,7 @@
                                                     <th>Identificación</th>
                                                     <th>Nombre</th>
                                                     <th>Tipo</th>
+                                                    <th>Curso</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="bodytablaestudiante">
@@ -321,6 +322,7 @@
                                                                 <td style="background-color: #DFF0D8; color: #468847;"> ${estudiante.muestrapersonaId.cedula}</td>
                                                                 <td style="background-color: #DFF0D8; color: #468847;"> ${estudiante.muestrapersonaId.nombre}</td>
                                                                 <td style="background-color: #DFF0D8; color: #468847;"> ${estudiante.tp}</td>
+                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${estudiante.curso}</td>
                                                             </tr>
                                                         </c:forEach>
                                                     </c:when>
@@ -332,6 +334,7 @@
                                                                 <td style="background-color: #F2DEDE; color: #B94A48"> ${estudiante.muestrapersonaId.cedula}</td>
                                                                 <td style="background-color: #F2DEDE; color: #B94A48;"> ${estudiante.muestrapersonaId.nombre}</td>
                                                                 <td style="background-color: #F2DEDE; color: #B94A48;"> ${estudiante.tp}</td>
+                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${estudiante.curso}</td>
                                                             </tr>
                                                         </c:forEach>
                                                     </c:when>
@@ -471,6 +474,7 @@
                                                     <th>Identificación</th>
                                                     <th>Nombre</th>
                                                     <th>Cargo</th>
+                                                    <th>Tipo</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="bodytablaadministrativo">
@@ -480,6 +484,7 @@
                                                             <tr class="terminadoC">
                                                                 <td style="background-color: #DFF0D8; color: #468847;"> ${administrativo.muestrapersonaId.cedula}</td>
                                                                 <td style="background-color: #DFF0D8; color: #468847;"> ${administrativo.muestrapersonaId.nombre}</td>
+                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${administrativo.cargo}</td>
                                                                 <td style="background-color: #DFF0D8; color: #468847;"> ${administrativo.tp}</td>
                                                             </tr>
                                                         </c:forEach>
@@ -491,6 +496,7 @@
                                                             <tr class="pendienteC">
                                                                 <td style="background-color: #F2DEDE; color: #B94A48"> ${administrativo.muestrapersonaId.cedula}</td>
                                                                 <td style="background-color: #F2DEDE; color: #B94A48;"> ${administrativo.muestrapersonaId.nombre}</td>
+                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${administrativo.cargo}</td>
                                                                 <td style="background-color: #F2DEDE; color: #B94A48;"> ${administrativo.tp}</td>
                                                             </tr>
                                                         </c:forEach>

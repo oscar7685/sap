@@ -72,7 +72,17 @@ public class Estudiante implements Serializable {
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
+    @Size(max = 45)
+    @Column(name = "curso")
+    private String curso;
 
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
     public Estudiante() {
     }
 

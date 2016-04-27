@@ -76,7 +76,17 @@ public class Muestraestudiante implements Serializable {
     @Size(max = 45)
     @Column(name = "tp")
     private String tp;
+    @Size(max = 45)
+    @Column(name = "curso")
+    private String curso;
 
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
     public String getTp() {
         return tp;
     }

@@ -112,6 +112,7 @@ public class GenerarMuestraCenso implements Action {
                 me.setSemestre(est.getSemestre());
                 me.setPeriodo(est.getPeriodo());
                 me.setAnio(est.getAnio());
+                me.setCurso(est.getCurso());
                 me.setMuestrapersonaId(mp);
                 me.setProgramaId(programa);
                 me.setTipo("" + est.getFuenteId().getId());
@@ -142,6 +143,7 @@ public class GenerarMuestraCenso implements Action {
             me.setAnio(est.getAnio());
             me.setMuestrapersonaId(mp);
             me.setProgramaId(programa);
+            me.setCurso(est.getCurso());
             me.setTipo("" + est.getFuenteId().getId());
             me.setTp("" + est.getTipo());
             muestraestudianteFacade.create(me);
@@ -167,6 +169,7 @@ public class GenerarMuestraCenso implements Action {
             me.setPeriodo(est.getPeriodo());
             me.setAnio(est.getAnio());
             me.setMuestrapersonaId(mp);
+            me.setCurso(est.getCurso());
             me.setProgramaId(programa);
             me.setTipo("" + est.getFuenteId().getId());
             me.setTp("" + est.getTipo());
@@ -202,6 +205,7 @@ public class GenerarMuestraCenso implements Action {
                 me.setAnio(est.getAnio());
                 me.setMuestrapersonaId(mp);
                 me.setProgramaId(programa);
+                me.setCurso(est.getCurso());
                 me.setTp("" + est.getTipo());
                 me.setTipo("" + est.getFuenteId().getId());
                 muestraestudianteFacade.create(me);
@@ -412,7 +416,7 @@ public class GenerarMuestraCenso implements Action {
                 Muestraadministrativo mad = new Muestraadministrativo();
                 mad.setCargo(ad.getCargo());
                 mad.setMuestrapersonaId(mp);
-                mad.setTp(ad.getCargo());
+                mad.setTp(ad.getTipo());
                 muestraadministrativoFacade.create(mad);
             }
 
