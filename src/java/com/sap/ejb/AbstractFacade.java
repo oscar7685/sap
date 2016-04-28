@@ -115,6 +115,45 @@ public abstract class AbstractFacade<T> {
         }
 
     }
+    
+    public List<T> findByPersonasQueNOEstanEnlaMuestra(String muestrafuente, Object proceso) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().
+                createQuery("SELECT c FROM " + entityClass.getSimpleName() 
+                + " c WHERE c.procesoId = :proceso and c.personaId.id not IN  "
+                + "(select me.muestrapersonaId.cedula from "+muestrafuente+" me "
+                + "where me.muestrapersonaId.muestraId.procesoId =:proceso)", entityClass);
+        q.setParameter("proceso", proceso);
+        try {
+            return q.getResultList();
+        } catch (Exception e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Excepcion en el metodo findBySingle3", e);
+            }
+            return null;
+        }
+
+    }
+    public List<T> findByMuestraQueNOHaContestado(Object proceso) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().
+                createQuery("SELECT c FROM " + entityClass.getSimpleName() 
+                + " c WHERE c.muestrapersonaId.muestraId.procesoId =:proceso and c.muestrapersonaId.id not IN "
+                + "(select en.muestrapersonaId.id from Encabezado en where en.procesoId =:proceso)", entityClass);
+        
+        q.setParameter("proceso", proceso);
+        try {
+            return q.getResultList();
+        } catch (Exception e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Excepcion en el metodo findBySingle3", e);
+            }
+            return null;
+        }
+
+    }
 
     public List<T> findByList(String property, Object m) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
