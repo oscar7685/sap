@@ -51,7 +51,29 @@
                     <c:if test="${EstadoProceso == 1}">
                         <a href="#preparedEditPonderarFactor" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Ponderación</a>
                     </c:if>
-                    <script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $('#tablaX').DataTable({
+                                dom: 'Bfrtip',
+                                buttons: [
+                                    {
+                                        extend: 'copy',
+                                        text: 'Copiar'
+                                    },
+                                    {
+                                        extend: 'excelHtml5',
+                                        text: 'Exportar a excel',
+                                        title: 'Ponderacion factores'
+                                    }
+                                ],
+                                language: {
+                                    buttons: {
+                                        copyTitle: 'Copiar'
+                                    }
+                                }
+                            });
+                        });
+                    </script>
                 </c:when>
                 <c:otherwise>
                     No  se han ponderado los factores en el sistema para este proceso.

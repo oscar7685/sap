@@ -103,7 +103,6 @@
             }); //fin $.ajax    
 
         });
-
         $("#bpreparedEditarMuestraEs").click(function() {
             $.ajax({
                 type: 'POST',
@@ -199,8 +198,7 @@
                 } //fin success
             }); //fin $.ajax    
         });
-    });
-</script>
+    });</script>
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
@@ -753,5 +751,103 @@
         </div>
     </div>
 </div>    
-                                        
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTableY.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#tablaY1').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+               {
+                    extend: 'copy',
+                    text: 'Copiar'
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: 'Exportar a excel',
+                    title: 'Muestra estudiantes'
+                }
+            ],
+            language: {
+                buttons: {
+                    copyTitle: 'Copiar'
+                }
+            }
+        });
+        $('#tablaY2').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: 'Copiar'
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: 'Exportar a excel',
+                    title: 'Muestra docentes'
+                }
+            ],
+            language: {
+                buttons: {
+                    copyTitle: 'Copiar'
+                }
+            }
+        });
+        $('#tablaY3').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: 'Copiar'
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: 'Exportar a excel',
+                    title: 'Muestra administrativos'
+                }
+            ],
+            language: {
+                buttons: {
+                    copyTitle: 'Copiar'
+                }
+            }
+        });
+        $('#tablaY4').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: 'Copiar'
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: 'Exportar a excel',
+                    title: 'Muestra egresados'
+                }
+            ],
+            language: {
+                buttons: {
+                    copyTitle: 'Copiar'
+                }
+            }
+        });
+        $('#tablaY5').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: 'Copiar'
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: 'Exportar a excel',
+                    title: 'Muestra directivos'
+                }
+            ],
+            language: {
+                buttons: {
+                    copyTitle: 'Copiar'
+                }
+            }
+        });
+    });
+</script>

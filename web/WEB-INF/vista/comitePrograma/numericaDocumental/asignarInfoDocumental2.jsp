@@ -135,4 +135,26 @@
 
     });
 </script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTableN.js"></script>
+<script type="text/javascript">
+                        $(document).ready(function() {
+                            $('#tablaX').DataTable({
+                                dom: 'Bfrtip',
+                                buttons: [
+                                    {
+                                        extend: 'copy',
+                                        text: 'Copiar'
+                                    },
+                                    {
+                                        extend: 'excelHtml5',
+                                        text: 'Exportar a excel',
+                                        title: 'Informacion documental'
+                                    }
+                                ],
+                                language: {
+                                    buttons: {
+                                        copyTitle: 'Copiar'
+                                    }
+                                }
+                            });
+                        });
+                    </script>

@@ -36,7 +36,29 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                    <script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $('#tablaX').DataTable({
+                                dom: 'Bfrtip',
+                                buttons: [
+                                    {
+                                        extend: 'copy',
+                                        text: 'Copiar'
+                                    },
+                                    {
+                                        extend: 'excelHtml5',
+                                        text: 'Exportar a excel',
+                                        title: 'Programas'
+                                    }
+                                ],
+                                language: {
+                                    buttons: {
+                                        copyTitle: 'Copiar'
+                                    }
+                                }
+                            });
+                        });
+                    </script>
                 </c:when>
                 <c:otherwise>
                     No existen Programas registrados en el sistema.

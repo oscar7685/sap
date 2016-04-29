@@ -31,7 +31,29 @@
                     <c:if test="${EstadoProceso == 2}">
                         <a href="#editarEvaluacionCara" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Evaluación</a>
                     </c:if>
-                    <script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $('#tablaX').DataTable({
+                                dom: 'Bfrtip',
+                                buttons: [
+                                    {
+                                        extend: 'copy',
+                                        text: 'Copiar'
+                                    },
+                                    {
+                                        extend: 'excelHtml5',
+                                        text: 'Exportar a excel',
+                                        title: 'Evaluacion caracteristicas'
+                                    }
+                                ],
+                                language: {
+                                    buttons: {
+                                        copyTitle: 'Copiar'
+                                    }
+                                }
+                            });
+                        });
+                    </script>
                 </c:when>
                 <c:otherwise>
                     No se han evaluado las características en el sistema para este proceso.

@@ -41,11 +41,11 @@
                                 <th class="span1">Medio</th>
                                 <th class="span1">Lugar</th>
                                 <th class="span1">Estado <i style="font-size: 25px; vertical-align: -2px;" class="icon-info-sign" data-content="<p style='font-weight:normal'>5: La información requerida en el indicador está completa y actualizada.<br/>
-                                      4: La información requerida en el indicador está completa y en proceso de actualización.<br/>
-                                      3: La información requerida en el indicador está en proceso de elaboración.<br/>
-                                      2: Se detectó la inexistencia de la información requerida en el indicador. Ya se previó su elaboración.<br/>
-                                      1: La información requerida en el indicador no existe y no se ha previsto su elaboración.<br/>
-                                      0: No aplica</p>" data-original-title="Escala de gradación"></i></th>
+                                                            4: La información requerida en el indicador está completa y en proceso de actualización.<br/>
+                                                            3: La información requerida en el indicador está en proceso de elaboración.<br/>
+                                                            2: Se detectó la inexistencia de la información requerida en el indicador. Ya se previó su elaboración.<br/>
+                                                            1: La información requerida en el indicador no existe y no se ha previsto su elaboración.<br/>
+                                                            0: No aplica</p>" data-original-title="Escala de gradación"></i></th>
                                 <th class="span2">Acci&oacute;n a implementar u observaci&oacute;n</th>
                             </tr>
                         </thead>
@@ -130,9 +130,31 @@
             }); //fin $.ajax
 
         });
-        $("i").popover({trigger: "hover", placement: 'bottom',html: true});
-        
+        $("i").popover({trigger: "hover", placement: 'bottom', html: true});
+
 
     });
 </script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTableN.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#tablaX').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: 'Copiar'
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: 'Exportar a excel',
+                    title: 'Informacion numerica'
+                }
+            ],
+            language: {
+                buttons: {
+                    copyTitle: 'Copiar'
+                }
+            }
+        });
+    });
+</script>

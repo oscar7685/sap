@@ -9,7 +9,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <link href="css/layout-sitenav.css" type="text/css" rel="stylesheet" media="screen">
-        <title></title>
+        <title>Sap</title>
         <link href="http://fonts.googleapis.com/css?family=Lobster|Oswald|Kaushan+Script" rel="stylesheet" type="text/css">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
@@ -19,7 +19,8 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/otro.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/dataTables.tableTools.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css">
         <style type="text/css">
             .table-condensed th,
             .table-condensed td {
@@ -155,8 +156,14 @@
         <script src="<%=request.getContextPath()%>/js/highcharts.js"></script>
         <script src="<%=request.getContextPath()%>/js/highcharts-more.js"></script>
         <script src="<%=request.getContextPath()%>/js/exporting.js"></script>
-        <script src="<%=request.getContextPath()%>/js/jquery.dataTables.min.js"></script>
-        <script src="<%=request.getContextPath()%>/js/dataTables.tableTools.js"></script>
+        <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+        <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.flash.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+        <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js "></script>
         <script src="<%=request.getContextPath()%>/js/jquery.PrintArea.js"></script>
         <script src="<%=request.getContextPath()%>/js/main2.js"></script>
 
