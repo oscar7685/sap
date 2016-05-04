@@ -88,7 +88,7 @@ public class PreparedEditarMuestra implements Action {
             sesion.setAttribute("selectorFuente", "Administrativo");
             List<Administrativo> poblacion = administrativoFacade.findByPersonasQueNOEstanEnlaMuestra("Muestraadministrativo", proceso);
             sesion.setAttribute("listPoblacion", poblacion);
-            sesion.setAttribute("listMuestraSeleccionada", muestraegresadoFacade.findByMuestraQueNOHaContestado(proceso));
+            sesion.setAttribute("listMuestraSeleccionada", muestraadministrativoFacade.findByMuestraQueNOHaContestado(proceso));
         } else if (fuente.equals("empleadores")) {
             sesion.setAttribute("selectorFuente", "Empleador");
             List<Empleador> poblacion = empleadorFacade.findByPersonasQueNOEstanEnlaMuestra("Muestraempleador", proceso);
