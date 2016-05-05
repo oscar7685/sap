@@ -153,7 +153,7 @@
                                         </c:when>
                                     </c:choose>
                                 <li class="nav-header">Estado del proceso</li>
-                                <li><a  id="informeEncuesta"  href="#estadoProceso"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
+                                <li><a  id="informeEncuesta"  href="#informeDMA"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
                             </ul>
                         </div>
                     </c:when>
@@ -170,7 +170,7 @@
                                 <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
                                 <li><a href="#calificarCaracteristicas"><i class="icon-check"></i> Evaluar Caracteristica</a></li>
                                 <li><a href="#subirAdjunto"><i class="icon-file-alt"></i> Anexos</a></li>
-                                <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
+                                <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informeDMA"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
                                 <li class="divider"></li>
                                 <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>
                             </ul>

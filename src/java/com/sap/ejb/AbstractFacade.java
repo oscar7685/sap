@@ -307,7 +307,7 @@ public abstract class AbstractFacade<T> {
         q.setParameter("name", m);
         return ((Long) q.getSingleResult()).intValue();
     }
-
+    
     public int countByProperty2(String property, Object m1, String property2, Object m2) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));

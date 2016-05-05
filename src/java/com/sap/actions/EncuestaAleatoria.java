@@ -51,15 +51,15 @@ public class EncuestaAleatoria implements Action {
                     break;
                 }
             }
-            sesion.setAttribute("encuesta", en);
-            List<Encabezado> encabezados = encabezadoFacade.findByList3("procesoId", pro, "encuestaId", en, "estado", "terminado");
+            sesion.setAttribute("preguntas", en.getPreguntaList());
+            List<Encabezado> encabezados = encabezadoFacade.findByList3("procesoId", pro, "fuenteId.id", idf, "estado", "terminado");
             Random generador2 = new Random();
             if (encabezados.size() > 0) {
                 indiceEncabezado = generador2.nextInt(encabezados.size());
                 List<Resultadoevaluacion> resultados = resultadoevaluacionFacade.findByList("encabezadoId", encabezados.get(indiceEncabezado));
                 sesion.setAttribute("resultados", resultados);
             }
-        } else {
+        } /*else {
             List<Encuesta> encuestas = m.getEncuestaList();
 
             boolean busca = true;
@@ -79,7 +79,7 @@ public class EncuestaAleatoria implements Action {
                 }
                 limite++;
             }
-        }
+        }*/
         return "/WEB-INF/vista/comitePrograma/proceso/informe/encuestaAleatoria.jsp";
     }
 

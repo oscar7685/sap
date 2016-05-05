@@ -128,7 +128,7 @@ $(function() {
                 '<li><a href="#calificarCaracteristicas"><i class="icon-check"></i> Evaluar Caracteristica</a></li>' +
                 '<li><a href="#subirAdjunto"><i class="icon-file-alt"></i> Anexos</a></li>' +
                 '<li class = "nav-header"> Estado del proceso </li>' +
-                '<li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
+                '<li><a id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado Proceso</a></li>' +
                 '<li class = "nav-header"> Plan de Aseguramiento </li>' +
                 '<li><a href="#planMejoramiento"><i class="icon-exchange"></i> Plan de aseguramiento</a></li>' +
                 '</ul>' +
@@ -354,7 +354,7 @@ $(function() {
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
                                         || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta" || hash === "#crear2Meta" || hash === "#listarFortalezas"
-                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd" || hash === "#graficasDMA" || hash === "#calificarCaracteristicas" || hash === "#listEvaluacionCara" || hash === "#editarEvaluacionCara" || hash === "#editarEvaluacionCara2" || hash === "#subirAdjunto") {
+                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd" || hash === "#graficasDMA" || hash === "#calificarCaracteristicas" || hash === "#listEvaluacionCara" || hash === "#editarEvaluacionCara" || hash === "#editarEvaluacionCara2" || hash === "#subirAdjunto" || hash ==="#informeDMA") {
                                     var url3 = "/sapnaval/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
@@ -374,7 +374,7 @@ $(function() {
                                             if (hash === "#listPonderacionCara2") {
                                                 hash = "#listPonderacionCara";
                                             }
-                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental" || hash === "#estadoProceso") {
+                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental" || hash ==="#informeDMA") {
                                                 setTimeout(function() {
                                                     $("#west-closer").trigger("click");
                                                 }, 500);
