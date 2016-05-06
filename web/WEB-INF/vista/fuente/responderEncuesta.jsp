@@ -73,22 +73,22 @@
                     <div class="row" id="pregunta${pregunta.id}">
                         <div class="span12">
                             <c:choose>
-                                <c:when test="${pregunta.id == '11'}">
+                                <c:when test="${pregunta.id == '11' && programa.id == '1'}">
                                     <p style="font-weight: bold;">${status.index+1} Cómo califica la calidad general de los profesores de la Institución en cuanto a:</p>
                                 </c:when>
-                                <c:when test="${pregunta.id == '19'}">
+                                <c:when test="${pregunta.id == '19' && programa.id == '1'}">
                                     <p style="font-weight: bold;">${status.index+1} Cómo califica en general la calidad de los programas académicos ofrecidos por ENAP en cuanto a:</p>
                                 </c:when>    
-                                <c:when test="${pregunta.id == '31'}">
+                                <c:when test="${pregunta.id == '31' && programa.id == '1'}">
                                     <p style="font-weight: bold;">${status.index+1} Como califica el impacto de las acciones y proyectos de extensión o proyección social realizado por los profesores o estudiantes de la Institución:</p>
                                 </c:when>
-                                <c:when test="${pregunta.id == '32'}">
+                                <c:when test="${pregunta.id == '32' && programa.id == '1'}">
                                     <p style="font-weight: bold;">${status.index+1} En qué grado el material bibliográfico con que cuenta la Institución es:</p>
                                 </c:when>
-                                <c:when test="${pregunta.id == '35'}">
+                                <c:when test="${pregunta.id == '35' && programa.id == '1'}">
                                     <p style="font-weight: bold;">${status.index+1} Evalúe la calidad de los siguientes recursos de apoyo a la docencia e investigación con que cuenta la Institución para sus desarrollos académicos:</p>
                                 </c:when>    
-                                <c:when test="${pregunta.id == '37'}">
+                                <c:when test="${pregunta.id == '37' && programa.id == '1'}">
                                     <p style="font-weight: bold;">${status.index+1} Evalúe en qué grado se dan las siguientes condiciones dentro de la Institución en cuanto a la investigación:</p>
                                 </c:when>
 

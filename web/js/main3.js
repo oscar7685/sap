@@ -49,11 +49,9 @@ $(function() {
             }); //fin post
 
         } else {
-            if (hash.indexOf("#responderEncuesta") !== -1) {
-                var cual = hash.split("&");
-                hash = cual[0];
+            if (hash.indexOf("#responderEncuestaF") !== -1) {
                 var url3 = "/sapnaval/controladorF?action=";
-                url3 = url3.concat(cual[0].substring(1), "F&id=", cual[1]);
+                url3 = url3.concat(hash.substring(1));
                 $("div.ui-layout-center").empty();
                 $.ajax({
                     type: "POST",

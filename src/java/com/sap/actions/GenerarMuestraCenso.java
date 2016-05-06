@@ -106,6 +106,7 @@ public class GenerarMuestraCenso implements Action {
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
                 muestrapersonaFacade.create(mp);
+                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
 
                 Muestraestudiante me = new Muestraestudiante();
                 me.setCodigo(est.getId());
@@ -113,7 +114,7 @@ public class GenerarMuestraCenso implements Action {
                 me.setPeriodo(est.getPeriodo());
                 me.setAnio(est.getAnio());
                 me.setCurso(est.getCurso());
-                me.setMuestrapersonaId(mp);
+                me.setMuestrapersonaId(aux);
                 me.setProgramaId(programa);
                 me.setTipo("" + est.getFuenteId().getId());
                 me.setTp("" + est.getTipo());
@@ -135,13 +136,14 @@ public class GenerarMuestraCenso implements Action {
             mp.setMail(per.getMail());
             mp.setMuestraId(m);
             muestrapersonaFacade.create(mp);
+            Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
 
             Muestraestudiante me = new Muestraestudiante();
             me.setCodigo(est.getId());
             me.setSemestre(est.getSemestre());
             me.setPeriodo(est.getPeriodo());
             me.setAnio(est.getAnio());
-            me.setMuestrapersonaId(mp);
+            me.setMuestrapersonaId(aux);
             me.setProgramaId(programa);
             me.setCurso(est.getCurso());
             me.setTipo("" + est.getFuenteId().getId());
@@ -162,13 +164,14 @@ public class GenerarMuestraCenso implements Action {
             mp.setMail(per.getMail());
             mp.setMuestraId(m);
             muestrapersonaFacade.create(mp);
+            Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
 
             Muestraestudiante me = new Muestraestudiante();
             me.setCodigo(est.getId());
             me.setSemestre(est.getSemestre());
             me.setPeriodo(est.getPeriodo());
             me.setAnio(est.getAnio());
-            me.setMuestrapersonaId(mp);
+            me.setMuestrapersonaId(aux);
             me.setCurso(est.getCurso());
             me.setProgramaId(programa);
             me.setTipo("" + est.getFuenteId().getId());
@@ -197,13 +200,14 @@ public class GenerarMuestraCenso implements Action {
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
                 muestrapersonaFacade.create(mp);
-
+                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
+                
                 Muestraestudiante me = new Muestraestudiante();
                 me.setCodigo(est.getId());
                 me.setSemestre(est.getSemestre());
                 me.setPeriodo(est.getPeriodo());
                 me.setAnio(est.getAnio());
-                me.setMuestrapersonaId(mp);
+                me.setMuestrapersonaId(aux);
                 me.setProgramaId(programa);
                 me.setCurso(est.getCurso());
                 me.setTp("" + est.getTipo());
@@ -240,10 +244,11 @@ public class GenerarMuestraCenso implements Action {
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
                 muestrapersonaFacade.create(mp);
+                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
 
                 Muestradocente md = new Muestradocente();
                 md.setTipo("" + doc.getFuenteId().getId());
-                md.setMuestrapersonaId(mp);
+                md.setMuestrapersonaId(aux);
                 md.setTp("" + doc.getTipo());
                 muestradocenteFacade.create(md);
             }
@@ -267,11 +272,12 @@ public class GenerarMuestraCenso implements Action {
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
                 muestrapersonaFacade.create(mp);
+                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
 
                 Muestradocente md = new Muestradocente();
                 md.setTipo("" + doc.getFuenteId().getId());
                 md.setTp("" + doc.getTipo());
-                md.setMuestrapersonaId(mp);
+                md.setMuestrapersonaId(aux);
                 muestradocenteFacade.create(md);
             }
         }
@@ -295,10 +301,11 @@ public class GenerarMuestraCenso implements Action {
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
                 muestrapersonaFacade.create(mp);
+                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
 
                 Muestradocente md = new Muestradocente();
                 md.setTipo("" + doc.getFuenteId().getId());
-                md.setMuestrapersonaId(mp);
+                md.setMuestrapersonaId(aux);
                 md.setTp("" + doc.getTipo());
                 muestradocenteFacade.create(md);
             }
@@ -322,10 +329,11 @@ public class GenerarMuestraCenso implements Action {
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
                 muestrapersonaFacade.create(mp);
+                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
 
                 Muestradocente md = new Muestradocente();
                 md.setTipo("" + doc.getFuenteId().getId());
-                md.setMuestrapersonaId(mp);
+                md.setMuestrapersonaId(aux);
                 md.setTp("" + doc.getTipo());
                 muestradocenteFacade.create(md);
             }
@@ -351,9 +359,10 @@ public class GenerarMuestraCenso implements Action {
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
                 muestrapersonaFacade.create(mp);
-
+                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
+                
                 Muestraegresado meg = new Muestraegresado();
-                meg.setMuestrapersonaId(mp);
+                meg.setMuestrapersonaId(aux);
                 meg.setTipo("" + eg.getFuenteId().getId());
                 meg.setTp("" + eg.getTipo());
                 muestraegresadoFacade.create(meg);
@@ -378,12 +387,12 @@ public class GenerarMuestraCenso implements Action {
                 mp.setPassword(per.getPassword());
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
-
                 muestrapersonaFacade.create(mp);
-
-                Muestradirector mdp = new Muestradirector();
-                mdp.setMuestrapersonaId(mp);
                 
+                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
+                Muestradirector mdp = new Muestradirector();
+                mdp.setMuestrapersonaId(aux);
+
                 muestradirectorFacade.create(mdp);
             }
         }
@@ -412,11 +421,13 @@ public class GenerarMuestraCenso implements Action {
                 mp.setMail(per.getMail());
                 mp.setMuestraId(m);
                 muestrapersonaFacade.create(mp);
+                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
+
 
                 Muestraadministrativo mad = new Muestraadministrativo();
                 mad.setCargo(ad.getCargo());
-                mad.setMuestrapersonaId(mp);
                 mad.setTp(ad.getTipo());
+                mad.setMuestrapersonaId(aux);
                 muestraadministrativoFacade.create(mad);
             }
 

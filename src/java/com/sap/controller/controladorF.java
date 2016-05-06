@@ -6,7 +6,9 @@ package com.sap.controller;
 
 import com.sap.ejb.EncabezadoFacade;
 import com.sap.ejb.EncuestaFacade;
+import com.sap.ejb.FuenteFacade;
 import com.sap.ejb.GlosarioFacade;
+import com.sap.ejb.MuestrapersonaFacade;
 import com.sap.ejb.ParticipanteFacade;
 import com.sap.ejb.ParticipanteHasRolFacade;
 import com.sap.ejb.ProgramaFacade;
@@ -47,15 +49,12 @@ import org.apache.log4j.Logger;
  * @author Ususario
  */
 public class controladorF extends HttpServlet {
-
+    @EJB
+    private FuenteFacade fuenteFacade;
+    @EJB
+    private MuestrapersonaFacade muestrapersonaFacade;
     @EJB
     private RespuestasFacade respuestasFacade;
-    @EJB
-    private RolFacade rolFacade;
-    @EJB
-    private ParticipanteHasRolFacade participanteHasRolFacade;
-    @EJB
-    private ParticipanteFacade participanteFacade;
     @EJB
     private EncuestaFacade encuestaFacade;
     @EJB
@@ -94,11 +93,17 @@ public class controladorF extends HttpServlet {
             } else {
                 if (action.equals("responderEncuestaF")) {
                     String idEncuesta = request.getParameter("id");
+                    String persona = request.getParameter("persona");
+                    String fuente = request.getParameter("fuente");
+                    
                     Encuesta e = encuestaFacade.find(Integer.parseInt(idEncuesta));
-
+                    
                     List<Pregunta> preguntas = e.getPreguntaList();
                     session.setAttribute("encuesta", e);
                     session.setAttribute("preguntas", preguntas);
+                    session.setAttribute("persona", muestrapersonaFacade.find(Integer.parseInt(persona)));
+                    session.setAttribute("fuente", fuenteFacade.find(Integer.parseInt(fuente)));
+                    
                     String url = "/WEB-INF/vista/fuente/responderEncuesta.jsp";
                     RequestDispatcher rd = request.getRequestDispatcher(url);
                     rd.forward(request, response);
@@ -107,7 +112,6 @@ public class controladorF extends HttpServlet {
 
                         List<Pregunta> preguntas = (List<Pregunta>) session.getAttribute("preguntas");
                         Encuesta e = (Encuesta) session.getAttribute("encuesta");
-
                         Muestrapersona persona = (Muestrapersona) session.getAttribute("persona");
                         Fuente fuente = (Fuente) session.getAttribute("fuente");
                         String estado = "terminado";

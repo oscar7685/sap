@@ -38,7 +38,7 @@ public class Muestraadministrativo implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
+    @Size(max = 255)
     @Column(name = "cargo")
     private String cargo;
     @Size(max = 45)
