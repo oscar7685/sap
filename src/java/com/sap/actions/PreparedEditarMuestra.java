@@ -69,32 +69,32 @@ public class PreparedEditarMuestra implements Action {
 
 
 
-        if (fuente.equals("estudiantes")) {
+        if (fuente.equals("Estudiante")) {
             sesion.setAttribute("selectorFuente", "Estudiante");
             List<Estudiante> poblacion = estudianteFacade.findByPersonasQueNOEstanEnlaMuestra("Muestraestudiante", proceso);
             sesion.setAttribute("listPoblacion", poblacion);
             sesion.setAttribute("listMuestraSeleccionada", muestraestudianteFacade.findByMuestraQueNOHaContestado(proceso));
-        } else if (fuente.equals("docentes")) {
+        } else if (fuente.equals("Docente")) {
             sesion.setAttribute("selectorFuente", "Docente");
             List<Docente> poblacion = docenteFacade.findByPersonasQueNOEstanEnlaMuestra("Muestradocente", proceso);
             sesion.setAttribute("listPoblacion", poblacion);
             sesion.setAttribute("listMuestraSeleccionada", muestradocenteFacade.findByMuestraQueNOHaContestado(proceso));
-        } else if (fuente.equals("egresados")) {
+        } else if (fuente.equals("Egresado")) {
             sesion.setAttribute("selectorFuente", "Egresado");
             List<Egresado> poblacion = egresadoFacade.findByPersonasQueNOEstanEnlaMuestra("Muestraegresado", proceso);
             sesion.setAttribute("listPoblacion", poblacion);
             sesion.setAttribute("listMuestraSeleccionada", muestraegresadoFacade.findByMuestraQueNOHaContestado(proceso));
-        } else if (fuente.equals("administrativos")) {
+        } else if (fuente.equals("Administrativo")) {
             sesion.setAttribute("selectorFuente", "Administrativo");
             List<Administrativo> poblacion = administrativoFacade.findByPersonasQueNOEstanEnlaMuestra("Muestraadministrativo", proceso);
             sesion.setAttribute("listPoblacion", poblacion);
             sesion.setAttribute("listMuestraSeleccionada", muestraadministrativoFacade.findByMuestraQueNOHaContestado(proceso));
-        } else if (fuente.equals("empleadores")) {
+        } else if (fuente.equals("Empleador")) {
             sesion.setAttribute("selectorFuente", "Empleador");
             List<Empleador> poblacion = empleadorFacade.findByPersonasQueNOEstanEnlaMuestra("Muestraempleador", proceso);
             sesion.setAttribute("listPoblacion", poblacion);
             sesion.setAttribute("listMuestraSeleccionada", muestraempleadorFacade.findByMuestraQueNOHaContestado(proceso));
-        } else if (fuente.equals("directivos")) {
+        } else if (fuente.equals("Directivo")) {
             sesion.setAttribute("selectorFuente", "Directivo");
             List<Directorprograma> poblacion = directorprogramaFacade.findByPersonasQueNOEstanEnlaMuestra("Muestradirector", proceso);
             sesion.setAttribute("listPoblacion", poblacion);

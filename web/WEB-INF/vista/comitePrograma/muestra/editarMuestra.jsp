@@ -26,12 +26,12 @@
                 </li>
             </c:forEach>
             <c:forEach items="${listMuestraSeleccionada}" var="item2" varStatus="iter2">
-                    <li id="itemblockRojo">
-                        <c:set var="auxx" value="0"></c:set>
-                        <strong>${item2.muestrapersonaId.nombre} ${item2.muestrapersonaId.apellido}</strong><br/> 
-                        <span class="fcbkitem_text">${item2.muestrapersonaId.cedula}</span>
-                        <input name="${item2.muestrapersonaId.cedula}" type="hidden" checked="checked" value="0"/>
-                    </li>
+                <li id="itemblockRojo">
+                    <c:set var="auxx" value="0"></c:set>
+                    <strong>${item2.muestrapersonaId.nombre} ${item2.muestrapersonaId.apellido}</strong><br/> 
+                    <span class="fcbkitem_text">${item2.muestrapersonaId.cedula}</span>
+                    <input name="${item2.muestrapersonaId.cedula}" type="hidden" checked="checked" value="0"/>
+                </li>
             </c:forEach>       
 
         </ul>
@@ -53,10 +53,18 @@
                 url: "/sapnaval/controladorCP?action=editarMuestra",
                 data: $("#formEditarMuestra").serialize(),
                 success: function() {
-                    location = "#detalleProceso";
-                    setTimeout(function() {
-                        location = "#listMuestra";
-                    }, 200);
+                    $("#listM").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: "/sapnaval/controladorCP?action=selectorListSemestre",
+                        data: $("#formListarMuestra").serialize(),
+                        success: function(datos) {
+                            $("#listM").append(datos);
+                            $("#contenido").show(200, function() {
+                                $("#dancing-dots-text").remove();
+                            });
+                        } //fin success
+                    }); //fin $.ajax   
 
                 } //fin success
             }); //fin $.ajax    
@@ -64,8 +72,18 @@
         });
 
         $("#botonCancelar").click(function() {
-            $("#editM").hide();
-            $("#muestra").show();
+            $("#listM").empty();
+            $.ajax({
+                type: 'POST',
+                url: "/sapnaval/controladorCP?action=selectorListSemestre&botonCancelar=OK",
+                data: $("#formListarMuestra").serialize(),
+                success: function(datos) {
+                    $("#listM").append(datos);
+                    $("#contenido").show(200, function() {
+                        $("#dancing-dots-text").remove();
+                    });
+                } //fin success
+            }); //fin $.ajax    
         });
     });
 </script>

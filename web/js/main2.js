@@ -124,7 +124,7 @@ $(function() {
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
                 /*'<li><a href="#listPonderacionInd"><i class="icon-signal"></i> Indicadores</a></li>' +*/
-                '<li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
+                '<li><a href="#selectorListMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 '<li><a href="#calificarCaracteristicas"><i class="icon-check"></i> Evaluar Caracteristica</a></li>' +
                 '<li><a href="#subirAdjunto"><i class="icon-file-alt"></i> Anexos</a></li>' +
                 '<li class = "nav-header"> Estado del proceso </li>' +

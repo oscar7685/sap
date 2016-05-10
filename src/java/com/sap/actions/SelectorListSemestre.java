@@ -4,6 +4,11 @@
  */
 package com.sap.actions;
 
+import com.sap.ejb.AdministrativoFacade;
+import com.sap.ejb.DirectorprogramaFacade;
+import com.sap.ejb.DocenteFacade;
+import com.sap.ejb.EgresadoFacade;
+import com.sap.ejb.EmpleadorFacade;
 import com.sap.ejb.EncabezadoFacade;
 import com.sap.ejb.EstudianteFacade;
 import com.sap.ejb.FuenteFacade;
@@ -34,6 +39,11 @@ import javax.servlet.http.HttpSession;
  */
 public class SelectorListSemestre implements Action {
 
+    EmpleadorFacade empleadorFacade = lookupEmpleadorFacadeBean();
+    DirectorprogramaFacade directorprogramaFacade = lookupDirectorprogramaFacadeBean();
+    EgresadoFacade egresadoFacade = lookupEgresadoFacadeBean();
+    AdministrativoFacade administrativoFacade = lookupAdministrativoFacadeBean();
+    DocenteFacade docenteFacade = lookupDocenteFacadeBean();
     MuestradirectorFacade muestradirectorFacade = lookupMuestradirectorFacadeBean();
     MuestraadministrativoFacade muestraadministrativoFacade = lookupMuestraadministrativoFacadeBean();
     MuestraempleadorFacade muestraempleadorFacade = lookupMuestraempleadorFacadeBean();
@@ -49,58 +59,51 @@ public class SelectorListSemestre implements Action {
         HttpSession sesion = request.getSession();
         Programa programa = (Programa) sesion.getAttribute("Programa");
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        String semestre = request.getParameter("semestre"); //parametro que viene x post
-        sesion.setAttribute("Semestre", semestre);
         Muestra m = (Muestra) sesion.getAttribute("Muestra");
         String fuente;
-
-        if (request.getParameter("fuente") == null) {
-            fuente = (String) sesion.getAttribute("selectorFuente");
+        if (request.getParameter("botonCancelar") != null && request.getParameter("botonCancelar").equals("OK")) {
+            return "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
         } else {
-            fuente = request.getParameter("fuente");
-            sesion.setAttribute("selectorFuente", fuente);
-        }
-        if ("Estudiante".equals(fuente)) {
-            if ( semestre != null && !semestre.equals("todos") ) {
-                sesion.setAttribute("listMuestraSeleccionada", muestraestudianteFacade.findByList2("muestrapersonaId.muestraId", m, "semestre", semestre));
-                sesion.setAttribute("Fuente", fuenteFacade.find(1));
-                List e = estudianteFacade.findByList2("programaId", programa, "semestre", semestre);
-                sesion.setAttribute("listPoblacion", e);
-                List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                sesion.setAttribute("listEncabezado", le);
-            }else{
-                if(semestre != null && semestre.equals("todos")){
-                sesion.setAttribute("listMuestraSeleccionada", muestraestudianteFacade.findByList("muestrapersonaId.muestraId", m));
-                sesion.setAttribute("Fuente", fuenteFacade.find(1));
-                List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                sesion.setAttribute("listEncabezado", le);
-                }
-            }
-
-        } else {
-            if ("Docente".equals(fuente)) {
-                sesion.setAttribute("listMuestraSeleccionada", muestradocenteFacade.findByList("muestrapersonaId.muestraId", m));
+            if (request.getParameter("fuente") == null) {
+                fuente = (String) sesion.getAttribute("selectorFuente");
             } else {
-                if ("Egresado".equals(fuente)) {
-                    sesion.setAttribute("listMuestraSeleccionada", muestraegresadoFacade.findByList("muestrapersonaId.muestraId", m));
-                } else {
-                    if ("Empleador".equals(fuente)) {
-                        sesion.setAttribute("listMuestraSeleccionada", muestraempleadorFacade.findByList("muestrapersonaId.muestraId", m));
-                    } else {
-                        if ("Administrativo".equals(fuente)) {
-                            sesion.setAttribute("listMuestraSeleccionada", muestraadministrativoFacade.findByList("muestrapersonaId.muestraId", m));
-                        } else {
-                            if ("Directivo".equals(fuente)) {
-                                sesion.setAttribute("listMuestraSeleccionada", muestradirectorFacade.findByList("muestrapersonaId.muestraId", m));
-                            }
-                        }
-                    }
-                }
+                fuente = request.getParameter("fuente");
+                sesion.setAttribute("selectorFuente", fuente);
+            }
+            if (fuente.equals("Estudiante")) {
+                //ESTUDIANTES
+                sesion.setAttribute("listMuestraCon", muestraestudianteFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraSin", muestraestudianteFacade.findByMuestraSinEncabezado(proceso));
+                sesion.setAttribute("poblacion", estudianteFacade.findByList("procesoId", proceso));
+            } else if (fuente.equals("Docente")) {
+                //DOCENTES
+                sesion.setAttribute("listMuestraCon", muestradocenteFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraSin", muestradocenteFacade.findByMuestraSinEncabezado(proceso));
+                sesion.setAttribute("poblacion", docenteFacade.findByList("procesoId", proceso));
+            } else if (fuente.equals("Egresado")) {
+                //EGRESADOS
+                sesion.setAttribute("listMuestraCon", muestraegresadoFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraSin", muestraegresadoFacade.findByMuestraSinEncabezado(proceso));
+                sesion.setAttribute("poblacion", egresadoFacade.findByList("procesoId", proceso));
+            } else if (fuente.equals("Administrativo")) {
+                //ADMINISTRATIVOS
+                sesion.setAttribute("listMuestraCon", muestraadministrativoFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraSin", muestraadministrativoFacade.findByMuestraSinEncabezado(proceso));
+                sesion.setAttribute("poblacion", administrativoFacade.findByList("procesoId", proceso));
+            } else if (fuente.equals("Directivo")) {
+                //DIRECTIVOS
+                sesion.setAttribute("listMuestraCon", muestradirectorFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraSin", muestradirectorFacade.findByMuestraSinEncabezado(proceso));
+                sesion.setAttribute("poblacion", directorprogramaFacade.findByList("procesoId", proceso));
+            } else if (fuente.equals("Empleador")) {
+                //EMPLEADORES
+                sesion.setAttribute("listMuestraCon", muestraempleadorFacade.findByMuestraConEncabezado(proceso));
+                sesion.setAttribute("listMuestraSin", muestraempleadorFacade.findByMuestraSinEncabezado(proceso));
+                sesion.setAttribute("poblacion", empleadorFacade.findByList("procesoId", proceso));
             }
 
+            return "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
         }
-
-        return "/WEB-INF/vista/comitePrograma/muestra/selectorListMuestra.jsp";
     }
 
     private MuestraestudianteFacade lookupMuestraestudianteFacadeBean() {
@@ -187,6 +190,56 @@ public class SelectorListSemestre implements Action {
         try {
             Context c = new InitialContext();
             return (MuestradirectorFacade) c.lookup("java:global/sapnaval/MuestradirectorFacade!com.sap.ejb.MuestradirectorFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private DocenteFacade lookupDocenteFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (DocenteFacade) c.lookup("java:global/sapnaval/DocenteFacade!com.sap.ejb.DocenteFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private AdministrativoFacade lookupAdministrativoFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (AdministrativoFacade) c.lookup("java:global/sapnaval/AdministrativoFacade!com.sap.ejb.AdministrativoFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private EgresadoFacade lookupEgresadoFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (EgresadoFacade) c.lookup("java:global/sapnaval/EgresadoFacade!com.sap.ejb.EgresadoFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private DirectorprogramaFacade lookupDirectorprogramaFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (DirectorprogramaFacade) c.lookup("java:global/sapnaval/DirectorprogramaFacade!com.sap.ejb.DirectorprogramaFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private EmpleadorFacade lookupEmpleadorFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (EmpleadorFacade) c.lookup("java:global/sapnaval/EmpleadorFacade!com.sap.ejb.EmpleadorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

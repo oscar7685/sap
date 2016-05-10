@@ -202,7 +202,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <h3>Asignación de  Muestra</h3>
             <c:choose>
                 <c:when test="${Muestra != null}">
 
@@ -266,483 +265,83 @@
                     </div>
                     <br><br>
                 </c:if>
-                <div class="accordion" id="accordion2">
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                                Estudiantes
-                            </a>
-                        </div>
-                        <div id="collapseOne" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <ul class="nav nav-tabs" id="myTab">
-                                    <li class="active"><a href="#poblacionest" data-toggle="tab">Población estudiantes</a></li>
-                                    <li><a href="#muestraes" data-toggle="tab">Muestra estudiantes</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="poblacionest">
-                                        <table id="tablaestudiante0" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytablaestudiante">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(poblacionEstudiante)!= 0}">
-                                                        <c:forEach items="${poblacionEstudiante}" var="pestudiante" varStatus="iter55">
-                                                            <tr>
-                                                                <td>${pestudiante.personaId.id}</td>
-                                                                <td>${pestudiante.personaId.nombre}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane" id="muestraes">
-                                        <table id="tablaY1" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                    <th>Tipo</th>
-                                                    <th>Curso</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytablaestudiante">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraEstudianteCon)!= 0}">
-                                                        <c:forEach items="${listMuestraEstudianteCon}" var="estudiante" varStatus="iter55">
-                                                            <tr class="terminadoC">
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${estudiante.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${estudiante.muestrapersonaId.nombre}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${estudiante.tp}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${estudiante.curso}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraEstudianteSin)!= 0}">
-                                                        <c:forEach items="${listMuestraEstudianteSin}" var="estudiante" varStatus="iter55">
-                                                            <tr class="pendienteC">
-                                                                <td style="background-color: #F2DEDE; color: #B94A48"> ${estudiante.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${estudiante.muestrapersonaId.nombre}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${estudiante.tp}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${estudiante.curso}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
 
-                                            </tbody>
-                                        </table>
-                                        <p class="total" style="font-weight: bold">Total: ${fn:length(listMuestraEstudianteCon) + fn:length(listMuestraEstudianteSin)}</p>
-                                        <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
-                                            <a id="bpreparedEditarMuestraEs" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
-                                        </c:if>
-                                    </div>
-                                </div>
 
-                            </div>
-                        </div>
+
+
+
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="active"><a href="#poblacionest" data-toggle="tab">Población estudiantes</a></li>
+                    <li><a href="#muestraes" data-toggle="tab">Muestra estudiantes</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="poblacionest">
+                        <table id="tablaestudiante0" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Identificación</th>
+                                    <th>Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodytablaestudiante">
+                                <c:choose>
+                                    <c:when test="${fn:length(poblacion)!= 0}">
+                                        <c:forEach items="${poblacion}" var="paux" varStatus="iter55">
+                                            <tr>
+                                                <td>${paux.personaId.id}</td>
+                                                <td>${paux.personaId.nombre}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:when>
+                                </c:choose>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                                Docentes
-                            </a>
-                        </div>
-                        <div id="collapseTwo" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <ul class="nav nav-tabs" id="myTabDoc">
-                                    <li class="active"><a href="#poblaciondoc" data-toggle="tab">Población docentes</a></li>
-                                    <li><a href="#muestradoc" data-toggle="tab">Muestra docentes</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="poblaciondoc">
-                                        <table id="tabladocente0" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytabladocente0">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(poblacionDocente)!= 0}">
-                                                        <c:forEach items="${poblacionDocente}" var="pdocente" varStatus="iter55">
-                                                            <tr>
-                                                                <td>${pdocente.personaId.id}</td>
-                                                                <td>${pdocente.personaId.nombre}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane" id="muestradoc">
-                                        <table id="tablaY2" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                    <th>Tipo</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytabladocente">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraDocenteCon)!= 0}">
-                                                        <c:forEach items="${listMuestraDocenteCon}" var="docente" varStatus="iter55">
-                                                            <tr class="terminadoC">
-                                                                <td style="background-color: #DFF0D8; color: #468847;">  ${docente.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;">  ${docente.muestrapersonaId.nombre}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;">  ${docente.tp}</td>
+                    <div class="tab-pane" id="muestraes">
+                        <table id="tablaY1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Identificación</th>
+                                    <th>Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>Curso</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodytablaestudiante">
+                                <c:choose>
+                                    <c:when test="${fn:length(listMuestraCon)!= 0}">
+                                        <c:forEach items="${listMuestraCon}" var="faux" varStatus="iter55">
+                                            <tr class="terminadoC">
+                                                <td style="background-color: #DFF0D8; color: #468847;"> ${faux.muestrapersonaId.cedula}</td>
+                                                <td style="background-color: #DFF0D8; color: #468847;"> ${faux.muestrapersonaId.nombre}</td>
+                                                <td style="background-color: #DFF0D8; color: #468847;"> ${faux.tp}</td>
+                                                <td style="background-color: #DFF0D8; color: #468847;"> ${faux.curso}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:when>
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${fn:length(listMuestraSin)!= 0}">
+                                        <c:forEach items="${listMuestraSin}" var="faux" varStatus="iter55">
+                                            <tr class="pendienteC">
+                                                <td style="background-color: #F2DEDE; color: #B94A48"> ${faux.muestrapersonaId.cedula}</td>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${faux.muestrapersonaId.nombre}</td>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${faux.tp}</td>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${faux.curso}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:when>
+                                </c:choose>
 
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraDocenteSin)!= 0}">
-                                                        <c:forEach items="${listMuestraDocenteSin}" var="docente" varStatus="iter55">
-                                                            <tr class="pendienteC">
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;">${docente.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;">${docente.muestrapersonaId.nombre}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;">${docente.tp}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                        <p class="total" style="font-weight: bold">Total: ${fn:length(listMuestraDocenteSin)+ fn:length(listMuestraDocenteCon)}</p>
-                                        <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
-                                            <a id="bpreparedEditarMuestraDo" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
-                                        </c:if>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse3">
-                                Administrativos
-                            </a>
-                        </div>
-                        <div id="collapse3" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <ul class="nav nav-tabs" id="myTabDoc">
-                                    <li class="active"><a href="#poblacionadm" data-toggle="tab">Población administrativos</a></li>
-                                    <li><a href="#muestraadm" data-toggle="tab">Muestra administrativos</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="poblacionadm">
-                                        <table id="tablaadministrativo0" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytablaadministrativo0">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(poblacionAdministrativo)!= 0}">
-                                                        <c:forEach items="${poblacionAdministrativo}" var="padministrativo" varStatus="iter55">
-                                                            <tr>
-                                                                <td>${padministrativo.personaId.id}</td>
-                                                                <td>${padministrativo.personaId.nombre}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane" id="muestraadm">
-                                        <table id="tablaY3"  class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                    <th>Cargo</th>
-                                                    <th>Tipo</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytablaadministrativo">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraAdministrativoCon)!= 0}">
-                                                        <c:forEach items="${listMuestraAdministrativoCon}" var="administrativo" varStatus="iter55">
-                                                            <tr class="terminadoC">
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${administrativo.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${administrativo.muestrapersonaId.nombre}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${administrativo.cargo}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${administrativo.tp}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraAdministrativoSin)!= 0}">
-                                                        <c:forEach items="${listMuestraAdministrativoSin}" var="administrativo" varStatus="iter55">
-                                                            <tr class="pendienteC">
-                                                                <td style="background-color: #F2DEDE; color: #B94A48"> ${administrativo.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${administrativo.muestrapersonaId.nombre}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${administrativo.cargo}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${administrativo.tp}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                        <p class="total" style="font-weight: bold">Total: ${fn:length(listMuestraAdministrativoSin) + fn:length(listMuestraAdministrativoCon)}</p>
-                                        <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
-                                            <a id="bpreparedEditarMuestraAd" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
-                                        </c:if>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse4">
-                                Egresados
-                            </a>
-                        </div>
-                        <div id="collapse4" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <ul class="nav nav-tabs" id="myTabEgr">
-                                    <li class="active"><a href="#poblacionegr" data-toggle="tab">Población egresados</a></li>
-                                    <li><a href="#muestraegr" data-toggle="tab">Muestra egresados</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="poblacionegr">
-                                        <table id="tablaegresado0" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytablaegresado0">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(poblacionEgresado)!= 0}">
-                                                        <c:forEach items="${poblacionEgresado}" var="pegresado" varStatus="iter55">
-                                                            <tr>
-                                                                <td>${pegresado.personaId.id}</td>
-                                                                <td>${pegresado.personaId.nombre}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane" id="muestraegr">
-                                        <table id="tablaY4"  class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                    <th>Tipo</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytablaegresado">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraEgresadoCon)!= 0}">
-                                                        <c:forEach items="${listMuestraEgresadoCon}" var="egresado" varStatus="iter55">
-                                                            <tr class="terminadoC">
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${egresado.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${egresado.muestrapersonaId.nombre}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${egresado.tp}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraEgresadoSin)!= 0}">
-                                                        <c:forEach items="${listMuestraEgresadoSin}" var="egresado" varStatus="iter55">
-                                                            <tr class="pendienteC">
-                                                                <td style="background-color: #F2DEDE; color: #B94A48"> ${egresado.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${egresado.muestrapersonaId.nombre}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${egresado.tp}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                        <p class="total" style="font-weight: bold">Total: ${fn:length(listMuestraEgresadoSin)+ fn:length(listMuestraEgresadoCon)}</p>
-                                        <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
-                                            <a id="bpreparedEditarMuestraEg" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
-                                        </c:if>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse5">
-                                Directivos
-                            </a>
-                        </div>
-                        <div id="collapse5" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <ul class="nav nav-tabs" id="myTabDir">
-                                    <li class="active"><a href="#poblaciondir" data-toggle="tab">Población directivos</a></li>
-                                    <li><a href="#muestradir" data-toggle="tab">Muestra directivos</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="poblaciondir">
-                                        <table id="tabladirectivo0" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytabladirectivo0">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(poblacionDirectivo)!= 0}">
-                                                        <c:forEach items="${poblacionDirectivo}" var="pdirectivo" varStatus="iter55">
-                                                            <tr>
-                                                                <td>${pdirectivo.personaId.id}</td>
-                                                                <td>${pdirectivo.personaId.nombre}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane" id="muestradir">
-                                        <table id="tablaY5" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytabladirectivo">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraDirectivoCon)!= 0}">
-                                                        <c:forEach items="${listMuestraDirectivoCon}" var="directivo" varStatus="iter55">
-                                                            <tr class="terminadoC">
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${directivo.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${directivo.muestrapersonaId.nombre}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraDirectivoSin)!= 0}">
-                                                        <c:forEach items="${listMuestraDirectivoSin}" var="directivo" varStatus="iter55">
-                                                            <tr class="pendienteC">
-                                                                <td style="background-color: #F2DEDE; color: #B94A48"> ${directivo.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${directivo.muestrapersonaId.nombre}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                        <p class="total" style="font-weight: bold">Total: ${fn:length(listMuestraDirectivoSin) + fn:length(listMuestraDirectivoCon) }</p>
-                                        <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
-                                            <a id="bpreparedEditarMuestraDi" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
-                                        </c:if>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse6">
-                                Empleadores
-                            </a>
-                        </div>
-                        <div id="collapse6" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <ul class="nav nav-tabs" id="myTabEmp">
-                                    <li class="active"><a href="#poblacionemp" data-toggle="tab">Población empleadores</a></li>
-                                    <li><a href="#muestraemp" data-toggle="tab">Muestra empleadores</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="poblacionemp">
-                                        <table id="tablaempleadores0" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytablaempleadores0">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(poblacionEmpleador)!= 0}">
-                                                        <c:forEach items="${poblacionEmpleador}" var="pempleador" varStatus="iter55">
-                                                            <tr>
-                                                                <td>${pempleador.personaId.id}</td>
-                                                                <td>${pempleador.personaId.nombre}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane" id="muestraemp">
-                                        <table id="tablaY6" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="bodytablaempleadores">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraEmpleadorCon)!= 0}">
-                                                        <c:forEach items="${listMuestraEmpleadorCon}" var="empleador" varStatus="iter55">
-                                                            <tr class="terminadoC">
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${empleador.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #DFF0D8; color: #468847;"> ${empleador.muestrapersonaId.nombre}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(listMuestraEmpleadorSin)!= 0}">
-                                                        <c:forEach items="${listMuestraEmpleadorSin}" var="empleador" varStatus="iter55">
-                                                            <tr class="pendienteC">
-                                                                <td style="background-color: #F2DEDE; color: #B94A48"> ${empleador.muestrapersonaId.cedula}</td>
-                                                                <td style="background-color: #F2DEDE; color: #B94A48;"> ${empleador.muestrapersonaId.nombre}</td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                </c:choose>
-                                            </tbody>    
-                                        </table>
-                                        <p class="total" style="font-weight: bold">Total: ${fn:length(listMuestraEmpleadorSin) + fn:length(listMuestraEmpleadorCon)}</p>
-                                        <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
-                                            <a id="bpreparedEditarMuestraEm" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
-                                        </c:if>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
+                        <p class="total" style="font-weight: bold">Total: ${fn:length(listMuestraCon) + fn:length(listMuestraSin)}</p>
+                        <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
+                            <a id="bpreparedEditarMuestraEs" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Editar Muestra</a>
+                        </c:if>
                     </div>
                 </div>
+
 
             </div>
             <div id="editM">
@@ -757,7 +356,7 @@
         $('#tablaY1').DataTable({
             dom: 'Bfrtip',
             buttons: [
-               {
+                {
                     extend: 'copy',
                     text: 'Copiar'
                 },
@@ -773,81 +372,6 @@
                 }
             }
         });
-        $('#tablaY2').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'copy',
-                    text: 'Copiar'
-                },
-                {
-                    extend: 'excelHtml5',
-                    text: 'Exportar a excel',
-                    title: 'Muestra docentes'
-                }
-            ],
-            language: {
-                buttons: {
-                    copyTitle: 'Copiar'
-                }
-            }
-        });
-        $('#tablaY3').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'copy',
-                    text: 'Copiar'
-                },
-                {
-                    extend: 'excelHtml5',
-                    text: 'Exportar a excel',
-                    title: 'Muestra administrativos'
-                }
-            ],
-            language: {
-                buttons: {
-                    copyTitle: 'Copiar'
-                }
-            }
-        });
-        $('#tablaY4').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'copy',
-                    text: 'Copiar'
-                },
-                {
-                    extend: 'excelHtml5',
-                    text: 'Exportar a excel',
-                    title: 'Muestra egresados'
-                }
-            ],
-            language: {
-                buttons: {
-                    copyTitle: 'Copiar'
-                }
-            }
-        });
-        $('#tablaY5').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'copy',
-                    text: 'Copiar'
-                },
-                {
-                    extend: 'excelHtml5',
-                    text: 'Exportar a excel',
-                    title: 'Muestra directivos'
-                }
-            ],
-            language: {
-                buttons: {
-                    copyTitle: 'Copiar'
-                }
-            }
-        });
+       
     });
 </script>
