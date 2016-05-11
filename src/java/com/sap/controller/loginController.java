@@ -499,7 +499,7 @@ public class loginController extends HttpServlet {
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Credenciales validas");
                         }
-                        respuesta = "1";
+                        respuesta = "0";
                         session.setAttribute("tipoLogin", "Comite programa");
                         session.setAttribute("representante", r);
                         //SessionCountListener.representantesLogueados.add(r);

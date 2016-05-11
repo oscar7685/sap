@@ -101,7 +101,9 @@ public class controladorF extends HttpServlet {
                     List<Pregunta> preguntas = e.getPreguntaList();
                     session.setAttribute("encuesta", e);
                     session.setAttribute("preguntas", preguntas);
-                    session.setAttribute("persona", muestrapersonaFacade.find(Integer.parseInt(persona)));
+                    Muestrapersona mp  = muestrapersonaFacade.find(Integer.parseInt(persona));
+                    session.setAttribute("persona", mp);
+                    session.setAttribute("programa", mp.getMuestraId().getProcesoId().getProgramaId());
                     session.setAttribute("fuente", fuenteFacade.find(Integer.parseInt(fuente)));
                     
                     String url = "/WEB-INF/vista/fuente/responderEncuesta.jsp";

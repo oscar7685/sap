@@ -29,6 +29,7 @@
                 .validate({
             ignore: "",
             submitHandler: function() {
+                $("button").attr("disabled", true);
                 $.ajax({
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/controladorF?action=responderE",
