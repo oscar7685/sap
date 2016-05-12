@@ -1,7 +1,15 @@
 $(function() {
     var urlx;
 
-
+    $("#popover").popover({
+        trigger: 'hover',
+        html: true,
+        placement: 'top',
+        title: ("Personas logueadas"),
+        content: function() {
+            return '' + $("#popover").attr("data-content");
+        }
+    }).popover('show');
     location = "/sapnaval/#inicio";
     $(document).ajaxStart(function() {
         if ($("div.ui-layout-center").find('div#contenido').length === 0) {
@@ -354,7 +362,7 @@ $(function() {
                                         || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                         || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
                                         || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta" || hash === "#crear2Meta" || hash === "#listarFortalezas"
-                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd" || hash === "#graficasDMA" || hash === "#calificarCaracteristicas" || hash === "#listEvaluacionCara" || hash === "#editarEvaluacionCara" || hash === "#editarEvaluacionCara2" || hash === "#subirAdjunto" || hash ==="#informeDMA") {
+                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo" || hash === "#listPonderacionInd" || hash === "#graficasDMA" || hash === "#calificarCaracteristicas" || hash === "#listEvaluacionCara" || hash === "#editarEvaluacionCara" || hash === "#editarEvaluacionCara2" || hash === "#subirAdjunto" || hash === "#informeDMA") {
                                     var url3 = "/sapnaval/" + hash;
                                     url3 = url3.replace('#', "controladorCP?action=");
                                     $("div.ui-layout-center").empty();
@@ -374,7 +382,7 @@ $(function() {
                                             if (hash === "#listPonderacionCara2") {
                                                 hash = "#listPonderacionCara";
                                             }
-                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental" || hash ==="#informeDMA") {
+                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental" || hash === "#informeDMA") {
                                                 setTimeout(function() {
                                                     $("#west-closer").trigger("click");
                                                 }, 500);

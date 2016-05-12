@@ -133,7 +133,7 @@
                     </div>
                 </div>
                 <br/>
-                <a title="Responder Encuesta" class="btn btn-default" href="#responderEncuestaF&id=${encuesta1.id}&fuente=${fuente1.id}&persona=${persona0.id}">Continuar >> </a>
+                <a title="Responder Encuesta" class="btn btn-default" href="#responderEncuestaF&id=${encuesta1.id}&fuente=${fuente1.id}&persona=${persona1.id}">Continuar >> </a>
             </div>
         </div> 
     </c:when>

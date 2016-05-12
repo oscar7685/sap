@@ -144,10 +144,15 @@
                     <div style="padding: 8px 0pt;" class="well">
                         <ul class="nav nav-list">  
                             <li class="nav-header">¿Qui&eacute;n est&aacute; en l&iacute;nea&quest;</li>
-                            <li><a href="#"><i class="icon-group"></i> Hay ${cantidad} persona(s) en linea</a></li>
-                                <%-- <c:forEach items="${representantesLogueados}" var="representante" varStatus="index" end="1">
-                                 <li><a href="#"><i class="icon-user"></i> ${representante.nombre}</a></li>
-                                 </c:forEach> --%>
+                            <li id="popover" title="Personas logueadas" 
+                                data-content="
+                                <c:forEach items="${personasLogueadas}" var="persona" varStatus="index">
+                                    ${persona}<br/>
+                                </c:forEach>
+                            ">
+                            <a href="#"><i class="icon-group"></i> 
+                                Hay ${personasLogueadas.size()} persona(s) en linea</a></li>
+
                             </ui>
                     </div>
 

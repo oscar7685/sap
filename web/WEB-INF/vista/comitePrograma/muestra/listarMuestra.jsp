@@ -7,7 +7,7 @@
             var a = $("#selectListMuestra option:selected").index();
             if (a == 0) {
                 $("#listM").empty();
-                $("#help1").html('<div class="alert alert-info" role="alert"><strong>Atenci&oacute;n</strong>Seleccione una fuente para ver la muestra asignada a la misma.</div>');
+                $("#help1").html('<div class="alert alert-info" role="alert"><strong>Atenci&oacute;n</strong> Seleccione una fuente para ver la muestra asignada a la misma.</div>');
             }
             else {//para hacer el editar muestra
                 $("#help1").empty();
@@ -44,7 +44,7 @@
                                         <option value="Docente">Docentes</option>
                                         <option value="Egresado">Egresados</option>
                                         <option value="Administrativo">Administrativos</option>
-                                        <option value="Directivo">Directores de programa</option>
+                                        <option value="Directivo">Directivos</option>
                                         <option value="Empleador">Empleadores</option>
                                     </select>
                                 </div>
@@ -52,7 +52,7 @@
                         </div>
                     </fieldset>
                 </form>
-                <div id="help1"><div class="alert alert-info" role="alert"><strong>Atenci&oacute;n</strong>Seleccione una fuente para ver la muestra asignada a la misma.</div></div>
+                <div id="help1"><div class="alert alert-info" role="alert"><strong>Atenci&oacute;n</strong> Seleccione una fuente para ver la muestra asignada a la misma.</div></div>
             </ul>
             <div id="listM"></div>
         </div>

@@ -138,9 +138,11 @@ public class loginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        List<Muestrapersona> usuario = null;
         String action = (String) request.getParameter("action");
         String respuesta = "1";
-
+        Representante r = null;
         if (action != null) {
             request.getSession().invalidate();
         } else {
@@ -148,9 +150,9 @@ public class loginController extends HttpServlet {
             /*parametros*/
             String un = (String) request.getParameter("un");
             String pw = (String) request.getParameter("pw");
-            HttpSession session = request.getSession();
 
-            Representante r = null;
+
+
             try {
                 r = representanteFacade.find(Integer.parseInt(un));
             } catch (NumberFormatException e) {
@@ -158,7 +160,7 @@ public class loginController extends HttpServlet {
             if (r == null) {
 
                 /*COMPROBAMOS SI ESTA EN LA MUESTRA Y SE ESTA UNA SOLA VEZ*/
-                List<Muestrapersona> usuario = muestrapersonaFacade.findByCedula(un);
+                usuario = muestrapersonaFacade.findByCedula(un);
 
                 for (int sapin = 0; sapin < usuario.size(); sapin++) {
                     if (usuario != null && usuario.size() == 1) {
@@ -225,7 +227,7 @@ public class loginController extends HttpServlet {
                                     } else if (Mestudiante.getTipo().equals("7")) {
                                         f = fuenteFacade.find(7);
                                         session.setAttribute("fuente", f);
-                                    } else if (Mestudiante.getTipo().equals("7")) {
+                                    } else if (Mestudiante.getTipo().equals("8")) {
                                         f = fuenteFacade.find(8);
                                         session.setAttribute("fuente", f);
                                     }
@@ -489,9 +491,6 @@ public class loginController extends HttpServlet {
                     }
                     session.setAttribute("tipoLogin", "Comite central");
                     session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
-                    SessionCountListener sessionCountListener = new SessionCountListener();
-                    session.setAttribute("cantidad", sessionCountListener.getCount());
-//                        session.setAttribute("representantesLogueados", sessionCountListener.representantesLogueados);
                     respuesta = "0";
                 } else {
                     /*COMITE PROGRAMA*/
@@ -536,6 +535,17 @@ public class loginController extends HttpServlet {
                     }
                 }
             }
+        }
+        if (respuesta.equals("0")) {
+            if (usuario != null) {
+                session.setAttribute("personaLogueada", usuario.get(0).getNombre() + " " + usuario.get(0).getApellido());
+            } else if (r != null) {
+                session.setAttribute("personaLogueada", r.getNombre() + " " + r.getApellido());
+            }
+            String personaLogueada = (String) session.getAttribute("personaLogueada");
+            SessionCountListener.addPersonaLogueada(personaLogueada);
+            session.setAttribute("numberOfSessionsCount", SessionCountListener.getNumberOfSessionsCount());
+            session.setAttribute("personasLogueadas", SessionCountListener.getPersonasLogueadas());
         }
         out.print(respuesta);
     }

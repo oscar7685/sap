@@ -54,7 +54,7 @@ public class GraficarDMA implements Action {
         String url = "/WEB-INF/vista/comitePrograma/proceso/informe/graficarDMA.jsp";
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        Modelo m = modeloFacade.find(Integer.parseInt("1"));
+        Modelo m = proceso.getModeloId();
 
         String factor = request.getParameter("factor");
         String caracteristica = request.getParameter("caracteristica");
@@ -92,7 +92,7 @@ public class GraficarDMA implements Action {
                         if (pregunta1.getPreguntaList().size() > 0) {
                             for (int i = 0; i < pregunta1.getPreguntaList().size(); i++) {
                                 Pregunta pregaux = pregunta1.getPreguntaList().get(i);
-                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregaux.getId());
+                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregaux.getId(), proceso.getId());
                                 if (dmaTotalyCeros.size() > 0) {
                                     for (Object[] objects : dmaTotalyCeros) {
                                         total5y4Factores += (double) (Double.parseDouble(objects[0].toString()));
@@ -103,7 +103,7 @@ public class GraficarDMA implements Action {
                                 }
                             }
                         } else {
-                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregunta1.getId());
+                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregunta1.getId(), proceso.getId());
                             if (dmaTotalyCeros.size() > 0) {
                                 for (Object[] objects : dmaTotalyCeros) {
                                     total5y4Factores += (double) (Double.parseDouble(objects[0].toString()));
@@ -141,7 +141,7 @@ public class GraficarDMA implements Action {
                         if (pregunta1.getPreguntaList().size() > 0) {
                             for (int i = 0; i < pregunta1.getPreguntaList().size(); i++) {
                                 Pregunta pregaux = pregunta1.getPreguntaList().get(i);
-                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregaux.getId());
+                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregaux.getId(), proceso.getId());
                                 if (dmaTotalyCeros.size() > 0) {
                                     for (Object[] objects : dmaTotalyCeros) {
                                         total5y4Caracteristicas += (double) (Double.parseDouble(objects[0].toString()));
@@ -152,7 +152,7 @@ public class GraficarDMA implements Action {
                                 }
                             }
                         } else {
-                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregunta1.getId());
+                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregunta1.getId(), proceso.getId());
                             if (dmaTotalyCeros.size() > 0) {
                                 for (Object[] objects : dmaTotalyCeros) {
                                     total5y4Caracteristicas += (double) (Double.parseDouble(objects[0].toString()));
@@ -192,14 +192,19 @@ public class GraficarDMA implements Action {
                                     for (int i = 0; i < pregunta1.getPreguntaList().size(); i++) {
                                         Pregunta pregaux = pregunta1.getPreguntaList().get(i);
                                         ejeY.add("" + pregunta1.getPregunta() + " " + pregaux.getPregunta());
-                                        List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregaux.getId());
+                                        List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregaux.getId(), proceso.getId());
                                         if (dmaTotalyCeros.size() > 0) {
                                             for (Object[] objects : dmaTotalyCeros) {
-                                                dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
-                                                dmaX = Math.rint(dmaX * 100) / 100;
-                                                total5y4 += Double.parseDouble(objects[0].toString());
-                                                total += Long.parseLong(objects[1].toString());
-                                                ejeX.add("" + dmaX);
+                                                if (!objects[1].toString().equals("0")) {
+                                                    dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                                    dmaX = Math.rint(dmaX * 100) / 100;
+                                                    total5y4 += Double.parseDouble(objects[0].toString());
+                                                    total += Long.parseLong(objects[1].toString());
+                                                    ejeX.add("" + dmaX);
+                                                } else {
+                                                    ejeX.add("0.0");
+                                                }
+
                                             }
                                         } else {
                                             ejeX.add("0.0");
@@ -207,14 +212,18 @@ public class GraficarDMA implements Action {
                                     }
                                 } else {
                                     ejeY.add("" + pregunta1.getPregunta());
-                                    List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregunta1.getId());
+                                    List<Object[]> dmaTotalyCeros = respuestasFacade.findByPregunta(pregunta1.getId(), proceso.getId());
                                     if (dmaTotalyCeros.size() > 0) {
                                         for (Object[] objects : dmaTotalyCeros) {
-                                            dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
-                                            dmaX = Math.rint(dmaX * 100) / 100;
-                                            total5y4 += Double.parseDouble(objects[0].toString());
-                                            total += Long.parseLong(objects[1].toString());
-                                            ejeX.add("" + dmaX);
+                                            if (!objects[1].toString().equals("0")) {
+                                                dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                                dmaX = Math.rint(dmaX * 100) / 100;
+                                                total5y4 += Double.parseDouble(objects[0].toString());
+                                                total += Long.parseLong(objects[1].toString());
+                                                ejeX.add("" + dmaX);
+                                            } else {
+                                                ejeX.add("0.0");
+                                            }
                                         }
                                     } else {
                                         ejeX.add("0.0");
@@ -230,18 +239,23 @@ public class GraficarDMA implements Action {
                 } else if ("-1".equals(pregunta)) {
                     if ("-2".equals(grupo)) { // valores vs grupos
                         titulo = "GRUPOS";
-                        for (int i = 1; i < 12; i++) {
-                            Encuesta enc = encuestaFacade.find(i);
+                        List<Encuesta> encuestas15 = proceso.getModeloId().getEncuestaList();
+                        for (int i = 0; i < encuestas15.size(); i++) {
+                            Encuesta enc = encuestas15.get(i);
                             aux = enc.getNombre().replace("ENCUESTA A ", "");
                             ejeY.add("" + aux);
-                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByRolYEncuesta(relacionEncuestaRol[i], i);
+                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByEncuestaYproceso(enc.getId(), proceso.getId());
                             if (dmaTotalyCeros.size() > 0) {
                                 for (Object[] objects : dmaTotalyCeros) {
-                                    dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
-                                    dmaX = Math.rint(dmaX * 100) / 100;
-                                    total5y4 += Double.parseDouble(objects[0].toString());
-                                    total += Long.parseLong(objects[1].toString());
-                                    ejeX.add("" + dmaX);
+                                    if (!objects[1].toString().equals("0")) {
+                                        dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                        dmaX = Math.rint(dmaX * 100) / 100;
+                                        total5y4 += Double.parseDouble(objects[0].toString());
+                                        total += Long.parseLong(objects[1].toString());
+                                        ejeX.add("" + dmaX);
+                                    } else {
+                                        ejeX.add("0.0");
+                                    }
                                 }
                             } else {
                                 ejeX.add("0.0");
@@ -253,13 +267,14 @@ public class GraficarDMA implements Action {
                         ejeX.add("" + dmaTotal);
                     } else if (!"-1".equals(grupo)) { //  valores vs grupo seleccionado
                         titulo = "GRUPOS";
-                        for (int i = 1; i < 12; i++) {
-                            Encuesta enc = encuestaFacade.find(i);
+                        List<Encuesta> encuestas11 = proceso.getModeloId().getEncuestaList();
+                        for (int i = 0; i < encuestas11.size(); i++) {
+                            Encuesta enc = encuestas11.get(i);
                             aux = enc.getNombre().replace("ENCUESTA A ", "");
                             if (grupo.equals("" + i)) {
                                 ejeY.add("" + aux);
                             }
-                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByRolYEncuesta(relacionEncuestaRol[i], i);
+                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByEncuestaYproceso(enc.getId(), proceso.getId());
                             if (dmaTotalyCeros.size() > 0) {
                                 for (Object[] objects : dmaTotalyCeros) {
                                     dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
@@ -291,11 +306,12 @@ public class GraficarDMA implements Action {
                 if ("-2".equals(grupo)) { //factor vs grupos
                     Factor fa = factorFacade.find(Integer.parseInt(factor));
                     titulo = fa.getNombre();
-                    for (int i = 1; i < 12; i++) {
-                        Encuesta enc = encuestaFacade.find(i);
+                    List<Encuesta> encuestas5 = proceso.getModeloId().getEncuestaList();
+                    for (int i = 0; i < encuestas5.size(); i++) {
+                        Encuesta enc = encuestas5.get(i);
                         aux = enc.getNombre().replace("ENCUESTA A ", "");
                         ejeY.add("" + aux);
-                        List<Object[]> dmaTotalyCeros = respuestasFacade.findByFactoryRol(fa.getId(), relacionEncuestaRol[i]);
+                        List<Object[]> dmaTotalyCeros = respuestasFacade.findByFactoryEncuesta(fa.getId(), enc.getId(), proceso.getId());
                         if (dmaTotalyCeros.size() > 0) {
                             for (Object[] objects : dmaTotalyCeros) {
                                 dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
@@ -326,18 +342,23 @@ public class GraficarDMA implements Action {
 
                         Caracteristica ca = caracteristicaFacade.find(Integer.parseInt(caracteristica));
                         titulo = ca.getNombre();
-                        for (int i = 1; i < 12; i++) {
-                            Encuesta enc = encuestaFacade.find(i);
+                        List<Encuesta> encuestas10 = proceso.getModeloId().getEncuestaList();
+                        for (int i = 0; i < encuestas10.size(); i++) {
+                            Encuesta enc = encuestas10.get(i);
                             aux = enc.getNombre().replace("ENCUESTA A ", "");
                             ejeY.add("" + aux);
-                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByCaracteristicayRol(ca.getId(), relacionEncuestaRol[i]);
+                            List<Object[]> dmaTotalyCeros = respuestasFacade.findByCaracteristicayEncuesta(ca.getId(), enc.getId(), proceso.getId());
                             if (dmaTotalyCeros.size() > 0) {
                                 for (Object[] objects : dmaTotalyCeros) {
-                                    dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
-                                    dmaX = Math.rint(dmaX * 100) / 100;
-                                    total5y4 += Double.parseDouble(objects[0].toString());
-                                    total += Long.parseLong(objects[1].toString());
-                                    ejeX.add("" + dmaX);
+                                    if (!objects[1].toString().equals("0")) {
+                                        dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
+                                        dmaX = Math.rint(dmaX * 100) / 100;
+                                        total5y4 += Double.parseDouble(objects[0].toString());
+                                        total += Long.parseLong(objects[1].toString());
+                                        ejeX.add("" + dmaX);
+                                    } else {
+                                        ejeX.add("0.0");
+                                    }
                                 }
                             } else {
                                 ejeX.add("0.0");
@@ -366,13 +387,13 @@ public class GraficarDMA implements Action {
                         } else {
                             titulo = preg.getPregunta();
                         }
-
-                        for (int i = 1; i < 12; i++) {
-                            Encuesta enc = encuestaFacade.find(i);
+                        List<Encuesta> encuestas0 = proceso.getModeloId().getEncuestaList();
+                        for (int i = 0; i < encuestas0.size(); i++) {
+                            Encuesta enc = encuestas0.get(i);
                             aux = enc.getNombre().replace("ENCUESTA A ", "");
                             ejeY.add("" + aux);
                             if (enc.getPreguntaList().contains(pregaux)) {
-                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPreguntayRol(preg.getId(), relacionEncuestaRol[i]);
+                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPreguntayEncuesta(preg.getId(), enc.getId(), proceso.getId());
                                 if (dmaTotalyCeros.size() > 0) {
                                     for (Object[] objects : dmaTotalyCeros) {
                                         dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
@@ -405,11 +426,12 @@ public class GraficarDMA implements Action {
                             titulo = preg.getPregunta();
                         }
 
-                        for (int i = 1; i < 12; i++) {
-                            Encuesta enc = encuestaFacade.find(i);
+                        List<Encuesta> encuestas1 = proceso.getModeloId().getEncuestaList();
+                        for (int i = 0; i < encuestas1.size(); i++) {
+                            Encuesta enc = encuestas1.get(i);
                             aux = enc.getNombre().replace("ENCUESTA A ", "");
                             if (enc.getPreguntaList().contains(pregaux)) {
-                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPreguntayRol(preg.getId(), relacionEncuestaRol[i]);
+                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPreguntayEncuesta(preg.getId(), enc.getId(), proceso.getId());
                                 if (dmaTotalyCeros.size() > 0) {
                                     for (Object[] objects : dmaTotalyCeros) {
                                         //dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
@@ -442,16 +464,15 @@ public class GraficarDMA implements Action {
                             titulo = preg.getPregunta();
                         }
 
-                        for (int i = 1; i < 12; i++) {
-                            Encuesta enc = encuestaFacade.find(i);
+                        List<Encuesta> encuestas3 = proceso.getModeloId().getEncuestaList();
+                        for (int i = 0; i < encuestas3.size(); i++) {
+                            Encuesta enc = encuestas3.get(i);
                             aux = enc.getNombre().replace("ENCUESTA A ", "");
                             if (grupo.equals("" + i)) {
                                 ejeY.add("" + aux);
                             }
-
-                            // 
                             if (enc.getPreguntaList().contains(pregaux)) {
-                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPreguntayRol(preg.getId(), relacionEncuestaRol[i]);
+                                List<Object[]> dmaTotalyCeros = respuestasFacade.findByPreguntayEncuesta(preg.getId(), enc.getId(), proceso.getId());
                                 if (dmaTotalyCeros.size() > 0) {
                                     for (Object[] objects : dmaTotalyCeros) {
                                         dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
