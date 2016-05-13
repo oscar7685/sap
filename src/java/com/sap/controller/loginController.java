@@ -544,7 +544,6 @@ public class loginController extends HttpServlet {
             }
             String personaLogueada = (String) session.getAttribute("personaLogueada");
             SessionCountListener.addPersonaLogueada(personaLogueada);
-            session.setAttribute("numberOfSessionsCount", SessionCountListener.getNumberOfSessionsCount());
             session.setAttribute("personasLogueadas", SessionCountListener.getPersonasLogueadas());
         }
         out.print(respuesta);

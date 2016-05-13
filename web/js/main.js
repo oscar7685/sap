@@ -15,6 +15,7 @@ $(function() {
     $("#formulario_login").validate({
         errorLabelContainer: ".alert-error",
         submitHandler: function() {
+            $("#btnIniciar").attr("disabled", true);
             this.timer = setTimeout(function() {
                 $.ajax({
                     url: '/sapnaval/loginController',
