@@ -98,13 +98,13 @@ public class EditarMuestra implements Action {
                     mp.setMail(per.getMail());
                     mp.setMuestraId(m);
                     muestrapersonaFacade.create(mp);
-
+                    Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
                     Muestraestudiante me = new Muestraestudiante();
                     me.setCodigo(aux5.getId());
                     me.setSemestre(aux5.getSemestre());
                     me.setPeriodo(aux5.getPeriodo());
                     me.setAnio(aux5.getAnio());
-                    me.setMuestrapersonaId(mp);
+                    me.setMuestrapersonaId(aux);
                     me.setProgramaId(programa);
                     me.setCurso(aux5.getCurso());
                     me.setTp("" + aux5.getTipo());
@@ -139,10 +139,10 @@ public class EditarMuestra implements Action {
                         mp.setMail(per.getMail());
                         mp.setMuestraId(m);
                         muestrapersonaFacade.create(mp);
-
+                        Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
                         Muestradocente md = new Muestradocente();
                         md.setTipo("" + docente.getFuenteId().getId());
-                        md.setMuestrapersonaId(mp);
+                        md.setMuestrapersonaId(aux);
                         md.setTp("" + docente.getTipo());
                         muestradocenteFacade.create(md);
                     }
@@ -173,9 +173,9 @@ public class EditarMuestra implements Action {
                             mp.setMail(per.getMail());
                             mp.setMuestraId(m);
                             muestrapersonaFacade.create(mp);
-
+                            Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
                             Muestraegresado meg = new Muestraegresado();
-                            meg.setMuestrapersonaId(mp);
+                            meg.setMuestrapersonaId(aux);
                             meg.setTipo("" + aux5.getFuenteId().getId());
                             meg.setTp("" + aux5.getTipo());
                             muestraegresadoFacade.create(meg);
@@ -206,10 +206,10 @@ public class EditarMuestra implements Action {
                                 mp.setMail(per.getMail());
                                 mp.setMuestraId(m);
                                 muestrapersonaFacade.create(mp);
-
+                                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
                                 Muestraadministrativo mad = new Muestraadministrativo();
                                 mad.setCargo(aux5.getCargo());
-                                mad.setMuestrapersonaId(mp);
+                                mad.setMuestrapersonaId(aux);
                                 mad.setTp(aux5.getTipo());
                                 muestraadministrativoFacade.create(mad);
                             }
@@ -239,9 +239,9 @@ public class EditarMuestra implements Action {
                                     mp.setMail(per.getMail());
                                     mp.setMuestraId(m);
                                     muestrapersonaFacade.create(mp);
-
+                                    Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
                                     Muestradirector mdp = new Muestradirector();
-                                    mdp.setMuestrapersonaId(mp);
+                                    mdp.setMuestrapersonaId(aux);
                                     muestradirectorFacade.create(mdp);
                                 }
                             }
@@ -270,11 +270,12 @@ public class EditarMuestra implements Action {
                                         mp.setMail(per.getMail());
                                         mp.setMuestraId(m);
                                         muestrapersonaFacade.create(mp);
-
+                                    
+                                        Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
                                         Muestraempleador mem = new Muestraempleador();
                                         mem.setEmpresa(aux5.getEmpresa());
                                         mem.setCargo(aux5.getCargo());
-                                        mem.setMuestrapersonaId(mp);
+                                        mem.setMuestrapersonaId(aux);
                                         muestraempleadorFacade.create(mem);
                                     }
                                 }

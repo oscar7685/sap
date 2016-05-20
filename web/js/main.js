@@ -29,6 +29,7 @@ $(function() {
 
 
                         } else {
+                            $("#btnIniciar").attr("disabled", false);
                             if (msg === '1') {
                                 $("#login-error").append("<label generated='true' class='error'>Usuario y/o Contrase&nacute;a incorrectos.</label>");
                                 $("#login-error").show();
