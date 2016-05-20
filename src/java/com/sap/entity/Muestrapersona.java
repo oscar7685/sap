@@ -54,12 +54,12 @@ public class Muestrapersona implements Serializable {
     private String cedula;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "apellido")
     private String apellido;
     @Basic(optional = false)
