@@ -26,7 +26,9 @@
                 <c:otherwise>
                     No  se ha registrado la muestra en el sistema para este proceso.
                     <br><br>
-                    <a id="botonGenerarMuestra" href="#generarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Generar Muestra</a>
+                    <c:if test="${tipoLogin=='Comite central'}">
+                        <a id="botonGenerarMuestra" href="#generarMuestra" class="btn btn-large btn-primary llamador"><i class="icon-edit-sign"></i> Generar Muestra</a>
+                    </c:if>
                 </c:otherwise>
             </c:choose>
         </div>

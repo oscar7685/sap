@@ -1,6 +1,14 @@
 $(function() {
     var urlx;
-
+    $("#popover").popover({
+        trigger: 'hover',
+        html: true,
+        placement: 'top',
+        title: ("Personas logueadas"),
+        content: function() {
+            return '' + $("#popover").attr("data-content");
+        }
+    }).popover('show');
 
     location = "/sap/#inicio";
     $(document).ajaxStart(function() {

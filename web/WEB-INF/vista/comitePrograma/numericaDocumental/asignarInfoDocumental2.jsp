@@ -117,13 +117,12 @@
         });
         $('#tablaX td').on('change', function(evt, newValue) {
             // do something with the new cell value 
-
             var indicador = $(this).parents("tr").find("input[name='indicadorInput']").val();
             var columna = $(this).index();
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/controladorCP?action=registrarInfoDocumental",
-                data: "indicador=" + indicador + "&columna=" + columna + "&valor=" + newValue,
+                data: "indicador=" + indicador + "&columna=" + columna + "&valor=" + encodeURI(newValue),
                 success: function() {
                     $("#dancing-dots-text").remove();
                 }

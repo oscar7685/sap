@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class RegistrarInfoNumerica implements Action {
+
     NumericadocumentalFacade numericadocumentalFacade = lookupNumericadocumentalFacadeBean();
     InstrumentoFacade instrumentoFacade = lookupInstrumentoFacadeBean();
     IndicadorFacade indicadorFacade = lookupIndicadorFacadeBean();
@@ -38,7 +39,7 @@ public class RegistrarInfoNumerica implements Action {
         String indicador = request.getParameter("indicador");
         String columna = request.getParameter("columna");
         String valor = request.getParameter("valor");
-
+        
 
         Indicador aux = indicadorFacade.find(Integer.parseInt(indicador));
         Instrumento ins = instrumentoFacade.find(2);

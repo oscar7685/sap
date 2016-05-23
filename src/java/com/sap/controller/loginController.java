@@ -84,8 +84,9 @@ public class loginController extends HttpServlet {
     private ProcesoFacade procesoFacade;
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -114,7 +115,8 @@ public class loginController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
+     * Handles the HTTP
+     * <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -128,7 +130,8 @@ public class loginController extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * Handles the HTTP
+     * <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -138,7 +141,12 @@ public class loginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
         String action = (String) request.getParameter("action");
+        List<Muestrapersona> usuario = null;
+        String respuesta = "1";
+        Representante r = null;
         if (action != null) {
             request.getSession().invalidate();
         } else {
@@ -146,10 +154,9 @@ public class loginController extends HttpServlet {
             String un = (String) request.getParameter("un");
             String pw = (String) request.getParameter("pw");
             String tp = (String) request.getParameter("tp");
-            HttpSession session = request.getSession();
 
             response.setContentType("text/plain");
-            PrintWriter out = response.getWriter();
+
 
             if (tp != null && tp.equals("Estudiantes")) {
                 Muestrapersona persona = null;
@@ -158,10 +165,10 @@ public class loginController extends HttpServlet {
                 List<Encuesta> aux3 = null;
                 Modelo m;
                 Proceso proceso;
-                List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
-                if (aux != null && aux.size() > 0) {
-                    for (int i = 0; i < aux.size(); i++) {
-                        persona = aux.get(i);
+                usuario = muestrapersonaFacade.findByCedula(un);
+                if (usuario != null && usuario.size() > 0) {
+                    for (int i = 0; i < usuario.size(); i++) {
+                        persona = usuario.get(i);
                         if (persona != null && persona.getPassword().equals(pw)) {
                             aux2 = muestraestudianteFacade.findByMuestraPersona(persona);
                         }
@@ -171,7 +178,7 @@ public class loginController extends HttpServlet {
                             }
                         }
                         if (estudiante != null) {
-                            out.print(0);
+                            respuesta = "0";
                             session.setAttribute("tipoLogin", "Fuente");
                             session.setAttribute("programa", estudiante.getProgramaId());
                             session.setAttribute("persona", persona);
@@ -199,8 +206,8 @@ public class loginController extends HttpServlet {
                             }
                             break;
                         } else {
-                            if (i + 1 == aux.size()) {
-                                out.print(1);
+                            if (i + 1 == usuario.size()) {
+                                respuesta = "1";
                             }
 
                         }
@@ -215,10 +222,10 @@ public class loginController extends HttpServlet {
                     List<Encuesta> auxE3 = null;
                     Modelo m;
                     Proceso proceso;
-                    List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
-                    if (aux != null && aux.size() > 0) {
-                        for (int l = 0; l < aux.size(); l++) {
-                            persona = aux.get(l);
+                    usuario = muestrapersonaFacade.findByCedula(un);
+                    if (usuario != null && usuario.size() > 0) {
+                        for (int l = 0; l < usuario.size(); l++) {
+                            persona = usuario.get(l);
                             if (persona != null && persona.getPassword().equals(pw)) {
                                 auxE2 = muestraegresadoFacade.findByMuestraPersona(persona);
                             }
@@ -228,7 +235,7 @@ public class loginController extends HttpServlet {
                                 }
                             }
                             if (egresado != null) {
-                                out.print(0);
+                                respuesta = "0";
                                 session.setAttribute("tipoLogin", "Fuente");
                                 session.setAttribute("programa", egresado.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                 session.setAttribute("persona", persona);
@@ -256,8 +263,8 @@ public class loginController extends HttpServlet {
                                 }
                                 break;
                             } else {
-                                if (l + 1 == aux.size()) {
-                                    out.print(1);
+                                if (l + 1 == usuario.size()) {
+                                    respuesta = "1";
                                 }
                             }
 
@@ -272,10 +279,10 @@ public class loginController extends HttpServlet {
                         List<Encuesta> auxD3 = null;
                         Modelo m;
                         Proceso proceso;
-                        List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
-                        if (aux != null && aux.size() > 0) {
-                            for (int l = 0; l < aux.size(); l++) {
-                                persona = aux.get(l);
+                        usuario = muestrapersonaFacade.findByCedula(un);
+                        if (usuario != null && usuario.size() > 0) {
+                            for (int l = 0; l < usuario.size(); l++) {
+                                persona = usuario.get(l);
                                 if (persona != null && persona.getPassword().equals(pw)) {
                                     auxD2 = muestradocenteFacade.findByMuestraPersona(persona);
                                 }
@@ -285,7 +292,7 @@ public class loginController extends HttpServlet {
                                     }
                                 }
                                 if (docente != null) {
-                                    out.print(0);
+                                    respuesta = "0";
                                     session.setAttribute("tipoLogin", "Fuente");
                                     session.setAttribute("programa", docente.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                     session.setAttribute("persona", persona);
@@ -313,8 +320,8 @@ public class loginController extends HttpServlet {
                                     }
                                     break;
                                 } else {
-                                    if (l + 1 == aux.size()) {
-                                        out.print(1);
+                                    if (l + 1 == usuario.size()) {
+                                        respuesta = "1";
                                     }
                                 }
 
@@ -329,10 +336,10 @@ public class loginController extends HttpServlet {
                             List<Encuesta> auxDi3 = null;
                             Modelo m;
                             Proceso proceso;
-                            List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
-                            if (aux != null && aux.size() > 0) {
-                                for (int l = 0; l < aux.size(); l++) {
-                                    persona = aux.get(l);
+                            usuario = muestrapersonaFacade.findByCedula(un);
+                            if (usuario != null && usuario.size() > 0) {
+                                for (int l = 0; l < usuario.size(); l++) {
+                                    persona = usuario.get(l);
                                     if (persona != null && persona.getPassword().equals(pw)) {
                                         auxDi2 = muestradirectorFacade.findByMuestraPersona(persona);
                                     }
@@ -342,7 +349,7 @@ public class loginController extends HttpServlet {
                                         }
                                     }
                                     if (director != null) {
-                                        out.print(0);
+                                        respuesta = "0";
                                         session.setAttribute("tipoLogin", "Fuente");
                                         session.setAttribute("programa", director.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                         session.setAttribute("persona", persona);
@@ -371,8 +378,8 @@ public class loginController extends HttpServlet {
                                         }
                                         break;
                                     } else {
-                                        if (l + 1 == aux.size()) {
-                                            out.print(1);
+                                        if (l + 1 == usuario.size()) {
+                                            respuesta = "1";
                                         }
                                     }
 
@@ -386,10 +393,10 @@ public class loginController extends HttpServlet {
                             List<Encuesta> auxA3 = null;
                             Modelo m;
                             Proceso proceso;
-                            List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
-                            if (aux != null && aux.size() > 0) {
-                                for (int l = 0; l < aux.size(); l++) {
-                                    persona = aux.get(l);
+                            usuario = muestrapersonaFacade.findByCedula(un);
+                            if (usuario != null && usuario.size() > 0) {
+                                for (int l = 0; l < usuario.size(); l++) {
+                                    persona = usuario.get(l);
 
                                     if (persona != null && persona.getPassword().equals(pw)) {
                                         auxA2 = muestraadministrativoFacade.findByMuestraPersona(persona);
@@ -400,7 +407,7 @@ public class loginController extends HttpServlet {
                                         }
                                     }
                                     if (administrativo != null) {
-                                        out.print(0);
+                                        respuesta = "0";
                                         session.setAttribute("tipoLogin", "Fuente");
                                         session.setAttribute("programa", administrativo.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                         session.setAttribute("persona", persona);
@@ -428,8 +435,8 @@ public class loginController extends HttpServlet {
                                         }
                                         break;
                                     } else {
-                                        if (l + 1 == aux.size()) {
-                                            out.print(1);
+                                        if (l + 1 == usuario.size()) {
+                                            respuesta = "1";
                                         }
                                     }
                                 }
@@ -442,10 +449,10 @@ public class loginController extends HttpServlet {
                             List<Encuesta> auxEm3 = null;
                             Modelo m;
                             Proceso proceso;
-                            List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
-                            if (aux != null && aux.size() > 0) {
-                                for (int l = 0; l < aux.size(); l++) {
-                                    persona = aux.get(l);
+                            usuario = muestrapersonaFacade.findByCedula(un);
+                            if (usuario != null && usuario.size() > 0) {
+                                for (int l = 0; l < usuario.size(); l++) {
+                                    persona = usuario.get(l);
 
                                     if (persona != null && persona.getPassword().equals(pw)) {
                                         auxEm2 = muestraempleadorFacade.findByMuestraPersona(persona);
@@ -456,7 +463,7 @@ public class loginController extends HttpServlet {
                                         }
                                     }
                                     if (empleador != null) {
-                                        out.print(0);
+                                        respuesta = "0";
                                         session.setAttribute("tipoLogin", "Fuente");
                                         session.setAttribute("programa", empleador.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                         session.setAttribute("persona", persona);
@@ -484,8 +491,8 @@ public class loginController extends HttpServlet {
                                         }
                                         break;
                                     } else {
-                                        if (l + 1 == aux.size()) {
-                                            out.print(1);
+                                        if (l + 1 == usuario.size()) {
+                                            respuesta = "1";
                                         }
                                     }
                                 }
@@ -498,10 +505,10 @@ public class loginController extends HttpServlet {
                             List<Encuesta> auxVi3 = null;
                             Modelo m;
                             Proceso proceso;
-                            List<Muestrapersona> aux = muestrapersonaFacade.findByCedula(un);
-                            if (aux != null && aux.size() > 0) {
-                                for (int l = 0; l < aux.size(); l++) {
-                                    persona = aux.get(l);
+                            usuario = muestrapersonaFacade.findByCedula(un);
+                            if (usuario != null && usuario.size() > 0) {
+                                for (int l = 0; l < usuario.size(); l++) {
+                                    persona = usuario.get(l);
 
                                     if (persona != null && persona.getPassword().equals(pw)) {
                                         auxVi2 = muestraagenciaFacade.findByMuestraPersona(persona);
@@ -512,7 +519,7 @@ public class loginController extends HttpServlet {
                                         }
                                     }
                                     if (visitante != null) {
-                                        out.print(0);
+                                        respuesta = "0";
                                         session.setAttribute("tipoLogin", "Fuente");
                                         session.setAttribute("programa", visitante.getMuestrapersonaId().getMuestraId().getProcesoId().getProgramaId());
                                         session.setAttribute("persona", persona);
@@ -540,8 +547,8 @@ public class loginController extends HttpServlet {
                                         }
                                         break;
                                     } else {
-                                        if (l + 1 == aux.size()) {
-                                            out.print(1);
+                                        if (l + 1 == usuario.size()) {
+                                            respuesta = "1";
                                         }
                                     }
                                 }
@@ -550,7 +557,6 @@ public class loginController extends HttpServlet {
                         } else {
                             if (tp != null && tp.equals("Comite central")) {
 
-                                Representante r = null;
                                 try {
                                     r = representanteFacade.find(Integer.parseInt(un));
                                 } catch (NumberFormatException e) {
@@ -563,15 +569,11 @@ public class loginController extends HttpServlet {
 
                                     session.setAttribute("tipoLogin", "Comite central");
                                     session.setAttribute("nombre", "" + r.getNombre() + " " + r.getApellido());
-                                    SessionCountListener sessionCountListener = new SessionCountListener();
-                                    session.setAttribute("cantidad", sessionCountListener.getCount());
-                                    session.setAttribute("representantesLogueados", sessionCountListener.representantesLogueados);
-                                    out.print(0);
+                                    respuesta = "0";
                                 } else {
-                                    out.print(1);
+                                    respuesta = "1";
                                 }
                             } else if (tp != null && tp.equals("Comite programa")) {
-                                Representante r = null;
                                 try {
                                     r = representanteFacade.find(Integer.parseInt(un));
                                 } catch (NumberFormatException e) {
@@ -581,10 +583,10 @@ public class loginController extends HttpServlet {
                                     if (LOGGER.isDebugEnabled()) {
                                         LOGGER.debug("Credenciales validas");
                                     }
-                                    out.print(0);
+                                    respuesta = "0";
                                     session.setAttribute("tipoLogin", "Comite programa");
                                     session.setAttribute("representante", r);
-                                    SessionCountListener.representantesLogueados.add(r);
+                                    //SessionCountListener.representantesLogueados.add(r);
                                     if (r.getProgramaList() != null && r.getProgramaList().size() == 1) {
                                         session.setAttribute("Programa", r.getProgramaList().get(0));
                                         List procesos = (List) procesoFacade.findByPrograma(r.getProgramaList().get(0));
@@ -632,11 +634,11 @@ public class loginController extends HttpServlet {
                                     }
 
                                 } else {
-                                    out.print(1);
+                                    respuesta = "1";
                                 }
 
                             } else {
-                                out.print(1);
+                                respuesta = "1";
                             }
                         }
                     }
@@ -644,7 +646,17 @@ public class loginController extends HttpServlet {
             }
 
         }
-
+        String personaLogueada = "";
+        if (respuesta.equals("0")) {
+            if (usuario != null) {
+                personaLogueada = usuario.get(0).getNombre() + " " + usuario.get(0).getApellido();
+            } else if (r != null) {
+                personaLogueada = r.getNombre() + " " + r.getApellido();
+            }
+            SessionCountListener.addPersonaLogueada(personaLogueada);
+            session.setAttribute("personasLogueadas", SessionCountListener.getPersonasLogueadas());
+        }
+        out.print(respuesta);
     }
 
     /**

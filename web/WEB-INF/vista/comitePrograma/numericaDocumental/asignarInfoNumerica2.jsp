@@ -123,7 +123,7 @@
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/controladorCP?action=registrarInfoNumerica",
-                data: "indicador=" + indicador + "&columna=" + columna + "&valor=" + newValue,
+                data: "indicador=" + indicador + "&columna=" + columna + "&valor=" + encodeURI(newValue),
                 success: function() {
                     $("#dancing-dots-text").remove();
                 }
