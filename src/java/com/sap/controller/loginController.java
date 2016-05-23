@@ -646,13 +646,14 @@ public class loginController extends HttpServlet {
             }
 
         }
-        String personaLogueada = "";
+
         if (respuesta.equals("0")) {
             if (usuario != null) {
-                personaLogueada = usuario.get(0).getNombre() + " " + usuario.get(0).getApellido();
+                session.setAttribute("personaLogueada", usuario.get(0).getNombre() + " " + usuario.get(0).getApellido());
             } else if (r != null) {
-                personaLogueada = r.getNombre() + " " + r.getApellido();
+                session.setAttribute("personaLogueada", r.getNombre() + " " + r.getApellido());
             }
+            String personaLogueada = (String) session.getAttribute("personaLogueada");
             SessionCountListener.addPersonaLogueada(personaLogueada);
             session.setAttribute("personasLogueadas", SessionCountListener.getPersonasLogueadas());
         }
