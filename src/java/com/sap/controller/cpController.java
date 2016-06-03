@@ -24,8 +24,9 @@ public class cpController extends HttpServlet {
     private final Logger LOGGER = Logger.getLogger(cpController.class);
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -40,14 +41,19 @@ public class cpController extends HttpServlet {
             String action = request.getParameter("action");
             String clase;
             clase = rb.getString(action);
-            System.out.println("clase: " + clase);
             Action objeto = (Action) Class.forName(clase).newInstance();
 
             String ruta = objeto.procesar(request);
             int longitudRuta = ruta.length();
             if (longitudRuta > 2) {
-                RequestDispatcher rd = request.getRequestDispatcher(ruta);
-                rd.forward(request, response);
+                if (ruta.contains("{")) {
+                    response.setContentType("application/json");
+                    out.print(ruta);
+                } else {
+                    RequestDispatcher rd = request.getRequestDispatcher(ruta);
+                    rd.forward(request, response);
+                }
+
             } else if (longitudRuta == 2) {
                 //NO pasa nada
             } else if (longitudRuta == 1) {
@@ -63,7 +69,8 @@ public class cpController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
+     * Handles the HTTP
+     * <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -77,7 +84,8 @@ public class cpController extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * Handles the HTTP
+     * <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

@@ -1,8 +1,40 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="<%=request.getContextPath()%>/js/typeahead.bundle.js"></script>
 <script type="text/javascript">
     $(function() {
+
+        $('#cedula').blur(function() {
+            var cedula = $('#cedula').val();
+            $.ajax({
+                type: 'POST',
+                url: "/sapnaval/controladorCP?action=buscarPersona",
+                data: 'cedula=' + cedula,
+                success: function(persona) {
+                    $("#dancing-dots-text").remove();
+                    if (persona !== "1") {
+                        $("#nombre").val(persona.nombre);
+                        $("#apellido").val(persona.apellido);
+                        $("#password").val(persona.pass);
+                        $("#mail").val(persona.correo);
+                        $("#nombre").attr("disabled", true);
+                        $("#apellido").attr("disabled", true);
+                        $("#password").attr("disabled", true);
+                        $("#mail").attr("disabled", true);
+                    } else {
+                        $("#nombre").attr("disabled", false);
+                        $("#apellido").attr("disabled", false);
+                        $("#password").attr("disabled", false);
+                        $("#mail").attr("disabled", false);
+                    }
+
+                } //fin success
+            }); //fin $.ajax   
+        });
+
+
         $("#formCrearEvaluador").validate({
             submitHandler: function() {
+                $("#btnCrearEvaluador").attr("disabled", true);
                 $.ajax({
                     type: 'POST',
                     url: "/sapnaval/controladorCP?action=crearEvaluador",
@@ -66,51 +98,61 @@
                     <c:choose>
                         <c:when test="${selectorFuente == 'Estudiante'}">
                             <div class="control-group">
-                                <label for="codigo"  class="control-label">Código ${selectorFuente}</label>
+                                <label for="curso"  class="control-label">Curso</label>
                                 <div class="controls">
-                                    <input type="text" name="codigo" id="codigo" class="input-xlarge {required:true}" value=""/>
+                                    <input type="text" name="curso" id="curso" class="input-xlarge {required:true}" value=""/>
                                 </div>
                             </div>
-                            <div class="control-group">
-                                <label for="semestre"  class="control-label">Semestre</label>
-                                <div class="controls">
-                                    <input type="text" name="semestre" id="semestre" class="input-xlarge {required:true}" value=""/>
+                            <c:if test="${Proceso.modeloId.id == '1'}">
+                                <div class="control-group">
+                                    <label for="tipo"  class="control-label">Tipo</label>
+                                    <div class="controls">
+                                        <select name="tipo" id="tipo" class="input-xlarge {required:true}"/>
+                                        <option value="OFICIALES">OFICIALES</option>
+                                        <option value="CADETES">CADETES</option>
+                                        <option value="ESPECIALIZACION">ESPECIALIZACIÓN</option>
+                                        <option value="MAESTRIA">MAESTRÍA</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label for="periodo"  class="control-label">Periodo</label>
-                                <div class="controls">
-                                    <input type="text" name="periodo" id="periodo" class="input-xlarge {required:true}" value=""/>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label for="anio"  class="control-label">Año</label>
-                                <div class="controls">
-                                    <input type="text" name="anio" id="anio" class="input-xlarge {required:true}" value=""/>
-                                </div>
-                            </div>
+                            </c:if>
                         </c:when>
                         <c:when test="${selectorFuente == 'Docente'}">
                             <div class="control-group">
                                 <label for="tipo"  class="control-label">Tipo</label>
                                 <div class="controls">
-                                    <input type="text" name="tipo" id="tipo" class="input-xlarge {required:true}" value=""/>
+                                    <select name="tipo" id="tipo" class="input-xlarge {required:true}"/>
+                                    <option value="MILITAR">MILITAR</option>
+                                    <option value="NOMINA">NÓMINA</option>
+                                    <option value="CATEDRA">CÁTEDRA</option>
+                                    <option value="OCASIONALES">OCASIONALES</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:when test="${selectorFuente == 'Egresado' && Proceso.modeloId.id == '1'}">
+                            <div class="control-group">
+                                <label for="tipo"  class="control-label">Tipo</label>
+                                <div class="controls">
+                                    <select name="tipo" id="tipo" class="input-xlarge {required:true}"/>
+                                    <option value="PREGRADO">PREGRADO</option>
+                                    <option value="ESPECIALIZACION">ESPECIALIZACIÓN</option>
+                                    <option value="MAESTRIA">MAESTRÍA</option>
+                                    </select>
                                 </div>
                             </div>
                         </c:when>
                         <c:when test="${selectorFuente == 'Administrativo'}">
                             <div class="control-group">
-                                <label for="cargo"  class="control-label">Cargo</label>
+                                <label for="tipo"  class="control-label">Tipo</label>
                                 <div class="controls">
-                                    <input type="text" name="cargo" id="cargo" class="input-xlarge {required:true}" value=""/>
-                                </div>
-                            </div>
-                        </c:when>
-                        <c:when test="${selectorFuente == 'Agencia'}">
-                            <div class="control-group">
-                                <label for="descripcion"  class="control-label">Descripción</label>
-                                <div class="controls">
-                                    <input type="text" name="descripcion" id="descripcion" class="input-xlarge {required:true}" value=""/>
+                                    <div class="controls">
+                                        <select name="tipo" id="tipo" class="input-xlarge {required:true}"/>
+                                        <option value="CIVILES">CIVILES</option>
+                                        <option value="MILITARES">MILITARES</option>
+                                        <option value="SUBOFICIALES">SUBOFICIALES</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </c:when>
@@ -121,19 +163,13 @@
                                     <input type="text" name="empresa" id="empresa" class="input-xlarge {required:true}" value=""/>
                                 </div>
                             </div>
-                             <div class="control-group">
-                                <label for="cargo"  class="control-label">Cargo</label>
-                                <div class="controls">
-                                    <input type="text" name="cargo" id="cargo" class="input-xlarge {required:true}" value=""/>
-                                </div>
-                            </div>
                         </c:when>
                         <c:otherwise>
                         </c:otherwise>
                     </c:choose>
 
                     <div class="form-actions">
-                        <button class="btn btn-primary" type="submit">Crear Evaluador</button>
+                        <button class="btn btn-primary" type="submit" id="btnCrearEvaluador">Crear Evaluador</button>
                         <button class="btn" type="reset">Cancelar</button>
                     </div>
                 </fieldset>
