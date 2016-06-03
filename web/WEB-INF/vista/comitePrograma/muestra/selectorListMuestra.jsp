@@ -32,6 +32,22 @@
         var Anio = Hoy.getFullYear();
         var Fecha = Dia[Hoy.getDay()] + " " + Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
         $("#hora").html(" " + Fecha);
+                
+        $("#bpreparedCrearPersona").click(function() {
+            $.ajax({
+                type: 'POST',
+                url: "/sapnaval/controladorCP?action=preparedCrearEvaluador&fuente=${fuenteX}",
+                success: function(datos) {
+                    $("#editM").empty();
+                    $("#editM").append(datos);
+                    $("#contenido").show(200, function() {
+                        $("#dancing-dots-text").remove();
+                    });
+                } //fin success
+            }); //fin $.ajax    
+
+        });
+        
         $("#bpreparedEditarMuestra").click(function() {
             $.ajax({
                 type: 'POST',
@@ -46,6 +62,8 @@
             }); //fin $.ajax    
 
         });
+        
+        
         $("#printEnlace").click(function() {
             $('#printMuestra').printArea();
             return false;
@@ -135,6 +153,9 @@
                                             </c:choose>
                                         </tbody>
                                     </table>
+                                    <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
+                                        <a id="bpreparedCrearPersona" class="btn btn-large btn-primary"><i class="icon-edit-sign"></i> Crear Evaluador</a>
+                                    </c:if>
                                     <p id="total0" style="font-weight: bold">Total: ${fn:length(poblacion)}</p>
                                 </div>
                                 <div class="tab-pane" id="muestraes">

@@ -66,7 +66,7 @@
                     <c:choose>
                         <c:when test="${selectorFuente == 'Estudiante'}">
                             <div class="control-group">
-                                <label for="codigo"  class="control-label">Código</label>
+                                <label for="codigo"  class="control-label">Código ${selectorFuente}</label>
                                 <div class="controls">
                                     <input type="text" name="codigo" id="codigo" class="input-xlarge {required:true}" value=""/>
                                 </div>
