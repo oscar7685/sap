@@ -115,14 +115,14 @@ public abstract class AbstractFacade<T> {
         }
 
     }
-    
+
     public List<T> findByPersonasQueNOEstanEnlaMuestra(String muestrafuente, Object proceso) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().
-                createQuery("SELECT c FROM " + entityClass.getSimpleName() 
+                createQuery("SELECT c FROM " + entityClass.getSimpleName()
                 + " c WHERE c.procesoId = :proceso and c.personaId.id not IN  "
-                + "(select me.muestrapersonaId.cedula from "+muestrafuente+" me "
+                + "(select me.muestrapersonaId.cedula from " + muestrafuente + " me "
                 + "where me.muestrapersonaId.muestraId.procesoId =:proceso)", entityClass);
         q.setParameter("proceso", proceso);
         try {
@@ -135,14 +135,15 @@ public abstract class AbstractFacade<T> {
         }
 
     }
+
     public List<T> findByMuestraQueNOHaContestado(Object proceso) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().
-                createQuery("SELECT c FROM " + entityClass.getSimpleName() 
+                createQuery("SELECT c FROM " + entityClass.getSimpleName()
                 + " c WHERE c.muestrapersonaId.muestraId.procesoId =:proceso and c.muestrapersonaId.id not IN "
                 + "(select en.muestrapersonaId.id from Encabezado en where en.procesoId =:proceso)", entityClass);
-        
+
         q.setParameter("proceso", proceso);
         try {
             return q.getResultList();
@@ -280,6 +281,16 @@ public abstract class AbstractFacade<T> {
         return q.getResultList();
     }
 
+    public List<T> findByProcesoPreguntaFuente(Object proceso, Object pregunta, Object fuente) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.encabezadoId.procesoId =:proc and c.preguntaId = :preg and c.encabezadoId.fuenteId =:fuen", entityClass);
+        q.setParameter("proc", proceso);
+        q.setParameter("preg", pregunta);
+        q.setParameter("fuen", fuente);
+        return q.getResultList();
+    }
+
     public List<T> findPreguntasCerrarDesdeResultado(Object m1) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -307,7 +318,7 @@ public abstract class AbstractFacade<T> {
         q.setParameter("name", m);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
     public int countByProperty2(String property, Object m1, String property2, Object m2) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -326,7 +337,7 @@ public abstract class AbstractFacade<T> {
     public List findByMuestraConEncabezado(Proceso p) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        return getEntityManager().createQuery("SELECT m FROM "+ entityClass.getSimpleName() +" m join m.muestrapersonaId mp join mp.encabezadoList en WHERE en.muestrapersonaId = mp and en.procesoId=:proceso", entityClass).setParameter("proceso", p).getResultList();
+        return getEntityManager().createQuery("SELECT m FROM " + entityClass.getSimpleName() + " m join m.muestrapersonaId mp join mp.encabezadoList en WHERE en.muestrapersonaId = mp and en.procesoId=:proceso", entityClass).setParameter("proceso", p).getResultList();
     }
 
     public List findByMuestraSinEncabezado(Proceso p) {

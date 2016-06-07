@@ -5,11 +5,13 @@
 package com.sap.actions;
 
 import com.sap.ejb.CaracteristicaFacade;
+import com.sap.ejb.FuenteFacade;
 import com.sap.ejb.ModeloFacade;
 import com.sap.ejb.ProgramaFacade;
 import com.sap.ejb.RespuestasFacade;
 import com.sap.ejb.RolFacade;
 import com.sap.entity.Caracteristica;
+import com.sap.entity.Fuente;
 import com.sap.entity.Modelo;
 import com.sap.entity.Pregunta;
 import com.sap.entity.Proceso;
@@ -35,6 +37,7 @@ import javax.servlet.http.HttpSession;
  */
 public class ResultadosxProgramas implements Action {
 
+    FuenteFacade fuenteFacade = lookupFuenteFacadeBean();
     ProgramaFacade programaFacade = lookupProgramaFacadeBean();
     RolFacade rolFacade = lookupRolFacadeBean();
     RespuestasFacade respuestasFacade = lookupRespuestasFacadeBean();
@@ -46,37 +49,22 @@ public class ResultadosxProgramas implements Action {
         String url = "/WEB-INF/vista/comitePrograma/proceso/informe/dmaProgramas.jsp";
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        String programaid = (String) request.getParameter("programaId");
-        Programa prog = programaFacade.find(Integer.parseInt(programaid));
+        Programa prog = proceso.getProgramaId();
         String tipoF = prog.getTipoformacion();
-        Modelo m = null;
-        if (tipoF.equals("Universitaria")) {
-            m = modeloFacade.find(Integer.parseInt("2"));
-        } else if (tipoF.equals("Maestria")) {
-            m = modeloFacade.find(Integer.parseInt("3"));
-        } else {
-            m = modeloFacade.find(Integer.parseInt("4"));
-        }
-
+        Modelo m = proceso.getModeloId();
         List<Caracteristica> caractesticas = caracteristicaFacade.findByModeloOptimizada(m);
-
         String[][] resultados = new String[258][12];
         String[][] cerillos = new String[258][12];
-        List<Rol> roles = rolFacade.findAll();
+        List<Fuente> fuentes = fuenteFacade.findAll();
         for (Caracteristica caracteristica : caractesticas) {
             if (caracteristica.getPreguntaList().size() > 0) {
                 List<Pregunta> preguntas = caracteristica.getPreguntaList();
                 for (Pregunta pregunta : preguntas) {
                     if (pregunta.getPreguntaList().size() > 0) {
-                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {
-                            for (Rol rol : roles) {
+                        for (int i = 0; i < pregunta.getPreguntaList().size(); i++) {// Si la pregunta tiene subpreguntas
+                            for (Fuente fuente : fuentes) {
                                 List<Respuestas> rs = null;
-                                if ("si".equals(pregunta.getPreguntaList().get(i).getRepetir())) {
-                                    rs = respuestasFacade.findByPreguntaRol(pregunta.getPreguntaList().get(i), rol, prog);
-                                } else {
-                                    rs = respuestasFacade.findByPreguntaRol(pregunta.getPreguntaList().get(i), rol);
-                                }
-
+                                rs = respuestasFacade.findByProcesoPreguntaFuente(proceso, pregunta.getPreguntaList().get(i), fuente);
                                 int cuatros = 0, cincos = 0, ceros = 0;
                                 for (Respuestas respuestas : rs) {
                                     if (respuestas.getRespuesta() == 0) {
@@ -88,27 +76,20 @@ public class ResultadosxProgramas implements Action {
                                     }
                                 }
                                 if (rs.isEmpty()) {
-                                    resultados[pregunta.getPreguntaList().get(i).getId()][rol.getId()] = "-1";
+                                    resultados[pregunta.getPreguntaList().get(i).getId()][fuente.getId()] = "-1";
                                 } else {
                                     double dma = (double) ((cincos + cuatros) * 100) / rs.size();
                                     double cerosPorcentaje = (double) ((ceros) * 100) / rs.size();
-                                    resultados[pregunta.getPreguntaList().get(i).getId()][rol.getId()] = "" + dma + "";
-                                    cerillos[pregunta.getPreguntaList().get(i).getId()][rol.getId()] = "" + cerosPorcentaje;
+                                    resultados[pregunta.getPreguntaList().get(i).getId()][fuente.getId()] = "" + dma + "";
+                                    cerillos[pregunta.getPreguntaList().get(i).getId()][fuente.getId()] = "" + cerosPorcentaje;
+
                                 }
-                                //resultados[pregunta.getPreguntaList().get(i).getId()][1] = "" + rs.size() + "," + cincos + "," + cuatros + "," + tres + "," + dos + "," + unos + "," + ceros;
-                                //System.out.println(rs.size() + "," + cincos + "," + cuatros + "," + tres + "," + dos + "," + unos + "," + ceros);
                             }
-
                         }
-                    } else {
-                        for (Rol rol : roles) {
+                    } else { // Si la pregunta NO tiene subpreguntas
+                        for (Fuente fuente : fuentes) {
                             List<Respuestas> rs = null;
-                            if ("si".equals(pregunta.getRepetir())) {
-                                rs = respuestasFacade.findByPreguntaRol(pregunta, rol, prog);
-                            } else {
-                                rs = respuestasFacade.findByPreguntaRol(pregunta, rol);
-                            }
-
+                            rs = respuestasFacade.findByProcesoPreguntaFuente(proceso, pregunta, fuente);
                             int cuatros = 0, cincos = 0, ceros = 0;
                             for (Respuestas respuestas : rs) {
                                 if (respuestas.getRespuesta() == 0) {
@@ -120,15 +101,14 @@ public class ResultadosxProgramas implements Action {
                                 }
                             }
                             if (rs.isEmpty()) {
-                                resultados[pregunta.getId()][rol.getId()] = "-1";
+                                resultados[pregunta.getId()][fuente.getId()] = "-1";
                             } else {
                                 double dma = (double) ((cincos + cuatros) * 100) / rs.size();
                                 double cerosPorcentaje = (double) ((ceros) * 100) / rs.size();
-                                resultados[pregunta.getId()][rol.getId()] = "" + dma + "";
-                                cerillos[pregunta.getId()][rol.getId()] = "" + cerosPorcentaje;
+                                resultados[pregunta.getId()][fuente.getId()] = "" + dma + "";
+                                cerillos[pregunta.getId()][fuente.getId()] = "" + cerosPorcentaje;
+
                             }
-                            //resultados[pregunta.getPreguntaList().get(i).getId()][1] = "" + rs.size() + "," + cincos + "," + cuatros + "," + tres + "," + dos + "," + unos + "," + ceros;
-                            //System.out.println(rs.size() + "," + cincos + "," + cuatros + "," + tres + "," + dos + "," + unos + "," + ceros);
                         }
                     }
                 }
@@ -185,6 +165,16 @@ public class ResultadosxProgramas implements Action {
         try {
             Context c = new InitialContext();
             return (ProgramaFacade) c.lookup("java:global/sapnaval/ProgramaFacade!com.sap.ejb.ProgramaFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private FuenteFacade lookupFuenteFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (FuenteFacade) c.lookup("java:global/sapnaval/FuenteFacade!com.sap.ejb.FuenteFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

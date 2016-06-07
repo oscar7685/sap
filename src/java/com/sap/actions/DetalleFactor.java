@@ -48,38 +48,30 @@ public class DetalleFactor implements Action {
         HttpSession sesion = request.getSession();
         Proceso p = (Proceso) sesion.getAttribute("Proceso");
         String idFactor = request.getParameter("id");
-
+        
         Factor f = factorFacade.find(Integer.parseInt(idFactor));
         float sumaPon = 0;
         float suma2 = 0;
         float cumplimientoF=0;
+        
         List<Ponderacioncaracteristica> ponderacionesC = new ArrayList<Ponderacioncaracteristica>();
         List<Caracteristica> caracteristicas = f.getCaracteristicaList();
         float cumplimiento2[] = new float[caracteristicas.size()];
         for (int j = 0; j < caracteristicas.size(); j++) {
+
             Evaluarcaracteristica ev = evaluarcaracteristicaFacade.findBySingle2("caracteristicaId", caracteristicas.get(j), "procesoId", p);
             cumplimiento2[j] = ev.getEvaluacion();
-            Ponderacioncaracteristica pc = ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p);
-            ponderacionesC.add(pc);
-            if (cumplimiento2[j] != 0) {
-
-                sumaPon += pc.getPonderacion();
-                suma2 += cumplimiento2[j] * pc.getPonderacion();
-            }
+            ponderacionesC.add(ponderacioncaracteristicaFacade.findByCaracteristicaYProceso(caracteristicas.get(j), p));
         }
 
-        if (sumaPon != 0) {
-            
-            cumplimientoF = suma2 / sumaPon;
-            cumplimientoF = (float) (Math.rint(cumplimientoF * 10) / 10);
-        }
 
+        sesion.setAttribute("caracteristicas", caracteristicas);
+        sesion.setAttribute("ponderacionesC", ponderacionesC);
+        sesion.setAttribute("cumplimiento", cumplimiento2);
+
+        
         sesion.setAttribute("factor", f);
-        sesion.setAttribute("caracteristicasDF", caracteristicas);
-        sesion.setAttribute("ponderacionesCDF", ponderacionesC);
-        sesion.setAttribute("cumplimientoDF", cumplimiento2);
-        sesion.setAttribute("cumplimientoF", cumplimientoF);
-
+        
         return "/WEB-INF/vista/comitePrograma/proceso/informe/detalleFactor.jsp";
     }
 
