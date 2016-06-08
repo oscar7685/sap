@@ -1,6 +1,79 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/print.css" media="print">
+<link rel="stylesheet" href="css/jquery.fileupload.css">
+<style type="text/css">
+    #sharefLI_1 {
+        box-sizing: border-box;
+        color: rgb(95, 118, 118);
+        height: 43px;
+        width: 506.031px;
+        perspective-origin: 253.016px 21.5px;
+        transform-origin: 253.016px 21.5px;
+        border: 0px none rgb(95, 118, 118);
+        font: normal normal normal normal 14px / 20px 'Source Sans Pro', 'Segoe UI', 'Droid Sans', Tahoma, Arial, sans-serif;
+        list-style: none outside none;
+        outline: rgb(95, 118, 118) none 0px;
+    }/*#sharefLI_1*/
+
+    #sharefA_2 {
+        box-sizing: border-box;
+        color: rgb(52, 152, 219);
+        cursor: pointer;
+        display: inline-block;
+        height: 43px;
+        text-align: center;
+        text-decoration: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        white-space: nowrap;
+        width: 235.297px;
+        perspective-origin: 117.641px 21.5px;
+        transform-origin: 117.641px 21.5px;
+        background: rgba(255, 255, 255, 0) none repeat scroll 0% 0% / auto padding-box border-box;
+        border: 1px solid rgb(52, 152, 219);
+        border-radius: 3px 3px 3px 3px;
+        font: normal normal normal normal 17px / 22.61px 'Source Sans Pro', 'Segoe UI', 'Droid Sans', Tahoma, Arial, sans-serif;
+        list-style: none outside none;
+        outline: rgb(52, 152, 219) none 0px;
+        padding: 0px 29px 0px 21px;
+    }/*#sharefA_2*/
+
+    #sharefI_3 {
+        box-shadow: rgba(0, 0, 0, 0.0980392) -1px 0px 0px 0px inset;
+        box-sizing: border-box;
+        color: rgb(52, 152, 219);
+        cursor: pointer;
+        display: inline-block;
+        height: 41px;
+        left: -21px;
+        position: relative;
+        text-align: center;
+        white-space: nowrap;
+        width: 48px;
+        perspective-origin: 24px 20.5px;
+        transform-origin: 24px 20.5px;
+        background: rgba(0, 0, 0, 0.0196078) none repeat scroll 0% 0% / auto padding-box border-box;
+        border: 0px none rgb(52, 152, 219);
+        border-radius: 3px 0 0 3px;
+        font: normal normal normal normal 17px / 23px FontAwesome;
+        list-style: none outside none;
+        outline: rgb(52, 152, 219) none 0px;
+        padding: 9px;
+    }/*#sharefI_3*/
+
+    #sharefI_3:before {
+        box-sizing: border-box;
+        color: rgb(52, 152, 219);
+        cursor: pointer;
+        text-align: center;
+        white-space: nowrap;
+        border: 0px none rgb(52, 152, 219);
+        font: normal normal normal normal 17px / 23px FontAwesome;
+        list-style: none outside none;
+        outline: rgb(52, 152, 219) none 0px;
+    }/*#sharefI_3:before*/
+</style>
 <script type="text/javascript">
     $(function() {
 
@@ -32,7 +105,7 @@
         var Anio = Hoy.getFullYear();
         var Fecha = Dia[Hoy.getDay()] + " " + Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
         $("#hora").html(" " + Fecha);
-                
+
         $("#bpreparedCrearPersona").click(function() {
             $.ajax({
                 type: 'POST',
@@ -47,7 +120,7 @@
             }); //fin $.ajax    
 
         });
-        
+
         $("#bpreparedEditarMuestra").click(function() {
             $.ajax({
                 type: 'POST',
@@ -62,8 +135,8 @@
             }); //fin $.ajax    
 
         });
-        
-        
+
+
         $("#printEnlace").click(function() {
             $('#printMuestra').printArea();
             return false;
@@ -157,6 +230,41 @@
                                         <a id="bpreparedCrearPersona" class="btn btn-large btn-primary"><i class="icon-edit-sign"></i> Crear Evaluador</a>
                                     </c:if>
                                     <p id="total0" style="font-weight: bold">Total: ${fn:length(poblacion)}</p>
+                                    <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
+                                        <h2>Adjuntar Archivo con la población</h2> 
+                                        <form action="Formulario" class="form row-border" enctype='multipart/form-data'>
+                                            <div class="form-group">
+                                                <!-- The global progress bar -->
+                                                <div class="col-sm-12">
+                                                    <div id="progress" class="progress">
+                                                        <div class="progress-bar progress-bar-success"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5">
+
+                                                    <span class="btn btn-success fileinput-button">      
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                        <span>Seleccionar archivo...</span>
+                                                        <input id="fileupload" type="file" name="files[]" multiple>
+                                                    </span>
+
+                                                </div>
+                                                <label class="col-sm-10 control-label">Ingrese el archivo excel con la poblaci&oacute;n de ${fuenteX}s asociada del programa ${Proceso.programaId.nombre}.<br>Solamente se aceptan archivos con el formato brindado.</label>
+
+                                                <div class="col-sm-10">
+                                                    <div class="col-sm-5">
+                                                        <li id="sharefLI_1">
+                                                            <a href="DescargarFormato?fuente=${fuenteX}" id="sharefA_2"><i id="sharefI_3" class="icon-download-alt"></i> Descargar formato</a>
+                                                        </li>
+                                                    </div>
+                                                    <!-- The file input field used as target for the file upload widget -->
+                                                    <!-- The container for the uploaded files -->
+                                                    <div id="files" class="files"></div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </c:if>
                                 </div>
                                 <div class="tab-pane" id="muestraes">
                                     <div class="btn-group" data-toggle="buttons">
@@ -242,8 +350,65 @@
         </div>
     </div>
 </div>
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script src="js/jquery.fileupload-process.js"></script>
+<script src="js/jquery.fileupload-validate.js"></script>
+<!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
+        'use strict';
+
+    // Initialize the jQuery File Upload widget:
+    $('#fileupload').fileupload({
+        // Uncomment the following to send cross-domain cookies:
+        //xhrFields: {withCredentials: true},
+        url: 'SubirArchivo',
+        acceptFileTypes: /(\.|\/)(gif|jpg|png|pdf|xlsx)$/i,
+        previewFileTypes: /^.*\/(gif|jpeg|png|pdf|PDF)$/
+
+    });
+
+    // Enable iframe cross-domain access via redirect option:
+    $('#fileupload').fileupload(
+            'option',
+            'redirect',
+            window.location.href.replace(
+            /\/[^\/]*$/,
+            '/cors/result.html?%s'
+            )
+            ).bind('fileuploaddestroy', function(e, data) {
+        if (e.isDefaultPrevented()) {
+            return false;
+        }
+        var that = $(this).data('blueimp-fileupload') ||
+                $(this).data('fileupload'),
+                removeNode = function() {
+            that._transition(data.context).done(
+                    function() {
+                        $(this).remove();
+                        that._trigger('destroyed', e, data);
+                    }
+            );
+        };
+        if (data.url) {
+            data.dataType = data.dataType || that.options.dataType;
+            $.ajax(data).done(removeNode).fail(function() {
+                that._trigger('destroyfailed', e, data);
+                removeNode();
+            });
+        } else {
+            removeNode();
+        }
+
+    }).bind('fileuploaddone', function(e, data) {
+        $("#dancing-dots-text").remove();
+    });
+
+
         $('#tablaY1').DataTable({
             bPaginate: false,
             aaSorting: [],

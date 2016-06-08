@@ -107,7 +107,7 @@
                                 <div class="control-group">
                                     <label for="tipo"  class="control-label">Tipo</label>
                                     <div class="controls">
-                                        <select name="tipo" id="tipo" class="input-xlarge {required:true}"/>
+                                        <select name="tipo" id="tipo" class="input-xlarge {required:true}">
                                         <option value="OFICIALES">OFICIALES</option>
                                         <option value="CADETES">CADETES</option>
                                         <option value="ESPECIALIZACION">ESPECIALIZACIÓN</option>

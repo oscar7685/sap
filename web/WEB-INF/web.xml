@@ -47,6 +47,14 @@
         <servlet-name>DescargarAnexo</servlet-name>
         <servlet-class>com.sap.controller.DescargarAnexo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DescargarFormato</servlet-name>
+        <servlet-class>com.sap.controller.DescargarFormato</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubirArchivo</servlet-name>
+        <servlet-class>com.sap.controller.SubirArchivo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -74,6 +82,14 @@
     <servlet-mapping>
         <servlet-name>DescargarAnexo</servlet-name>
         <url-pattern>/DescargarAnexo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DescargarFormato</servlet-name>
+        <url-pattern>/DescargarFormato</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubirArchivo</servlet-name>
+        <url-pattern>/SubirArchivo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

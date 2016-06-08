@@ -116,6 +116,19 @@ public class RespuestasFacade extends AbstractFacade<Respuestas> {
                 + "where caracteristica.id = '" + caracteristica + "' and encabezado.encuesta_id = '" + encuesta + "' and encabezado.proceso_id = '" + proceso + "' ");
         return q.getResultList();
     }
+    public List findByCaracteristicayFuente(int caracteristica, int fuente, int proceso) {
+        Query q = em.createNativeQuery("select sum(case when resultadoevaluacion.respuesta = '4' then '1' when resultadoevaluacion.respuesta = '5' then '1' else '0' end)  as dma,\n"
+                + "count(*) as total,\n"
+                + "sum(case when resultadoevaluacion.respuesta = '0' then '1' else '0' end)  as ceros \n"
+                + "from resultadoevaluacion   \n"
+                + "inner join encabezado on encabezado.id = resultadoevaluacion.encabezado_id\n"
+                + "inner join pregunta on pregunta.id = resultadoevaluacion.pregunta_id   \n"
+                + "left join pregunta as padre on padre.id = pregunta.pregunta_padre   \n"
+                + "inner join pregunta_has_caracteristica on (pregunta_has_caracteristica.pregunta_id = pregunta.id or pregunta_has_caracteristica.pregunta_id = padre.id) \n"
+                + "inner join caracteristica on caracteristica.id = pregunta_has_caracteristica.caracteristica_id  \n"
+                + "where caracteristica.id = '" + caracteristica + "' and encabezado.fuente_id = '" + fuente + "' and encabezado.proceso_id = '" + proceso + "' ");
+        return q.getResultList();
+    }
 
     public List findByFactoryEncuesta(int factor, int encuesta, int proceso) {
         Query q = em.createNativeQuery("select sum(case when resultadoevaluacion.respuesta = '4' then '1' when resultadoevaluacion.respuesta = '5' then '1' else '0' end)  as dma, \n"
@@ -128,9 +141,25 @@ public class RespuestasFacade extends AbstractFacade<Respuestas> {
                 + " inner join pregunta_has_caracteristica on (pregunta_has_caracteristica.pregunta_id = pregunta.id or pregunta_has_caracteristica.pregunta_id = padre.id)    \n"
                 + " inner join caracteristica on caracteristica.id = pregunta_has_caracteristica.caracteristica_id   \n"
                 + " inner join factor on factor.id = caracteristica.factor_id  \n"
-                + " where factor.id = '" + factor + "' and encabezado.encuesta_id = '" + encuesta + "' and encabezado.proceso_id = '" + encuesta + "'");
+                + " where factor.id = '" + factor + "' and encabezado.encuesta_id = '" + encuesta + "' and encabezado.proceso_id = '" + proceso + "'");
         return q.getResultList();
     }
+    
+    public List findByFactoryFuente(int factor, int fuente, int proceso) {
+        Query q = em.createNativeQuery("select sum(case when resultadoevaluacion.respuesta = '4' then '1' when resultadoevaluacion.respuesta = '5' then '1' else '0' end)  as dma, \n"
+                + " count(*) as total,  \n"
+                + " sum(case when resultadoevaluacion.respuesta = '0' then '1' else '0' end)  as ceros  \n"
+                + " from resultadoevaluacion      \n"
+                + " inner join encabezado on encabezado.id = resultadoevaluacion.encabezado_id \n"
+                + " inner join pregunta on pregunta.id = resultadoevaluacion.pregunta_id      \n"
+                + " left join pregunta as padre on padre.id = pregunta.pregunta_padre      \n"
+                + " inner join pregunta_has_caracteristica on (pregunta_has_caracteristica.pregunta_id = pregunta.id or pregunta_has_caracteristica.pregunta_id = padre.id)    \n"
+                + " inner join caracteristica on caracteristica.id = pregunta_has_caracteristica.caracteristica_id   \n"
+                + " inner join factor on factor.id = caracteristica.factor_id  \n"
+                + " where factor.id = '" + factor + "' and encabezado.fuente_id = '" + fuente + "' and encabezado.proceso_id = '" + proceso + "'");
+        return q.getResultList();
+    }
+    
 
     public List findByPreguntaRol(Pregunta p, Rol r, Programa prog) {
         Query q = em.createNamedQuery("Respuestas.findByPreguntaRolxPrograma");

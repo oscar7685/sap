@@ -50,7 +50,7 @@ public class GraficasDMA implements Action {
         String url = "/WEB-INF/vista/comitePrograma/proceso/informe/graficasDMA.jsp";
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        Modelo m = modeloFacade.find(Integer.parseInt("1"));
+        Modelo m = proceso.getModeloId();
         List<Factor> factores = factorFacade.findByModelo(m);
         
         sesion.setAttribute("factores", factores);
