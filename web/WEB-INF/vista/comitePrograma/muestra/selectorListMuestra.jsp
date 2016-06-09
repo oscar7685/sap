@@ -406,6 +406,7 @@
 
     }).bind('fileuploaddone', function(e, data) {
         $("#dancing-dots-text").remove();
+        $('#selectListMuestra').val('--').trigger('change');
     });
 
 

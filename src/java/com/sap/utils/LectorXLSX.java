@@ -77,14 +77,12 @@ public class LectorXLSX {
     private void Leer(List cellDataList, int i0, Proceso pr) {
         boolean sapo = false; //avisa si ha ocurrido un error de validación
         String errores = "";
-        List<Persona> personas = new ArrayList<Persona>();
-        List<Estudiante> estudiantes = new ArrayList<Estudiante>();
-        for (int i = 1; i < cellDataList.size(); i++) {
+        for (int i = 1; i < cellDataList.size(); i++) { //recorre las filas
+            personaExistente = false;
             Persona p = new Persona();
             Estudiante e = new Estudiante();
             List cellTempList = (List) cellDataList.get(i);
-            for (int j = 0; j < cellTempList.size(); j++) {
-                personaExistente = false;
+            for (int j = 0; j < cellTempList.size(); j++) {//recorre las celdas
                 XSSFCell hssfCell = (XSSFCell) cellTempList.get(j);
                 if (i0 == 0) {
                     if (j == 0) {// identificacion
@@ -92,7 +90,7 @@ public class LectorXLSX {
                             String aux = "" + new BigDecimal(Double.valueOf(hssfCell.getNumericCellValue())).toPlainString();
 
                             if (!aux.equals("0")) {
-                                
+
                                 p = personaFacade.find(aux);
                                 if (p == null) {
                                     p = new Persona();
@@ -114,7 +112,7 @@ public class LectorXLSX {
                         }
 
 
-                    } else if (j == 2 && !personaExistente) {//nombre
+                    } else if (j == 1 && !personaExistente) {//nombre
                         try {
                             if (!hssfCell.toString().equals("")) {
                                 p.setNombre(hssfCell.toString());
@@ -128,7 +126,7 @@ public class LectorXLSX {
                             errores += "<br/>ha ocurrido un error de validación con el nombre en el registro #" + (i + 1);
                             sapo = true;
                         }
-                    } else if (j == 3 && !personaExistente) {//curso
+                    } else if (j == 2 && !personaExistente) {//curso
                         try {
                             if (!hssfCell.toString().equals("")) {
                                 e.setCurso(hssfCell.toString());
@@ -142,7 +140,7 @@ public class LectorXLSX {
                             errores += "<br/>ha ocurrido un error de validación con el apellido en el registro #" + (i + 1);
                             sapo = true;
                         }
-                    } else if (j == 4) {//tipo
+                    } else if (j == 3) {//tipo
                         try {
                             e.setTipo(hssfCell.toString());
                         } catch (Exception exc) {
@@ -157,8 +155,9 @@ public class LectorXLSX {
                 if (p.getId() != null) {
                     if (!personaExistente) {
                         personaFacade.create(p);
+                        p = personaFacade.find(p.getId());
                     }
-                    p = personaFacade.find(p.getId());
+
                     e.setPersonaId(p);
                     e.setId("" + pr.getId() + "-" + p.getId());
                     e.setAnio("2016");

@@ -76,7 +76,7 @@ public class SubirArchivo extends HttpServlet {
                     try {
                         // escribimos el fichero colgando del nuevo path
                         actual.write(fichero);
-                        Proceso pro = (Proceso) sesion.getAttribute("proceso");
+                        Proceso pro = (Proceso) sesion.getAttribute("Proceso");
                         String fuente = (String) sesion.getAttribute("fuenteX");
                         LectorXLSX pb = new LectorXLSX(fichero, pro, response, fuente);
 
