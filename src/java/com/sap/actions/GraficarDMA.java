@@ -582,18 +582,11 @@ public class GraficarDMA implements Action {
                                 List<Object[]> dmaTotalyCeros = respuestasFacade.findByPreguntayEncuesta(preg.getId(), enc.getId(), proceso.getId());
                                 if (dmaTotalyCeros.size() > 0) {
                                     for (Object[] objects : dmaTotalyCeros) {
-                                        //dmaX = (double) ((Double.parseDouble(objects[0].toString()) * 100) / Long.parseLong(objects[1].toString()));
-                                        // dmaX = Math.rint(dmaX * 100) / 100;
                                         total5y4 += Double.parseDouble(objects[0].toString());
                                         total += Long.parseLong(objects[1].toString());
-                                        // ejeX.add("" + dmaX);
                                     }
-                                } else {
-                                    // ejeX.add("0.0");
-                                }
-                            } else {
-                                //  ejeX.add("0.0");
-                            }
+                                } 
+                            } 
                         }
                         ejeY.add("TOTAL PREGUNTA");
                         dmaTotal = (double) (total5y4 * 100 / total);
