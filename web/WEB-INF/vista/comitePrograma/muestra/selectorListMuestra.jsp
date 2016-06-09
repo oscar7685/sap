@@ -254,7 +254,7 @@
                                                 <div class="col-sm-10">
                                                     <div class="col-sm-5">
                                                         <li id="sharefLI_1">
-                                                            <a href="DescargarFormato?fuente=${fuenteX}" id="sharefA_2"><i id="sharefI_3" class="icon-download-alt"></i> Descargar formato</a>
+                                                            <a href="DescargarFormato?fuente=${fuenteX}" id="sharefA_2" target="_blank"><i id="sharefI_3" class="icon-download-alt"></i> Descargar formato</a>
                                                         </li>
                                                     </div>
                                                     <!-- The file input field used as target for the file upload widget -->

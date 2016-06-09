@@ -39,17 +39,17 @@ private final Logger LOGGER = Logger.getLogger(DescargarFormato.class);
             String ruta = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/com/sap/files/");
 
             if (fuente.equals("Estudiante")) {
-                ruta += "\\formato_estudiantes.xls";
+                ruta += "\\formato_estudiantes.xlsx";
             } else if (fuente.equals("Docente")) {
-                ruta += "\\formato_docentes.xls";
+                ruta += "\\formato_docentes.xlsx";
             } else if (fuente.equals("Administrativo")) {
-                ruta += "\\formato_administrativos.xls";
+                ruta += "\\formato_administrativos.xlsx";
             } else if (fuente.equals("Directivo")) {
-                ruta += "\\formato_directivos.xls";
+                ruta += "\\formato_directivos.xlsx";
             } else if (fuente.equals("Egresado")) {
-                ruta += "\\formato_egresados.xls";
+                ruta += "\\formato_egresados.xlsx";
             } else if (fuente.equals("Empleador")) {
-                ruta += "\\formato_empleadores.xls";
+                ruta += "\\formato_empleadores.xlsx";
             }
 
 
