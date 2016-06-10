@@ -14,7 +14,7 @@
                     <div class="tab-pane active" id="home">
                         <ul class="breadcrumb">
                             <li>Hallazgos</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
+                            <a id="printEnlace" target="_blank" href="/sapenfermeria/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
                         <h3>Listado de  Hallazgos</h3>
                         <c:choose>
@@ -53,7 +53,7 @@
                     <div class="tab-pane" id="profile">
                         <ul class="breadcrumb">
                             <li>Fortalezas</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
+                            <a id="printEnlace" target="_blank" href="/sapenfermeria/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
                          <h3>Listado de  Fortalezas</h3>
                       <c:choose>

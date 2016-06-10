@@ -46,10 +46,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCC?action=editarPregunta",
+                    url: "/sapenfermeria/controladorCC?action=editarPregunta",
                     data: $("#formEditarPregunta").serialize(),
                     success: function() {
-                        location = "/sap/#listarPreguntas";
+                        location = "/sapenfermeria/#listarPreguntas";
                     } //fin success
                 }); //fin $.ajax    
             }

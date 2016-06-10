@@ -38,8 +38,8 @@
                     <li><a href="#controlPanel"><i class="icon-level-up"></i>Regresar al panel</a></li>
                     <li class="nav-header">Proceso de Autoevaluación</li>
                     <li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>
-                    <li><a href="#listPonderacionFactor"><i class="icon-list"></i> Factores</a></li>
-                    <li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>
+                    <li><a href="#listPonderacionFactor"><i class="icon-list"></i> Dimensiones</a></li>
+                    <li><a href="#listPonderacionCara"><i class="icon-list"></i> Componentes</a></li>
                     <li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>
                     <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>
                     <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>

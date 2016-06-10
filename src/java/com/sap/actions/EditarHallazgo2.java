@@ -47,7 +47,7 @@ public class EditarHallazgo2 implements Action {
     private CaracteristicaFacade lookupCaracteristicaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (CaracteristicaFacade) c.lookup("java:global/sap/CaracteristicaFacade!com.sap.ejb.CaracteristicaFacade");
+            return (CaracteristicaFacade) c.lookup("java:global/sapenfermeria/CaracteristicaFacade!com.sap.ejb.CaracteristicaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -57,7 +57,7 @@ public class EditarHallazgo2 implements Action {
     private HallazgoFacade lookupHallazgoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (HallazgoFacade) c.lookup("java:global/sap/HallazgoFacade!com.sap.ejb.HallazgoFacade");
+            return (HallazgoFacade) c.lookup("java:global/sapenfermeria/HallazgoFacade!com.sap.ejb.HallazgoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

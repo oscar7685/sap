@@ -40,7 +40,7 @@ public class ListarEvaluarNum implements Action {
     private NumericadocumentalFacade lookupNumericadocumentalFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (NumericadocumentalFacade) c.lookup("java:global/sap/NumericadocumentalFacade!com.sap.ejb.NumericadocumentalFacade");
+            return (NumericadocumentalFacade) c.lookup("java:global/sapenfermeria/NumericadocumentalFacade!com.sap.ejb.NumericadocumentalFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -50,7 +50,7 @@ public class ListarEvaluarNum implements Action {
     private InstrumentoFacade lookupInstrumentoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (InstrumentoFacade) c.lookup("java:global/sap/InstrumentoFacade!com.sap.ejb.InstrumentoFacade");
+            return (InstrumentoFacade) c.lookup("java:global/sapenfermeria/InstrumentoFacade!com.sap.ejb.InstrumentoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

@@ -5,13 +5,13 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=crearEvaluador",
+                    url: "/sapenfermeria/controladorCP?action=crearEvaluador",
                     data: $("#formCrearEvaluador").serialize(),
                     success: function() {
                         $("#listM").empty();
                         $.ajax({
                             type: 'POST',
-                            url: "/sap/controladorCP?action=selectorListMuestra",
+                            url: "/sapenfermeria/controladorCP?action=selectorListMuestra",
                             data: $("#formListarMuestra").serialize(),
                             success: function(datos) {
                                 $(".divEvaluador").remove();

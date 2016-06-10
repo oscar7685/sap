@@ -116,11 +116,11 @@
                 <div class="span2"></div>
                 <div class="span5" style="margin-left: 0px">
                     <br/>
-                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img  src="/sap/img/logooficial2.png" style="margin-top: 12px; margin-left: 0px;"></a></p>
+                    <p><a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img  src="/sapenfermeria/img/logooficial2.png" style="margin-top: 12px; margin-left: 0px;"></a></p>
                 </div>
                 <div class="span3">
                     <br/>
-                    <p><a title="Universidad de Cartagena" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="/sap/img/MEDALLA.png" style="margin-top: -30px;width: 180px;"></a></p>
+                    <p><a title="Universidad de Cartagena" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="/sapenfermeria/img/MEDALLA.png" style="margin-top: -30px;width: 180px;"></a></p>
                 </div>
                 <div class="span2"></div>
             </div>

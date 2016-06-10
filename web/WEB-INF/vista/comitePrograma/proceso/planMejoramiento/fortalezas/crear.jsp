@@ -10,10 +10,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=crearFortaleza2",
+                    url: "/sapenfermeria/controladorCP?action=crearFortaleza2",
                     data: $("#formCrearFortaleza").serialize(),
                     success: function() {
-                        location = "/sap/#listarFortalezas";
+                        location = "/sapenfermeria/#listarFortalezas";
                     } //fin success
                 }); //fin $.ajax    */
             }
@@ -33,7 +33,7 @@
                     <div class="tab-pane" id="home">
                         <ul class="breadcrumb">
                             <li>Hallazgos</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
+                            <a id="printEnlace" target="_blank" href="/sapenfermeria/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
                         <h3>Listado de  Hallazgos</h3>
                         <c:choose>
@@ -73,7 +73,7 @@
                         <ul class="breadcrumb">
                             <li><a href="<%=request.getContextPath()%>/#listarFortalezas" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar fortalezas">Fortalezas</a> <span class="divider">/</span></li>
                             <li>Crear</li>
-                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
+                            <a id="printEnlace" target="_blank" href="/sapenfermeria/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
                            <form id="formCrearFortaleza" class="form-horizontal" method="post">
                             <fieldset>

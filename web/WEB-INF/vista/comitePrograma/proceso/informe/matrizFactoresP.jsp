@@ -190,10 +190,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <div class="btn-group offset7">
-                <a class="btn" href="#informeMatrizFactores">Todo</a>
-                <a class="btn active" style="cursor:default;">S&oacute;lo percepci&oacute;n</a>
-            </div>
             <legend>Matriz de Calidad de Factores</legend>
             <ul class="breadcrumb">
                 <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>

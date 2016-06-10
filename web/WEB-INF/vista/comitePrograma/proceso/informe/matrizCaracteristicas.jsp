@@ -18,7 +18,7 @@
             margin: [ 50, 30, 100, 50]
     },
             title: {
-    text: 'Matriz de calidad de características'
+    text: 'Matriz de calidad de componentes'
     },
             xAxis: {
     categories: [
@@ -84,7 +84,7 @@
         }
         },
                 series: [{
-        name: 'Caracteristicas',
+        name: 'Componente',
                 data: [
     <c:forEach items="${caracteristicas}" var="caracteristica4" varStatus="status33">
         <fmt:parseNumber var="cum5"  value="${cumplimiento[status33.index]}" />
@@ -196,14 +196,10 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <div class="btn-group offset7">
-                <a class="btn active" style="cursor:default;">Todo</a>
-                <a class="btn" href="#informeMatrizCaracteristicasP">S&oacute;lo percepci&oacute;n</a>
-            </div>
-            <legend>Matriz de Calidad de Caracteristicas</legend>
+            <legend>Matriz de Calidad de Componentes</legend>
             <ul class="breadcrumb">
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
-                <li class="active">Matriz de Calidad de Características</li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Dimensiones</a> <span class="divider">/</span></li>
+                <li class="active">Matriz de Calidad de Componentes</li>
             </ul>
             <br>
             <c:choose>
@@ -212,12 +208,8 @@
                     <table class="table table-striped table-bordered table-condensed inicial">
                         <thead>
                         <th>Id</th>
-                        <th>Caracteristica</th>
-                        <th>Nivel de importacia</th>
-                        <th>Ponderacion caracteristica</th>
+                        <th>Componente</th>
                         <th>Grado de Cumplimiento</th>
-                        <th>Evaluacion teniendo en cuenta ponderacion</th>
-                        <th>Logro ideal</th>
                         <th>Relacion con el logro ideal</th>
                         </thead>
                         <tbody>
@@ -233,19 +225,7 @@
                                                 <a href="#detalleCaracteristica&${caracteristica.id}" data="${caracteristica.nombre}">${caracteristica.nombre}</a> 
                                             </td>
                                             <td>   
-                                                ${ponderacionesC.get(iter.index).nivelimportancia}
-                                            </td>
-                                            <td>   
-                                                ${ponderacionesC.get(iter.index).ponderacion}
-                                            </td>
-                                            <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimiento[iter.index]}"/>
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimiento[iter.index] * ponderacionesC.get(iter.index).ponderacion}"/>
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesC.get(iter.index).ponderacion}"/>
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimiento[iter.index] * 20}"/>%
