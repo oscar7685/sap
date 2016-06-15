@@ -109,6 +109,26 @@ public class SelectorListMuestra implements Action {
                 }
             } else {
                 sesion.setAttribute("Muestra", m); //null
+                if (fuente.equals("Estudiante")) {
+                        //ESTUDIANTES
+                        sesion.setAttribute("poblacion", estudianteFacade.findByList("procesoId", proceso));
+                    } else if (fuente.equals("Docente")) {
+                        //DOCENTES
+                        sesion.setAttribute("poblacion", docenteFacade.findByList("procesoId", proceso));
+                    } else if (fuente.equals("Egresado")) {
+                        //EGRESADOS
+                        sesion.setAttribute("poblacion", egresadoFacade.findByList("procesoId", proceso));
+                    } else if (fuente.equals("Administrativo")) {
+                        //ADMINISTRATIVOS
+                        sesion.setAttribute("poblacion", administrativoFacade.findByList("procesoId", proceso));
+                    } else if (fuente.equals("Directivo")) {
+                        //DIRECTIVOS
+                        sesion.setAttribute("poblacion", directorprogramaFacade.findByList("procesoId", proceso));
+                    } else if (fuente.equals("Empleador")) {
+                        //EMPLEADORES
+                        sesion.setAttribute("poblacion", empleadorFacade.findByList("procesoId", proceso));
+                    }
+                
             }
         } catch (Exception e) {
             LOGGER.error("Se ha presentado un error: ", e);
