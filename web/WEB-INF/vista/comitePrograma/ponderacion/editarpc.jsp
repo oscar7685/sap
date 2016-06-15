@@ -227,7 +227,7 @@
                                             <input type="hidden"  value="${row.id}" name="id${row.id}">
                                         </td>
                                         <td>
-                                            <textarea value="" name="justificacion${row.id}" rows="4" class="span5 {required:true}">${row.justificacion}</textarea>
+                                            <textarea value="" name="justificacion${row.id}" rows="4" class="span5 {required:true}" maxlength="1999">${row.justificacion}</textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}" />
