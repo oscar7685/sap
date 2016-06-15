@@ -73,10 +73,10 @@ public class ListMuestra implements Action {
                 m = (Muestra) i.next();
                 sesion.setAttribute("Muestra", m);
             }
-            url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";
+            url = "/WEB-INF/vista/comitePrograma/muestra/listarMuestra.jsp";//cuando ya la muestra ha sido asignada
         } else {
             sesion.setAttribute("Muestra", m);
-            url = "/WEB-INF/vista/comitePrograma/muestra/asignarMuestra.jsp";
+            url = "/WEB-INF/vista/comitePrograma/muestra/asignarMuestra.jsp"; //cuando aun la muestra NO ha sido asignada
         }
 
         return url;

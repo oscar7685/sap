@@ -67,14 +67,14 @@ public class SelectorListMuestra implements Action {
             Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
             List<Muestra> lm = muestraFacade.findByList("procesoId", proceso);
             String fuente = request.getParameter("fuente");
-
+            sesion.setAttribute("fuenteX", "" + fuente);
             Muestra m = null;
             if (!lm.isEmpty()) {
                 Iterator i = lm.iterator();
                 while (i.hasNext()) {
                     m = (Muestra) i.next();
                     sesion.setAttribute("Muestra", m);
-                    sesion.setAttribute("fuenteX", "" + fuente);
+
                     if (fuente.equals("Estudiante")) {
                         //ESTUDIANTES
                         sesion.setAttribute("listMuestraCon", muestraestudianteFacade.findByMuestraConEncabezado(proceso));
