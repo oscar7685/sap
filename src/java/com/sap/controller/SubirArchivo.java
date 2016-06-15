@@ -38,7 +38,7 @@ public class SubirArchivo extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final Logger LOGGER = Logger.getLogger(cpController.class);
+    private final Logger LOGGER = Logger.getLogger(SubirArchivo.class);
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileUploadException {

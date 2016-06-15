@@ -79,7 +79,14 @@ public abstract class AbstractFacade<T> {
         Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :name1 and c." + property2 + " = :name2", entityClass);
         q.setParameter("name1", m1);
         q.setParameter("name2", m2);
-        return (T) q.getSingleResult();
+        try {
+            return (T) q.getSingleResult();
+        } catch (Exception e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Excepcion en el metodo findBySingle2", e);
+            }
+            return null;
+        }
     }
 
     public List<Proceso> findByListReprestanteMultiple(String property, Object m) {

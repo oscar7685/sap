@@ -28,6 +28,7 @@
                 suma += Number($(this).val());
 
             });
+            suma = parseFloat(suma).toFixed(2);
             $("li a#total").html("<strong>Total Ponderacion: " + suma + "</strong>");
 
         });
@@ -68,7 +69,8 @@
                     $("input[name^='ponderacion']").each(function() {
                         suma2 += Number($(this).val());
                     });
-                    if (suma2 === 100) {
+                    suma2 = parseFloat(suma2).toFixed(2);
+                    if (suma2 == 100.00) {
                         $('#PonderacionFactores').hide();
                     }
                 }
@@ -90,7 +92,9 @@
 
 
                 });
-                if (suma === 100) {
+
+                suma = parseFloat(suma).toFixed(2);
+                if (suma == 100.00) {
                     setTimeout(function() {
                         $.ajax({
                             type: 'POST',

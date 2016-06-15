@@ -158,22 +158,46 @@ public class LectorXLSX {
                         p = personaFacade.find(p.getId());
                     }
 
-                    e.setPersonaId(p);
-                    e.setId("" + pr.getId() + "-" + p.getId());
-                    e.setAnio("2016");
-                    e.setPeriodo("01");
-                    e.setSemestre("03");
-                    e.setProcesoId(pr);
-                    e.setProgramaId(pr.getProgramaId());
-                    String tipo = e.getTipo();
-                    if (tipo.equals("OFICIALES") || tipo.equals("CADETES")) {
-                        e.setFuenteId(fuenteFacade.find(1));
-                    } else if (tipo.equals("MAESTRIA")) {
-                        e.setFuenteId(fuenteFacade.find(8));
-                    } else if (tipo.equals("ESPECIALIZACION")) {
-                        e.setFuenteId(fuenteFacade.find(7));
+                    if (!personaExistente) {
+                        e.setPersonaId(p);
+                        e.setId("" + pr.getId() + "-" + p.getId());
+                        e.setAnio("2016");
+                        e.setPeriodo("01");
+                        e.setSemestre("03");
+                        e.setProcesoId(pr);
+                        e.setProgramaId(pr.getProgramaId());
+                        String tipo = e.getTipo();
+                        if (tipo.equals("OFICIALES") || tipo.equals("CADETES")) {
+                            e.setFuenteId(fuenteFacade.find(1));
+                        } else if (tipo.equals("MAESTRIA")) {
+                            e.setFuenteId(fuenteFacade.find(8));
+                        } else if (tipo.equals("ESPECIALIZACION")) {
+                            e.setFuenteId(fuenteFacade.find(7));
+                        }
+                        estudianteFacade.create(e);
+                    } else {
+                        Estudiante aux = estudianteFacade.findBySingle2("procesoId", pr, "personaId", p);
+                        if (aux == null) {
+                            e.setPersonaId(p);
+                            e.setId("" + pr.getId() + "-" + p.getId());
+                            e.setAnio("2016");
+                            e.setPeriodo("01");
+                            e.setSemestre("03");
+                            e.setProcesoId(pr);
+                            e.setProgramaId(pr.getProgramaId());
+                            String tipo = e.getTipo();
+                            if (tipo.equals("OFICIALES") || tipo.equals("CADETES")) {
+                                e.setFuenteId(fuenteFacade.find(1));
+                            } else if (tipo.equals("MAESTRIA")) {
+                                e.setFuenteId(fuenteFacade.find(8));
+                            } else if (tipo.equals("ESPECIALIZACION")) {
+                                e.setFuenteId(fuenteFacade.find(7));
+                            }
+                            estudianteFacade.create(e);
+                        }
                     }
-                    estudianteFacade.create(e);
+
+
                 }
             }
         } //termina la hoja actual

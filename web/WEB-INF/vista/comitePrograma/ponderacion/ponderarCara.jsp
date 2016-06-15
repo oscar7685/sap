@@ -32,13 +32,14 @@
                 error.appendTo($(element).parent("td").find("div"));
             },
             submitHandler: function() {
-                 sapo = 0;
+                sapo = 0;
     <c:forEach items="${listFactores}" var="factAux" varStatus="statusfactAux">
                 sum = 0;
                 $(".factorX${factAux.id}").each(function(index, element) {
                     sum += Number($(this).val());
                 });
-                if (sum === 100) {
+                sum = parseFloat(sum).toFixed(2);
+                if (sum == 100.00) {
                     $("#factorId${factAux.id}").html(" -> " + sum);
                     $("#factorId${factAux.id}").parents("tr").removeClass();
                     $("#factorId${factAux.id}").parents("tr").addClass("success");

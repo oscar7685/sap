@@ -31,13 +31,14 @@
                 error.appendTo($(element).parent("td").find("div"));
             },
             submitHandler: function() {
-                 sapo = 0;
+                sapo = 0;
     <c:forEach items="${listFactores}" var="factAux" varStatus="statusfactAux">
                 sum = 0;
                 $(".factorX${factAux.id}").each(function(index, element) {
                     sum += Number($(this).val());
                 });
-                if (sum === 100) {
+                sum = parseFloat(sum).toFixed(2);
+                if (sum == 100.00) {
                     $("#factorId${factAux.id}").html(" -> " + sum);
                     $("#factorId${factAux.id}").parents("tr").removeClass();
                     $("#factorId${factAux.id}").parents("tr").addClass("success");
@@ -62,17 +63,17 @@
                         $('div.ui-layout-center').animate({scrollTop: 10}, 500);
                     }
                 }
-        });
+            });
 
-        $("#popover").popover({
-            trigger: 'hover',
-            placement: 'bottom',
-            html: true,
-            content: function() {
-                return '<img src="<%=request.getContextPath()%>/img/escalaCaract.png" />';
-            }
+            $("#popover").popover({
+                trigger: 'hover',
+                placement: 'bottom',
+                html: true,
+                content: function() {
+                    return '<img src="<%=request.getContextPath()%>/img/escalaCaract.png" />';
+                }
+            });
         });
-    });
 </script>
 <div class="hero-unit">
     <div class="row">
@@ -103,7 +104,7 @@
                                         <c:when test="${row.caracteristicaId.factorId.id != idfactor}">
                                             <tr class="info">
                                                 <td colspan="4">Factor ${row.caracteristicaId.factorId.codigo}: ${row.caracteristicaId.factorId.nombre}<strong id="factorId${row.caracteristicaId.factorId.id}"></strong></td>   
-                                                <c:set var="idfactor" value="${row.caracteristicaId.factorId.id}"></c:set>
+                                                    <c:set var="idfactor" value="${row.caracteristicaId.factorId.id}"></c:set>
                                                 </tr>   
                                         </c:when>
                                     </c:choose>
