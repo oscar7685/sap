@@ -93,7 +93,7 @@
                                 <tr>
                                     <td>${indicador.getCodigo()}</td>
                                     <td>${indicador.getNombre()}</td>
-                                    <td>${cumplimientoI[indiceI]}</td>
+                                    <td><fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoI[indiceI]}"/></td>
                                 </tr> 
                             </tbody>
                         </table>
