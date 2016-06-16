@@ -28,10 +28,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ususario
+ * @author acreditacion
  */
 @Entity
-@Table(name = "indicador", catalog = "sapbd", schema = "")
+@Table(name = "indicador", catalog = "sapenfermeria", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Indicador.findAll", query = "SELECT i FROM Indicador i"),
@@ -69,6 +69,13 @@ public class Indicador implements Serializable {
         @JoinColumn(name = "proceso_id", referencedColumnName = "id", nullable = false)})
     @ManyToMany
     private List<Proceso> procesoList;
+    @JoinTable(name = "indicador_has_indicador", joinColumns = {
+        @JoinColumn(name = "indicador_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "indicador_id1", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Indicador> indicadorList;
+    @ManyToMany(mappedBy = "indicadorList")
+    private List<Indicador> indicadorList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "indicadorId")
     private List<Numericadocumental> numericadocumentalList;
     @OneToMany(mappedBy = "indicadorId")
@@ -133,6 +140,24 @@ public class Indicador implements Serializable {
 
     public void setProcesoList(List<Proceso> procesoList) {
         this.procesoList = procesoList;
+    }
+
+    @XmlTransient
+    public List<Indicador> getIndicadorList() {
+        return indicadorList;
+    }
+
+    public void setIndicadorList(List<Indicador> indicadorList) {
+        this.indicadorList = indicadorList;
+    }
+
+    @XmlTransient
+    public List<Indicador> getIndicadorList1() {
+        return indicadorList1;
+    }
+
+    public void setIndicadorList1(List<Indicador> indicadorList1) {
+        this.indicadorList1 = indicadorList1;
     }
 
     @XmlTransient

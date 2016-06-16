@@ -8,13 +8,13 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=cambiarClave",
+                    url: "/sapenfermeria/controladorCP?action=cambiarClave",
                     data: $("#formularioContrasena").serialize(),
                     success: function(data) {
                         $("#dancing-dots-text").remove();
                         if (data == "0") {
                             $("#modalClaveOK").modal();
-                            location = "/sap/#inicio";
+                            location = "/sapenfermeria/#inicio";
                         } else {
                             if (data == "1") {
                                 $("#modalClaveERROR").modal();

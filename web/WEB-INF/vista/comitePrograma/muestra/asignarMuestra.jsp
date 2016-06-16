@@ -5,9 +5,9 @@
         $("#botonGenerarMuestra").click(function() {
             $.ajax({
                 type: 'POST',
-                url: "/sap/controladorCP?action=generarMuestra",
+                url: "/sapenfermeria/controladorCP?action=generarMuestra",
                 success: function() {
-                    location = "/sap/#listMuestra";
+                    location = "/sapenfermeria/#listMuestra";
                 } //fin success
             }); //fin $.ajax    
 

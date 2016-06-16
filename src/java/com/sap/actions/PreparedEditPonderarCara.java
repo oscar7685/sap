@@ -35,7 +35,7 @@ public class PreparedEditPonderarCara implements Action {
     private PonderacioncaracteristicaFacade lookupPonderacioncaracteristicaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (PonderacioncaracteristicaFacade) c.lookup("java:global/sap/PonderacioncaracteristicaFacade!com.sap.ejb.PonderacioncaracteristicaFacade");
+            return (PonderacioncaracteristicaFacade) c.lookup("java:global/sapenfermeria/PonderacioncaracteristicaFacade!com.sap.ejb.PonderacioncaracteristicaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

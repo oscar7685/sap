@@ -1,5 +1,5 @@
 $(function() {
-    location = "/sap/#inicio";
+    location = "/sapenfermeria/#inicio";
     /*$(document).ajaxStart(function() {
      
      });*/
@@ -44,15 +44,15 @@ $(function() {
     $(window).hashchange(function() {
         hash = location.hash;
         if (hash === "#CerrarSesion") {
-            $.post('/sap/loginController?action=CerrarSesion', function() {
-                location = "/sap";
+            $.post('/sapenfermeria/loginController?action=CerrarSesion', function() {
+                location = "/sapenfermeria";
             }); //fin post
 
         } else {
             if (hash.indexOf("#responderEncuesta") !== -1) {
                 var cual = hash.split("&");
                 hash = cual[0];
-                var url3 = "/sap/controladorF?action=";
+                var url3 = "/sapenfermeria/controladorF?action=";
                 url3 = url3.concat(cual[0].substring(1), "F&id=", cual[1]);
                 $("div.ui-layout-center").empty();
                 $.ajax({
@@ -77,7 +77,7 @@ $(function() {
 
             } else {
                 if (hash === "#inicio") {
-                    var url3 = "/sap/" + hash;
+                    var url3 = "/sapenfermeria/" + hash;
                     url3 = url3.replace('#', "controladorF?action=") + "CC";
                     $("div.ui-layout-center").empty();
                     $.ajax({

@@ -35,7 +35,7 @@ public class ListPonderacionFactor implements Action {
     private PonderacionfactorFacade lookupPonderacionfactorFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (PonderacionfactorFacade) c.lookup("java:global/sap/PonderacionfactorFacade!com.sap.ejb.PonderacionfactorFacade");
+            return (PonderacionfactorFacade) c.lookup("java:global/sapenfermeria/PonderacionfactorFacade!com.sap.ejb.PonderacionfactorFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

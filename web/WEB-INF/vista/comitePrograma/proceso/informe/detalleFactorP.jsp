@@ -189,10 +189,6 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <div class="btn-group offset7">
-                <a class="btn" href="#detalleFactor&${factor.id}">Todo</a>
-                <a class="btn active" style="cursor:default;">S&oacute;lo percepci&oacute;n</a>
-            </div>
             <legend>Factor: ${factor.nombre}</legend>
             <ul class="breadcrumb">
                 <li><a href="<%=request.getContextPath()%>/#informeMatrizFactoresP">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>

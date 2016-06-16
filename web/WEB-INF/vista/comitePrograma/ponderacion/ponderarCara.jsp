@@ -15,10 +15,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sap/controladorCP?action=ponderarCara",
+                    url: "/sapenfermeria/controladorCP?action=ponderarCara",
                     data: $("#formPonderarCara").serialize(),
                     success: function() {
-                        location = "/sap/#listPonderacionCara";
+                        location = "/sapenfermeria/#listPonderacionCara";
                     } //fin success
                 }); //fin $.ajax    
             }
