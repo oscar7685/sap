@@ -214,7 +214,7 @@
                         <th>Relacion con el logro ideal</th>
                         </thead>
                         <tbody>
-                            
+                            <c:set var="indice2" value="0"></c:set>
                             <c:set var="final" value="0"></c:set>
                             <c:set var="ponderaciones" value="0"></c:set>
                             <c:forEach items="${factores}" var="factor" varStatus="iter2">
@@ -230,24 +230,26 @@
                                                 <a href="#detalleFactor&${factor.getId()}" data="${factor.nombre}">${factor.nombre}</a>
                                             </td>
                                             <td>   
-                                                <c:out value="${ponderacionesF.get(iter2.index).ponderacion}"/>
+                                                <c:out value="${ponderacionesF.get(indice2).ponderacion}"/>
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index]}"/>
                                                 
                                             </td>
                                             <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * ponderacionesF.get(iter2.index).ponderacion}"/>
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * ponderacionesF.get(indice2).ponderacion}"/>
                                             </td>
                                             <td>   
-                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesF.get(iter2.index).ponderacion}"/>
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesF.get(indice2).ponderacion}"/>
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * 20}"/>%
                                             </td>
                                         </tr>
-                                        <c:set var="final" value="${final+((ponderacionesF.get(iter2.index).ponderacion)*(cumplimientoF[iter2.index]))}"></c:set>
-                                        <c:set var="ponderaciones" value="${ponderaciones+ponderacionesF.get(iter2.index).ponderacion}"></c:set>
+                                        <c:set var="final" value="${final+((ponderacionesF.get(indice2).ponderacion)*(cumplimientoF[iter2.index]))}"></c:set>
+                                        <c:set var="ponderaciones" value="${ponderaciones+ponderacionesF.get(indice2).ponderacion}"></c:set>
+                                        <c:set var="indice2" value="${indice2+1}"></c:set>
+                                        
                                     </c:when>
                                 </c:choose>       
                             </c:forEach>
