@@ -42,10 +42,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sapenfermeria/controladorCC?action=crearPregunta",
+                    url: "/sap/controladorCC?action=crearPregunta",
                     data: $("#formCrearPregunta").serialize(),
                     success: function() {
-                        location = "/sapenfermeria/#listarPreguntas";
+                        location = "/sap/#listarPreguntas";
                     } //fin success
                 }); //fin $.ajax    
             }

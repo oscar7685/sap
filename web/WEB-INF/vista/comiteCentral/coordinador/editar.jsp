@@ -98,10 +98,10 @@
         if (elt.tagsinput('items').length){
                 $.ajax({
                  type: 'POST',
-                 url: "/sapenfermeria/controladorCC?action=editarCoordinador",
+                 url: "/sap/controladorCC?action=editarCoordinador",
                  data: $("#formEditarCoordinador").serialize(),
                  success: function() {
-                 location = "/sapenfermeria/#listarCoordinadores";
+                 location = "/sap/#listarCoordinadores";
                  } //fin success
                  }); //fin $.ajax
         } else{

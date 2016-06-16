@@ -17,7 +17,7 @@
             margin: [ 50, 30, 100, 50]
     },
             title: {
-    text: 'Matriz de calidad de Dimensiones'
+    text: 'Matriz de calidad de factores'
     },
             xAxis: {
     categories: [
@@ -40,7 +40,7 @@
                 labels: {
         formatter: function() {
         var partes = this.value.split("-");
-                return "Dimensión " + partes[0];
+                return "Factor " + partes[0];
         },
                 rotation: - 45,
                 align: 'right',
@@ -82,7 +82,7 @@
         }
         },
                 series: [{
-        name: 'Dimensiones',
+        name: 'Factores',
                 data: [
     <c:forEach items="${factores}" var="fact" varStatus="status">
         <fmt:parseNumber var="cum4"  value="${cumplimientoF[status.index]}" />
@@ -114,7 +114,8 @@
                             {
                             y: ${cumplimientoF[status.index]},
                                     color: '#AA4643'
-                            },</c:otherwise></c:choose></c:when>                    <c:otherwise>
+                            },</c:otherwise></c:choose></c:when>
+                    <c:otherwise>
                         <c:choose>
                             <c:when test="${cumplimientoF[status.index]>=4.5}">
                             {
@@ -189,10 +190,14 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <legend>Matriz de Calidad de Dimensiones</legend>
+            <div class="btn-group offset7">
+                <a class="btn active" style="cursor:default;">Todo</a>
+                <a class="btn" href="#informeMatrizFactoresP">S&oacute;lo percepci&oacute;n</a>
+            </div>
+            <legend>Matriz de Calidad de Factores</legend>
             <ul class="breadcrumb">
-                <li class="active">Matriz de Calidad de Dimensiones  <span class="divider">/</span></li>
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de Calidad de Componentes</a></li>
+                <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de Calidad de Características</a></li>
             </ul>
             <br>
             <c:choose>
@@ -200,13 +205,16 @@
 
                     <table class="table table-striped table-bordered table-condensed inicial">
                         <thead>
-                        <th>Id Dimensión</th>
-                        <th>Dimensión</th>
+                        <th>Id Factor</th>
+                        <th>Factor</th>
+                        <th>Ponderacion Factor</th>
                         <th>Grado de Cumplimiento</th>
+                        <th>Evaluacion teniendo en cuenta ponderacion</th>
+                        <th>Logro ideal</th>
                         <th>Relacion con el logro ideal</th>
                         </thead>
                         <tbody>
-
+                            
                             <c:set var="final" value="0"></c:set>
                             <c:set var="ponderaciones" value="0"></c:set>
                             <c:forEach items="${factores}" var="factor" varStatus="iter2">
@@ -222,8 +230,17 @@
                                                 <a href="#detalleFactor&${factor.getId()}" data="${factor.nombre}">${factor.nombre}</a>
                                             </td>
                                             <td>   
+                                                <c:out value="${ponderacionesF.get(iter2.index).ponderacion}"/>
+                                            </td>
+                                            <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index]}"/>
-
+                                                
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * ponderacionesF.get(iter2.index).ponderacion}"/>
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesF.get(iter2.index).ponderacion}"/>
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoF[iter2.index] * 20}"/>%
@@ -236,20 +253,31 @@
                             </c:forEach>
                         </tbody>
                         <tfoot>
-                        <td>   
+                                <td>   
 
-                        </td>            
-                        <td style="text-align: left;font-weight: bold;">   
-                            Total
-                        </td>
-                        <td>   
-                            <fmt:formatNumber type="number" maxFractionDigits="1" value="${final/ponderaciones}"/>
+                                </td>            
+                                <td style="text-align: left;font-weight: bold;">   
+                                    Total
+                                </td>
 
-                        </td>
-                        <td>   
-                            <fmt:formatNumber type="number" maxFractionDigits="1" value="${(final/ponderaciones)*20}"/>%
-                        </td>
-                        </tfoot>
+                                <td>   
+                                    100
+                                </td>
+                                    
+                                <td>   
+                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${final/ponderaciones}"/>
+                                    
+                                </td>
+                                <td>   
+
+                                </td>
+                                <td>   
+
+                                </td>
+                                <td>   
+                                    <fmt:formatNumber type="number" maxFractionDigits="1" value="${(final/ponderaciones)*20}"/>%
+                                </td>
+                            </tfoot>
                     </table>
                     <br/>          
                     <div id="grafica" style="height: 500px; margin: 0 auto" class="span10"></div>

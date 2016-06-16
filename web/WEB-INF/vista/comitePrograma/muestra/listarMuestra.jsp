@@ -21,7 +21,7 @@
                 $("#listM").empty();
                 $.ajax({
                     type: 'POST',
-                    url: "/sapenfermeria/controladorCP?action=selectorListMuestra",
+                    url: "/sap/controladorCP?action=selectorListMuestra",
                     data: $("#formListarMuestra").serialize(),
                     success: function(datos) {
                         $("#listM").append(datos);
@@ -42,7 +42,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: "/sapenfermeria/controladorCP?action=selectorListSemestre",
+                    url: "/sap/controladorCP?action=selectorListSemestre",
                     data: $("#formListarMuestra").serialize(),
                     success: function(datos) {
                         $("#listM").empty();

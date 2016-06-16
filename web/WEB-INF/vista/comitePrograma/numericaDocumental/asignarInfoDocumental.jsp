@@ -31,7 +31,7 @@
                 success: function() {
                     $('#myModalID').modal();
                     $('#myModalID').on('hidden', function() {
-                        location = "/sapenfermeria/#listarEvaluarDoc";
+                        location = "/sap/#listarEvaluarDoc";
                     });
                 } //fin success
             }); //fin $.ajax

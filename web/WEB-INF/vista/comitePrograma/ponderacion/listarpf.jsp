@@ -20,13 +20,13 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <h3>Ponderación de  Dimensiones <i id="popoverF" class="icon-question-sign" rel="popover" data-content="La suma de la ponderación de los factores debe ser 100" data-title="Ponderación de factores"></i></h3>
+            <h3>Ponderación de  Factores <i id="popoverF" class="icon-question-sign" rel="popover" data-content="La suma de la ponderación de los factores debe ser 100" data-title="Ponderación de factores"></i></h3>
             <c:choose>
                 <c:when test="${fn:length(listPonderacionFactor)!= 0}">
                     <table id="tablaX" class="table table-striped table-bordered table-condensed">
                         <thead>
                         <th>C&oacute;digo</th>    
-                        <th>Dimensión</th>
+                        <th>Factor</th>
                         <th>Ponderaci&oacute;n</th>
                         <th>Justificaci&oacute;n</th>
                         </thead>

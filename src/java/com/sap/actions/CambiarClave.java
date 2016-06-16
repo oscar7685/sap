@@ -49,7 +49,7 @@ public class CambiarClave implements Action {
     private RepresentanteFacade lookupRepresentanteFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (RepresentanteFacade) c.lookup("java:global/sapenfermeria/RepresentanteFacade!com.sap.ejb.RepresentanteFacade");
+            return (RepresentanteFacade) c.lookup("java:global/sap/RepresentanteFacade!com.sap.ejb.RepresentanteFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

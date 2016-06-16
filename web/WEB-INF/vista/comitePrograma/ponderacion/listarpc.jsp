@@ -25,13 +25,13 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <h3>Ponderación de  Componentes <i id="popover" class="icon-question-sign" rel="popover" data-title="Escala nivel de importancia"></i></h3>
+            <h3>Ponderación de  Características <i id="popover" class="icon-question-sign" rel="popover" data-title="Escala nivel de importancia"></i></h3>
                 <c:choose>
                     <c:when test="${fn:length(listPonderacionCara)!= 0}">
                     <table id="tablaX" class="table table-striped table-bordered table-condensed">
                         <thead>
                         <th>C&oacute;digo</th>    
-                        <th>Componente</th>
+                        <th>Característica</th>
                         <th>Nivel de importancia</th>
                         <th>Ponderaci&oacute;n</th>
                         <th>Justificaci&oacute;n</th>

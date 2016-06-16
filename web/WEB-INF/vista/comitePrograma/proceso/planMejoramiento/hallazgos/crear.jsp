@@ -10,10 +10,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sapenfermeria/controladorCP?action=crearHallazgo2",
+                    url: "/sap/controladorCP?action=crearHallazgo2",
                     data: $("#formCrearHallazgo").serialize(),
                     success: function() {
-                        location = "/sapenfermeria/#listarHallazgos";
+                        location = "/sap/#listarHallazgos";
                     } //fin success
                 }); //fin $.ajax    */
             }
@@ -34,7 +34,7 @@
                         <ul class="breadcrumb">
                             <li><a href="<%=request.getContextPath()%>/#listarHallazgos" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar hallazgos">Hallazgos</a> <span class="divider">/</span></li>
                             <li>Crear</li>
-                            <a id="printEnlace" target="_blank" href="/sapenfermeria/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
+                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
 
                         <form id="formCrearHallazgo" class="form-horizontal" method="post">
@@ -71,7 +71,7 @@
                     <div class="tab-pane" id="profile">
                         <ul class="breadcrumb">
                             <li>Fortalezas</li>
-                            <a id="printEnlace" target="_blank" href="/sapenfermeria/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
+                            <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
                          <h3>Listado de  Fortalezas</h3>
                       <c:choose>

@@ -5,16 +5,16 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sapenfermeria/controladorCP?action=crearProceso",
+                    url: "/sap/controladorCP?action=crearProceso",
                     data: $("#formCrearProceso").serialize(),
                     success: function(data) {
                         $("#dancing-dots-text").remove();
                         if (data == 1) {
-                            location = "/sapenfermeria/#controlPanel";
+                            location = "/sap/#controlPanel";
                         }
                         if (data == 0) {
                             $('#modalCc3').modal();
-                              location = "/sapenfermeria/#controlPanel";
+                              location = "/sap/#controlPanel";
                         }
                     } //fin success
                 }); //fin $.ajax    

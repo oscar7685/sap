@@ -164,8 +164,8 @@
                 <br>
                 <p>Informes: </p>
                 <div>
-                    <a  href="<%=request.getContextPath()%>/#informeMatrizFactores" class="btn btn-warning"><i class="icon-bar-chart">  </i>Matriz de calidad por Dimensiones</a>
-                    <a  href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas" class="btn btn-warning"><i class="icon-bar-chart">  </i>Matriz de calidad por Componentes</a>
+                    <a  href="<%=request.getContextPath()%>/#informeMatrizFactores" class="btn btn-warning"><i class="icon-bar-chart">  </i>Matriz de calidad por factores</a>
+                    <a  href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas" class="btn btn-warning"><i class="icon-bar-chart">  </i>Matriz de calidad por caracter&iacute;sticas</a>
                     <!--<a  href="<%=request.getContextPath()%>/#resultadosGenerales"><i class="icon-bar-chart"></i> Resultados Generales</a>-->
                     <a  href="<%=request.getContextPath()%>/#resultadosGenerales2" class="btn btn-warning"><i class="icon-bar-chart"></i> Resultados Generales</a>
                     <c:if test="${EstadoProceso == 3}">

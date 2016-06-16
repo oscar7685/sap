@@ -36,7 +36,7 @@ public class EditarMeta implements Action {
     private MetasFacade lookupMetasFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MetasFacade) c.lookup("java:global/sapenfermeria/MetasFacade!com.sap.ejb.MetasFacade");
+            return (MetasFacade) c.lookup("java:global/sap/MetasFacade!com.sap.ejb.MetasFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

@@ -80,13 +80,13 @@
         $("#botonActualizarMuestra").click(function() {
             $.ajax({
                 type: 'POST',
-                url: "/sapenfermeria/controladorCP?action=editarMuestra",
+                url: "/sap/controladorCP?action=editarMuestra",
                 data: $("#formEditarMuestra").serialize(),
                 success: function() {
                     $("#listM").empty();
                     $.ajax({
                         type: 'POST',
-                        url: "/sapenfermeria/controladorCP?action=selectorListSemestre",
+                        url: "/sap/controladorCP?action=selectorListSemestre",
                         data: $("#formListarMuestra").serialize(),
                         success: function(datos) {
                             $("#listM").append(datos);
@@ -104,7 +104,7 @@
             $("#listM").empty();
             $.ajax({
                 type: 'POST',
-                url: "/sapenfermeria/controladorCP?action=selectorListSemestre",
+                url: "/sap/controladorCP?action=selectorListSemestre",
                 data: $("#formListarMuestra").serialize(),
                 success: function(datos) {
                     $("#listM").append(datos);

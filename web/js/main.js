@@ -3,7 +3,7 @@ $(function() {
         $('#ModalAcercaDe').modal("show");
     });
 
-    location = "/sapenfermeria/#inicio";
+    location = "/sap/#inicio";
     $('#close1').on("click", function() {
         $(this).parent().hide();
     });
@@ -18,14 +18,14 @@ $(function() {
             $("#btnIniciar").attr("disabled", true);
             this.timer = setTimeout(function() {
                 $.ajax({
-                    url: '/sapenfermeria/loginController',
+                    url: '/sap/loginController',
                     data: 'un=' + $('#codigo').val() + '&pw=' + $('#pass').val() + '&tp=' + $('#perfilIngreso :selected').val(),
                     type: 'post',
                     success: function(msg) {
 
                         if (msg === '0')
                         {
-                            document.location = '/sapenfermeria/';
+                            document.location = '/sap/';
 
 
                         } else {

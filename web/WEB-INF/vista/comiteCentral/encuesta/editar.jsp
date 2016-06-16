@@ -82,10 +82,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sapenfermeria/controladorCC?action=editarEncuesta",
+                    url: "/sap/controladorCC?action=editarEncuesta",
                     data: $("#formEditarEncu").serialize(),
                     success: function() {
-                        location = "/sapenfermeria/#listarEncuestas";
+                        location = "/sap/#listarEncuestas";
                     } //fin success
                 }); //fin $.ajax    
             }

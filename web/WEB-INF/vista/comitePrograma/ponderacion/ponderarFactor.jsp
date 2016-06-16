@@ -98,10 +98,10 @@
                     setTimeout(function() {
                         $.ajax({
                             type: 'POST',
-                            url: "/sapenfermeria/controladorCP?action=ponderarFactor",
+                            url: "/sap/controladorCP?action=ponderarFactor",
                             data: $("#formPonderarFactor").serialize(),
                             success: function() {
-                                location = "/sapenfermeria/#listPonderacionFactor";
+                                location = "/sap/#listPonderacionFactor";
                             } //fin success
                         }); //fin $.ajax    
                     }, 400);

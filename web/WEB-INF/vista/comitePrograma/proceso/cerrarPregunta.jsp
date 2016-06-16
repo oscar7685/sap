@@ -30,7 +30,7 @@
                 success: function() {
                     $('#myModalCP').modal();
                     $('#myModalCP').on('hidden', function() {
-                        location = "/sapenfermeria/#inicio";
+                        location = "/sap/#inicio";
                     });
                 } //fin success
             }); //fin $.ajax

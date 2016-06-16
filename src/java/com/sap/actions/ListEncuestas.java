@@ -35,7 +35,7 @@ public class ListEncuestas implements Action {
     private EncuestaFacade lookupEncuestaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (EncuestaFacade) c.lookup("java:global/sapenfermeria/EncuestaFacade!com.sap.ejb.EncuestaFacade");
+            return (EncuestaFacade) c.lookup("java:global/sap/EncuestaFacade!com.sap.ejb.EncuestaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

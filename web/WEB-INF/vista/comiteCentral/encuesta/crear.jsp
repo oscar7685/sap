@@ -4,10 +4,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sapenfermeria/controladorCC?action=crearEncuesta",
+                    url: "/sap/controladorCC?action=crearEncuesta",
                     data: $("#formCrearEncuesta").serialize(),
                     success: function() {
-                        location = "/sapenfermeria/#listarEncuestas";
+                        location = "/sap/#listarEncuestas";
                     } //fin success
                 }); //fin $.ajax    
             }

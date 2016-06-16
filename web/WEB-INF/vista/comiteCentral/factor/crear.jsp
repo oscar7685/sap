@@ -82,10 +82,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sapenfermeria/controladorCC?action=crearFactor",
+                    url: "/sap/controladorCC?action=crearFactor",
                     data: $("#formCrearFactor").serialize(),
                     success: function() {
-                        location = "/sapenfermeria/#listarFactores";
+                        location = "/sap/#listarFactores";
                     } //fin success
                 }); //fin $.ajax    
             }

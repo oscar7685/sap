@@ -60,7 +60,7 @@ public class Comentarios implements Action {
     private FuenteFacade lookupFuenteFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (FuenteFacade) c.lookup("java:global/sapenfermeria/FuenteFacade!com.sap.ejb.FuenteFacade");
+            return (FuenteFacade) c.lookup("java:global/sap/FuenteFacade!com.sap.ejb.FuenteFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -70,7 +70,7 @@ public class Comentarios implements Action {
     private EncabezadoFacade lookupEncabezadoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (EncabezadoFacade) c.lookup("java:global/sapenfermeria/EncabezadoFacade!com.sap.ejb.EncabezadoFacade");
+            return (EncabezadoFacade) c.lookup("java:global/sap/EncabezadoFacade!com.sap.ejb.EncabezadoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

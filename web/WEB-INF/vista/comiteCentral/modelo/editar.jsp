@@ -4,10 +4,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sapenfermeria/controladorCC?action=editarModelo",
+                    url: "/sap/controladorCC?action=editarModelo",
                     data: $("#formEditarModelo").serialize(),
                     success: function() {
-                        location = "/sapenfermeria/#listarModelo";
+                        location = "/sap/#listarModelo";
                     } //fin success
                 }); //fin $.ajax    
             }

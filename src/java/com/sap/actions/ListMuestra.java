@@ -57,7 +57,7 @@ public class ListMuestra implements Action{
     private MuestraFacade lookupMuestraFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MuestraFacade) c.lookup("java:global/sapenfermeria/MuestraFacade!com.sap.ejb.MuestraFacade");
+            return (MuestraFacade) c.lookup("java:global/sap/MuestraFacade!com.sap.ejb.MuestraFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

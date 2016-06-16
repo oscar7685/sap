@@ -89,7 +89,7 @@
         }
         },
                 series: [{
-        name: 'Componentes',
+        name: 'Caracteristicas',
                 data: [
     <c:forEach items="${indicadores}" var="caracteristica4" varStatus="status33">
         <fmt:parseNumber var="cum5"  value="${cumplimientoIN[status33.index]}" />
@@ -190,15 +190,19 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <legend>Componente: ${caracteristica.nombre}</legend>
+            <div class="btn-group offset7">
+                <a class="btn active" style="cursor:default;">Todo</a>
+                <a class="btn" href="#detallePCaracteristica&${caracteristica.id}">S&oacute;lo percepci&oacute;n</a>
+            </div>
+            <legend>Caracter&iacute;stica: ${caracteristica.nombre}</legend>
             <ul class="breadcrumb">
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Dimensiones</a> <span class="divider">/</span></li>
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de Calidad de Componentes</a> <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de Calidad de Caracter&iacute;sticas</a> <span class="divider">/</span></li>
                 <li>
-                    <a href="<%=request.getContextPath()%>/#detalleFactor&${caracteristica.getFactorId().id}" class="tool" data-placement="top" rel="tooltip" data-original-title="${caracteristica.getFactorId().nombre}">Dimension ${caracteristica.getFactorId().codigo}</a> 
+                    <a href="<%=request.getContextPath()%>/#detalleFactor&${caracteristica.getFactorId().id}" class="tool" data-placement="top" rel="tooltip" data-original-title="${caracteristica.getFactorId().nombre}">Factor ${caracteristica.getFactorId().codigo}</a> 
                     <span class="divider">/</span>
                 </li>
-                <li class="active tool" data-placement="top" rel="tooltip" data-original-title="${caracteristica.nombre}">Componente ${caracteristica.codigo}</li>
+                <li class="active tool" data-placement="top" rel="tooltip" data-original-title="${caracteristica.nombre}">Caracter&iacute;stica ${caracteristica.codigo}</li>
 
             </ul>
             <br>

@@ -132,7 +132,7 @@ public class SelectorListMuestra implements Action {
     private FuenteFacade lookupFuenteFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (FuenteFacade) c.lookup("java:global/sapenfermeria/FuenteFacade!com.sap.ejb.FuenteFacade");
+            return (FuenteFacade) c.lookup("java:global/sap/FuenteFacade!com.sap.ejb.FuenteFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -142,7 +142,7 @@ public class SelectorListMuestra implements Action {
     private MuestraestudianteFacade lookupMuestraestudianteFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MuestraestudianteFacade) c.lookup("java:global/sapenfermeria/MuestraestudianteFacade!com.sap.ejb.MuestraestudianteFacade");
+            return (MuestraestudianteFacade) c.lookup("java:global/sap/MuestraestudianteFacade!com.sap.ejb.MuestraestudianteFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -152,7 +152,7 @@ public class SelectorListMuestra implements Action {
     private MuestradocenteFacade lookupMuestradocenteFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MuestradocenteFacade) c.lookup("java:global/sapenfermeria/MuestradocenteFacade!com.sap.ejb.MuestradocenteFacade");
+            return (MuestradocenteFacade) c.lookup("java:global/sap/MuestradocenteFacade!com.sap.ejb.MuestradocenteFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -162,7 +162,7 @@ public class SelectorListMuestra implements Action {
     private DocenteFacade lookupDocenteFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (DocenteFacade) c.lookup("java:global/sapenfermeria/DocenteFacade!com.sap.ejb.DocenteFacade");
+            return (DocenteFacade) c.lookup("java:global/sap/DocenteFacade!com.sap.ejb.DocenteFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -172,7 +172,7 @@ public class SelectorListMuestra implements Action {
     private EncabezadoFacade lookupEncabezadoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (EncabezadoFacade) c.lookup("java:global/sapenfermeria/EncabezadoFacade!com.sap.ejb.EncabezadoFacade");
+            return (EncabezadoFacade) c.lookup("java:global/sap/EncabezadoFacade!com.sap.ejb.EncabezadoFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -182,7 +182,7 @@ public class SelectorListMuestra implements Action {
     private MuestraegresadoFacade lookupMuestraegresadoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MuestraegresadoFacade) c.lookup("java:global/sapenfermeria/MuestraegresadoFacade!com.sap.ejb.MuestraegresadoFacade");
+            return (MuestraegresadoFacade) c.lookup("java:global/sap/MuestraegresadoFacade!com.sap.ejb.MuestraegresadoFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -192,7 +192,7 @@ public class SelectorListMuestra implements Action {
     private EgresadoFacade lookupEgresadoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (EgresadoFacade) c.lookup("java:global/sapenfermeria/EgresadoFacade!com.sap.ejb.EgresadoFacade");
+            return (EgresadoFacade) c.lookup("java:global/sap/EgresadoFacade!com.sap.ejb.EgresadoFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -202,7 +202,7 @@ public class SelectorListMuestra implements Action {
     private MuestraadministrativoFacade lookupMuestraadministrativoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MuestraadministrativoFacade) c.lookup("java:global/sapenfermeria/MuestraadministrativoFacade!com.sap.ejb.MuestraadministrativoFacade");
+            return (MuestraadministrativoFacade) c.lookup("java:global/sap/MuestraadministrativoFacade!com.sap.ejb.MuestraadministrativoFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -212,7 +212,7 @@ public class SelectorListMuestra implements Action {
     private AdministrativoFacade lookupAdministrativoFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (AdministrativoFacade) c.lookup("java:global/sapenfermeria/AdministrativoFacade!com.sap.ejb.AdministrativoFacade");
+            return (AdministrativoFacade) c.lookup("java:global/sap/AdministrativoFacade!com.sap.ejb.AdministrativoFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -222,7 +222,7 @@ public class SelectorListMuestra implements Action {
     private MuestradirectorFacade lookupMuestradirectorFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MuestradirectorFacade) c.lookup("java:global/sapenfermeria/MuestradirectorFacade!com.sap.ejb.MuestradirectorFacade");
+            return (MuestradirectorFacade) c.lookup("java:global/sap/MuestradirectorFacade!com.sap.ejb.MuestradirectorFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -232,7 +232,7 @@ public class SelectorListMuestra implements Action {
     private DirectorprogramaFacade lookupDirectorprogramaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (DirectorprogramaFacade) c.lookup("java:global/sapenfermeria/DirectorprogramaFacade!com.sap.ejb.DirectorprogramaFacade");
+            return (DirectorprogramaFacade) c.lookup("java:global/sap/DirectorprogramaFacade!com.sap.ejb.DirectorprogramaFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -242,7 +242,7 @@ public class SelectorListMuestra implements Action {
     private MuestraempleadorFacade lookupMuestraempleadorFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MuestraempleadorFacade) c.lookup("java:global/sapenfermeria/MuestraempleadorFacade!com.sap.ejb.MuestraempleadorFacade");
+            return (MuestraempleadorFacade) c.lookup("java:global/sap/MuestraempleadorFacade!com.sap.ejb.MuestraempleadorFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -252,7 +252,7 @@ public class SelectorListMuestra implements Action {
     private EmpleadorFacade lookupEmpleadorFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (EmpleadorFacade) c.lookup("java:global/sapenfermeria/EmpleadorFacade!com.sap.ejb.EmpleadorFacade");
+            return (EmpleadorFacade) c.lookup("java:global/sap/EmpleadorFacade!com.sap.ejb.EmpleadorFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -262,7 +262,7 @@ public class SelectorListMuestra implements Action {
     private MuestraagenciaFacade lookupMuestraagenciaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (MuestraagenciaFacade) c.lookup("java:global/sapenfermeria/MuestraagenciaFacade!com.sap.ejb.MuestraagenciaFacade");
+            return (MuestraagenciaFacade) c.lookup("java:global/sap/MuestraagenciaFacade!com.sap.ejb.MuestraagenciaFacade");
         } catch (NamingException ne) {
             LOGGER.error("exception caught", ne);
             throw new RuntimeException(ne);
@@ -272,7 +272,7 @@ public class SelectorListMuestra implements Action {
     private AgenciagubernamentalFacade lookupAgenciagubernamentalFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (AgenciagubernamentalFacade) c.lookup("java:global/sapenfermeria/AgenciagubernamentalFacade!com.sap.ejb.AgenciagubernamentalFacade");
+            return (AgenciagubernamentalFacade) c.lookup("java:global/sap/AgenciagubernamentalFacade!com.sap.ejb.AgenciagubernamentalFacade");
         } catch (NamingException ne) {
             java.util.logging.Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

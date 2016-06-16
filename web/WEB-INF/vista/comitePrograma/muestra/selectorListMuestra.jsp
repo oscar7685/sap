@@ -44,13 +44,13 @@
             $(this).popover('hide');
             $.ajax({
                 type: 'POST',
-                url: "/sapenfermeria/controladorCP?action=generarMuestraAleatoria",
+                url: "/sap/controladorCP?action=generarMuestraAleatoria",
                 data: $("#formGenearAleatorio").serialize(),
                 success: function(data) {
                     $("#listM").empty();
                     $.ajax({
                         type: 'POST',
-                        url: "/sapenfermeria/controladorCP?action=selectorListMuestra",
+                        url: "/sap/controladorCP?action=selectorListMuestra",
                         data: $("#formListarMuestra").serialize(),
                         success: function(datos) {
                             $("#listM").append(datos);
@@ -65,7 +65,7 @@
         $("#bpreparedEditarMuestra").click(function() {
             $.ajax({
                 type: 'POST',
-                url: "/sapenfermeria/controladorCP?action=preparedEditarMuestra",
+                url: "/sap/controladorCP?action=preparedEditarMuestra",
                 success: function(datos) {
                     $("#editM").empty();
                     $("#editM").append(datos);
@@ -99,7 +99,7 @@
             $("#hora").html(" " + Fecha);
             $.ajax({
                 type: 'POST',
-                url: "/sapenfermeria/controladorCP?action=selectorListSemestre",
+                url: "/sap/controladorCP?action=selectorListSemestre",
                 data: $("#formListarMuestra").serialize(),
                 success: function(datos) {
                     $("#listM").empty();

@@ -189,11 +189,15 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <legend>Dimensión: ${factor.nombre}</legend>
+            <div class="btn-group offset7">
+                <a class="btn active" style="cursor:default;">Todo</a>
+                <a class="btn" href="#detallePFactor&${factor.id}">S&oacute;lo percepci&oacute;n</a>
+            </div>
+            <legend>Factor: ${factor.nombre}</legend>
             <ul class="breadcrumb">
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Dimensiones</a> <span class="divider">/</span></li>
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de Calidad de Componentes</a> <span class="divider">/</span></li>
-                <li class="active tool" data-placement="top" rel="tooltip" data-original-title="${factor.nombre}">Dimensión ${factor.codigo}</li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
+                <li class="active tool" data-placement="top" rel="tooltip" data-original-title="${factor.nombre}">Factor ${factor.codigo}</li>
 
             </ul>
             <br>
@@ -203,8 +207,12 @@
                     <table class="table table-striped table-bordered table-condensed inicial">
                         <thead>
                         <th>C&oacute;digo</th>
-                        <th>Componente</th>
+                        <th>Caracteristica</th>
+                        <th>Nivel de importacia</th>
+                        <th>Ponderacion caracteristica</th>
                         <th>Grado de Cumplimiento</th>
+                        <th>Evaluacion teniendo en cuenta ponderacion</th>
+                        <th>Logro ideal</th>
                         <th>Relacion con el logro ideal</th>
                         </thead>
                         <tbody>
@@ -220,9 +228,20 @@
                                             <td style="text-align: left">   
                                                 <a href="#detalleCaracteristica&${caracteristica.id}" data="${caracteristica.nombre}">${caracteristica.nombre}</a> 
                                             </td>
-                                            
+                                            <td>   
+                                                ${ponderacionesCDF.get(indice).nivelimportancia}
+                                            </td>
+                                            <td>   
+                                                ${ponderacionesCDF.get(indice).ponderacion}
+                                            </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoDF[iter.index]}"/>
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoDF[iter.index] * ponderacionesCDF.get(indice).ponderacion}"/>
+                                            </td>
+                                            <td>   
+                                                <fmt:formatNumber type="number" maxFractionDigits="1" value="${5 * ponderacionesCDF.get(indice).ponderacion}"/>
                                             </td>
                                             <td>   
                                                 <fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoDF[iter.index] * 20}"/>%

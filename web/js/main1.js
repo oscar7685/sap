@@ -2,7 +2,7 @@ $(function() {
     if ($(".brand").text().length > 60) {
         $(".brand").css("font-size", "18px");
     }
-    location = "/sapenfermeria/#inicio";
+    location = "/sap/#inicio";
     $(document).ajaxStart(function() {
         $("div.ui-layout-center").append("<div id='contenido'></div>");
         //$("#contenido").hide();
@@ -174,8 +174,8 @@ $(function() {
     $(window).hashchange(function() {
         var hash = location.hash;
         if (hash === "#CerrarSesion") {
-            $.post('/sapenfermeria/loginController?action=CerrarSesion', function() {
-                location = "/sapenfermeria";
+            $.post('/sap/loginController?action=CerrarSesion', function() {
+                location = "/sap";
 
             }); //fin post
 
@@ -189,7 +189,7 @@ $(function() {
                 || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                 || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
                 || hash === "#comentarios" || hash === "#todosResultados" || hash ==="#resultadosGenerales" || hash ==="#resultadosGenerales2") {
-            var url3 = "/sapenfermeria/" + hash;
+            var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
             $.ajax({
@@ -213,7 +213,7 @@ $(function() {
 
             var cual = hash.split("&");
             hash = cual[0];
-            var url3 = "/sapenfermeria/controladorCC?action=";
+            var url3 = "/sap/controladorCC?action=";
             url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
 
             $("div.ui-layout-center").empty();
@@ -237,7 +237,7 @@ $(function() {
         } else if (hash.indexOf("#verPProceso") !== -1) {
             var cual = hash.split("&");
             hash = cual[0];
-            var url3 = "/sapenfermeria/controladorCP?action=";
+            var url3 = "/sap/controladorCP?action=";
             url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
             $("div.ui-layout-center").empty();
             $.ajax({
@@ -259,7 +259,7 @@ $(function() {
                     $("#contenido").show(200, function() {
                         $("#dancing-dots-text").remove();
                     });
-                    location = "/sapenfermeria/#inicio";
+                    location = "/sap/#inicio";
 
                 } //fin success
             }); //fin del $.ajax
@@ -267,7 +267,7 @@ $(function() {
 
             $('#modalCp1').modal();
 
-            /*  var url3 = "/sapenfermeria/" + hash;
+            /*  var url3 = "/sap/" + hash;
              url3 = url3.replace('#', "controladorCP?action=");
              $("div.ui-layout-center").empty();
              $.ajax({
@@ -287,7 +287,7 @@ $(function() {
              } //fin success
              }); //fin del $.ajax*/
         } else if (hash === "#listarFactores") {
-            var url3 = "/sapenfermeria/" + hash;
+            var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCC?action=") + "CC";
             $("div.ui-layout-center").empty();
             $.ajax({
@@ -308,7 +308,7 @@ $(function() {
                 } //fin success
             }); //fin del $.ajax
         } else if (hash === "#preparedEvaluador") {
-            var url3 = "/sapenfermeria/" + hash;
+            var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             //$("div.ui-layout-center").empty();
             $.ajax({
@@ -325,7 +325,7 @@ $(function() {
             actualizaEnlaces(hash);
         }
         else if (hash === "#preparedPonderarFactor") {
-            var url3 = "/sapenfermeria/" + hash;
+            var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
             $.ajax({
@@ -349,7 +349,7 @@ $(function() {
                 //fin success
             }); //fin del $.ajax
         } else if (hash === "#listPonderacionCara") {
-            var url3 = "/sapenfermeria/" + hash;
+            var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
             $.ajax({
@@ -358,10 +358,10 @@ $(function() {
                 success: function(data)
                 {
                     if (data == 1) {
-                        location = "/sapenfermeria/#listPonderacionCara2";
+                        location = "/sap/#listPonderacionCara2";
                     } else {
                         $('#modalCp3').modal();
-                        location = "/sapenfermeria/#listPonderacionFactor";
+                        location = "/sap/#listPonderacionFactor";
                     }
                     actualizaEnlaces(hash);
                 }
@@ -371,7 +371,7 @@ $(function() {
                 || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 || hash.indexOf("#encuestaXaleatoria") !== -1 || hash.indexOf("#detallePFactor") !== -1 || hash.indexOf("#detallePCaracteristica") !== -1 || hash.indexOf("#detallePIndicador") !== -1) {
             var cual = hash.split("&");
             hash = cual[0];
-            var url3 = "/sapenfermeria/controladorCP?action=";
+            var url3 = "/sap/controladorCP?action=";
             url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
             $("div.ui-layout-center").empty();
             $.ajax({
@@ -389,7 +389,7 @@ $(function() {
             }); //fin del $.ajax
         } else {
             if (hash === "#contrasena") {
-                var url3 = "/sapenfermeria/" + hash;
+                var url3 = "/sap/" + hash;
                 url3 = url3.replace('#', "controladorCP?action=");
                 $("div.ui-layout-center").empty();
                 $.ajax({
@@ -414,7 +414,7 @@ $(function() {
     });
 
     $('#modalCpb1').click(function() {
-        var url3 = "/sapenfermeria/" + "controladorCP?action=iniciarProceso";
+        var url3 = "/sap/" + "controladorCP?action=iniciarProceso";
         url3 = url3.replace('#', "controladorCP?action=");
         $("div.ui-layout-center").empty();
         $.ajax({

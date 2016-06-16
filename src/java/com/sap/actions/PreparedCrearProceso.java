@@ -36,7 +36,7 @@ public class PreparedCrearProceso implements Action {
     private ModeloFacade lookupModeloFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ModeloFacade) c.lookup("java:global/sapenfermeria/ModeloFacade!com.sap.ejb.ModeloFacade");
+            return (ModeloFacade) c.lookup("java:global/sap/ModeloFacade!com.sap.ejb.ModeloFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
@@ -46,7 +46,7 @@ public class PreparedCrearProceso implements Action {
     private ProgramaFacade lookupProgramaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ProgramaFacade) c.lookup("java:global/sapenfermeria/ProgramaFacade!com.sap.ejb.ProgramaFacade");
+            return (ProgramaFacade) c.lookup("java:global/sap/ProgramaFacade!com.sap.ejb.ProgramaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

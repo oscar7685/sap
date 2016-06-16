@@ -14,7 +14,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -49,20 +48,6 @@ public class ResultadoevaluacionFacade extends AbstractFacade<Resultadoevaluacio
         return q.getResultList();
     }
 
-    public List findResultadosxPreguntaxEncuestaxProceso2(Proceso p, Encuesta e, Pregunta pre) {
-        Query q = em.createNativeQuery("SELECT resultadoevaluacion.* FROM resultadoevaluacion \n"
-                + "join pregunta on pregunta.id = resultadoevaluacion.pregunta_id\n"
-                + "join encabezado on encabezado.id = resultadoevaluacion.encabezado_id\n"
-                + "join encuesta on encuesta.id = encabezado.encuesta_id\n"
-                + "join proceso on proceso.id = encabezado.proceso_id\n"
-                + "WHERE pregunta.id='" + pre.getId() + "' and encuesta.id='"+e.getId()+"' and \n"
-                + "proceso.id='"+p.getId()+"' and encabezado.estado='terminado' \n"
-                + "and (resultadoevaluacion.respuesta='5' or resultadoevaluacion.respuesta='4' or resultadoevaluacion.respuesta='3' \n"
-                + "or resultadoevaluacion.respuesta='2' or resultadoevaluacion.respuesta='1')");
-        
-        return q.getResultList();
-    }
-
     public List findResultadosxPreguntaxEncuestaxProcesoxValor(Proceso p, Encuesta e, Pregunta pre, String valor) {
         Query q = em.createNamedQuery("Resultadoevaluacion.findResultadosxPreguntaxEncuestaxProcesoxValor");
         q.setParameter("pregunta", pre);
@@ -78,7 +63,6 @@ public class ResultadoevaluacionFacade extends AbstractFacade<Resultadoevaluacio
         q.setParameter("proceso", p);
         return q.getResultList();
     }
-
     public List findResultadosxPreguntaxEncuestaxProcesoxValor2(Proceso p, Pregunta pre, Encuesta e) {
         Query q = em.createNamedQuery("Resultadoevaluacion.findResultadosxPreguntaxEncuestaxProcesoxValor2");
         q.setParameter("pregunta", pre);
@@ -86,4 +70,5 @@ public class ResultadoevaluacionFacade extends AbstractFacade<Resultadoevaluacio
         q.setParameter("encuesta", e);
         return q.getResultList();
     }
+    
 }
