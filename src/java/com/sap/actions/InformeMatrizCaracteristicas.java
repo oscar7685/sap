@@ -166,6 +166,7 @@ public class InformeMatrizCaracteristicas implements Action {
                         }
 
                         cumplimiento[k] = cumplimiento2 / indicadores2.size();
+                        cumplimiento[k] = (float) (Math.rint(cumplimiento[k] * 10) / 10);
                     } else {
                         List<Instrumento> instr = indicadores.get(k).getInstrumentoList();
                         for (int i = 0; i < instr.size(); i++) {

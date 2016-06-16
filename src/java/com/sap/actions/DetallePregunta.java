@@ -5,6 +5,7 @@
 package com.sap.actions;
 
 import com.sap.ejb.PreguntaFacade;
+import com.sap.ejb.ProcesoFacade;
 import com.sap.ejb.ResultadoevaluacionFacade;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Pregunta;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class DetallePregunta implements Action {
+    ProcesoFacade procesoFacade = lookupProcesoFacadeBean();
 
     PreguntaFacade preguntaFacade = lookupPreguntaFacadeBean();
     ResultadoevaluacionFacade resultadoevaluacionFacade = lookupResultadoevaluacionFacadeBean();
@@ -34,7 +36,7 @@ public class DetallePregunta implements Action {
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
-        Proceso p = (Proceso) sesion.getAttribute("Proceso");
+        Proceso  p = procesoFacade.find(52);
         sesion.setAttribute("numerico", null);
         sesion.setAttribute("documental", null);
         float suma;
@@ -107,6 +109,16 @@ public class DetallePregunta implements Action {
         try {
             Context c = new InitialContext();
             return (PreguntaFacade) c.lookup("java:global/sapenfermeria/PreguntaFacade!com.sap.ejb.PreguntaFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ProcesoFacade lookupProcesoFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (ProcesoFacade) c.lookup("java:global/sapenfermeria/ProcesoFacade!com.sap.ejb.ProcesoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

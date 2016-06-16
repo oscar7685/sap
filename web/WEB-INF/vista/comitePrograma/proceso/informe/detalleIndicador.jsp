@@ -7,10 +7,31 @@
         text-align: right;
     }
 </style>
-    <div class="hero-unit">
-        <div class="row">
-            <div id="conte" class="span10">
-                <legend>Indicador: ${indicador.nombre}</legend>
+<script type="text/javascript">
+    $(function() {
+        $(".tortapregunta").click(function() {
+            var idP = $(this).attr("data-id-pregunta");
+            if (!$(this).hasClass("open")) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/sapenfermeria/controladorCP?action=mostrarTortaPregunta",
+                    data: "idPregunta=" + idP,
+                    success: function(data) {
+                        $("#dancing-dots-text").remove();
+                        $("#container" + idP).replaceWith(data);
+
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+<div class="hero-unit">
+    <div class="row">
+        <div id="conte" class="span10">
+            <legend>Indicador: ${indicador.nombre}</legend>
             <ul class="breadcrumb">
                 <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Dimensiones</a> <span class="divider">/</span></li>
                 <li><a href="<%=request.getContextPath()%>/#informeMatrizCaracteristicas">Matriz de Calidad de Componentes</a> <span class="divider">/</span></li>
@@ -121,7 +142,7 @@
                                                     <a href="#detallePregunta&${row.id}" data="${row.pregunta}">${row.pregunta}</a> 
                                                 </td>
                                                 <td>
-                                                    <div class="btn-group pull-right">
+                                                    <div class="btn-group pull-right tortapregunta" data-id-pregunta ="${row.id}">
                                                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                                                             ${promediosres.get(status.index)[itera.index]}
                                                         </a>

@@ -163,6 +163,7 @@ public class DetalleCaracteristica implements Action {
                     }
                     if (indicadoresSAP.size() > 0) {
                         cumplimiento[k] = cumplimiento2 / indicadoresSAP.size();
+                        cumplimiento[k] = (float) (Math.rint(cumplimiento[k] * 10) / 10);
                     }
                 } else {
                     List<Instrumento> instr = indicadoresMercosur.get(k).getInstrumentoList();

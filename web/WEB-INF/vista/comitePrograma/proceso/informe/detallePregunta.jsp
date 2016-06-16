@@ -283,10 +283,10 @@
             <br/>
             <legend>Pregunta: ${pregunta.pregunta}</legend>
             <ul class="breadcrumb">
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
-                <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
-                <li><a class="tool" data-placement="top" rel="tooltip" data-original-title="${pregunta.getIndicadorId().getCaracteristicaId().getFactorId().nombre}" href="#detalleFactor&${pregunta.getIndicadorId().getCaracteristicaId().getFactorId().id}">Factor ${pregunta.getIndicadorId().getCaracteristicaId().getFactorId().codigo}</a> <span class="divider">/</span></li>
-                <li><a class="tool" data-placement="top" rel="tooltip" data-original-title="${pregunta.getIndicadorId().getCaracteristicaId().nombre}" href="#detalleCaracteristica&${pregunta.getIndicadorId().getCaracteristicaId().id}">Característica ${pregunta.getIndicadorId().getCaracteristicaId().codigo}</a><span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Dimensiones</a> <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Componentes</a> <span class="divider">/</span></li>
+                <li><a class="tool" data-placement="top" rel="tooltip" data-original-title="${pregunta.getIndicadorId().getCaracteristicaId().getFactorId().nombre}" href="#detalleFactor&${pregunta.getIndicadorId().getCaracteristicaId().getFactorId().id}">Dimension ${pregunta.getIndicadorId().getCaracteristicaId().getFactorId().codigo}</a> <span class="divider">/</span></li>
+                <li><a class="tool" data-placement="top" rel="tooltip" data-original-title="${pregunta.getIndicadorId().getCaracteristicaId().nombre}" href="#detalleCaracteristica&${pregunta.getIndicadorId().getCaracteristicaId().id}">Componente ${pregunta.getIndicadorId().getCaracteristicaId().codigo}</a><span class="divider">/</span></li>
                 <li><a class="tool" data-placement="top" rel="tooltip" data-original-title="${pregunta.getIndicadorId().nombre}" href="#detalleIndicador&${pregunta.getIndicadorId().id}">Indicador ${pregunta.getIndicadorId().codigo}</a><span class="divider">/</span></li>
                 <li class="active tool" data-placement="top" rel="tooltip" data-original-title="${pregunta.pregunta}">Pregunta ${pregunta.codigo}</li>
             </ul>
