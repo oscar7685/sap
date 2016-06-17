@@ -72,12 +72,11 @@ public class ResultadosGenerales2 implements Action {
             float cumplimientoC[] = new float[caracteristicas.size()]; //cumplimiento x caracteristica
             float cumplimientoI[] = new float[indicadoresMercosur.size()]; //cumplimiento indicadoresMercosur
 
+            float cumplimientoISap[][] = new float[indicadoresMercosur.size()][11];
+
 
             int indicecumplimientoI = 0;
 
-            //primera caracteristica y primer factor
-            int caracActual = indicadoresMercosur.get(0).getCaracteristicaId().getId();
-            int factorActual = indicadoresMercosur.get(0).getCaracteristicaId().getFactorId().getId();
 
 
             float calificacionNum;
@@ -191,6 +190,9 @@ public class ResultadosGenerales2 implements Action {
                                     cumplimiento3 = calificacionPer;
                                 }
                                 cumplimiento2 += (float) (Math.rint(cumplimiento3 * 10) / 10); //cumplimiento de cada indicador
+
+                                cumplimientoISap[indicecumplimientoI][aux1] = (float) (Math.rint(cumplimiento3 * 10) / 10);
+
                             }
                             if (indicadoresSAP.size() > 0) {
                                 cumplimientoI[indicecumplimientoI] = cumplimiento2 / indicadoresSAP.size();
@@ -249,6 +251,7 @@ public class ResultadosGenerales2 implements Action {
             sesion.setAttribute("cumplimientoF", cumplimientoF);
             sesion.setAttribute("cumplimientoC", cumplimientoC);
             sesion.setAttribute("cumplimientoI", cumplimientoI);
+            sesion.setAttribute("cumplimientoISap", cumplimientoISap);
             sesion.setAttribute("factores", factores);
 
         }

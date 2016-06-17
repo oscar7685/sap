@@ -80,7 +80,7 @@
 
 
                     <c:forEach items="${caracteristica.indicadorList}" var="indicador" varStatus="statusI">
-                        <h3>Indicador ${indicador.codigo}</h3>
+                        <h3>Indicador Arcu-Sur ${indicador.codigo}</h3>
                         <table class="table table-striped table-bordered table-condensed">
                             <thead style="background-color: #ffffff;">
                                 <tr>
@@ -92,11 +92,30 @@
                             <tbody>
                                 <tr>
                                     <td>${indicador.getCodigo()}</td>
-                                    <td>${indicador.getNombre()}</td>
+                                    <td><a href="#detalleIndicador&${indicador.id}">${indicador.getNombre()}</a></td>
                                     <td><fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoI[indiceI]}"/></td>
                                 </tr> 
                             </tbody>
                         </table>
+                        <c:forEach items="${indicador.indicadorList}" var="indicadorSAP" varStatus="statusISAP">
+                            <table class="table table-striped table-bordered table-condensed">
+                                <h4>Indicador SAP ${indicadorSAP.codigo}</h4>
+                                <thead style="background-color: #ffffff;">
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Indicador</th>
+                                        <th>Grado de Cumplimiento</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>${indicadorSAP.getCodigo()}</td>
+                                        <td>${indicadorSAP.getNombre()}</td>
+                                        <td>${cumplimientoISap[indiceI][statusISAP.index]}</td>
+                                    </tr> 
+                                </tbody>
+                            </table>
+                        </c:forEach> 
                         <c:set var="indiceI" value="${indiceI + 1}"></c:set>  
                     </c:forEach>
                 </c:forEach>  
