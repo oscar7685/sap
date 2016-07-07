@@ -55,7 +55,7 @@ public class Caracteristica implements Serializable {
     private String codigo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 1000)
     @Column(name = "nombre")
     private String nombre;
     @JoinTable(name = "pregunta_has_caracteristica", joinColumns = {
