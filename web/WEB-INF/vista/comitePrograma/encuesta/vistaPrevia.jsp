@@ -24,16 +24,16 @@
 
 <a class="span10" style="text-align: right;  margin-left: 60px; cursor: pointer;" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
 <br>
-<div class="hero-unit">
-    <div style="margin-left: -30px;">
+<div class="hero-unit" id="toPrint">
+    <div>
         <div id="conte" class="span10" style="text-align: justify">
             <div class="row">
                 <table class="table table-striped table-bordered" style="font-weight: bold;">
                     <tbody>
                         <tr>
                             <td style="text-align: center;">ESCUELA NAVAL DE CADETES "ALMIRANTE PADILLA"
-                            <!--<br/><span id="spanprograma">PROGRAMA: _PROGRAMA_</span>-->
-                            <br/>${encuesta.getNombre()}</td>
+                                <!--<br/><span id="spanprograma">PROGRAMA: _PROGRAMA_</span>-->
+                                <br/>${encuesta.getNombre()}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -134,8 +134,27 @@
     $(function() {
         setTimeout(function() {
             $("#printEnlace").click(function() {
-                $('.hero-unit').printArea();
-                return false;
+                var contents = $("#toPrint").html();
+                var frame1 = $('<iframe />');
+                frame1[0].name = "frame1";
+                frame1.css({"position": "absolute", "top": "-1000000px"});
+                $("body").append(frame1);
+                var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+                frameDoc.document.open();
+                //Create a new HTML document.
+                frameDoc.document.write('<html><head><title>${encuesta.getNombre()}</title>');
+                frameDoc.document.write('</head><body>');
+                //Append the external CSS file.
+                frameDoc.document.write('<link href="css/print.css" rel="stylesheet" type="text/css" />');
+                //Append the DIV contents.
+                frameDoc.document.write(contents);
+                frameDoc.document.write('</body></html>');
+                frameDoc.document.close();
+                setTimeout(function() {
+                    window.frames["frame1"].focus();
+                    window.frames["frame1"].print();
+                    frame1.remove();
+                }, 500);
             });
         }, 1000);
     });

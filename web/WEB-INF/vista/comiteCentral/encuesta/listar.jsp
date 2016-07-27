@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link media="print" href="<%=request.getContextPath()%>/css/print.css" rel="stylesheet"/>
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
