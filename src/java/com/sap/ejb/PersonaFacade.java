@@ -8,6 +8,7 @@ import com.sap.entity.Persona;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,5 +27,11 @@ public class PersonaFacade extends AbstractFacade<Persona> {
     public PersonaFacade() {
         super(Persona.class);
     }
+    
+    public int eliminarPersonas(String query) {
+        Query q = em.createNativeQuery(""+query);
+       return q.executeUpdate();
+    }
+    
     
 }

@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Muestrapersona.findAll", query = "SELECT m FROM Muestrapersona m"),
     @NamedQuery(name = "Muestrapersona.findById", query = "SELECT m FROM Muestrapersona m WHERE m.id = :id"),
-    @NamedQuery(name = "Muestrapersona.findByCedula", query = "SELECT m FROM Muestrapersona m WHERE m.cedula = :cedula and m.muestraId.procesoId.fechacierre = '--' and m.muestraId.procesoId.fechainicio <> 'En Configuración'"),
+    @NamedQuery(name = "Muestrapersona.findByCedula", query = "SELECT m FROM Muestrapersona m WHERE m.cedula = :cedula and m.muestraId.procesoId.fechacierre = '--' and m.muestraId.procesoId.fechainicio <> 'En Configuración' and size(m.encabezadoList) = 0"),
     @NamedQuery(name = "Muestrapersona.findByNombre", query = "SELECT m FROM Muestrapersona m WHERE m.nombre = :nombre"),
     @NamedQuery(name = "Muestrapersona.findByApellido", query = "SELECT m FROM Muestrapersona m WHERE m.apellido = :apellido"),
     @NamedQuery(name = "Muestrapersona.findByPassword", query = "SELECT m FROM Muestrapersona m WHERE m.password = :password"),

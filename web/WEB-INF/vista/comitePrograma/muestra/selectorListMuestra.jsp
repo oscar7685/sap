@@ -120,6 +120,28 @@
             }); //fin $.ajax    
 
         });
+        $("#bpreparedEliminarPersonas").click(function() {
+            $.ajax({
+                type: 'POST',
+                url: "/sapnaval/controladorCP?action=eliminarPersonas&fuente=${fuenteX}",
+                success: function() {
+                        $("#listM").empty();
+                        $.ajax({
+                            type: 'POST',
+                            url: "/sapnaval/controladorCP?action=selectorListMuestra",
+                            data: $("#formListarMuestra").serialize(),
+                            success: function(datos) {
+                                $(".divEvaluador").remove();
+                                $("#listM").append(datos);
+                                $("#contenido").show(200, function() {
+                                    $("#dancing-dots-text").remove();
+                                });
+                            } //fin success
+                        }); //fin $.ajax 
+                    } //fin success
+            }); //fin $.ajax    
+
+        });
 
         $("#bpreparedEditarMuestra").click(function() {
             $.ajax({
@@ -227,6 +249,7 @@
                         </table>
                         <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">
                             <a id="bpreparedCrearPersona" class="btn btn-large btn-primary"><i class="icon-edit-sign"></i> Crear Evaluador</a>
+                            <a id="bpreparedEliminarPersonas" class="btn btn-large btn-primary"><i class="icon-edit-sign"></i> Eliminar personas</a>
                         </c:if>
                         <p id="total0" style="font-weight: bold">Total: ${fn:length(poblacion)}</p>
                         <c:if test="${(EstadoProceso == 2 || EstadoProceso == 1) && tipoLogin=='Comite central'}">

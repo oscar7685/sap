@@ -36,7 +36,6 @@ public class PreparedCrearEvaluador implements Action {
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
         String fuente = request.getParameter("fuente");
-        System.out.println("fuente: " + fuente);
         if (fuente.equals("Estudiante")) {
             sesion.setAttribute("selectorFuente", "Estudiante");
         } else if (fuente.equals("Docente")) {
