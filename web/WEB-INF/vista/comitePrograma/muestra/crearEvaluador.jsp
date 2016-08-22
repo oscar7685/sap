@@ -121,7 +121,7 @@
                             <div class="control-group">
                                 <label for="tipo"  class="control-label">Tipo</label>
                                 <div class="controls">
-                                    <select name="tipo" id="tipo" class="input-xlarge {required:true}"/>
+                                    <select name="tipo" id="tipo" class="input-xlarge {required:true}">
                                     <option value="MILITAR">MILITAR</option>
                                     <option value="NOMINA">NÓMINA</option>
                                     <option value="CATEDRA">CÁTEDRA</option>
@@ -134,7 +134,7 @@
                             <div class="control-group">
                                 <label for="tipo"  class="control-label">Tipo</label>
                                 <div class="controls">
-                                    <select name="tipo" id="tipo" class="input-xlarge {required:true}"/>
+                                    <select name="tipo" id="tipo" class="input-xlarge {required:true}">
                                     <option value="PREGRADO">PREGRADO</option>
                                     <option value="ESPECIALIZACION">ESPECIALIZACIÓN</option>
                                     <option value="MAESTRIA">MAESTRÍA</option>
@@ -147,7 +147,7 @@
                                 <label for="tipo"  class="control-label">Tipo</label>
                                 <div class="controls">
                                     <div class="controls">
-                                        <select name="tipo" id="tipo" class="input-xlarge {required:true}"/>
+                                        <select name="tipo" id="tipo" class="input-xlarge {required:true}">
                                         <option value="CIVILES">CIVILES</option>
                                         <option value="MILITARES">MILITARES</option>
                                         <option value="SUBOFICIALES">SUBOFICIALES</option>
