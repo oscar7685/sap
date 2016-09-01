@@ -50,7 +50,10 @@ public class Administrativo implements Serializable {
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
-
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
+    
     public Administrativo() {
     }
 
@@ -97,7 +100,13 @@ public class Administrativo implements Serializable {
     public void setFuenteId(Fuente fuenteId) {
         this.fuenteId = fuenteId;
     }
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
 
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
+    }
     @Override
     public int hashCode() {
         int hash = 0;

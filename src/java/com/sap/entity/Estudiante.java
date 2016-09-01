@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Estudiante.findBySemestre", query = "SELECT e FROM Estudiante e WHERE e.semestre = :semestre"),
     @NamedQuery(name = "Estudiante.findByPeriodo", query = "SELECT e FROM Estudiante e WHERE e.periodo = :periodo"),
     @NamedQuery(name = "Estudiante.cantEstudiantesEntre3y9ByPrograma", query = "SELECT COUNT(e) FROM Estudiante e WHERE e.programaId = :programa AND  (e.semestre='03' OR e.semestre='04' OR e.semestre='05' OR e.semestre='06' OR e.semestre='07' OR e.semestre='08' OR e.semestre='09')"),
+    @NamedQuery(name = "Estudiante.cantEstudiantesEntre3y9ByProceso", query = "SELECT COUNT(e) FROM Estudiante e WHERE e.procesoId = :proceso AND  (e.semestre='03' OR e.semestre='04' OR e.semestre='05' OR e.semestre='06' OR e.semestre='07' OR e.semestre='08' OR e.semestre='09')"),
     @NamedQuery(name = "Estudiante.findByAnio", query = "SELECT e FROM Estudiante e WHERE e.anio = :anio")})
 public class Estudiante implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -64,6 +65,17 @@ public class Estudiante implements Serializable {
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
+
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
+
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
+    }
 
     public Estudiante() {
     }

@@ -101,7 +101,7 @@ public class GenerarMuestra implements Action {
         double N = 0.0;
 
         //********************************Estudiante
-        double aux = estudianteFacade.cantEstudiantesEntre3y9ByPrograma((Programa) programa);
+        double aux = estudianteFacade.cantEstudiantesEntre3y9ByProceso(proceso);
 
         N = aux;
 
@@ -115,11 +115,11 @@ public class GenerarMuestra implements Action {
 
             int tamanioMuestra1 = 0;
 
-            int tamaniosem = estudianteFacade.countByProperty2("programaId", programa, "semestre", "0" + i);
+            int tamaniosem = estudianteFacade.countByProperty2("procesoId", proceso, "semestre", "0" + i);
 
             tamanioMuestra1 = (int) Math.round(tamaniosem * cociente);
 
-            List<Estudiante> le = estudianteFacade.generarMuestraEst(programa, tamanioMuestra1, "semestre", "0" + i);
+            List<Estudiante> le = estudianteFacade.generarMuestraEst(proceso, tamanioMuestra1, "semestre", "0" + i);
 
             Iterator it = le.iterator();
 
@@ -156,7 +156,7 @@ public class GenerarMuestra implements Action {
         //********************************Docente
         int tamanioMuestra = 0;
         Iterator it;
-        aux = docenteFacade.countByProperty("programaId", programa);
+        aux = docenteFacade.countByProperty("procesoId", proceso);
 
         N = aux;
 
@@ -165,7 +165,7 @@ public class GenerarMuestra implements Action {
 
             tamanioMuestra = (int) Math.floor(n);
 
-            List<Docente> ld = docenteFacade.generarMuestra(programa, tamanioMuestra);
+            List<Docente> ld = docenteFacade.generarMuestra(proceso, tamanioMuestra);
 
             it = ld.iterator();
 
@@ -196,7 +196,7 @@ public class GenerarMuestra implements Action {
         }
 
         //********************************Egresado
-        aux = egresadoFacade.countByProperty("programaId", programa);
+        aux = egresadoFacade.countByProperty("procesoId", proceso);
 
         N = aux;
 
@@ -205,7 +205,7 @@ public class GenerarMuestra implements Action {
 
             tamanioMuestra = (int) Math.floor(n);
 
-            List<Egresado> leg = egresadoFacade.generarMuestra(programa, tamanioMuestra);
+            List<Egresado> leg = egresadoFacade.generarMuestra(proceso, tamanioMuestra);
 
             it = leg.iterator();
 
@@ -234,7 +234,7 @@ public class GenerarMuestra implements Action {
         }
 
         //********************************Director
-        aux = directorprogramaFacade.countByProperty("programaId", programa);
+        aux = directorprogramaFacade.countByProperty("procesoId", proceso);
 
         N = aux;
 
@@ -243,7 +243,7 @@ public class GenerarMuestra implements Action {
 
             tamanioMuestra = (int) Math.floor(n);
 
-            List<Directorprograma> ldp = directorprogramaFacade.generarMuestra(programa, tamanioMuestra);
+            List<Directorprograma> ldp = directorprogramaFacade.generarMuestra(proceso, tamanioMuestra);
 
             it = ldp.iterator();
 
@@ -273,7 +273,7 @@ public class GenerarMuestra implements Action {
         }
 
         //********************************Administrativo
-        aux = administrativoFacade.countByProperty("programaId", programa);
+        aux = administrativoFacade.countByProperty("procesoId", proceso);
 
         N = aux;
 
@@ -282,7 +282,7 @@ public class GenerarMuestra implements Action {
 
             tamanioMuestra = (int) Math.floor(n);
 
-            List<Administrativo> lad = administrativoFacade.generarMuestra(programa, tamanioMuestra);
+            List<Administrativo> lad = administrativoFacade.generarMuestra(proceso, tamanioMuestra);
 
             it = lad.iterator();
 
@@ -313,7 +313,7 @@ public class GenerarMuestra implements Action {
         }
 
         //********************************EMpleador
-        aux = empleadorFacade.countByProperty("programaId", programa);
+        aux = empleadorFacade.countByProperty("procesoId", proceso);
 
         N = aux;
 
@@ -322,7 +322,7 @@ public class GenerarMuestra implements Action {
 
             tamanioMuestra = (int) Math.floor(n);
 
-            List<Empleador> lem = empleadorFacade.generarMuestra(programa, tamanioMuestra);
+            List<Empleador> lem = empleadorFacade.generarMuestra(proceso, tamanioMuestra);
 
             it = lem.iterator();
 
@@ -353,7 +353,7 @@ public class GenerarMuestra implements Action {
         }
 
         //********************************Agencia
-        aux = agenciagubernamentalFacade.countByProperty("programaId", programa);
+        aux = agenciagubernamentalFacade.countByProperty("procesoId", proceso);
 
         N = aux;
 
@@ -362,7 +362,7 @@ public class GenerarMuestra implements Action {
 
             tamanioMuestra = (int) Math.floor(n);
 
-            List<Agenciagubernamental> lag = agenciagubernamentalFacade.generarMuestra(programa, tamanioMuestra);
+            List<Agenciagubernamental> lag = agenciagubernamentalFacade.generarMuestra(proceso, tamanioMuestra);
 
             it = lag.iterator();
 

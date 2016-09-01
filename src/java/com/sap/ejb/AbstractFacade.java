@@ -128,7 +128,7 @@ public abstract class AbstractFacade<T> {
         if (tamanio != 0) {
             javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
             cq.select(cq.from(entityClass));
-            Long size = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name", Long.class).setParameter("name", m).getSingleResult();
+            Long size = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() + " c WHERE c.procesoId = :name", Long.class).setParameter("name", m).getSingleResult();
             int size2 = size.intValue();
             Random random = new Random();
             List<T> lista = new ArrayList<T>();
@@ -136,7 +136,7 @@ public abstract class AbstractFacade<T> {
             int i = 0;
             while (i < tamanio) {
                 int aux = random.nextInt(size2);
-                Query q2 = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name", entityClass).setParameter("name", m);
+                Query q2 = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.procesoId = :name", entityClass).setParameter("name", m);
                 q2.setFirstResult(aux);
                 q2.setMaxResults(1);
                 if (!generated.contains(aux)) {
@@ -157,7 +157,7 @@ public abstract class AbstractFacade<T> {
     public List<T> generarMuestraEst(Object m1, int tamanio, String property2, Object m2) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Long size = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name and c." + property2 + "= :name2", Long.class).setParameter("name", m1).setParameter("name2", m2).getSingleResult();
+        Long size = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() + " c WHERE c.procesoId = :name and c." + property2 + "= :name2", Long.class).setParameter("name", m1).setParameter("name2", m2).getSingleResult();
         int size2 = size.intValue();
         Random random = new Random();
         List<T> lista = new ArrayList<T>();
@@ -165,7 +165,7 @@ public abstract class AbstractFacade<T> {
         int i = 0;
         while (i < tamanio) {
             int aux = random.nextInt(size2);
-            Query q2 = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.programaId = :name and c." + property2 + "= :name2", entityClass).setParameter("name", m1).setParameter("name2", m2);
+            Query q2 = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.procesoId = :name and c." + property2 + "= :name2", entityClass).setParameter("name", m1).setParameter("name2", m2);
             q2.setFirstResult(aux);
             q2.setMaxResults(1);
             if (!generated.contains(aux)) {
