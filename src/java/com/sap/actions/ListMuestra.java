@@ -33,7 +33,6 @@ public class ListMuestra implements Action{
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        proceso = procesoFacade.find(52);
         
         String url;
         List<Muestra> lm = muestraFacade.findByList("procesoId", proceso);
