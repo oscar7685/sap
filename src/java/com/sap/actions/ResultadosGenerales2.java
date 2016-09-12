@@ -98,6 +98,7 @@ public class ResultadosGenerales2 implements Action {
         List<List> PromedioPreguntasXindicadorEg = new ArrayList<List>();
         List<List> PromedioPreguntasXindicadorDi = new ArrayList<List>();
         List<List> PromedioPreguntasXindicadorEm = new ArrayList<List>();
+        List<List> PromedioPreguntasXindicadorVi = new ArrayList<List>();
 
         int caracActual = indicadores.get(0).getCaracteristicaId().getId();
         int factorActual = indicadores.get(0).getCaracteristicaId().getFactorId().getId();
@@ -109,8 +110,8 @@ public class ResultadosGenerales2 implements Action {
 
         float calificacionNum = 0;
         float calificacionDoc = 0;
-        float promedioEstudiantes, promedioDocentes, promedioAdmin, promedioEgre, promedioDire, promedioEmpl;
-        int numEst, numDoc, numAdmi, numEgr, numDire, numEmp;
+        float promedioEstudiantes, promedioDocentes, promedioAdmin, promedioEgre, promedioDire, promedioEmpl, promedioVi;
+        int numEst, numDoc, numAdmi, numEgr, numDire, numEmp, numVi;
         int indice = 0;
         int indiceCarac = 0;
         int indiceFactor = 0;
@@ -123,6 +124,7 @@ public class ResultadosGenerales2 implements Action {
             List promedioxPreguntaEg = new ArrayList();
             List promedioxPreguntaDi = new ArrayList();
             List promedioxPreguntaEm = new ArrayList();
+            List promedioxPreguntaVi = new ArrayList();
             sumaPromediosXpregunta = 0;
 
             calificacionNum = 0;
@@ -149,12 +151,14 @@ public class ResultadosGenerales2 implements Action {
                         promedioEgre = 0;
                         promedioDire = 0;
                         promedioEmpl = 0;
+                        promedioVi = 0;
                         numEst = 0;
                         numDoc = 0;
                         numAdmi = 0;
                         numEgr = 0;
                         numDire = 0;
                         numEmp = 0;
+                        numVi = 0;
                         for (int n = 0; n < respuestas.size(); n++) {
                             if (respuestas.get(n).getEncabezadoId().getEstado().equals("terminado") && respuestas.get(n).getEncabezadoId().getProcesoId().getId() == proceso.getId()
                                     && respuestas.get(n).getRespuesta() != null && (respuestas.get(n).getRespuesta().equals("1") || respuestas.get(n).getRespuesta().equals("2")
@@ -178,6 +182,9 @@ public class ResultadosGenerales2 implements Action {
                                 } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 6) {
                                     numEmp++;
                                     promedioEmpl += Integer.parseInt(respuestas.get(n).getRespuesta());
+                                }else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 7) {
+                                    numVi++;
+                                    promedioVi += Integer.parseInt(respuestas.get(n).getRespuesta());
                                 }
 
                             }
@@ -221,6 +228,11 @@ public class ResultadosGenerales2 implements Action {
                             promedioEmpl = (float) Math.rint(promedioEmpl * 10) / 10;
                             promedioXpregunta += promedioEmpl;
                             FuentesPregunta++;
+                        }if (numVi != 0) {
+                            promedioVi /= numVi;
+                            promedioVi = (float) Math.rint(promedioVi * 10) / 10;
+                            promedioXpregunta += promedioVi;
+                            FuentesPregunta++;
                         }
 
                         /* 2. Calculamos el promedio de la pregunta teniendo en cuenta los promedios por encuesta*/
@@ -237,6 +249,7 @@ public class ResultadosGenerales2 implements Action {
                         promedioxPreguntaEg.add(promedioEgre);
                         promedioxPreguntaDi.add(promedioDire);
                         promedioxPreguntaEm.add(promedioEmpl);
+                        promedioxPreguntaVi.add(promedioVi);
 
                     }
                     /* 3. Calculamos el promedio de la percepcion en el indicador*/
@@ -344,6 +357,7 @@ public class ResultadosGenerales2 implements Action {
             PromedioPreguntasXindicadorEg.add(promedioxPreguntaEg);
             PromedioPreguntasXindicadorDi.add(promedioxPreguntaDi);
             PromedioPreguntasXindicadorEm.add(promedioxPreguntaEm);
+            PromedioPreguntasXindicadorVi.add(promedioxPreguntaVi);
         }
         sesion.setAttribute("ponderacionesF", ponderacionesF);
         sesion.setAttribute("cumplimientoF", cumplimientoF);
@@ -359,6 +373,7 @@ public class ResultadosGenerales2 implements Action {
         sesion.setAttribute("PromedioPreguntasXindicadorEg", PromedioPreguntasXindicadorEg);
         sesion.setAttribute("PromedioPreguntasXindicadorDi", PromedioPreguntasXindicadorDi);
         sesion.setAttribute("PromedioPreguntasXindicadorEm", PromedioPreguntasXindicadorEm);
+        sesion.setAttribute("PromedioPreguntasXindicadorVi", PromedioPreguntasXindicadorVi);
         sesion.setAttribute("PromedioPreguntasXindicador", PromedioPreguntasXindicador);
         sesion.setAttribute("cantidadIndF", cantidadIndF);
         sesion.setAttribute("cantidadIndC", cantidadIndC);

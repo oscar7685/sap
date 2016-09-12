@@ -72,11 +72,18 @@
                                         <option value="--">Seleccionar Fuente</option>
                                         <option value="Estudiante">Estudiantes</option>
                                         <option value="Docente">Docentes</option>
-                                        <option value="Egresado">Egresados</option>
-                                        <option value="Administrativo">Administrativos</option>
                                         <option value="Directivo">Directores de programa</option>
-                                        <option value="Empleador">Empleadores</option>
-                                        <option value="Visitante">Visitantes</option>
+                                        <c:if test="${Proceso.modeloId.id < 4}">
+                                            <option value="Egresado">Egresados</option>
+                                            <option value="Administrativo">Administrativos</option>
+                                            <option value="Empleador">Empleadores</option>
+                                        </c:if>
+                                        <c:if test="${Proceso.modeloId.id == 4}">
+                                            <option value="Egresado">Egresados</option>
+                                        </c:if>
+                                        <c:if test="${Proceso.modeloId.id == 5}">
+                                            <option value="Visitante">Visitantes</option>    
+                                        </c:if>
                                     </select>
                                 </div>
                             </div>   

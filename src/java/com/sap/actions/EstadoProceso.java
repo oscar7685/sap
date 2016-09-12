@@ -6,6 +6,7 @@ package com.sap.actions;
 
 import com.sap.ejb.EncabezadoFacade;
 import com.sap.ejb.MuestraadministrativoFacade;
+import com.sap.ejb.MuestraagenciaFacade;
 import com.sap.ejb.MuestradirectorFacade;
 import com.sap.ejb.MuestradocenteFacade;
 import com.sap.ejb.MuestraegresadoFacade;
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class EstadoProceso implements Action {
+    MuestraagenciaFacade muestraagenciaFacade = lookupMuestraagenciaFacadeBean();
     EncabezadoFacade encabezadoFacade = lookupEncabezadoFacadeBean();
     MuestraempleadorFacade muestraempleadorFacade = lookupMuestraempleadorFacadeBean();
     MuestradirectorFacade muestradirectorFacade = lookupMuestradirectorFacadeBean();
@@ -53,6 +55,7 @@ public class EstadoProceso implements Action {
         int totalAdm = muestraadministrativoFacade.countByProperty("muestrapersonaId.muestraId", m);
         int totalDir = muestradirectorFacade.countByProperty("muestrapersonaId.muestraId", m);
         int totalEmp = muestraempleadorFacade.countByProperty("muestrapersonaId.muestraId", m);
+        int totalVis = muestraagenciaFacade.countByProperty("muestrapersonaId.muestraId", m);
 
         List<Encabezado> encabezados = encabezadoFacade.findByList2("procesoId", m.getProcesoId(), "estado", "terminado");
 
@@ -63,6 +66,7 @@ public class EstadoProceso implements Action {
         int terminadosAdm = 0;
         int terminadosDir = 0;
         int terminadosEmp = 0;
+        int terminadosVis = 0;
         for (Encabezado encabezado : encabezados) {
             if (encabezado.getFuenteId().getId() == 1) {
                 terminadosEst++;
@@ -74,8 +78,10 @@ public class EstadoProceso implements Action {
                 terminadosEgr++;
             } else if (encabezado.getFuenteId().getId() == 5) {
                 terminadosDir++;
-            } else {
+            } else if (encabezado.getFuenteId().getId() == 6) {
                 terminadosEmp++;
+            } else if (encabezado.getFuenteId().getId() == 7) {
+                terminadosVis++;
             }
         }
         sesion.setAttribute("terminadosX", terminados);
@@ -92,6 +98,8 @@ public class EstadoProceso implements Action {
         sesion.setAttribute("terminadosAdm", terminadosAdm);
         sesion.setAttribute("totalDir", totalDir);
         sesion.setAttribute("terminadosDir", terminadosDir);
+        sesion.setAttribute("totalVis", totalVis);
+        sesion.setAttribute("terminadosVis", terminadosVis);
         return "/WEB-INF/vista/comitePrograma/proceso/informe/estadoProceso.jsp";
     }
 
@@ -169,6 +177,16 @@ public class EstadoProceso implements Action {
         try {
             Context c = new InitialContext();
             return (EncabezadoFacade) c.lookup("java:global/sap/EncabezadoFacade!com.sap.ejb.EncabezadoFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private MuestraagenciaFacade lookupMuestraagenciaFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (MuestraagenciaFacade) c.lookup("java:global/sap/MuestraagenciaFacade!com.sap.ejb.MuestraagenciaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

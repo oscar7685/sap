@@ -75,14 +75,21 @@
                 },
                 xAxis: {
                     categories: [
-                        'Estudiantes',
-                        'Docentes',
-                        'Administrativos',
-                        'Directores de programa',
-                        'Egresados',
-                        'Empleadores',
-                    ]
-                },
+                        'Estudiantes'
+                        ,'Docentes'
+                        ,'Directores de programa'
+            <c:if test="${Proceso.modeloId.id < 4}">
+                         ,'Administrativos'       
+                         ,'Egresados'
+                         ,'Empleadores'
+            </c:if>
+            <c:if test="${Proceso.modeloId.id == 4}">
+                         ,'Egresados'
+            </c:if>    
+                        <c:if test="${Proceso.modeloId.id == 5}">
+                        ,'Visitantes'
+                        </c:if>   
+                    ]},
                 yAxis: {
                     min: 0,
                     title: {
@@ -107,11 +114,33 @@
                 },
                 series: [{
                         name: 'Seleccionados',
-                        data: [${totalEst}, ${totalDoc}, ${totalAdm}, ${totalDir}, ${totalEgr}, ${totalEmp}]
-
-                    }, {
+                        data: [${totalEst}, ${totalDoc}, ${totalDir}
+                        <c:if test="${Proceso.modeloId.id < 4}">
+                        ,${totalAdm}
+                        , ${totalEgr}
+                        , ${totalEmp}
+                        </c:if>
+                        <c:if test="${Proceso.modeloId.id == 4}">
+                        , ${totalEgr}    
+                        </c:if>
+                        <c:if test="${Proceso.modeloId.id == 5}">
+                        ,${totalVis}
+                        </c:if>   
+                        ]}, {
                         name: 'Evaluados',
-                        data: [${terminadosEst}, ${terminadosDoc}, ${terminadosAdm}, ${terminadosDir}, ${terminadosEgr}, ${terminadosEmp}],
+                        data: [${terminadosEst}, ${terminadosDoc}, ${terminadosDir}
+                        <c:if test="${Proceso.modeloId.id < 4}">
+                        , ${terminadosAdm}
+                        , ${terminadosEgr}
+                        , ${terminadosEmp}
+                        </c:if> 
+                        <c:if test="${Proceso.modeloId.id == 4}">
+                        , ${terminadosEgr}    
+                        </c:if>    
+                        <c:if test="${Proceso.modeloId.id == 5}">
+                        , ${terminadosVis}
+                        </c:if>                           
+                        ],
                         color: '#89A54E'
 
                     }],
@@ -169,8 +198,8 @@
                     <!--<a  href="<%=request.getContextPath()%>/#resultadosGenerales"><i class="icon-bar-chart"></i> Resultados Generales</a>-->
                     <a  href="<%=request.getContextPath()%>/#resultadosGenerales2" class="btn btn-warning"><i class="icon-bar-chart"></i> Resultados Generales</a>
                     <c:if test="${EstadoProceso == 3}">
-                    <a class="btn btn-warning" href="<%=request.getContextPath()%>/#todosResultados"><i class="icon-bar-chart"></i> Resultados</a>
-                    <a class="btn btn-warning" href="<%=request.getContextPath()%>/#comentarios"><i class="icon-comment"></i> Comentarios</a>    
+                        <a class="btn btn-warning" href="<%=request.getContextPath()%>/#todosResultados"><i class="icon-bar-chart"></i> Resultados</a>
+                        <a class="btn btn-warning" href="<%=request.getContextPath()%>/#comentarios"><i class="icon-comment"></i> Comentarios</a>    
                     </c:if>
 
 
@@ -184,10 +213,19 @@
                         <ul class="dropdown-menu">
                             <li><a href="#encuestaXaleatoria&1">de un estudiante</a></li>
                             <li><a href="#encuestaXaleatoria&2">de un docente</a></li>
+                            <li><a href="#encuestaXaleatoria&5">de un director de programa</a></li>
+                            <c:if test="${Proceso.modeloId.id < 4}">
                             <li><a href="#encuestaXaleatoria&4">de un egresado</a></li>
                             <li><a href="#encuestaXaleatoria&3">de un administrativo</a></li>
-                            <li><a href="#encuestaXaleatoria&5">de un director de programa</a></li>
                             <li><a href="#encuestaXaleatoria&6">de un empleador</a></li>
+                            </c:if>
+                            <c:if test="${Proceso.modeloId.id == 4}">
+                            <li><a href="#encuestaXaleatoria&4">de un egresado</a></li>
+                            </c:if>
+                            <c:if test="${Proceso.modeloId.id == 5}">
+                            <li><a href="#encuestaXaleatoria&7">de un visitante</a></li>
+                            </c:if>
+
                         </ul>
                     </div>
                 </div>
@@ -311,43 +349,6 @@
                         </tr>
                         <tr>
                             <td>
-                                ADMINISTRATIVOS
-                            </td>
-                            <td>
-                                ${totalAdm}
-                            </td>
-                            <td>
-                                ${terminadosAdm}
-                            </td>
-                            <td>   
-                                <c:choose>
-                                    <c:when test="${totalAdm!=0}">
-                                        <fmt:formatNumber type="number" maxFractionDigits="2" value="${terminadosAdm*100/totalAdm}"/>%
-                                    </c:when>
-                                    <c:otherwise>
-                                        0%
-                                    </c:otherwise>
-                                </c:choose>
-
-                            </td>
-                            <td>   
-                                <c:out value="${totalAdm-terminadosAdm}"/>
-                            </td>
-                            <td>   
-                                <c:choose>
-                                    <c:when test="${totalAdm!=0}">
-                                        <fmt:formatNumber type="number" maxFractionDigits="2" value="${100-(terminadosAdm*100/totalAdm)}"/>%
-                                    </c:when>
-                                    <c:otherwise>
-                                        0%
-                                    </c:otherwise>
-                                </c:choose>
-
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>
                                 DIRECTORES DE PROGRAMA
                             </td>
                             <td>
@@ -374,6 +375,45 @@
                                 <c:choose>
                                     <c:when test="${totalDir!=0}">
                                         <fmt:formatNumber type="number" maxFractionDigits="2" value="${100-(terminadosDir*100/totalDir)}"/>%
+                                    </c:when>
+                                    <c:otherwise>
+                                        0%
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </td>
+
+                        </tr>
+                        
+                        <c:if test="${Proceso.modeloId.id < 4}">
+                        <tr>
+                            <td>
+                                ADMINISTRATIVOS
+                            </td>
+                            <td>
+                                ${totalAdm}
+                            </td>
+                            <td>
+                                ${terminadosAdm}
+                            </td>
+                            <td>   
+                                <c:choose>
+                                    <c:when test="${totalAdm!=0}">
+                                        <fmt:formatNumber type="number" maxFractionDigits="2" value="${terminadosAdm*100/totalAdm}"/>%
+                                    </c:when>
+                                    <c:otherwise>
+                                        0%
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </td>
+                            <td>   
+                                <c:out value="${totalAdm-terminadosAdm}"/>
+                            </td>
+                            <td>   
+                                <c:choose>
+                                    <c:when test="${totalAdm!=0}">
+                                        <fmt:formatNumber type="number" maxFractionDigits="2" value="${100-(terminadosAdm*100/totalAdm)}"/>%
                                     </c:when>
                                     <c:otherwise>
                                         0%
@@ -420,7 +460,6 @@
                             </td>
 
                         </tr>
-
                         <tr>
                             <td>
                                 EMPLEADORES
@@ -457,8 +496,85 @@
 
                             </td>
                         </tr>
+                        </c:if>
+                        <c:if test="${Proceso.modeloId.id == 4}">
+                        <tr>
+                            <td>
+                                EGRESADOS
+                            </td>
+                            <td>
+                                ${totalEgr}
+                            </td>
+                            <td>
+                                ${terminadosEgr}
+                            </td>
+                            <td>   
+                                <c:choose>
+                                    <c:when test="${totalEgr!=0}">
+                                        <fmt:formatNumber type="number" maxFractionDigits="2" value="${terminadosEgr*100/totalEgr}"/>%
+                                    </c:when>
+                                    <c:otherwise>
+                                        0%
+                                    </c:otherwise>
+                                </c:choose>
 
+                            </td>
+                            <td>   
+                                <c:out value="${totalEgr-terminadosEgr}"/>
+                            </td>
+                            <td>   
+                                <c:choose>
+                                    <c:when test="${totalEgr!=0}">
+                                        <fmt:formatNumber type="number" maxFractionDigits="2" value="${100-(terminadosEgr*100/totalEgr)}"/>%
+                                    </c:when>
+                                    <c:otherwise>
+                                        0%
+                                    </c:otherwise>
+                                </c:choose>
 
+                            </td>
+
+                        </tr>    
+                        </c:if>
+                        
+                        <c:if test="${Proceso.modeloId.id == 5}">
+                            <tr>
+                                <td>
+                                    VISITANTES
+                                </td>
+                                <td>
+                                    ${totalVis}
+                                </td>
+                                <td>
+                                    ${terminadosVis}
+                                </td>
+                                <td>   
+                                    <c:choose>
+                                        <c:when test="${totalVis!=0}">
+                                            <fmt:formatNumber type="number" maxFractionDigits="2" value="${terminadosVis*100/totalVis}"/>%
+                                        </c:when>
+                                        <c:otherwise>
+                                            0%
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                </td>
+                                <td>   
+                                    <c:out value="${totalVis-terminadosVis}"/>
+                                </td>
+                                <td>   
+                                    <c:choose>
+                                        <c:when test="${totalVis!=0}">
+                                            <fmt:formatNumber type="number" maxFractionDigits="2" value="${100-(terminadosVis*100/totalVis)}"/>%
+                                        </c:when>
+                                        <c:otherwise>
+                                            0%
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                </td>
+                            </tr> 
+                        </c:if>
                     <div id="container" style="height: 500px; margin: 0 auto" class="span10"></div>             
                     <br>
                     </tbody>

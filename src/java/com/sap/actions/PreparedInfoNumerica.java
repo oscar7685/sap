@@ -52,7 +52,7 @@ public class PreparedInfoNumerica implements Action {
                 indicadoresNum.add(indicador);
             }
         }
-        sesion.setAttribute("programa", programa); // son todos los que son numericos
+        sesion.setAttribute("programa", programa); // montamos en sesion el programa
         sesion.setAttribute("lisrInidicadorsNum", indicadoresNum); // son todos los que son numericos
         sesion.setAttribute("listaNum", listaNum);//son la numerica documental que ya estan en la tabla calificados
         

@@ -12,6 +12,7 @@ import com.sap.entity.Instrumento;
 import com.sap.entity.Modelo;
 import com.sap.entity.Numericadocumental;
 import com.sap.entity.Proceso;
+import com.sap.entity.Programa;
 import com.sap.interfaz.Action;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class PreparedInfoDocumental implements Action {
         HttpSession sesion = request.getSession();
         Proceso p = (Proceso) sesion.getAttribute("Proceso");
         Modelo m2 = (Modelo) sesion.getAttribute("Modelo");
-
+        Programa programa = p.getProgramaId();
         Instrumento ins = instrumentoFacade.find(3);
         List<Numericadocumental> listaDoc = numericadocumentalFacade.findByList2("procesoId", p, "instrumentoId", ins);
 
@@ -52,6 +53,7 @@ public class PreparedInfoDocumental implements Action {
                 indicadoresDoc.add(indicador);
             }
         }
+        sesion.setAttribute("programa", programa); // montamos en sesion el programa
         sesion.setAttribute("lisrInidicadorsDoc", indicadoresDoc); // son todos los que son documentales
         sesion.setAttribute("listaDoc", listaDoc);//son los que ya estan en la tabla calificados
         if (m2.getId() != 5) {

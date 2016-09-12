@@ -117,18 +117,20 @@
         });
         $('#tablaX td').on('change', function(evt, newValue) {
             // do something with the new cell value 
-
-            var indicador = $(this).parents("tr").find("input[name='indicadorInput']").val();
-            var columna = $(this).index();
-            $.ajax({
-                type: 'POST',
-                url: "<%=request.getContextPath()%>/controladorCP?action=registrarInfoDocumental",
-                data: "indicador=" + indicador + "&columna=" + columna + "&valor=" + newValue,
-                success: function() {
-                    $("#dancing-dots-text").remove();
-                }
-            }); //fin $.ajax
-
+            if (programa != 6841 && $('td:first-child', $(this).parents('tr')).html().indexOf("-Glo")!=-1) {
+                 return false;
+            } else {
+                var indicador = $(this).parents("tr").find("input[name='indicadorInput']").val();
+                var columna = $(this).index();
+                $.ajax({
+                    type: 'POST',
+                    url: "<%=request.getContextPath()%>/controladorCP?action=registrarInfoDocumental",
+                    data: "indicador=" + indicador + "&columna=" + columna + "&valor=" + newValue,
+                    success: function() {
+                        $("#dancing-dots-text").remove();
+                    }
+                }); //fin $.ajax    
+            }
         });
         $("i").popover({trigger: "hover", placement: 'bottom',html: true});
         
