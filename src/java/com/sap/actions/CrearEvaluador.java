@@ -112,11 +112,11 @@ public class CrearEvaluador implements Action {
             String tipo = "";
             if (proce.getModeloId().getId() != 1) {
                 if (proce.getModeloId().getId() == 2) {
-                    tipo = request.getParameter("PREGRADO");
+                    tipo = "PREGRADO";
                 } else if (proce.getModeloId().getId() == 3) {
-                    tipo = request.getParameter("MAESTRIA");
+                    tipo = "MAESTRIA";
                 } else if (proce.getModeloId().getId() == 4) {
-                    tipo = request.getParameter("ESPECIALIZACION");
+                    tipo = "ESPECIALIZACION";
                 }
             } else {
                 tipo = request.getParameter("tipo");
@@ -146,11 +146,11 @@ public class CrearEvaluador implements Action {
             String tipo = "";
             if (proce.getModeloId().getId() != 1) {
                 if (proce.getModeloId().getId() == 2) {
-                    tipo = request.getParameter("PREGRADO");
+                    tipo = "PREGRADO";
                 } else if (proce.getModeloId().getId() == 3) {
-                    tipo = request.getParameter("MAESTRIA");
+                    tipo = "MAESTRIA";
                 } else if (proce.getModeloId().getId() == 4) {
-                    tipo = request.getParameter("ESPECIALIZACION");
+                    tipo = "ESPECIALIZACION";
                 }
             } else {
                 tipo = request.getParameter("tipo");

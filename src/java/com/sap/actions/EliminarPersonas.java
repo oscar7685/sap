@@ -102,7 +102,12 @@ public class EliminarPersonas implements Action {
                     + "                    inner join muestra on muestra.id = muestrapersona.muestra_id\n"
                     + "                    where muestra.proceso_id = '" + proce.getId() + "')");
         } else if (fuente.equals("Empleador")) {
-            sesion.setAttribute("selectorFuente", "Empleador");
+            personaFacade.eliminarPersonas("delete from empleador where empleador.proceso_id = '" + proce.getId() + "' \n"
+                    + "                    and empleador.persona_id not in(\n"
+                    + "                    select muestrapersona.cedula from muestraempleador\n"
+                    + "                    inner join muestrapersona on muestrapersona.id = muestraempleador.muestrapersona_id\n"
+                    + "                    inner join muestra on muestra.id = muestrapersona.muestra_id\n"
+                    + "                    where muestra.proceso_id = '" + proce.getId() + "')");
         } else if (fuente.equals("Directivo")) {
             personaFacade.eliminarPersonas("delete from directorprograma where directorprograma.proceso_id = '" + proce.getId() + "' \n"
                     + "                    and directorprograma.persona_id not in(\n"
