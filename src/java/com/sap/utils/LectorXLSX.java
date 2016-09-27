@@ -161,10 +161,14 @@ public class LectorXLSX {
                 if (i0 == 0) {
                     if (j == 0) {// identificacion
                         try {
-                            String aux = "" + new BigDecimal(Double.valueOf(hssfCell.getNumericCellValue())).toPlainString();
+                             String aux = "" ;
+                            if (!fuente.equals("Empleador")) {
+                               aux+= new BigDecimal(Double.valueOf(hssfCell.getNumericCellValue())).toPlainString();
+                            } else {
+                                 aux += "" + hssfCell.getStringCellValue();
+                            }
 
                             if (!aux.equals("0")) {
-
                                 p = personaFacade.find(aux);
                                 if (p == null) {
                                     p = new Persona();
@@ -221,7 +225,7 @@ public class LectorXLSX {
                                 sapo = true;
                             }
                         } catch (Exception ex3) {
-                            LOGGER.error("ha ocurrido un error de validación con la identificación en el registro #" + (i + 1), ex3);    
+                            LOGGER.error("ha ocurrido un error de validación con la identificación en el registro #" + (i + 1), ex3);
                             errores += "<br/>ha ocurrido un error de validación con el apellido en el registro #" + (i + 1);
                             sapo = true;
                         }
