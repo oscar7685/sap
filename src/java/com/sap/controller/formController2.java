@@ -24,6 +24,7 @@ import com.sap.entity.Asignacionencuesta;
 import com.sap.entity.Caracteristica;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Factor;
+import com.sap.entity.Facultad;
 import com.sap.entity.Fuente;
 import com.sap.entity.Indicador;
 import com.sap.entity.Instrumento;
@@ -230,6 +231,53 @@ public class formController2 extends HttpServlet {
                             }
                         }
                     }
+                } else if (action.equals("listarProgramasCC")) {
+                    String url = "/WEB-INF/vista/comiteCentral/programa/listar.jsp";
+                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                    sesion.setAttribute("listaPro", programaFacade.findAll());
+                    rd.forward(request, response);
+                } else if (action.equals("crearProgramaCC")) {
+                    String url = "/WEB-INF/vista/comiteCentral/programa/crear.jsp";
+                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                    sesion.setAttribute("listaFac", facultadFacade.findAll());
+                    rd.forward(request, response);
+                } else if (action.equals("crearPrograma")) {
+                    String nombre = request.getParameter("nombre");
+                    String descripcion = request.getParameter("descripcion");
+                    String modalidad = request.getParameter("modalidad");
+                    String tipoformacion = request.getParameter("tipoformacion");
+                    String facultad = request.getParameter("facultad");
+                    Facultad faux = facultadFacade.find(Integer.parseInt(facultad));
+                    Programa p = new Programa();
+                    p.setNombre(nombre);
+                    p.setDescripcion(descripcion);
+                    p.setModalidad(modalidad);
+                    p.setTipoformacion(tipoformacion);
+                    p.setFacultadId(faux);
+                    programaFacade.create(p);
+                } else if (action.equals("editarProgramaCC")) {
+                    String id = request.getParameter("id");
+                    Programa p2 = programaFacade.find(Integer.parseInt(id));
+                    sesion.setAttribute("programa", p2);
+                    sesion.setAttribute("listaFac", facultadFacade.findAll());
+                    String url = "/WEB-INF/vista/comiteCentral/programa/editar.jsp";
+                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                    rd.forward(request, response);
+
+                } else if (action.equals("editarPrograma")) {
+                    String nombre = request.getParameter("nombre");
+                    String descripcion = request.getParameter("descripcion");
+                    String modalidad = request.getParameter("modalidad");
+                    String tipoformacion = request.getParameter("tipoformacion");
+                    String facultad = request.getParameter("facultad");
+                    Facultad faux = facultadFacade.find(Integer.parseInt(facultad));
+                    Programa p = (Programa) sesion.getAttribute("programa");
+                    p.setNombre(nombre);
+                    p.setDescripcion(descripcion);
+                    p.setModalidad(modalidad);
+                    p.setTipoformacion(tipoformacion);
+                    p.setFacultadId(faux);
+                    programaFacade.edit(p);
                 } else {
                     if (action.toLowerCase().contains("factor")) {
                         if (action.equals("crearFactor")) {
@@ -773,7 +821,7 @@ public class formController2 extends HttpServlet {
                                                                     Programa p = programaFacade.find(Integer.parseInt(idprograma));
                                                                     progra.add(p);
                                                                 }
-                                                               
+
                                                                 //quitamos los "antiguos" programas
                                                                 for (Programa program : antiguosP) {
                                                                     List<Representante> re = program.getRepresentanteList();
@@ -781,7 +829,7 @@ public class formController2 extends HttpServlet {
                                                                     program.setRepresentanteList(re);
                                                                     programaFacade.edit(program);
                                                                 }
-                                                                
+
                                                                 //metemos a los "nuevos" programas
                                                                 for (Programa program : progra) {
                                                                     List<Representante> re = program.getRepresentanteList();
@@ -789,7 +837,7 @@ public class formController2 extends HttpServlet {
                                                                     program.setRepresentanteList(re);
                                                                     programaFacade.edit(program);
                                                                 }
-                                                                
+
                                                                 r.setId(Integer.parseInt(id2));
                                                                 r.setNombre(nombre);
                                                                 r.setApellido(apellidos);
@@ -797,8 +845,8 @@ public class formController2 extends HttpServlet {
                                                                 r.setMail(correo);
                                                                 r.setProgramaList(progra);
                                                                 representanteFacade.edit(r);
-                                                                
-                                                                
+
+
 
                                                             }
                                                         }
@@ -807,53 +855,6 @@ public class formController2 extends HttpServlet {
                                                     }
                                                 }
                                             }
-                                        } else if (action.equals("verProcesosCC")) {
-                                            String idProg = request.getParameter("id");
-                                            Programa pro = programaFacade.find(Integer.parseInt(idProg));
-                                            sesion.setAttribute("Programa", pro);
-                                            List procesos = (List) procesoFacade.findByPrograma(pro);
-                                            if (!procesos.isEmpty()) {
-                                                Iterator iter = procesos.iterator();
-                                                while (iter.hasNext()) {
-                                                    Proceso p = (Proceso) iter.next();
-                                                    if (p.getFechainicio().equals("En Configuración")) {
-                                                        sesion.setAttribute("EstadoProceso", 1);
-                                                        sesion.setAttribute("Proceso", p);
-                                                        sesion.setAttribute("Modelo", p.getModeloId());
-                                                    } else if (p.getFechacierre().equals("--")) {
-                                                        sesion.setAttribute("EstadoProceso", 2);
-                                                        sesion.setAttribute("Proceso", p);
-                                                        sesion.setAttribute("Modelo", p.getModeloId());
-
-                                                        /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
-                                                        boolean tienePreguntasAbiertas = false;
-                                                        List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
-                                                        for (Pregunta pregunta : preguntasModelo) {
-                                                            if (pregunta.getTipo().equals("2")) {
-                                                                tienePreguntasAbiertas = true;
-                                                                break;
-                                                            }
-                                                        }
-                                                        if (tienePreguntasAbiertas) {
-                                                            sesion.setAttribute("abiertas", "true");
-                                                        } else {
-                                                            sesion.setAttribute("abiertas", "false");
-                                                        }
-                                                        /////////Termina 
-
-
-                                                    } else {
-                                                        sesion.setAttribute("EstadoProceso", 0);
-                                                        //  session.setAttribute("Proceso", p);
-                                                        //session.setAttribute("Modelo", p.getModeloId());
-                                                    }
-                                                }
-                                            } else {
-                                                sesion.setAttribute("EstadoProceso", 0);
-                                            }
-                                            String url = "/WEB-INF/vista/comiteCentral/control/comitePrograma/index.jsp";
-                                            RequestDispatcher rd = request.getRequestDispatcher(url);
-                                            rd.forward(request, response);
                                         } else {
 
                                             if (action.equals("inicioCC")) {

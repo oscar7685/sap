@@ -590,44 +590,52 @@ public class loginController extends HttpServlet {
                                     if (r.getProgramaList() != null && r.getProgramaList().size() == 1) {
                                         session.setAttribute("Programa", r.getProgramaList().get(0));
                                         List procesos = (List) procesoFacade.findByPrograma(r.getProgramaList().get(0));
-                                        if (!procesos.isEmpty()) {
-                                            Iterator iter = procesos.iterator();
-                                            while (iter.hasNext()) {
-                                                Proceso p = (Proceso) iter.next();
-                                                if (p.getFechainicio().equals("En Configuración")) {
-                                                    session.setAttribute("EstadoProceso", 1);
-                                                    session.setAttribute("Proceso", p);
-                                                    session.setAttribute("Modelo", p.getModeloId());
-                                                } else if (p.getFechacierre().equals("--")) {
-                                                    session.setAttribute("EstadoProceso", 2);
-                                                    session.setAttribute("Proceso", p);
-                                                    session.setAttribute("Modelo", p.getModeloId());
+                                        if (procesos.size() == 1) {
+                                            if (!procesos.isEmpty()) {
+                                                Iterator iter = procesos.iterator();
+                                                while (iter.hasNext()) {
+                                                    Proceso p = (Proceso) iter.next();
+                                                    if (p.getFechainicio().equals("En Configuración")) {
+                                                        session.setAttribute("EstadoProceso", 1);
+                                                        session.setAttribute("Proceso", p);
+                                                        session.setAttribute("Modelo", p.getModeloId());
+                                                    } else if (p.getFechacierre().equals("--")) {
+                                                        session.setAttribute("EstadoProceso", 2);
+                                                        session.setAttribute("Proceso", p);
+                                                        session.setAttribute("Modelo", p.getModeloId());
 
-                                                    /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
-                                                    boolean tienePreguntasAbiertas = false;
-                                                    List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
-                                                    for (Pregunta pregunta : preguntasModelo) {
-                                                        if (pregunta.getTipo().equals("2")) {
-                                                            tienePreguntasAbiertas = true;
-                                                            break;
+                                                        /////Comienza para saber si el modelo en cuestion tiene preguntas abiertas
+                                                        boolean tienePreguntasAbiertas = false;
+                                                        List<Pregunta> preguntasModelo = p.getModeloId().getPreguntaList();
+                                                        for (Pregunta pregunta : preguntasModelo) {
+                                                            if (pregunta.getTipo().equals("2")) {
+                                                                tienePreguntasAbiertas = true;
+                                                                break;
+                                                            }
                                                         }
-                                                    }
-                                                    if (tienePreguntasAbiertas) {
-                                                        session.setAttribute("abiertas", "true");
-                                                    } else {
-                                                        session.setAttribute("abiertas", "false");
-                                                    }
-                                                    /////////Termina 
+                                                        if (tienePreguntasAbiertas) {
+                                                            session.setAttribute("abiertas", "true");
+                                                        } else {
+                                                            session.setAttribute("abiertas", "false");
+                                                        }
+                                                        /////////Termina 
 
-                                                } else {
-                                                    session.setAttribute("EstadoProceso", 0);
-                                                    //  session.setAttribute("Proceso", p);
-                                                    //session.setAttribute("Modelo", p.getModeloId());
+                                                    } else {
+                                                        session.setAttribute("EstadoProceso", 0);
+                                                        //  session.setAttribute("Proceso", p);
+                                                        //session.setAttribute("Modelo", p.getModeloId());
+                                                    }
                                                 }
+                                            } else {
+                                                session.setAttribute("EstadoProceso", 0);
                                             }
                                         } else {
-                                            session.setAttribute("EstadoProceso", 0);
+                                            if (procesos.size() > 1) {
+                                                session.setAttribute("Programas", r.getProgramaList());
+                                                session.setAttribute("EstadoProceso2", 4);
+                                            }
                                         }
+
                                     } else if (r.getProgramaList() != null && r.getProgramaList().size() > 1) {
                                         session.setAttribute("Programas", r.getProgramaList());
                                         session.setAttribute("EstadoProceso2", 4);

@@ -112,7 +112,7 @@
         </div><!--/Center-->
 
         <div id="ui-layout-west" class="ui-layout-west">
-            <div class="ui-layout-content">
+            <div id="menu0" class="ui-layout-content">
                 <div id="menu" style="padding: 8px 0pt;" class="well">
                     <ul class="nav nav-list">  
                         <button id="west-closer" class="close">&laquo;</button>

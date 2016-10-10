@@ -32,38 +32,38 @@ $(function() {
     myLayout = $('body').layout({
         //	enable showOverflow on west-pane so CSS popups will overlap north pane
         west__size: 270
-        , center__paneSelector: ".ui-layout-center"
-        , north__paneClass: "ui-layout-pane2"
+                , center__paneSelector: ".ui-layout-center"
+                , north__paneClass: "ui-layout-pane2"
                 //	reference only - these options are NOT required because 'true' is the default
-        , closable: true	// pane can open & close
-        , resizable: false	// when open, pane can be resized 
-        , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-        , north__size: 1
-        , north__closable: false
-        , north__maxSize: 1
-        , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
-        , north__spacing_open: 0		// no resizer-bar when open (zero height)
-        , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
-        , south__closable: false
-        , south__spacing_open: 0		// no resizer-bar when open (zero height)
-        , west__spacing_open: 0
-        , west__spacing_closed: 20
-        , west__togglerLength_closed: 35
-        , west__togglerAlign_closed: "top"
-        , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
-        , west__togglerTip_closed: "Mostrar menú"
-        , west__togglerTip_open: "Ocultar menú"
-        , west__enableCursorHotkey: false
-        , west__onclose_end: function() {
+                , closable: true	// pane can open & close
+                , resizable: false	// when open, pane can be resized 
+                , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
+                , north__size: 1
+                , north__closable: false
+                , north__maxSize: 1
+                , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
+                , north__spacing_open: 0		// no resizer-bar when open (zero height)
+                , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+                , south__closable: false
+                , south__spacing_open: 0		// no resizer-bar when open (zero height)
+                , west__spacing_open: 0
+                , west__spacing_closed: 20
+                , west__togglerLength_closed: 35
+                , west__togglerAlign_closed: "top"
+                , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
+                , west__togglerTip_closed: "Mostrar menú"
+                , west__togglerTip_open: "Ocultar menú"
+                , west__enableCursorHotkey: false
+                , west__onclose_end: function() {
             $("#conte").removeClass("span10").addClass("span12");
         }
         , west__onopen_end: function() {
             $("#conte").removeClass("span12").addClass("span10");
         }
         , south__paneClass: "ui-layout-pane"
-        , west__togglerContent_open: ""
-        , west__minSize: 200
-        , west__maxSize: 350
+                , west__togglerContent_open: ""
+                , west__minSize: 200
+                , west__maxSize: 350
 
 
     });
@@ -125,6 +125,7 @@ $(function() {
                 '<div id="menu" style="padding: 8px 0pt;" class="well">' +
                 '<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
+                '<li><a href="#controlPanel"><i class="icon-level-up"></i>Regresar al panel</a></li>' +
                 '<li class="nav-header">Proceso de Autoevaluaci&oacute;n</li>' +
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
@@ -162,6 +163,42 @@ $(function() {
                 '</div>'
                 );
     };
+
+    var menuProceso1 = function() {
+        $("#menu0").html('<div align="center" class="alert alert-info"><i class="icon-cog"></i> Proceso en configuración</div>' +
+                ' <div id="menu" style="padding: 8px 0pt;" class="well">' +
+                '<ul class="nav nav-list">' +
+                '<button id="west-closer" class="close">&laquo;</button>' +
+                '<li><a href="#controlPanel"><i class="icon-level-up"></i>Regresar al panel</a></li>' +
+                '<li class="nav-header">Proceso de Autoevaluación</li>' +
+                '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
+                '<li><a href="#listPonderacionFactor"><i class="icon-list-ol"></i> Ponderar Factores</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list-ol"></i> Ponderar Caracteristicas</a></li>' +
+                '<li><a href="#listMuestra"><i class="icon-group"></i> Asignar Muestra</a></li>' +
+                '</ul>' +
+                '</div>');
+    };
+    var menuProceso2 = function() {
+        $("#menu0").html('<div align="center" class="alert alert-success"><i class="icon-play-sign"></i> Proceso en ejecuci&oacute;n</div>' +
+                '<div id="menu" style="padding: 8px 0pt;" class="well">' +
+                '<ul class="nav nav-list">' +
+                '<button id="west-closer" class="close">&laquo;</button>' +
+                '<li><a href="#controlPanel"><i class="icon-level-up"></i>Regresar al panel</a></li>' +
+                '<li class="nav-header">Proceso de Autoevaluaci&oacute;n</li>' +
+                '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
+                '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Caracteristicas</a></li>' +
+                '<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>' +
+                ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
+                ' <li><a href = "#preparedInfoNumerica"><i class = "icon-file-alt"></i> Informaci&oacute;n Num&eacute;rica</a></li>' +
+                ' <li><a href = "#preparedInfoDocumental"><i class = "icon-list-ol"></i> Informaci&oacute;n Documental</a></li>' +
+                ' <li class = "nav-header"> Estado del proceso </li>' +
+                ' <li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
+                '</ul>' +
+                '</div>'
+                );
+    };
+
     var hash;
     $(window).hashchange(function() {
         hash = location.hash;
@@ -277,7 +314,7 @@ $(function() {
                     }); //fin del $.ajax
 
                 } else {
-                    if (hash === "#crearModelo" || hash === "#listarModelo" || hash === "#listarCoordinadores" || hash === "#crearCoordinador" || hash === "#controlPanel") {
+                    if (hash === "#crearModelo" || hash === "#crearPrograma" || hash === "#listarProgramas" || hash === "#listarModelo" || hash === "#listarCoordinadores" || hash === "#crearCoordinador" || hash === "#controlPanel") {
                         var url3 = "/sap/" + hash;
                         url3 = url3.replace('#', "controladorCC?action=") + "CC";
                         $("div.ui-layout-center").empty();
@@ -325,7 +362,7 @@ $(function() {
                                 } //fin success
                             }); //fin del $.ajax
                         } else {
-                            if (hash.indexOf("#editarModelo") !== -1 || hash.indexOf("#editarCoordinador") !== -1) {
+                            if (hash.indexOf("#editarModelo") !== -1 || hash.indexOf("#editarCoordinador") !== -1 || hash.indexOf("#editarPrograma") !== -1) {
                                 var cual = hash.split("&");
                                 hash = cual[0];
                                 var url3 = "/sap/controladorCC?action=";
@@ -349,218 +386,194 @@ $(function() {
                                     } //fin success
                                 }); //fin del $.ajax
 
-                            } else {
-                                if (hash.indexOf("#verProcesos") !== -1) {
-                                    var cual = hash.split("&");
-                                    hash = cual[0];
-                                    var url3 = "/sap/controladorCC?action=";
-                                    url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
-                                    $("div.ui-layout-center").empty();
-                                    $("div.ui-layout-west").empty();
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url3,
-                                        success: function(data)
-                                        {
-                                            $("div.ui-layout-west").append(data);
-                                            setTimeout(function() {
-                                                $("#dancing-dots-text").remove();
-                                                myLayout.addCloseBtn("#west-closer", "west");
-                                            }, 200);
-
-                                        } //fin success
-                                    }); //fin del $.ajax
-
-
-                                } else if (hash === "#listPonderacionCara2" || hash === "#listarProceso"
-                                        || hash === "#detalleProceso" || hash === "#ponderarFactor"
-                                        || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#preparedAsignarMuestra"
-                                        || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEditPonderarFactor"
-                                        || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra"
-                                        || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
-                                        || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
-                                        || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                                        || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta" || hash === "#crear2Meta" || hash === "#listarFortalezas"
-                                        || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo") {
-                                    var url3 = "/sap/" + hash;
-                                    url3 = url3.replace('#', "controladorCP?action=");
-                                    $("div.ui-layout-center").empty();
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url3,
-                                        success: function(data)
-                                        {
-                                            if (hash === "#planMejoramiento") {
-                                                actualizaEnlaces(hash);
-                                            }
-                                            $("#contenido").append(data);
-                                            $("#contenido").show(400, function() {
-                                                $("#dancing-dots-text").remove();
-                                            }
-                                            );
-                                            if (hash === "#listPonderacionCara2") {
-                                                hash = "#listPonderacionCara";
-                                            }
-                                            if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental") {
-                                                setTimeout(function() {
-                                                    $("#west-closer").trigger("click");
-                                                }, 500);
-                                            }
-                                            if (hash !== "#planMejoramiento" && hash !== "#crearHallazgo" && hash !== "#listarHallazgos" && hash !== "#listarFortalezas"
-                                                    && hash !== "#crearObjetivo" && hash !== "#crear2Objetivo" && hash !== "#crearMeta" && hash !== "#crear2Meta" && hash !== "#crearFortaleza") {
-                                                actualizaEnlaces(hash);
-                                            }
-
-                                        } //fin success
-                                    }); //fin del $.ajax
-                                } else if (hash.indexOf("#verPProceso") !== -1) {
-                                    var cual = hash.split("&");
-                                    hash = cual[0];
-                                    var url3 = "/sap/controladorCP?action=";
-                                    url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
-                                    $("div.ui-layout-center").empty();
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url3,
-                                        success: function(data)
-                                        {
-                                            if (data === '1') {
-                                                menuProceso1();
-                                            } else if (data === '2') {
-                                                menuProceso2();
-                                            } else if (data === '3') {
-                                                menuProceso3();
-                                            } else if (data === '4') {
-                                                menuProceso4();
-                                            }
-                                            myLayout.addCloseBtn("#west-closer", "west");
-                                            actualizaEnlaces();
-                                            $("#contenido").show(200, function() {
-                                                $("#dancing-dots-text").remove();
-                                            });
-                                            //location = "/sap/#inicio";
-
-                                        } //fin success
-                                    }); //fin del $.ajax
-                                } else if (hash === "#preparedEvaluador") {
-                                    var url3 = "/sap/" + hash;
-                                    url3 = url3.replace('#', "controladorCP?action=");
-                                    //$("div.ui-layout-center").empty();
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url3,
-                                        success: function(data)
-                                        {
-                                            $("#contenido").after(data);
+                            } else if (hash === "#listPonderacionCara2" || hash === "#listarProceso"
+                                    || hash === "#detalleProceso" || hash === "#ponderarFactor"
+                                    || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#preparedAsignarMuestra"
+                                    || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEditPonderarFactor"
+                                    || hash === "#preparedEditPonderarCara" || hash === "#generarMuestraAleatoria" || hash === "#preparedEditarMuestra"
+                                    || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
+                                    || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
+                                    || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
+                                    || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta" || hash === "#crear2Meta" || hash === "#listarFortalezas"
+                                    || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo") {
+                                var url3 = "/sap/" + hash;
+                                url3 = url3.replace('#', "controladorCP?action=");
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        if (hash === "#planMejoramiento") {
+                                            actualizaEnlaces(hash);
+                                        }
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(400, function() {
                                             $("#dancing-dots-text").remove();
-
-
-                                        } //fin success
-                                    }); //fin del $.ajax
-                                    actualizaEnlaces(hash);
-                                } else if (hash === "#preparedPonderarFactor") {
-                                    var url3 = "/sap/" + hash;
-                                    url3 = url3.replace('#', "controladorCP?action=");
-                                    $("div.ui-layout-center").empty();
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url3,
-                                        success: function(data)
-                                        {
-                                            $("#contenido").append(data);
-
+                                        }
+                                        );
+                                        if (hash === "#listPonderacionCara2") {
+                                            hash = "#listPonderacionCara";
+                                        }
+                                        if (hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental") {
                                             setTimeout(function() {
-                                                $("#dancing-dots-text").remove();
-                                            }, 200);
-
-                                            setTimeout(function() {
-                                                $("div.ui-layout-center").affix();
+                                                $("#west-closer").trigger("click");
                                             }, 500);
+                                        }
+                                        if (hash !== "#planMejoramiento" && hash !== "#crearHallazgo" && hash !== "#listarHallazgos" && hash !== "#listarFortalezas"
+                                                && hash !== "#crearObjetivo" && hash !== "#crear2Objetivo" && hash !== "#crearMeta" && hash !== "#crear2Meta" && hash !== "#crearFortaleza") {
+                                            actualizaEnlaces(hash);
+                                        }
 
-                                            //$("div.ui-layout-center").affix('refresh');
-                                            actualizaEnlaces(hash);
+                                    } //fin success
+                                }); //fin del $.ajax
+                            } else if (hash.indexOf("#verPProceso") !== -1) {
+                                var cual = hash.split("&");
+                                hash = cual[0];
+                                var url3 = "/sap/controladorCP?action=";
+                                url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        if (data === '1') {
+                                            menuProceso1();
+                                        } else if (data === '2') {
+                                            menuProceso2();
+                                        } else if (data === '3') {
+                                            menuProceso3();
+                                        } else if (data === '4') {
+                                            menuProceso4();
                                         }
-                                        //fin success
-                                    }); //fin del $.ajax
-                                } else if (hash === "#listPonderacionCara") {
-                                    var url3 = "/sap/" + hash;
-                                    url3 = url3.replace('#', "controladorCP?action=");
-                                    $("div.ui-layout-center").empty();
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url3,
-                                        success: function(data)
-                                        {
-                                            if (data == 1) {
-                                                location = "/sap/#listPonderacionCara2";
-                                            } else {
-                                                $('#modalCp3').modal();
-                                                location = "/sap/#listPonderacionFactor";
-                                            }
-                                            actualizaEnlaces(hash);
-                                        }
-                                        //fin success
-                                    }); //fin del $.ajax
-                                } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1
-                                        || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 || hash.indexOf("#encuestaXaleatoria") !== -1 || hash.indexOf("#detallePFactor") !== -1 || hash.indexOf("#detallePCaracteristica") !== -1 || hash.indexOf("#detallePIndicador") !== -1) {
-                                    var cual = hash.split("&");
-                                    hash = cual[0];
-                                    var url3 = "/sap/controladorCP?action=";
-                                    url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
-                                    $("div.ui-layout-center").empty();
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url3,
-                                        success: function(data)
-                                        {
-                                            $("#contenido").append(data);
-                                            myLayout.addCloseBtn("#west-closer", "west");
-                                            actualizaEnlaces();
-                                            $("#contenido").show(200, function() {
-                                                $("#dancing-dots-text").remove();
-                                            });
-                                        } //fin success
-                                    }); //fin del $.ajax
-                                } else if (hash.indexOf("#listarObjetivos") !== -1 || hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#editarFortaleza") !== -1
-                                        || hash.indexOf("#verMetas") !== -1 || hash.indexOf("#ver2Metas") !== -1 || hash.indexOf("#editarObjetivo") !== -1 
-                                        || hash.indexOf("#editar2Objetivo") !== -1 || hash.indexOf("#editarMeta") !== -1 || hash.indexOf("#editar2Meta") !== -1 || 
-                                        hash.indexOf("#listar2Objetivos") !== -1 || hash.indexOf("#verSeguimientos") !== -1) {
-                                    var cual = hash.split("&");
-                                    hash = cual[0];
-                                    var url3 = "/sap/controladorCP?action=";
-                                    url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
-                                    $("div.ui-layout-center").empty();
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url3,
-                                        success: function(data)
-                                        {
-                                            $("#contenido").append(data);
-                                            $("#contenido").show(200, function() {
-                                                $("#dancing-dots-text").remove();
-                                            });
-                                        } //fin success
-                                    }); //fin del $.ajax
-                                } else {
-                                    if (hash === "#contrasena") {
-                                        var url3 = "/sap/" + hash;
-                                        url3 = url3.replace('#', "controladorCP?action=");
-                                        $("div.ui-layout-center").empty();
-                                        $.ajax({
-                                            type: "POST",
-                                            url: url3,
-                                            success: function(data)
-                                            {
-                                                $("#contenido").append(data);
-                                                setTimeout(function() {
-                                                    $("#dancing-dots-text").remove();
-                                                }, 200);
-                                                actualizaEnlaces(hash);
-                                            } //fin success
-                                        }); //fin del $.ajax
+                                        myLayout.addCloseBtn("#west-closer", "west");
+                                        actualizaEnlaces();
+                                        $("#contenido").show(200, function() {
+                                            $("#dancing-dots-text").remove();
+                                        });
+                                        //location = "/sap/#inicio";
+
+                                    } //fin success
+                                }); //fin del $.ajax
+                            } else if (hash === "#preparedEvaluador") {
+                                var url3 = "/sap/" + hash;
+                                url3 = url3.replace('#', "controladorCP?action=");
+                                //$("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        $("#contenido").after(data);
+                                        $("#dancing-dots-text").remove();
+
+
+                                    } //fin success
+                                }); //fin del $.ajax
+                                actualizaEnlaces(hash);
+                            } else if (hash === "#preparedPonderarFactor") {
+                                var url3 = "/sap/" + hash;
+                                url3 = url3.replace('#', "controladorCP?action=");
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        $("#contenido").append(data);
+
+                                        setTimeout(function() {
+                                            $("#dancing-dots-text").remove();
+                                        }, 200);
+
+                                        setTimeout(function() {
+                                            $("div.ui-layout-center").affix();
+                                        }, 500);
+
+                                        //$("div.ui-layout-center").affix('refresh');
+                                        actualizaEnlaces(hash);
                                     }
-                                }
+                                    //fin success
+                                }); //fin del $.ajax
+                            } else if (hash === "#listPonderacionCara") {
+                                var url3 = "/sap/" + hash;
+                                url3 = url3.replace('#', "controladorCP?action=");
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        if (data == 1) {
+                                            location = "/sap/#listPonderacionCara2";
+                                        } else {
+                                            $('#modalCp3').modal();
+                                            location = "/sap/#listPonderacionFactor";
+                                        }
+                                        actualizaEnlaces(hash);
+                                    }
+                                    //fin success
+                                }); //fin del $.ajax
+                            } else if (hash.indexOf("#detalleFactor") !== -1 || hash.indexOf("#detalleCaracteristica") !== -1 || hash.indexOf("#detalleIndicador") !== -1
+                                    || hash.indexOf("#detallePregunta") !== -1 || hash.indexOf("#vistaPreviaPEncuesta") !== -1 || hash.indexOf("#encuestaXaleatoria") !== -1 || hash.indexOf("#detallePFactor") !== -1 || hash.indexOf("#detallePCaracteristica") !== -1 || hash.indexOf("#detallePIndicador") !== -1) {
+                                var cual = hash.split("&");
+                                hash = cual[0];
+                                var url3 = "/sap/controladorCP?action=";
+                                url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        $("#contenido").append(data);
+                                        myLayout.addCloseBtn("#west-closer", "west");
+                                        actualizaEnlaces();
+                                        $("#contenido").show(200, function() {
+                                            $("#dancing-dots-text").remove();
+                                        });
+                                    } //fin success
+                                }); //fin del $.ajax
+                            } else if (hash.indexOf("#listarObjetivos") !== -1 || hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#editarFortaleza") !== -1
+                                    || hash.indexOf("#verMetas") !== -1 || hash.indexOf("#ver2Metas") !== -1 || hash.indexOf("#editarObjetivo") !== -1
+                                    || hash.indexOf("#editar2Objetivo") !== -1 || hash.indexOf("#editarMeta") !== -1 || hash.indexOf("#editar2Meta") !== -1 ||
+                                    hash.indexOf("#listar2Objetivos") !== -1 || hash.indexOf("#verSeguimientos") !== -1) {
+                                var cual = hash.split("&");
+                                hash = cual[0];
+                                var url3 = "/sap/controladorCP?action=";
+                                url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function() {
+                                            $("#dancing-dots-text").remove();
+                                        });
+                                    } //fin success
+                                }); //fin del $.ajax
+                            } else if (hash === "#contrasena") {
+                                var url3 = "/sap/" + hash;
+                                url3 = url3.replace('#', "controladorCP?action=");
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        $("#contenido").append(data);
+                                        setTimeout(function() {
+                                            $("#dancing-dots-text").remove();
+                                        }, 200);
+                                        actualizaEnlaces(hash);
+                                    } //fin success
+                                }); //fin del $.ajax
                             }
+
+
 
 
 
