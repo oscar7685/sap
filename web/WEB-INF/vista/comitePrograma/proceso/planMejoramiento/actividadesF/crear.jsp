@@ -64,7 +64,7 @@
                                                 </td>
                                                 <td>   
                                                     <a href="#editarHallazgo&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
-                                                    <a href="#listarObjetivos&${item.idhallazgo}" title="Ver objetivos"><i class="icon-signin"></i></a>
+                                                    <a href="#verActividades&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -82,8 +82,6 @@
                         <ul class="breadcrumb">
                             <li><a href="<%=request.getContextPath()%>/#listarFortalezas" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar fortalezas">Fortalezas</a> <span class="divider">/</span></li>
                             <li><a href="<%=request.getContextPath()%>/#editarFortaleza&${fortalezas.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${fortalezas.hallazgo}">Fortaleza</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#listar2Objetivos&${fortalezas.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar objetivos">Objetivos</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#editar2Objetivo&${objetivo.idobjetivos}" class="tool" data-placement="top" rel="tooltip" data-original-title="${objetivo.objetivo}">Objetivo</a> <span class="divider">/</span></li>
                             <li><a href="<%=request.getContextPath()%>/#ver2Metas&${objetivo.idobjetivos}" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar metas">Metas</a> <span class="divider">/</span></li>
                             <li>Crear</li>
                             <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>

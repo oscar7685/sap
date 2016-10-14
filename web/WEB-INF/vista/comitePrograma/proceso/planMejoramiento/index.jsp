@@ -1,90 +1,61 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script>
-    $(function() {
-        $('.tool').tooltip().click(function(e) {
-            $(this).tooltip('hide');
-        });
-    });
-</script>
 <div class="hero-unit">
     <div style="margin-left: -30px;">
         <div id="conte" class="span10" style="text-align: justify">
             <div class="row">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#home" role="tab" data-toggle="tab">Plan de mejoramiento</a></li>
-                    <li><a href="#profile" role="tab" data-toggle="tab">Plan de mantenimiento</a></li>
+                    <li class="active"><a href="#mejoramiento" role="tab" data-toggle="tab">Plan de mejoramiento</a></li>
+                    <li><a href="#mantenimiento" role="tab" data-toggle="tab">Plan de mantenimiento</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="home">
+                    <div class="tab-pane active" id="mejoramiento">
                         <ul class="breadcrumb">
-                            <li><a href="<%=request.getContextPath()%>/#listarHallazgos" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar hallazgos">Hallazgos</a> <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#editarHallazgo&${hallazgo.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${hallazgo.hallazgo}">Hallazgo</a> <span class="divider">/</span></li>
-                            <li>Metas</li>
+                            <li>Hallazgos</li>
                             <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
-                        <h3>Listado de  Metas</h3>
+                        <h3>Listado de  Hallazgos</h3>
                         <c:choose>
-                            <c:when test="${fn:length(listMetas)!= 0}">
+                            <c:when test="${fn:length(listHallazgos)!= 0}">
                                 <table class="table table-striped table-bordered table-condensed">
                                     <thead>
-                                    <th>Metas</th>
-                                    <th>Acciones</th>    
-                                    <th>Indicador de Cumplimiento</th>    
-                                    <th>Fecha Inicio</th>    
-                                    <th>Fecha Final</th>    
-                                    <th>Responsables</th>    
-                                    <th>Recursos o financiaci&oacute;n</th>    
-                                    <th></th>    
+                                    <th>Hallazgo</th>
+                                    <th>Caracteristica</th>    
+                                    <th>Acci&oacute;n</th>    
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${listMetas}" var="item" varStatus="iter">
+                                        <c:forEach items="${listHallazgos}" var="item" varStatus="iter">
                                             <tr>
                                                 <td>   
-                                                    <c:out value="${item.meta}"/>
+                                                    <c:out value="${item.hallazgo}"/>
                                                 </td>
                                                 <td>   
-                                                    <c:out value="${item.actividad}"/>
+                                                    <c:out value="${item.caracteristicaId.nombre}"/>
                                                 </td>
                                                 <td>   
-                                                    <c:out value="${item.indicadorCumplimiento}"/>
+                                                    <a href="#editarHallazgo&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
+                                                    <a href="#verActividades&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
                                                 </td>
-                                                <td>   
-                                                    <fmt:formatDate value="${item.fechaInicio}" pattern="yyyy/MM/dd" />
-                                                </td>
-                                                <td>   
-                                                    <fmt:formatDate value="${item.fechaFinal}" pattern="yyyy/MM/dd"  />
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${item.responsable}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${item.recursos}"/>
-                                                </td>
-                                                
-                                                <td>   
-                                                    <a href="#editarMeta&${item.idmeta}" title="Editar"><i class="icon-edit"></i></a>
-                                                 </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
                             </c:when>
                             <c:otherwise>
-                                Aun no existen Actividades para este Hallazgo.<br/>
+                                Aun no existen Hallazgos para este plan de estrat&eacute;gico.<br/>
                             </c:otherwise>
                         </c:choose>
-                        <a href="#crearMeta" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear Meta</a>    
+                        <a href="#crearHallazgo" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear hallazgo</a>
                     </div>
-                            
-                     <div class="tab-pane" id="profile">
-                         <ul class="breadcrumb">
+
+                    <div class="tab-pane" id="mantenimiento">
+                        <ul class="breadcrumb">
                             <li>Fortalezas</li>
                             <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
                         </ul>
-                        <h3>Listado de  Fortalezas</h3>
+                         <h3>Listado de  Fortalezas</h3>
                       <c:choose>
                             <c:when test="${fn:length(listFortalezas)!= 0}">
                                 <table class="table table-striped table-bordered table-condensed">
@@ -104,7 +75,7 @@
                                                 </td>
                                                 <td>   
                                                     <a href="#editarFortaleza&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
-                                                    <a href="#listar2Objetivos&${item.idhallazgo}" title="Ver objetivos"><i class="icon-signin"></i></a>
+                                                      <a href="#verActividades&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -122,4 +93,3 @@
         </div>
     </div>
 </div>
-

@@ -131,7 +131,7 @@
                                                 </td>
                                                 <td>   
                                                     <a href="#editarFortaleza&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
-                                                    <a href="#listar2Objetivos&${item.idhallazgo}" title="Ver objetivos"><i class="icon-signin"></i></a>
+                                                    <a href="#verActividades&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
                                                 </td>
                                             </tr>
                                         </c:forEach>

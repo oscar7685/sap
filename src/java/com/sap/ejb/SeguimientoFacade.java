@@ -1,22 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sap.ejb;
 
-import com.sap.entity.Metas;
+import com.sap.entity.Seguimiento;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Ususario
+ * @author acreditacion
  */
 @Stateless
-public class MetasFacade extends AbstractFacade<Metas> {
+public class SeguimientoFacade extends AbstractFacade<Seguimiento> {
     @PersistenceContext(unitName = "sapPU")
     private EntityManager em;
 
@@ -25,8 +23,8 @@ public class MetasFacade extends AbstractFacade<Metas> {
         return em;
     }
 
-    public MetasFacade() {
-        super(Metas.class);
+    public SeguimientoFacade() {
+        super(Seguimiento.class);
     }
     
 }

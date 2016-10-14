@@ -202,6 +202,7 @@ $(function() {
     var hash;
     $(window).hashchange(function() {
         hash = location.hash;
+        console.log("hash:" + hash)
         if (hash === "#CerrarSesion") {
             $.post('/sap/loginController?action=CerrarSesion', function() {
                 location = "/sap";
@@ -394,8 +395,8 @@ $(function() {
                                     || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                                     || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                     || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                                    || hash === "#planMejoramiento" || hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearObjetivo" || hash === "#crearMeta" || hash === "#crear2Meta" || hash === "#listarFortalezas"
-                                    || hash === "#comentarios" || hash === "#crearFortaleza" || hash === "#crear2Objetivo") {
+                                    || hash === "#planMejoramiento" || hash === "#crearObjetivo" || hash === "#crearActividad" || hash === "#crear2Meta"
+                                    || hash === "#comentarios" || hash === "#crear2Objetivo") {
                                 var url3 = "/sap/" + hash;
                                 url3 = url3.replace('#', "controladorCP?action=");
                                 $("div.ui-layout-center").empty();
@@ -425,6 +426,70 @@ $(function() {
                                             actualizaEnlaces(hash);
                                         }
 
+                                    } //fin success
+                                }); //fin del $.ajax
+                            } else if (hash === "#crearHallazgo" || hash === "#listarHallazgos") {
+                                var url3 = "/sap/" + hash;
+                                url3 = url3.replace('#', "controladorCP?action=");
+                                $("div#mejoramiento").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        $("div#mejoramiento").append(data);
+                                        $("#contenido").show(400, function() {
+                                            $("#dancing-dots-text").remove();
+                                        });
+                                    } //fin success
+                                }); //fin del $.ajax
+                            } else if (hash === "#crearFortaleza" || hash === "#listarFortalezas") {
+                                var url3 = "/sap/" + hash;
+                                url3 = url3.replace('#', "controladorCP?action=");
+                                $("div#mantenimiento").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        $("div#mantenimiento").append(data);
+                                        $("#contenido").show(400, function() {
+                                            $("#dancing-dots-text").remove();
+                                        });
+                                    } //fin success
+                                }); //fin del $.ajax
+                            } else if (hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#verActividadesH") !== -1) {
+                                var cual = hash.split("&");
+                                hash = cual[0];
+                                var url3 = "/sap/controladorCP?action=";
+                                url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+                                $("div#mejoramiento").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        $("div#mejoramiento").append(data);
+                                        $("#contenido").show(200, function() {
+                                            $("#dancing-dots-text").remove();
+                                        });
+                                    } //fin success
+                                }); //fin del $.ajax
+                            } else if (hash.indexOf("#editarFortaleza") !== -1 || hash.indexOf("#verActividadesF") !== -1) {
+                                var cual = hash.split("&");
+                                hash = cual[0];
+                                var url3 = "/sap/controladorCP?action=";
+                                url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+                                $("div#mantenimiento").empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: url3,
+                                    success: function(data)
+                                    {
+                                        $("div#mantenimiento").append(data);
+                                        $("#contenido").show(200, function() {
+                                            $("#dancing-dots-text").remove();
+                                        });
                                     } //fin success
                                 }); //fin del $.ajax
                             } else if (hash.indexOf("#verPProceso") !== -1) {
@@ -535,8 +600,8 @@ $(function() {
                                         });
                                     } //fin success
                                 }); //fin del $.ajax
-                            } else if (hash.indexOf("#listarObjetivos") !== -1 || hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#editarFortaleza") !== -1
-                                    || hash.indexOf("#verMetas") !== -1 || hash.indexOf("#ver2Metas") !== -1 || hash.indexOf("#editarObjetivo") !== -1
+                            } else if (hash.indexOf("#listarObjetivos") !== -1
+                                    || hash.indexOf("#ver2Metas") !== -1 || hash.indexOf("#editarObjetivo") !== -1
                                     || hash.indexOf("#editar2Objetivo") !== -1 || hash.indexOf("#editarMeta") !== -1 || hash.indexOf("#editar2Meta") !== -1 ||
                                     hash.indexOf("#listar2Objetivos") !== -1 || hash.indexOf("#verSeguimientos") !== -1) {
                                 var cual = hash.split("&");

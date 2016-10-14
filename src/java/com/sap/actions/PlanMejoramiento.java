@@ -34,12 +34,12 @@ public class PlanMejoramiento implements Action {
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
         Modelo modelo = (Modelo) sesion.getAttribute("Modelo");
-        List<Hallazgo> ha = hallazgoFacade.findByList2("procesoId", proceso, "tipo", "hallazgo");
-        List<Hallazgo> forta = hallazgoFacade.findByList2("procesoId", proceso, "tipo", "fortaleza");
+        List<Hallazgo> hallazgos = hallazgoFacade.findByList2("procesoId", proceso, "tipo", "hallazgo");
+        List<Hallazgo> fortalezas = hallazgoFacade.findByList2("procesoId", proceso, "tipo", "fortaleza");
         sesion.setAttribute("listaC", caracteristicaFacade.findByModelo(modelo));
-        sesion.setAttribute("listHallazgos", ha);
-        sesion.setAttribute("listFortalezas", forta);
-        return  "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/hallazgos/listar.jsp";
+        sesion.setAttribute("listHallazgos", hallazgos);
+        sesion.setAttribute("listFortalezas", fortalezas);
+        return  "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/index.jsp";
     }
 
     private HallazgoFacade lookupHallazgoFacadeBean() {

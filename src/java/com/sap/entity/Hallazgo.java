@@ -1,9 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sap.entity;
 
 import java.io.Serializable;
@@ -53,12 +51,12 @@ public class Hallazgo implements Serializable {
     @JoinColumn(name = "caracteristica_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Caracteristica caracteristicaId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hallazgoIdhallazgo")
+    private List<Actividad> actividadList;
     @JoinColumn(name = "proceso_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Proceso procesoId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hallazgoIdhallazgo")
-    private List<Metas> metasList;
-
+    
     public Hallazgo() {
     }
 
@@ -97,6 +95,15 @@ public class Hallazgo implements Serializable {
     public void setCaracteristicaId(Caracteristica caracteristicaId) {
         this.caracteristicaId = caracteristicaId;
     }
+    
+    @XmlTransient
+    public List<Actividad> getActividadList() {
+        return actividadList;
+    }
+
+    public void setActividadList(List<Actividad> actividadList) {
+        this.actividadList = actividadList;
+    }
 
     public Proceso getProcesoId() {
         return procesoId;
@@ -104,15 +111,6 @@ public class Hallazgo implements Serializable {
 
     public void setProcesoId(Proceso procesoId) {
         this.procesoId = procesoId;
-    }
-
-    @XmlTransient
-    public List<Metas> getMetasList() {
-        return metasList;
-    }
-
-    public void setMetasList(List<Metas> metasList) {
-        this.metasList = metasList;
     }
 
     @Override
