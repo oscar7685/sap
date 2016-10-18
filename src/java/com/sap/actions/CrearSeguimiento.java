@@ -4,21 +4,25 @@
  */
 package com.sap.actions;
 
+import com.sap.entity.Actividad;
 import com.sap.interfaz.Action;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author acreditacion
  */
-public class PM implements Action{
+public class CrearSeguimiento implements Action {
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        System.out.println("aqui estamos!!!!");
-        return "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/vistaPreviaPlan.jsp";
+        HttpSession sesion = request.getSession();
+        Actividad act = (Actividad) sesion.getAttribute("actividad");
+        return "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/seguimientos/crear.jsp";
+
+
     }
-    
 }

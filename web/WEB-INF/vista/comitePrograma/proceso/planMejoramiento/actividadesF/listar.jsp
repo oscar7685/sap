@@ -12,7 +12,7 @@
     <li><a href="<%=request.getContextPath()%>/#listarFortalezas" class="tool" data-placement="top" rel="tooltip" data-original-title="Listar fortalezas">Fortalezas</a> <span class="divider">/</span></li>
     <li><a href="<%=request.getContextPath()%>/#editarFortaleza&${fortaleza.idhallazgo}" class="tool" data-placement="top" rel="tooltip" data-original-title="${fortaleza.hallazgo}">Fortaleza</a> <span class="divider">/</span></li>
     <li>Actividades</li>
-    <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
+    <a id="printEnlace" href="#PM2" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mantenimiento</a>
 </ul>
 <h3>Listado de Actividades</h3>
 <c:choose>
@@ -54,7 +54,7 @@
                     </td>
 
                     <td>   
-                        <a href="#editar2Meta&${item.idactividad}" title="Editar"><i class="icon-edit"></i></a>
+                        <a href="#editarActividadF&${item.idactividad}" title="Editar"><i class="icon-edit"></i></a>
                     </td>
                 </tr>
             </c:forEach>
@@ -62,8 +62,8 @@
     </table>
 </c:when>
 <c:otherwise>
-    Aun no existen Metas para este Objetivo.<br/>
+    Aun no existen Actividades para esta Fortaleza.<br/>
 </c:otherwise>
 </c:choose>
-<a href="#crear2Meta" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear Meta</a>
+<a href="#crearActividadF" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear Actividad</a>
 

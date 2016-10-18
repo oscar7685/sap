@@ -16,7 +16,7 @@
                             <li>Hallazgos</li>
                             <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
                         </ul>
-                        <h3>Listado de  Hallazgos</h3>
+                        <h3>Listado de Hallazgos</h3>
                         <c:choose>
                             <c:when test="${fn:length(listHallazgos)!= 0}">
                                 <table class="table table-striped table-bordered table-condensed">
@@ -36,7 +36,7 @@
                                                 </td>
                                                 <td>   
                                                     <a href="#editarHallazgo&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
-                                                    <a href="#verActividades&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
+                                                    <a href="#verActividadesH&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -75,7 +75,7 @@
                                                 </td>
                                                 <td>   
                                                     <a href="#editarFortaleza&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
-                                                      <a href="#verActividades&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
+                                                      <a href="#verActividadesF&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
                                                 </td>
                                             </tr>
                                         </c:forEach>

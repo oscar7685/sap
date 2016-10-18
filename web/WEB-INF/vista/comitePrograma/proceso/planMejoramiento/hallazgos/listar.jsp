@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <ul class="breadcrumb">
     <li>Hallazgos</li>
-    <a id="printEnlace" target="_blank" href="/sap/controladorCP?action=PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
+    <a id="printEnlace" href="#PM" style="float: right; cursor: pointer;"><i class="icon-eye-open"></i> Ver Plan de Mejoramiento</a>
 </ul>
 <h3>Listado de  Hallazgos</h3>
 <c:choose>
@@ -25,7 +25,7 @@
                     </td>
                     <td>   
                         <a href="#editarHallazgo&${item.idhallazgo}" title="Editar"><i class="icon-edit"></i></a>
-                        <a href="#verActividades&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
+                        <a href="#verActividadesH&${item.idhallazgo}" title="Ver Actividades"><i class="icon-signin"></i></a>
                     </td>
                 </tr>
             </c:forEach>

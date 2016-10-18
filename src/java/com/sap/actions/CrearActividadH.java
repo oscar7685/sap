@@ -4,7 +4,6 @@
  */
 package com.sap.actions;
 
-import com.sap.entity.Hallazgo;
 import com.sap.interfaz.Action;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -15,17 +14,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author acreditacion
  */
-public class CrearActividad implements Action {
+public class CrearActividadH implements Action {
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
-        Hallazgo h = (Hallazgo) sesion.getAttribute("hallazgo");
-        if (h.getTipo().equals("hallazgo")) {
-            return "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/actividadH/crear.jsp";
-        } else {
-            return "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/actividadF/crear.jsp";
-        }
-
+        return "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/actividadesH/crear.jsp";
     }
 }

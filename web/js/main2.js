@@ -27,6 +27,9 @@ $(function() {
         }
 
     });
+    $(document).ajaxStop(function() {
+        $("#dancing-dots-text").remove();
+    });
 
     var myLayout;
     myLayout = $('body').layout({
@@ -363,7 +366,7 @@ $(function() {
                                 } //fin success
                             }); //fin del $.ajax
                         } else {
-                            if (hash.indexOf("#editarModelo") !== -1 || hash.indexOf("#editarCoordinador") !== -1 || hash.indexOf("#editarPrograma") !== -1) {
+                            if (hash.indexOf("#editarModelo") !== -1 || hash.indexOf("#editarCoordinador") !== -1 || hash.indexOf("#editarPrograma") !== -1 ) {
                                 var cual = hash.split("&");
                                 hash = cual[0];
                                 var url3 = "/sap/controladorCC?action=";
@@ -395,8 +398,8 @@ $(function() {
                                     || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                                     || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                                     || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                                    || hash === "#planMejoramiento" || hash === "#crearObjetivo" || hash === "#crearActividad" || hash === "#crear2Meta"
-                                    || hash === "#comentarios" || hash === "#crear2Objetivo") {
+                                    || hash === "#planMejoramiento" || hash === "#crearObjetivo" || hash === "#crear2Meta"
+                                    || hash === "#comentarios" || hash === "#crearSeguimiento" || hash === "#PM" || hash === "#PM2") {
                                 var url3 = "/sap/" + hash;
                                 url3 = url3.replace('#', "controladorCP?action=");
                                 $("div.ui-layout-center").empty();
@@ -428,7 +431,7 @@ $(function() {
 
                                     } //fin success
                                 }); //fin del $.ajax
-                            } else if (hash === "#crearHallazgo" || hash === "#listarHallazgos") {
+                            } else if (hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearActividadH") {
                                 var url3 = "/sap/" + hash;
                                 url3 = url3.replace('#', "controladorCP?action=");
                                 $("div#mejoramiento").empty();
@@ -438,12 +441,10 @@ $(function() {
                                     success: function(data)
                                     {
                                         $("div#mejoramiento").append(data);
-                                        $("#contenido").show(400, function() {
-                                            $("#dancing-dots-text").remove();
-                                        });
+                                        $("#dancing-dots-text").remove();
                                     } //fin success
                                 }); //fin del $.ajax
-                            } else if (hash === "#crearFortaleza" || hash === "#listarFortalezas") {
+                            } else if (hash === "#crearFortaleza" || hash === "#listarFortalezas" || hash === "#crearActividadF") {
                                 var url3 = "/sap/" + hash;
                                 url3 = url3.replace('#', "controladorCP?action=");
                                 $("div#mantenimiento").empty();
@@ -453,12 +454,10 @@ $(function() {
                                     success: function(data)
                                     {
                                         $("div#mantenimiento").append(data);
-                                        $("#contenido").show(400, function() {
-                                            $("#dancing-dots-text").remove();
-                                        });
+                                        $("#dancing-dots-text").remove();
                                     } //fin success
                                 }); //fin del $.ajax
-                            } else if (hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#verActividadesH") !== -1) {
+                            } else if (hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#verActividadesH") !== -1 || hash.indexOf("#editarActividadH") !== -1) {
                                 var cual = hash.split("&");
                                 hash = cual[0];
                                 var url3 = "/sap/controladorCP?action=";
@@ -470,12 +469,10 @@ $(function() {
                                     success: function(data)
                                     {
                                         $("div#mejoramiento").append(data);
-                                        $("#contenido").show(200, function() {
-                                            $("#dancing-dots-text").remove();
-                                        });
+                                        $("#dancing-dots-text").remove();
                                     } //fin success
                                 }); //fin del $.ajax
-                            } else if (hash.indexOf("#editarFortaleza") !== -1 || hash.indexOf("#verActividadesF") !== -1) {
+                            } else if (hash.indexOf("#editarFortaleza") !== -1 || hash.indexOf("#verActividadesF") !== -1 || hash.indexOf("#editarActividadF") !== -1) {
                                 var cual = hash.split("&");
                                 hash = cual[0];
                                 var url3 = "/sap/controladorCP?action=";
@@ -487,9 +484,7 @@ $(function() {
                                     success: function(data)
                                     {
                                         $("div#mantenimiento").append(data);
-                                        $("#contenido").show(200, function() {
-                                            $("#dancing-dots-text").remove();
-                                        });
+                                        $("#dancing-dots-text").remove();
                                     } //fin success
                                 }); //fin del $.ajax
                             } else if (hash.indexOf("#verPProceso") !== -1) {
@@ -602,8 +597,8 @@ $(function() {
                                 }); //fin del $.ajax
                             } else if (hash.indexOf("#listarObjetivos") !== -1
                                     || hash.indexOf("#ver2Metas") !== -1 || hash.indexOf("#editarObjetivo") !== -1
-                                    || hash.indexOf("#editar2Objetivo") !== -1 || hash.indexOf("#editarMeta") !== -1 || hash.indexOf("#editar2Meta") !== -1 ||
-                                    hash.indexOf("#listar2Objetivos") !== -1 || hash.indexOf("#verSeguimientos") !== -1) {
+                                    || hash.indexOf("#Seg2Objetivo") !== -1 || hash.indexOf("#editarMeta") !== -1 || hash.indexOf("#editar2Meta") !== -1 ||
+                                    hash.indexOf("#listar2Objetivos") !== -1 || hash.indexOf("#verSeguimientos") !== -1 || hash.indexOf("#editarSeguimiento") !== -1) {
                                 var cual = hash.split("&");
                                 hash = cual[0];
                                 var url3 = "/sap/controladorCP?action=";

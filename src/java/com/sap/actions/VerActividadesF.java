@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author acreditacion
  */
-public class VerActividades implements Action {
+public class VerActividadesF implements Action {
 
     ActividadFacade actividadFacade = lookupActividadFacadeBean();
     HallazgoFacade hallazgoFacade = lookupHallazgoFacadeBean();
@@ -32,15 +32,9 @@ public class VerActividades implements Action {
         String id = request.getParameter("id");
         Hallazgo h = hallazgoFacade.find(Integer.parseInt(id));
         List<Actividad> actividades = actividadFacade.findByList("hallazgoIdhallazgo", h);
+        sesion.setAttribute("fortaleza", h);
         sesion.setAttribute("actividades", actividades);
-        
-        if (h.getTipo().equals("hallazgo")) {
-            return "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/actividadesH/listar.jsp";
-        } else {
-            return "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/actividadesF/listar.jsp";
-        }
-
-
+        return "/WEB-INF/vista/comitePrograma/proceso/planMejoramiento/actividadesF/listar.jsp";
     }
 
     private HallazgoFacade lookupHallazgoFacadeBean() {
