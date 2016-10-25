@@ -5,10 +5,10 @@
             submitHandler: function() {
                 $.ajax({
                     type: 'POST',
-                    url: "/sapnaval/controladorCC?action=crearPrograma",
+                    url: "/sap/controladorCC?action=crearPrograma",
                     data: $("#formX").serialize(),
                     success: function() {
-                        location = "/sapnaval/#listarProgramas";
+                        location = "/sap/#listarProgramas";
                     } //fin success
                 }); //fin $.ajax    
             }
