@@ -13,6 +13,7 @@ import com.sap.ejb.MuestradocenteFacade;
 import com.sap.ejb.MuestraegresadoFacade;
 import com.sap.ejb.MuestraempleadorFacade;
 import com.sap.ejb.MuestraestudianteFacade;
+import com.sap.ejb.ProcesoFacade;
 import com.sap.entity.Muestra;
 import com.sap.entity.Proceso;
 import com.sap.entity.Programa;
@@ -33,6 +34,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class SelectorListSemestre implements Action {
+    ProcesoFacade procesoFacade = lookupProcesoFacadeBean();
 
     MuestradirectorFacade muestradirectorFacade = lookupMuestradirectorFacadeBean();
     MuestraadministrativoFacade muestraadministrativoFacade = lookupMuestraadministrativoFacadeBean();
@@ -48,10 +50,10 @@ public class SelectorListSemestre implements Action {
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
         Programa programa = (Programa) sesion.getAttribute("Programa");
-        Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
+        Proceso proceso = procesoFacade.find(52);
         String semestre = request.getParameter("semestre"); //parametro que viene x post
         sesion.setAttribute("Semestre", semestre);
-        Muestra m = (Muestra) sesion.getAttribute("Muestra");
+        Muestra m = proceso.getMuestraList().get(0);
         String fuente;
 
         if (request.getParameter("fuente") == null) {
@@ -187,6 +189,16 @@ public class SelectorListSemestre implements Action {
         try {
             Context c = new InitialContext();
             return (MuestradirectorFacade) c.lookup("java:global/sapenfermeria/MuestradirectorFacade!com.sap.ejb.MuestradirectorFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ProcesoFacade lookupProcesoFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (ProcesoFacade) c.lookup("java:global/sapenfermeria/ProcesoFacade!com.sap.ejb.ProcesoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

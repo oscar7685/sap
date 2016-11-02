@@ -103,10 +103,10 @@ $(function() {
         $("#menu").html('<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li><a href="#listarModelo"><i class="icon-level-up"></i>Men&uacute; modelo</a></li>' +
-                '<li class="nav-header">Factores</li>' +
+                '<li class="nav-header">Dimensiones</li>' +
                 '<li><a href="#listarFactores"><i class="icon-th-large"></i> Listar factores</a></li>' +
                 '<li class="divider"></li>' +
-                '<li class="nav-header">Caracteristicas</li>' +
+                '<li class="nav-header">Componentes</li>' +
                 '<li><a href="#listarCaracteristicas"><i class="icon-th-list"></i> Listar caracteristicas</a></li>' +
                 '<li class="divider"></li>' +
                 '<li class="nav-header">Indicadores</li>' +
@@ -127,8 +127,8 @@ $(function() {
                 '<button id="west-closer" class="close">&laquo;</button>' +
                 '<li class="nav-header">Proceso de Autoevaluaci&oacute;n</li>' +
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
-                '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
-                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Caracter&iacute;sticas</a></li>' +
+                '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Dimensiones</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Componentes</a></li>' +
                 '<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>' +
                 '<li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 '<li><a href = "#preparedInfoNumerica"><i class = "icon-file-alt"></i> Informaci&oacute;n Num&eacute;rica</a></li>' +
@@ -149,8 +149,9 @@ $(function() {
                 '<li><a href="#controlPanel"><i class="icon-level-up"></i>Regresar al panel</a></li>' +
                 '<li class="nav-header">Proceso de Autoevaluación</li>' +
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
-                '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
-                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Características</a></li>' +
+                '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Dimensiones</a></li>' +
+                '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Componentes</a></li>' +
+                '<li><a href="#listEncuestas"><i class="icon-list"></i> Encuestas</a></li>' +
                 '<li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 '<li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
                 '<li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +

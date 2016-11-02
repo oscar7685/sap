@@ -152,13 +152,14 @@ $(function() {
                 '<div id="menu" style="padding: 8px 0pt;" class="well">' +
                 '<ul class="nav nav-list">' +
                 '<button id="west-closer" class="close">&laquo;</button>' +
-                '<li class="nav-header">Proceso de Autoevaluación</li>' +
+                '<li class="nav-header">Proceso de Autoevaluaci&oacute;n</li>' +
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Dimensiones</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Componentes</a></li>' +
+                '<li><a href="#listEncuestas"><i class="icon-list"></i> Encuestas</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
-                ' <li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
-                ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
+                ' <li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Informaci&oacute;n Num&eacute;rica</a></li>' +
+                ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Informaci&oacute;n Documental</a></li>' +
                 ' <li class = "nav-header"> Estado del proceso </li>' +
                 ' <li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
                 ' <li class="divider"></li>' +

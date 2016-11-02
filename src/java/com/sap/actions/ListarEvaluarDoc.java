@@ -6,6 +6,7 @@ package com.sap.actions;
 
 import com.sap.ejb.InstrumentoFacade;
 import com.sap.ejb.NumericadocumentalFacade;
+import com.sap.ejb.ProcesoFacade;
 import com.sap.entity.Numericadocumental;
 import com.sap.entity.Proceso;
 import com.sap.interfaz.Action;
@@ -25,15 +26,20 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class ListarEvaluarDoc implements Action {
+    ProcesoFacade procesoFacade = lookupProcesoFacadeBean();
     InstrumentoFacade instrumentoFacade = lookupInstrumentoFacadeBean();
     NumericadocumentalFacade numericadocumentalFacade = lookupNumericadocumentalFacadeBean();
-
+    
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
         Proceso pro = (Proceso) sesion.getAttribute("Proceso");
         List<Numericadocumental> listaDoc = numericadocumentalFacade.findByList2("procesoId", pro, "instrumentoId", instrumentoFacade.find(3));
         sesion.setAttribute("listaDoc", listaDoc);
+        
+        Proceso proceso = procesoFacade.find(52);
+        listaDoc = numericadocumentalFacade.findByList2("procesoId", proceso, "instrumentoId", instrumentoFacade.find(2));
+        sesion.setAttribute("listaDoc2", listaDoc);
         return "/WEB-INF/vista/comitePrograma/numericaDocumental/listarInfoDocumental.jsp";
     }
 
@@ -51,6 +57,16 @@ public class ListarEvaluarDoc implements Action {
         try {
             Context c = new InitialContext();
             return (InstrumentoFacade) c.lookup("java:global/sapenfermeria/InstrumentoFacade!com.sap.ejb.InstrumentoFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ProcesoFacade lookupProcesoFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (ProcesoFacade) c.lookup("java:global/sapenfermeria/ProcesoFacade!com.sap.ejb.ProcesoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

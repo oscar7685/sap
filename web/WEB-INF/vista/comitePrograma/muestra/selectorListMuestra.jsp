@@ -172,8 +172,6 @@
                                 </c:choose>
                             </thead>
                             <tbody>
-                                <c:if test="${EstadoProceso == 2}">
-
                                     <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter55">
                                         <c:set var="varaux" value="0"/>
                                         <c:forEach items="${listEncabezado}" var="item3" >
@@ -254,33 +252,8 @@
                                         <c:set var="contador" value="${iter55.index}"></c:set>
                                     </c:forEach>
 
-                                </c:if>
-                                <c:if test="${EstadoProceso != 2}">
-                                    <c:forEach items="${listMuestraSeleccionada}" var="row" varStatus="iter44">
-                                        <tr>
-                                            <td>   
-                                                <c:out value="${row.muestrapersonaId.cedula}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row.muestrapersonaId.nombre}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row.muestrapersonaId.apellido}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row.muestrapersonaId.password}"/>
-                                            </td>
-                                            <c:choose>
-                                                <c:when test="${Semestre == 'todos' }">
-                                                    <td>
-                                                        <c:out value="${row.semestre}"/>
-                                                    </td>
-                                                </c:when>
-                                            </c:choose>
-                                        </tr>
-                                        <c:set var="contador" value="${iter44.index}"></c:set>
-                                    </c:forEach>
-                                </c:if>
+                          
+                              
                             </tbody>
                         </table>
                         <p id="total" style="font-weight: bold">Total: ${contador + 1}</p>

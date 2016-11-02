@@ -5,6 +5,7 @@
 package com.sap.actions;
 
 import com.sap.ejb.EncuestaFacade;
+import com.sap.ejb.ModeloFacade;
 import com.sap.entity.Modelo;
 import com.sap.interfaz.Action;
 import java.io.IOException;
@@ -22,12 +23,14 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class ListEncuestas implements Action {
+    ModeloFacade modeloFacade = lookupModeloFacadeBean();
     EncuestaFacade encuestaFacade = lookupEncuestaFacadeBean();
-
+    
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
-        Modelo modelo = (Modelo) sesion.getAttribute("Modelo");
+        
+        Modelo modelo = modeloFacade.find(1);
         sesion.setAttribute("listaE2", encuestaFacade.findByModelo(modelo));
         return "/WEB-INF/vista/comitePrograma/encuesta/listar.jsp";
     }
@@ -36,6 +39,16 @@ public class ListEncuestas implements Action {
         try {
             Context c = new InitialContext();
             return (EncuestaFacade) c.lookup("java:global/sapenfermeria/EncuestaFacade!com.sap.ejb.EncuestaFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ModeloFacade lookupModeloFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (ModeloFacade) c.lookup("java:global/sapenfermeria/ModeloFacade!com.sap.ejb.ModeloFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
