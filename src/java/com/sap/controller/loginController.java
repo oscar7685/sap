@@ -385,7 +385,7 @@ public class loginController extends HttpServlet {
                                     } else if (Mestudiante.getTipo().equals("7")) {
                                         f = fuenteFacade.find(7);
                                         session.setAttribute("fuente" + sapin, f);
-                                    } else if (Mestudiante.getTipo().equals("7")) {
+                                    } else if (Mestudiante.getTipo().equals("8")) {
                                         f = fuenteFacade.find(8);
                                         session.setAttribute("fuente" + sapin, f);
                                     }
