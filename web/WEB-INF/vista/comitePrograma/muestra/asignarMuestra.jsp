@@ -12,6 +12,30 @@
             }); //fin $.ajax    
 
         });
+
+        $("#selectListMuestra").change(function() {
+            $("#listM").empty();
+            var a = $("#selectListMuestra option:selected").index();
+            if (a == 0) {
+                $("#listM").empty();
+                $("#help1").html('<div class="alert alert-info" role="alert"><strong>Atenci&oacute;n</strong> Seleccione una fuente para ver la población asignada a la misma.</div>');
+            }
+            else {//para hacer el editar muestra
+                $("#help1").empty();
+                $("#listM").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: "/sap/controladorCP?action=selectorListMuestra",
+                    data: $("#formListarMuestra").serialize(),
+                    success: function(datos) {
+                        $("#listM").append(datos);
+                        setTimeout(function() {
+                            $("#dancing-dots-text").remove();
+                        }, 200);
+                    } //fin success
+                }); //fin $.ajax    
+            }
+        });
     });
 </script>
 <div class="hero-unit">

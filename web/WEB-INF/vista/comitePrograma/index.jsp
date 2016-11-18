@@ -166,6 +166,7 @@
                                 <li><a href="#preparedInfoNumerica"><i class="icon-list-ol"></i> Información Numérica</a></li>
                                 <li><a href="#preparedInfoDocumental"><i class="icon-file-alt"></i> Información Documental</a></li>
                                 <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-bar-chart"></i> Estado del proceso</a></li>
+                                <li><a href="#planMejoramiento"><i class="icon-exchange"></i> Plan de aseguramiento</a></li>
                                 <li class="divider"></li>
                                 <li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>
                             </ul>

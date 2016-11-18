@@ -12,43 +12,46 @@ $(function() {
                 + "</div>");
 
     });
+    $(document).ajaxStop(function() {
+        $("#dancing-dots-text").remove();
+    });
 
     var myLayout;
     myLayout = $('body').layout({
         //	enable showOverflow on west-pane so CSS popups will overlap north pane
         west__size: 280
-        , center__paneSelector: ".ui-layout-center"
-        , north__paneClass: "ui-layout-pane2"
+                , center__paneSelector: ".ui-layout-center"
+                , north__paneClass: "ui-layout-pane2"
                 //	reference only - these options are NOT required because 'true' is the default
-        , closable: true	// pane can open & close
-        , resizable: false	// when open, pane can be resized 
-        , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-        , north__size: 1
-        , north__closable: false
-        , north__maxSize: 1
-        , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
-        , north__spacing_open: 0		// no resizer-bar when open (zero height)
-        , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
-        , south__closable: false
-        , south__spacing_open: 0		// no resizer-bar when open (zero height)
-        , west__spacing_open: 0
-        , west__spacing_closed: 20
-        , west__togglerLength_closed: 35
-        , west__togglerAlign_closed: "top"
-        , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
-        , west__togglerTip_closed: "Mostrar menú"
-        , west__togglerTip_open: "Ocultar menú"
-        , west__enableCursorHotkey: false
-        , west__onclose_end: function() {
+                , closable: true	// pane can open & close
+                , resizable: false	// when open, pane can be resized 
+                , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
+                , north__size: 1
+                , north__closable: false
+                , north__maxSize: 1
+                , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
+                , north__spacing_open: 0		// no resizer-bar when open (zero height)
+                , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+                , south__closable: false
+                , south__spacing_open: 0		// no resizer-bar when open (zero height)
+                , west__spacing_open: 0
+                , west__spacing_closed: 20
+                , west__togglerLength_closed: 35
+                , west__togglerAlign_closed: "top"
+                , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
+                , west__togglerTip_closed: "Mostrar menú"
+                , west__togglerTip_open: "Ocultar menú"
+                , west__enableCursorHotkey: false
+                , west__onclose_end: function() {
             $("#conte").removeClass("span10").addClass("span12");
         }
         , west__onopen_end: function() {
             $("#conte").removeClass("span12").addClass("span10");
         }
         , south__paneClass: "ui-layout-pane"
-        , west__togglerContent_open: ""
-        , west__minSize: 200
-        , west__maxSize: 350
+                , west__togglerContent_open: ""
+                , west__minSize: 200
+                , west__maxSize: 350
 
 
     });
@@ -125,7 +128,7 @@ $(function() {
                 '</div>'
                 );
     };
-    
+
     var menuProceso4 = function() {
         $("#menu0").html('<div align="center" class="alert alert-success"><i class="icon-play-sign"></i> Proceso en ejecuci&oacute;n</div>' +
                 '<div id="menu" style="padding: 8px 0pt;" class="well">' +
@@ -146,7 +149,7 @@ $(function() {
                 '</div>'
                 );
     };
-    
+
     var menuProceso3 = function() {
         $("#menu0").html('<div align="center" class="alert alert-error" style="margin-bottom:5px;"><i class="icon-play-sign"></i> Proceso finalizado</div>' +
                 '<div id="menu" style="padding: 8px 0pt;" class="well">' +
@@ -161,8 +164,8 @@ $(function() {
                 ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
                 ' <li class = "nav-header"> Estado del proceso </li>' +
                 ' <li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
-                ' <li class="divider"></li>' +
-                '<li><a href="#listarProceso"><i class="icon-reorder"></i> Listar Procesos</a></li>' +
+                '<li class = "nav-header"> Plan de Aseguramiento </li>' +
+                '<li><a href="#planMejoramiento"><i class="icon-exchange"></i> Plan de aseguramiento</a></li>' +
                 '</ul>' +
                 '</div>'
                 );
@@ -188,7 +191,8 @@ $(function() {
                 || hash === "#editarMuestra" || hash === "#selectorListSemestre" || hash === "#preparedInfoNumerica" || hash === "#preparedInfoDocumental"
                 || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                 || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
-                || hash === "#comentarios" || hash === "#todosResultados" || hash ==="#resultadosGenerales" || hash ==="#resultadosGenerales2") {
+                || hash === "#comentarios" || hash === "#todosResultados" || hash === "#resultadosGenerales" || hash === "#resultadosGenerales2"
+                || hash === "#planMejoramiento" || hash === "#crearObjetivo" || hash === "#crear2Meta" || hash === "#crearSeguimiento" || hash === "#PM" || hash === "#PM2") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
@@ -206,6 +210,62 @@ $(function() {
                         hash = "#listPonderacionCara";
                     }
                     actualizaEnlaces(hash);
+                } //fin success
+            }); //fin del $.ajax
+        } else if (hash === "#crearHallazgo" || hash === "#listarHallazgos" || hash === "#crearActividadH") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCP?action=");
+            $("div#mejoramiento").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    $("div#mejoramiento").append(data);
+                    $("#dancing-dots-text").remove();
+                } //fin success
+            }); //fin del $.ajax
+        } else if (hash === "#crearFortaleza" || hash === "#listarFortalezas" || hash === "#crearActividadF") {
+            var url3 = "/sap/" + hash;
+            url3 = url3.replace('#', "controladorCP?action=");
+            $("div#mantenimiento").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    $("div#mantenimiento").append(data);
+                    $("#dancing-dots-text").remove();
+                } //fin success
+            }); //fin del $.ajax
+        } else if (hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#verActividadesH") !== -1 || hash.indexOf("#editarActividadH") !== -1) {
+            var cual = hash.split("&");
+            hash = cual[0];
+            var url3 = "/sap/controladorCP?action=";
+            url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+            $("div#mejoramiento").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    $("div#mejoramiento").append(data);
+                    $("#dancing-dots-text").remove();
+                } //fin success
+            }); //fin del $.ajax
+        } else if (hash.indexOf("#editarFortaleza") !== -1 || hash.indexOf("#verActividadesF") !== -1 || hash.indexOf("#editarActividadF") !== -1) {
+            var cual = hash.split("&");
+            hash = cual[0];
+            var url3 = "/sap/controladorCP?action=";
+            url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
+            $("div#mantenimiento").empty();
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function(data)
+                {
+                    $("div#mantenimiento").append(data);
+                    $("#dancing-dots-text").remove();
                 } //fin success
             }); //fin del $.ajax
         } else if (hash.indexOf("#finalizarPro") !== -1) {
@@ -247,11 +307,11 @@ $(function() {
                 {
                     if (data === '1') {
                         menuProceso1();
-                    }else if(data==='2'){
+                    } else if (data === '2') {
                         menuProceso2();
-                    }else if(data==='3'){
+                    } else if (data === '3') {
                         menuProceso3();
-                    }else if(data==='4'){
+                    } else if (data === '4') {
                         menuProceso4();
                     }
                     myLayout.addCloseBtn("#west-closer", "west");

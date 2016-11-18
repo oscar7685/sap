@@ -11,7 +11,9 @@ import com.sap.ejb.DocenteFacade;
 import com.sap.ejb.EgresadoFacade;
 import com.sap.ejb.EmpleadorFacade;
 import com.sap.ejb.EncabezadoFacade;
+import com.sap.ejb.EstudianteFacade;
 import com.sap.ejb.FuenteFacade;
+import com.sap.ejb.MuestraFacade;
 import com.sap.ejb.MuestraadministrativoFacade;
 import com.sap.ejb.MuestraagenciaFacade;
 import com.sap.ejb.MuestradirectorFacade;
@@ -24,6 +26,7 @@ import com.sap.entity.Proceso;
 import com.sap.entity.Programa;
 import com.sap.interfaz.Action;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import javax.naming.Context;
@@ -39,7 +42,9 @@ import org.apache.log4j.Logger;
  * @author acreditacion
  */
 public class SelectorListMuestra implements Action {
-    
+    EstudianteFacade estudianteFacade = lookupEstudianteFacadeBean();
+    MuestraFacade muestraFacade = lookupMuestraFacadeBean();
+
     private static final Logger LOGGER = Logger.getLogger(SelectorListMuestra.class);
     MuestraagenciaFacade muestraagenciaFacade = lookupMuestraagenciaFacadeBean();
     AgenciagubernamentalFacade agenciagubernamentalFacade = lookupAgenciagubernamentalFacadeBean();
@@ -56,70 +61,77 @@ public class SelectorListMuestra implements Action {
     MuestradocenteFacade muestradocenteFacade = lookupMuestradocenteFacadeBean();
     MuestraestudianteFacade muestraestudianteFacade = lookupMuestraestudianteFacadeBean();
     FuenteFacade fuenteFacade = lookupFuenteFacadeBean();
+    
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         try {
             HttpSession sesion = request.getSession();
-            sesion.setAttribute("Semestre", "NO");
             Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-            Programa programa = (Programa) sesion.getAttribute("Programa");
-            String fuente;
-            if (request.getParameter("fuente") == null) {
-                fuente = (String) sesion.getAttribute("selectorFuente");
+            List<Muestra> lm = muestraFacade.findByList("procesoId", proceso);
+            String fuente = request.getParameter("fuente");
+            sesion.setAttribute("fuenteX", "" + fuente);
+            Muestra m = null;
+            if (!lm.isEmpty()) {
+                Iterator i = lm.iterator();
+                while (i.hasNext()) {
+                    m = (Muestra) i.next();
+                    sesion.setAttribute("Muestra", m);
+
+                    if (fuente.equals("Estudiante")) {
+                        //ESTUDIANTES
+                        sesion.setAttribute("listMuestraCon", muestraestudianteFacade.findByMuestraConEncabezado(proceso));
+                        sesion.setAttribute("listMuestraSin", muestraestudianteFacade.findByMuestraSinEncabezado(proceso));
+                        sesion.setAttribute("poblacion", estudianteFacade.findByList("procesoId", proceso));
+                    } else if (fuente.equals("Docente")) {
+                        //DOCENTES
+                        sesion.setAttribute("listMuestraCon", muestradocenteFacade.findByMuestraConEncabezado(proceso));
+                        sesion.setAttribute("listMuestraSin", muestradocenteFacade.findByMuestraSinEncabezado(proceso));
+                        sesion.setAttribute("poblacion", docenteFacade.findByList("procesoId", proceso));
+                    } else if (fuente.equals("Egresado")) {
+                        //EGRESADOS
+                        sesion.setAttribute("listMuestraCon", muestraegresadoFacade.findByMuestraConEncabezado(proceso));
+                        sesion.setAttribute("listMuestraSin", muestraegresadoFacade.findByMuestraSinEncabezado(proceso));
+                        sesion.setAttribute("poblacion", egresadoFacade.findByList("procesoId", proceso));
+                    } else if (fuente.equals("Administrativo")) {
+                        //ADMINISTRATIVOS
+                        sesion.setAttribute("listMuestraCon", muestraadministrativoFacade.findByMuestraConEncabezado(proceso));
+                        sesion.setAttribute("listMuestraSin", muestraadministrativoFacade.findByMuestraSinEncabezado(proceso));
+                        sesion.setAttribute("poblacion", administrativoFacade.findByList("procesoId", proceso));
+                    } else if (fuente.equals("Directivo")) {
+                        //DIRECTIVOS
+                        sesion.setAttribute("listMuestraCon", muestradirectorFacade.findByMuestraConEncabezado(proceso));
+                        sesion.setAttribute("listMuestraSin", muestradirectorFacade.findByMuestraSinEncabezado(proceso));
+                        sesion.setAttribute("poblacion", directorprogramaFacade.findByList("procesoId", proceso));
+                    } else if (fuente.equals("Empleador")) {
+                        //EMPLEADORES
+                        sesion.setAttribute("listMuestraCon", muestraempleadorFacade.findByMuestraConEncabezado(proceso));
+                        sesion.setAttribute("listMuestraSin", muestraempleadorFacade.findByMuestraSinEncabezado(proceso));
+                        sesion.setAttribute("poblacion", empleadorFacade.findByList("procesoId", proceso));
+                    }
+                }
             } else {
-                fuente = request.getParameter("fuente");
-                sesion.setAttribute("selectorFuente", fuente);
-            }
+                sesion.setAttribute("Muestra", m); //null
+                if (fuente.equals("Estudiante")) {
+                    //ESTUDIANTES
+                    sesion.setAttribute("poblacion", estudianteFacade.findByList("procesoId", proceso));
+                } else if (fuente.equals("Docente")) {
+                    //DOCENTES
+                    sesion.setAttribute("poblacion", docenteFacade.findByList("procesoId", proceso));
+                } else if (fuente.equals("Egresado")) {
+                    //EGRESADOS
+                    sesion.setAttribute("poblacion", egresadoFacade.findByList("procesoId", proceso));
+                } else if (fuente.equals("Administrativo")) {
+                    //ADMINISTRATIVOS
+                    sesion.setAttribute("poblacion", administrativoFacade.findByList("procesoId", proceso));
+                } else if (fuente.equals("Directivo")) {
+                    //DIRECTIVOS
+                    sesion.setAttribute("poblacion", directorprogramaFacade.findByList("procesoId", proceso));
+                } else if (fuente.equals("Empleador")) {
+                    //EMPLEADORES
+                    sesion.setAttribute("poblacion", empleadorFacade.findByList("procesoId", proceso));
+                }
 
-            Muestra m = (Muestra) sesion.getAttribute("Muestra");
-            if (fuente.equals("Estudiante")) {
-                sesion.setAttribute("listMuestraSeleccionada", muestraestudianteFacade.findByList("muestrapersonaId.muestraId", m));
-                sesion.setAttribute("Fuente", fuenteFacade.find(1));
-                sesion.setAttribute("Semestre", "--");
-            } else if (fuente.equals("Docente")) {
-                sesion.setAttribute("listMuestraSeleccionada", muestradocenteFacade.findByList("muestrapersonaId.muestraId", m));
-                sesion.setAttribute("Fuente", fuenteFacade.find(2));
-                List e = docenteFacade.findByPrograma((Programa) programa);
-                sesion.setAttribute("listPoblacion", e);
-                List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                sesion.setAttribute("listEncabezado", le);
-            } else if (fuente.equals("Egresado")) {
-                sesion.setAttribute("listMuestraSeleccionada", muestraegresadoFacade.findByList("muestrapersonaId.muestraId", m));
-                sesion.setAttribute("Fuente", fuenteFacade.find(4));
-                List e = egresadoFacade.findByPrograma((Programa) programa);
-                sesion.setAttribute("listPoblacion", e);
-                List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                sesion.setAttribute("listEncabezado", le);
-
-            } else if (fuente.equals("Administrativo")) {
-                sesion.setAttribute("listMuestraSeleccionada", muestraadministrativoFacade.findByList("muestrapersonaId.muestraId", m));
-                sesion.setAttribute("Fuente", fuenteFacade.find(3));
-                List e = administrativoFacade.findByPrograma((Programa) programa);
-                sesion.setAttribute("listPoblacion", e);
-                List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                sesion.setAttribute("listEncabezado", le);
-            } else if (fuente.equals("Directivo")) {
-                sesion.setAttribute("listMuestraSeleccionada", muestradirectorFacade.findByList("muestrapersonaId.muestraId", m));
-                sesion.setAttribute("Fuente", fuenteFacade.find(5));
-                List e = directorprogramaFacade.findByPrograma((Programa) programa);
-                sesion.setAttribute("listPoblacion", e);
-                List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                sesion.setAttribute("listEncabezado", le);
-            } else if (fuente.equals("Empleador")) {
-                sesion.setAttribute("listMuestraSeleccionada", muestraempleadorFacade.findByList("muestrapersonaId.muestraId", m));
-                sesion.setAttribute("Fuente", fuenteFacade.find(6));
-                List e = empleadorFacade.findByPrograma((Programa) programa);
-                sesion.setAttribute("listPoblacion", e);
-                List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                sesion.setAttribute("listEncabezado", le);
-            } else if (fuente.equals("Visitante")) {
-                sesion.setAttribute("listMuestraSeleccionada", muestraagenciaFacade.findByList("muestrapersonaId.muestraId", m));
-                sesion.setAttribute("Fuente", fuenteFacade.find(7));
-                List e = agenciagubernamentalFacade.findByPrograma((Programa) programa);
-                sesion.setAttribute("listPoblacion", e);
-                List le = encabezadoFacade.findByList2("procesoId", proceso, "fuenteId", sesion.getAttribute("Fuente"));
-                sesion.setAttribute("listEncabezado", le);
             }
         } catch (Exception e) {
             LOGGER.error("Se ha presentado un error: ", e);
@@ -273,6 +285,26 @@ public class SelectorListMuestra implements Action {
         try {
             Context c = new InitialContext();
             return (AgenciagubernamentalFacade) c.lookup("java:global/sap/AgenciagubernamentalFacade!com.sap.ejb.AgenciagubernamentalFacade");
+        } catch (NamingException ne) {
+            java.util.logging.Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private MuestraFacade lookupMuestraFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (MuestraFacade) c.lookup("java:global/sap/MuestraFacade!com.sap.ejb.MuestraFacade");
+        } catch (NamingException ne) {
+            java.util.logging.Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private EstudianteFacade lookupEstudianteFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (EstudianteFacade) c.lookup("java:global/sap/EstudianteFacade!com.sap.ejb.EstudianteFacade");
         } catch (NamingException ne) {
             java.util.logging.Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

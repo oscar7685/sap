@@ -72,14 +72,21 @@ public abstract class AbstractFacade<T> {
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " = :name", entityClass).setParameter("name", m).getSingleResult();
     }
-    
+
     public T findBySingle2(String property1, Object m1, String property2, Object m2) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :name1 and c." + property2 + " = :name2", entityClass);
         q.setParameter("name1", m1);
         q.setParameter("name2", m2);
-        return (T) q.getSingleResult();
+        try {
+            return (T) q.getSingleResult();
+        } catch (Exception e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Excepcion en el metodo findBySingle2", e);
+            }
+            return null;
+        }
     }
 
     public List<Proceso> findByListReprestanteMultiple(String property, Object m) {
@@ -252,5 +259,64 @@ public abstract class AbstractFacade<T> {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property + " <> :name", entityClass).setParameter("name", m).getResultList();
+    }
+
+    public List findByMuestraConEncabezado(Proceso p) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery("SELECT m FROM " + entityClass.getSimpleName() + " m join m.muestrapersonaId mp join mp.encabezadoList en WHERE en.muestrapersonaId = mp and en.procesoId=:proceso", entityClass).setParameter("proceso", p).getResultList();
+    }
+    public List findByMuestraConEncabezado(Proceso p, String semestre) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery("SELECT m FROM " + entityClass.getSimpleName() + " m join m.muestrapersonaId mp join mp.encabezadoList en WHERE m.semestre=:semestre and en.muestrapersonaId = mp and en.procesoId=:proceso", entityClass).setParameter("proceso", p).setParameter("semestre", semestre).getResultList();
+    }
+
+    public List findByMuestraSinEncabezado(Proceso p) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery("SELECT m2 FROM " + entityClass.getSimpleName() + " m2 where m2.id NOT IN (SELECT m.id FROM " + entityClass.getSimpleName() + " m join m.muestrapersonaId mp join mp.encabezadoList en WHERE en.muestrapersonaId = mp and en.procesoId=:proceso) and m2.muestrapersonaId.muestraId.procesoId =:proceso", entityClass).setParameter("proceso", p).getResultList();
+    }
+    public List findByMuestraSinEncabezado(Proceso p, String semestre) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return getEntityManager().createQuery("SELECT m2 FROM " + entityClass.getSimpleName() + " m2 where m2.semestre=:semestre and m2.id NOT IN (SELECT m.id FROM " + entityClass.getSimpleName() + " m join m.muestrapersonaId mp join mp.encabezadoList en WHERE en.muestrapersonaId = mp and en.procesoId=:proceso) and m2.muestrapersonaId.muestraId.procesoId =:proceso", entityClass).setParameter("proceso", p).setParameter("semestre", semestre).getResultList();
+    }
+    public List<T> findByPersonasQueNOEstanEnlaMuestra(String muestrafuente, Object proceso) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().
+                createQuery("SELECT c FROM " + entityClass.getSimpleName()
+                + " c WHERE c.procesoId = :proceso and c.personaId.id not IN  "
+                + "(select me.muestrapersonaId.cedula from " + muestrafuente + " me "
+                + "where me.muestrapersonaId.muestraId.procesoId =:proceso)", entityClass);
+        q.setParameter("proceso", proceso);
+        try {
+            return q.getResultList();
+        } catch (Exception e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Excepcion en el metodo findBySingle3", e);
+            }
+            return null;
+        }
+    }
+
+    public List<T> findByMuestraQueNOHaContestado(Object proceso) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().
+                createQuery("SELECT c FROM " + entityClass.getSimpleName()
+                + " c WHERE c.muestrapersonaId.muestraId.procesoId =:proceso and c.muestrapersonaId.id not IN "
+                + "(select en.muestrapersonaId.id from Encabezado en where en.procesoId =:proceso)", entityClass);
+
+        q.setParameter("proceso", proceso);
+        try {
+            return q.getResultList();
+        } catch (Exception e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Excepcion en el metodo findBySingle3", e);
+            }
+            return null;
+        }
     }
 }
