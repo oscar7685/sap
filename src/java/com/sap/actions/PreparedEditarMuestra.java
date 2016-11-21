@@ -69,7 +69,8 @@ public class PreparedEditarMuestra implements Action {
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
         Proceso proceso = (Proceso) sesion.getAttribute("Proceso");
-        String fuente = (String) sesion.getAttribute("selectorFuente");
+        String fuente = request.getParameter("fuente");
+        
         if (fuente.equals("Estudiante")) {
             sesion.setAttribute("selectorFuente", "Estudiante");
             List<Estudiante> poblacion = estudianteFacade.findByPersonasQueNOEstanEnlaMuestra("Muestraestudiante", proceso);

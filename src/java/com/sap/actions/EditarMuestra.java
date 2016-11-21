@@ -78,80 +78,21 @@ public class EditarMuestra implements Action {
         Programa programa = (Programa) sesion.getAttribute("Programa");
         String fuente = (String) sesion.getAttribute("selectorFuente");
         if (fuente.equals("Estudiante")) {
-            Collection nuevos = new ArrayList();
-            Collection viejos = new ArrayList();
-            List<Muestraestudiante> muestraEstudiantes = (List<Muestraestudiante>) sesion.getAttribute("listMuestraSeleccionada");
-            for (Muestraestudiante muestraestudiante : muestraEstudiantes) {
-                viejos.add(muestraestudiante.getMuestrapersonaId().getCedula());
-            }
+            List<Muestraestudiante> muestraAux = (List<Muestraestudiante>) sesion.getAttribute("listMuestraSeleccionada");
             Muestra m = (Muestra) sesion.getAttribute("Muestra");
-            List<Estudiante> le = estudianteFacade.findByList2("programaId", programa, "semestre", sesion.getAttribute("Semestre"));
-            for (Estudiante estudiante : le) {
-                if ("1".equals(request.getParameter(String.valueOf(estudiante.getPersonaId().getId())))) {
-                    nuevos.add(estudiante.getPersonaId().getId());
-                }
-            }
-            Collection viejos2 = new ArrayList(viejos);
-            viejos.removeAll(nuevos); // quedan solo las cedulas de las personas que han sido eliminadas
-            nuevos.removeAll(viejos2); //quedan solo las cedulas de las personas que han sido agregadas
-
-            for (Object object : viejos) {
-                Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", object.toString(), "muestraId", m);
-                Muestraestudiante me = muestraestudianteFacade.findBySingle("muestrapersonaId", mp);
-                muestraestudianteFacade.remove(me);
-                muestrapersonaFacade.remove(mp);
-            }
-            for (Object object : nuevos) {
-                Estudiante est = estudianteFacade.findBySingle2("personaId.id", object.toString(), "programaId", m.getProcesoId().getProgramaId());
-                Persona per = est.getPersonaId();
-
-                Muestrapersona mp = new Muestrapersona();
-                mp.setCedula(per.getId());
-                mp.setNombre(per.getNombre());
-                mp.setApellido(per.getApellido());
-                mp.setPassword(per.getPassword());
-                mp.setMail(per.getMail());
-                mp.setMuestraId(m);
-                muestrapersonaFacade.create(mp);
-                Muestraestudiante mest = new Muestraestudiante();
-                mest.setCodigo(est.getId());
-                mest.setSemestre(est.getSemestre());
-                mest.setPeriodo(est.getPeriodo());
-                mest.setAnio(est.getAnio());
-                mest.setMuestrapersonaId(mp);
-                mest.setProgramaId(est.getProgramaId());
-                muestraestudianteFacade.create(mest);
-            }
-
-        } else {
-            if (fuente.equals("Docente")) {
-                Collection nuevos = new ArrayList();
-                Collection viejos = new ArrayList();
-                List<Muestradocente> muestraDocentes = (List<Muestradocente>) sesion.getAttribute("listMuestraSeleccionada");
-                for (Muestradocente muestradocente : muestraDocentes) {
-                    viejos.add(muestradocente.getMuestrapersonaId().getCedula());
-                }
-                Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                List<Docente> ld = docenteFacade.findByList("programaId", programa);
-                for (Docente docente : ld) {
-                    if ("1".equals(request.getParameter(String.valueOf(docente.getPersonaId().getId())))) {
-                        nuevos.add(docente.getPersonaId().getId());
-                    }
-                }
-                Collection viejos2 = new ArrayList(viejos);
-                viejos.removeAll(nuevos); // quedan solo las cedulas de las personas que han sido eliminadas
-                nuevos.removeAll(viejos2); //quedan solo las cedulas de las personas que han sido agregadas
-
-                for (Object object : viejos) {
-                    Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", object.toString(), "muestraId", m);
-                    Muestradocente md = muestradocenteFacade.findBySingle("muestrapersonaId", mp);
-                    muestradocenteFacade.remove(md);
+            for (Muestraestudiante muestraaux2 : muestraAux) {
+                if (!"1".equals(request.getParameter(String.valueOf(muestraaux2.getMuestrapersonaId().getCedula())))) {
+                    Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", muestraaux2.getMuestrapersonaId().getCedula(), "muestraId", m);
+                    Muestraestudiante md = muestraestudianteFacade.findBySingle("muestrapersonaId", mp);
+                    muestraestudianteFacade.remove(md);
                     muestrapersonaFacade.remove(mp);
                 }
-                for (Object object : nuevos) {
-                    Docente doc = docenteFacade.findBySingle2("personaId.id", object.toString(), "programaId", m.getProcesoId().getProgramaId());
-                    Persona per = doc.getPersonaId();
+            }
 
+            List<Estudiante> aux4 = (List<Estudiante>) sesion.getAttribute("listPoblacion");
+            for (Estudiante aux5 : aux4) {
+                if ("1".equals(request.getParameter(String.valueOf(aux5.getPersonaId().getId())))) {
+                    Persona per = aux5.getPersonaId();
                     Muestrapersona mp = new Muestrapersona();
                     mp.setCedula(per.getId());
                     mp.setNombre(per.getNombre());
@@ -160,40 +101,36 @@ public class EditarMuestra implements Action {
                     mp.setMail(per.getMail());
                     mp.setMuestraId(m);
                     muestrapersonaFacade.create(mp);
-                    Muestradocente mdoce = new Muestradocente();
-                    mdoce.setTipo(doc.getTipo());
-                    mdoce.setMuestrapersonaId(mp);
-                    muestradocenteFacade.create(mdoce);
+                    Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
+                    Muestraestudiante me = new Muestraestudiante();
+                    me.setCodigo(aux5.getId());
+                    me.setSemestre(aux5.getSemestre());
+                    me.setPeriodo(aux5.getPeriodo());
+                    me.setAnio(aux5.getAnio());
+                    me.setMuestrapersonaId(aux);
+                    me.setProgramaId(programa);
+                    muestraestudianteFacade.create(me);
                 }
-            } else {
-                if (fuente.equals("Egresado")) {
-                    Collection nuevos = new ArrayList();
-                    Collection viejos = new ArrayList();
-                    List<Muestraegresado> muestraAux = (List<Muestraegresado>) sesion.getAttribute("listMuestraSeleccionada");
-                    for (Muestraegresado muestraegresado : muestraAux) {
-                        viejos.add(muestraegresado.getMuestrapersonaId().getCedula());
-                    }
-                    Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                    List<Egresado> lax = egresadoFacade.findByList("programaId", programa);
-                    for (Egresado egresado : lax) {
-                        if ("1".equals(request.getParameter(String.valueOf(egresado.getPersonaId().getId())))) {
-                            nuevos.add(egresado.getPersonaId().getId());
-                        }
-                    }
-                    Collection viejos2 = new ArrayList(viejos);
-                    viejos.removeAll(nuevos); // quedan solo las cedulas de las personas que han sido eliminadas
-                    nuevos.removeAll(viejos2); //quedan solo las cedulas de las personas que han sido agregadas
+            }
 
-                    for (Object object : viejos) {
-                        Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", object.toString(), "muestraId", m);
-                        Muestraegresado maux = muestraegresadoFacade.findBySingle("muestrapersonaId", mp);
-                        muestraegresadoFacade.remove(maux);
+        } else {
+            if (fuente.equals("Docente")) {
+
+                List<Muestradocente> muestraDocentes = (List<Muestradocente>) sesion.getAttribute("listMuestraSeleccionada");
+                Muestra m = (Muestra) sesion.getAttribute("Muestra");
+                for (Muestradocente muestradocente : muestraDocentes) {
+                    if (!"1".equals(request.getParameter(String.valueOf(muestradocente.getMuestrapersonaId().getCedula())))) {
+                        Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", muestradocente.getMuestrapersonaId().getCedula(), "muestraId", m);
+                        Muestradocente md = muestradocenteFacade.findBySingle("muestrapersonaId", mp);
+                        muestradocenteFacade.remove(md);
                         muestrapersonaFacade.remove(mp);
                     }
-                    for (Object object : nuevos) {
-                        Egresado egre = egresadoFacade.findBySingle2("personaId.id", object.toString(), "programaId", m.getProcesoId().getProgramaId());
-                        Persona per = egre.getPersonaId();
+                }
 
+                List<Docente> docentes = (List<Docente>) sesion.getAttribute("listPoblacion");
+                for (Docente docente : docentes) {
+                    if ("1".equals(request.getParameter(String.valueOf(docente.getPersonaId().getId())))) {
+                        Persona per = docente.getPersonaId();
                         Muestrapersona mp = new Muestrapersona();
                         mp.setCedula(per.getId());
                         mp.setNombre(per.getNombre());
@@ -202,39 +139,31 @@ public class EditarMuestra implements Action {
                         mp.setMail(per.getMail());
                         mp.setMuestraId(m);
                         muestrapersonaFacade.create(mp);
-                        Muestraegresado megre = new Muestraegresado();
-                        megre.setMuestrapersonaId(mp);
-                        muestraegresadoFacade.create(megre);
+                        Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
+                        Muestradocente md = new Muestradocente();
+                        md.setTipo("" + docente.getFuenteId().getId());
+                        md.setMuestrapersonaId(aux);
+                        muestradocenteFacade.create(md);
                     }
-                } else {
-                    if (fuente.equals("Administrativo")) {
-                        Collection nuevos = new ArrayList();
-                        Collection viejos = new ArrayList();
-                        List<Muestraadministrativo> muestraAdministrativos = (List<Muestraadministrativo>) sesion.getAttribute("listMuestraSeleccionada");
-                        for (Muestraadministrativo muestraadministrativo : muestraAdministrativos) {
-                            viejos.add(muestraadministrativo.getMuestrapersonaId().getCedula());
-                        }
-                        Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                        List<Administrativo> lad = administrativoFacade.findByList("programaId", programa);
-                        for (Administrativo administrativo : lad) {
-                            if ("1".equals(request.getParameter(String.valueOf(administrativo.getPersonaId().getId())))) {
-                                nuevos.add(administrativo.getPersonaId().getId());
-                            }
-                        }
-                        Collection viejos2 = new ArrayList(viejos);
-                        viejos.removeAll(nuevos); // quedan solo las cedulas de las personas que han sido eliminadas
-                        nuevos.removeAll(viejos2); //quedan solo las cedulas de las personas que han sido agregadas
+                }
 
-                        for (Object object : viejos) {
-                            Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", object.toString(), "muestraId", m);
-                            Muestraadministrativo mad = muestraadministrativoFacade.findBySingle("muestrapersonaId", mp);
-                            muestraadministrativoFacade.remove(mad);
+            } else {
+                if (fuente.equals("Egresado")) {
+                    List<Muestraegresado> muestraAux = (List<Muestraegresado>) sesion.getAttribute("listMuestraSeleccionada");
+                    Muestra m = (Muestra) sesion.getAttribute("Muestra");
+                    for (Muestraegresado muestraaux2 : muestraAux) {
+                        if (!"1".equals(request.getParameter(String.valueOf(muestraaux2.getMuestrapersonaId().getCedula())))) {
+                            Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", muestraaux2.getMuestrapersonaId().getCedula(), "muestraId", m);
+                            Muestraegresado md = muestraegresadoFacade.findBySingle("muestrapersonaId", mp);
+                            muestraegresadoFacade.remove(md);
                             muestrapersonaFacade.remove(mp);
                         }
-                        for (Object object : nuevos) {
-                            Administrativo admi = administrativoFacade.findBySingle2("personaId.id", object.toString(), "programaId", m.getProcesoId().getProgramaId());
-                            Persona per = admi.getPersonaId();
+                    }
 
+                    List<Egresado> aux4 = (List<Egresado>) sesion.getAttribute("listPoblacion");
+                    for (Egresado aux5 : aux4) {
+                        if ("1".equals(request.getParameter(String.valueOf(aux5.getPersonaId().getId())))) {
+                            Persona per = aux5.getPersonaId();
                             Muestrapersona mp = new Muestrapersona();
                             mp.setCedula(per.getId());
                             mp.setNombre(per.getNombre());
@@ -243,40 +172,29 @@ public class EditarMuestra implements Action {
                             mp.setMail(per.getMail());
                             mp.setMuestraId(m);
                             muestrapersonaFacade.create(mp);
-                            Muestraadministrativo madmi = new Muestraadministrativo();
-                            madmi.setCargo(admi.getCargo());
-                            madmi.setMuestrapersonaId(mp);
-                            muestraadministrativoFacade.create(madmi);
+                            Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
+                            Muestraegresado meg = new Muestraegresado();
+                            meg.setMuestrapersonaId(aux);
+                            muestraegresadoFacade.create(meg);
                         }
-                    } else {
-                        if (fuente.equals("Directivo")) {
-                            Collection nuevos = new ArrayList();
-                            Collection viejos = new ArrayList();
-                            List<Muestradirector> muestraDirec = (List<Muestradirector>) sesion.getAttribute("listMuestraSeleccionada");
-                            for (Muestradirector muestradirectivo : muestraDirec) {
-                                viejos.add(muestradirectivo.getMuestrapersonaId().getCedula());
-                            }
-                            Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                            List<Directorprograma> ldire = directorprogramaFacade.findByList("programaId", programa);
-                            for (Directorprograma director : ldire) {
-                                if ("1".equals(request.getParameter(String.valueOf(director.getPersonaId().getId())))) {
-                                    nuevos.add(director.getPersonaId().getId());
-                                }
-                            }
-                            Collection viejos2 = new ArrayList(viejos);
-                            viejos.removeAll(nuevos); // quedan solo las cedulas de las personas que han sido eliminadas
-                            nuevos.removeAll(viejos2); //quedan solo las cedulas de las personas que han sido agregadas
-
-                            for (Object object : viejos) {
-                                Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", object.toString(), "muestraId", m);
-                                Muestradirector mdire = muestradirectorFacade.findBySingle("muestrapersonaId", mp);
-                                muestradirectorFacade.remove(mdire);
+                    }
+                } else {
+                    if (fuente.equals("Administrativo")) {
+                        List<Muestraadministrativo> muestraAux = (List<Muestraadministrativo>) sesion.getAttribute("listMuestraSeleccionada");
+                        Muestra m = (Muestra) sesion.getAttribute("Muestra");
+                        for (Muestraadministrativo muestraaux2 : muestraAux) {
+                            if (!"1".equals(request.getParameter(String.valueOf(muestraaux2.getMuestrapersonaId().getCedula())))) {
+                                Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", muestraaux2.getMuestrapersonaId().getCedula(), "muestraId", m);
+                                Muestraadministrativo md = muestraadministrativoFacade.findBySingle("muestrapersonaId", mp);
+                                muestraadministrativoFacade.remove(md);
                                 muestrapersonaFacade.remove(mp);
                             }
-                            for (Object object : nuevos) {
-                                Directorprograma dir = directorprogramaFacade.findBySingle2("personaId.id", object.toString(), "programaId", m.getProcesoId().getProgramaId());
-                                Persona per = dir.getPersonaId();
+                        }
 
+                        List<Administrativo> aux4 = (List<Administrativo>) sesion.getAttribute("listPoblacion");
+                        for (Administrativo aux5 : aux4) {
+                            if ("1".equals(request.getParameter(String.valueOf(aux5.getPersonaId().getId())))) {
+                                Persona per = aux5.getPersonaId();
                                 Muestrapersona mp = new Muestrapersona();
                                 mp.setCedula(per.getId());
                                 mp.setNombre(per.getNombre());
@@ -285,94 +203,79 @@ public class EditarMuestra implements Action {
                                 mp.setMail(per.getMail());
                                 mp.setMuestraId(m);
                                 muestrapersonaFacade.create(mp);
-                                Muestradirector mdir = new Muestradirector();
-                                mdir.setMuestrapersonaId(mp);
-                                muestradirectorFacade.create(mdir);
+                                Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
+                                Muestraadministrativo mad = new Muestraadministrativo();
+                                mad.setCargo(aux5.getCargo());
+                                mad.setMuestrapersonaId(aux);
+                                muestraadministrativoFacade.create(mad);
+                            }
+                        }
+                    } else {
+                        if (fuente.equals("Directivo")) {
+                            List<Muestradirector> muestraAux = (List<Muestradirector>) sesion.getAttribute("listMuestraSeleccionada");
+                            Muestra m = (Muestra) sesion.getAttribute("Muestra");
+                            for (Muestradirector muestraaux2 : muestraAux) {
+                                if (!"1".equals(request.getParameter(String.valueOf(muestraaux2.getMuestrapersonaId().getCedula())))) {
+                                    Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", muestraaux2.getMuestrapersonaId().getCedula(), "muestraId", m);
+                                    Muestradirector md = muestradirectorFacade.findBySingle("muestrapersonaId", mp);
+                                    muestradirectorFacade.remove(md);
+                                    muestrapersonaFacade.remove(mp);
+                                }
+                            }
+
+                            List<Directorprograma> aux4 = (List<Directorprograma>) sesion.getAttribute("listPoblacion");
+                            for (Directorprograma aux5 : aux4) {
+                                if ("1".equals(request.getParameter(String.valueOf(aux5.getPersonaId().getId())))) {
+                                    Persona per = aux5.getPersonaId();
+                                    Muestrapersona mp = new Muestrapersona();
+                                    mp.setCedula(per.getId());
+                                    mp.setNombre(per.getNombre());
+                                    mp.setApellido(per.getApellido());
+                                    mp.setPassword(per.getPassword());
+                                    mp.setMail(per.getMail());
+                                    mp.setMuestraId(m);
+                                    muestrapersonaFacade.create(mp);
+                                    Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
+                                    Muestradirector mdp = new Muestradirector();
+                                    mdp.setMuestrapersonaId(aux);
+                                    muestradirectorFacade.create(mdp);
+                                }
                             }
                         } else {
                             if (fuente.equals("Empleador")) {
-                                Collection nuevos = new ArrayList();
-                                Collection viejos = new ArrayList();
                                 List<Muestraempleador> muestraAux = (List<Muestraempleador>) sesion.getAttribute("listMuestraSeleccionada");
-                                for (Muestraempleador muestraempleador : muestraAux) {
-                                    viejos.add(muestraempleador.getMuestrapersonaId().getCedula());
-                                }
                                 Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                                List<Empleador> lax = empleadorFacade.findByList("programaId", programa);
-                                for (Empleador empleado : lax) {
-                                    if ("1".equals(request.getParameter(String.valueOf(empleado.getPersonaId().getId())))) {
-                                        nuevos.add(empleado.getPersonaId().getId());
+                                for (Muestraempleador muestraaux2 : muestraAux) {
+                                    if (!"1".equals(request.getParameter(String.valueOf(muestraaux2.getMuestrapersonaId().getCedula())))) {
+                                        Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", muestraaux2.getMuestrapersonaId().getCedula(), "muestraId", m);
+                                        Muestraempleador md = muestraempleadorFacade.findBySingle("muestrapersonaId", mp);
+                                        muestraempleadorFacade.remove(md);
+                                        muestrapersonaFacade.remove(mp);
                                     }
                                 }
-                                Collection viejos2 = new ArrayList(viejos);
-                                viejos.removeAll(nuevos); // quedan solo las cedulas de las personas que han sido eliminadas
-                                nuevos.removeAll(viejos2); //quedan solo las cedulas de las personas que han sido agregadas
 
-                                for (Object object : viejos) {
-                                    Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", object.toString(), "muestraId", m);
-                                    Muestraempleador maux = muestraempleadorFacade.findBySingle("muestrapersonaId", mp);
-                                    muestraempleadorFacade.remove(maux);
-                                    muestrapersonaFacade.remove(mp);
-                                }
-                                for (Object object : nuevos) {
-                                    Empleador empl = empleadorFacade.findBySingle2("personaId.id", object.toString(), "programaId", m.getProcesoId().getProgramaId());
-                                    Persona per = empl.getPersonaId();
-
-                                    Muestrapersona mp = new Muestrapersona();
-                                    mp.setCedula(per.getId());
-                                    mp.setNombre(per.getNombre());
-                                    mp.setApellido(per.getApellido());
-                                    mp.setPassword(per.getPassword());
-                                    mp.setMail(per.getMail());
-                                    mp.setMuestraId(m);
-                                    muestrapersonaFacade.create(mp);
-                                    Muestraempleador mempl = new Muestraempleador();
-                                    mempl.setMuestrapersonaId(mp);
-                                    mempl.setCargo(empl.getCargo());
-                                    mempl.setEmpresa(empl.getEmpresa());
-                                    muestraempleadorFacade.create(mempl);
-                                }
-                            }else if (fuente.equals("Visitante")) {
-                                Collection nuevos = new ArrayList();
-                                Collection viejos = new ArrayList();
-                                List<Muestraagencia> muestraAux = (List<Muestraagencia>) sesion.getAttribute("listMuestraSeleccionada");
-                                for (Muestraagencia muestravisitante : muestraAux) {
-                                    viejos.add(muestravisitante.getMuestrapersonaId().getCedula());
-                                }
-                                Muestra m = (Muestra) sesion.getAttribute("Muestra");
-                                List<Agenciagubernamental> lax = agenciagubernamentalFacade.findByList("programaId", programa);
-                                for (Agenciagubernamental visitante : lax) {
-                                    if ("1".equals(request.getParameter(String.valueOf(visitante.getPersonaId().getId())))) {
-                                        nuevos.add(visitante.getPersonaId().getId());
+                                List<Empleador> aux4 = (List<Empleador>) sesion.getAttribute("listPoblacion");
+                                for (Empleador aux5 : aux4) {
+                                    if ("1".equals(request.getParameter(String.valueOf(aux5.getPersonaId().getId())))) {
+                                        Persona per = aux5.getPersonaId();
+                                        Muestrapersona mp = new Muestrapersona();
+                                        mp.setCedula(per.getId());
+                                        mp.setNombre(per.getNombre());
+                                        mp.setApellido(per.getApellido());
+                                        mp.setPassword(per.getPassword());
+                                        mp.setMail(per.getMail());
+                                        mp.setMuestraId(m);
+                                        muestrapersonaFacade.create(mp);
+                                    
+                                        Muestrapersona aux = muestrapersonaFacade.findUltimo("id").get(0);
+                                        Muestraempleador mem = new Muestraempleador();
+                                        mem.setEmpresa(aux5.getEmpresa()); //Este campo no puede ser null
+                                        mem.setCargo(aux5.getCargo());
+                                        mem.setMuestrapersonaId(aux);
+                                        muestraempleadorFacade.create(mem);
                                     }
                                 }
-                                Collection viejos2 = new ArrayList(viejos);
-                                viejos.removeAll(nuevos); // quedan solo las cedulas de las personas que han sido eliminadas
-                                nuevos.removeAll(viejos2); //quedan solo las cedulas de las personas que han sido agregadas
 
-                                for (Object object : viejos) {
-                                    Muestrapersona mp = muestrapersonaFacade.findBySingle2("cedula", object.toString(), "muestraId", m);
-                                    Muestraagencia maux = muestraagenciaFacade.findBySingle("muestrapersonaId", mp);
-                                    muestraagenciaFacade.remove(maux);
-                                    muestrapersonaFacade.remove(mp);
-                                }
-                                for (Object object : nuevos) {
-                                    Agenciagubernamental visi = agenciagubernamentalFacade.findBySingle2("personaId.id", object.toString(), "programaId", m.getProcesoId().getProgramaId());
-                                    Persona per = visi.getPersonaId();
-
-                                    Muestrapersona mp = new Muestrapersona();
-                                    mp.setCedula(per.getId());
-                                    mp.setNombre(per.getNombre());
-                                    mp.setApellido(per.getApellido());
-                                    mp.setPassword(per.getPassword());
-                                    mp.setMail(per.getMail());
-                                    mp.setMuestraId(m);
-                                    muestrapersonaFacade.create(mp);
-                                    Muestraagencia mvisi = new Muestraagencia();
-                                    mvisi.setDescripcion(visi.getDescripcion());
-                                    mvisi.setMuestrapersonaId(mp);
-                                    muestraagenciaFacade.create(mvisi);
-                                }
                             }
                         }
                     }
