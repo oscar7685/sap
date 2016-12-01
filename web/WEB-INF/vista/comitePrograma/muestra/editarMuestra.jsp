@@ -19,51 +19,20 @@
     <fieldset>
         <ul id="fcbklist" class="span10">
             <c:forEach items="${listPoblacion}" var="item" varStatus="iter">
-                <c:set var="auxx" value="1"></c:set>
-                <c:forEach items="${listMuestraSeleccionada}" var="item2" varStatus="iter2">
-                    <c:if test="${item.personaId.id == item2.muestrapersonaId.cedula}">
-                        <c:set var="varaux" value="0"/>
-                        <c:forEach items="${listEncabezado}" var="item3" varStatus="iter2">
-                            <c:if test="${item2.muestrapersonaId.id == item3.muestrapersonaId.id}">
-                                <c:set var="varaux" value="1"/>
-                                <c:if test="${item3.estado == 'terminado'}">
-                                    <li id="itemblockVerde">
-                                        <c:set var="auxx" value="0"></c:set>
-                                        <strong>${item2.muestrapersonaId.nombre} ${item2.muestrapersonaId.apellido}</strong><br/> 
-                                        <span class="fcbkitem_text">${item2.muestrapersonaId.cedula}</span>
-                                        <input id="itemblockinput" name="${item2.muestrapersonaId.cedula}" type="hidden" checked="checked" value="0"/>
-                                    </li>
-                                </c:if>
-                                <c:if test="${item3.estado == 'guardada'}">
-                                    <li id="itemblockAzul">
-                                        <c:set var="auxx" value="0"></c:set>
-                                        <strong>${item.personaId.nombre} ${item2.muestrapersonaId.apellido}</strong><br/> 
-                                        <span class="fcbkitem_text">${item2.muestrapersonaId.cedula}</span>
-                                        <input name="${item2.muestrapersonaId.cedula}" type="hidden" checked="checked" value="0"/>
-                                    </li>
-                                </c:if>                   
-                            </c:if>
-                        </c:forEach>
-                        <c:if test="${varaux == 0}">
-                            <li id="itemblockRojo">
-                                <c:set var="auxx" value="0"></c:set>
-                                <strong>${item2.muestrapersonaId.nombre} ${item2.muestrapersonaId.apellido}</strong><br/> 
-                                <span class="fcbkitem_text">${item2.muestrapersonaId.cedula}</span>
-                                <input name="${item2.muestrapersonaId.cedula}" type="hidden" checked="checked" value="0"/>
-                            </li>
-                        </c:if>
-                    </c:if>
-                </c:forEach>
-                <c:if test="${auxx == 1}">
-                    <li>
-                        <c:set var="auxx" value="0"></c:set>
-                        <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
-                        <span class="fcbkitem_text">${item.personaId.id}</span>
-                        <input name="${item.personaId.id}" type="hidden" value="0"/>
-                    </li>
-                </c:if>
-            </c:forEach> 
-
+                <li>
+                    <strong>${item.personaId.nombre} ${item.personaId.apellido}</strong><br/> 
+                    <span class="fcbkitem_text">${item.personaId.id}</span>
+                    <input name="${item.personaId.id}" type="hidden" value="0"/>
+                </li>
+            </c:forEach>
+            <c:forEach items="${listMuestraSeleccionada}" var="item2" varStatus="iter2">
+                <li id="itemblockRojo">
+                    <c:set var="auxx" value="0"></c:set>
+                    <strong>${item2.muestrapersonaId.nombre} ${item2.muestrapersonaId.apellido}</strong><br/> 
+                    <span class="fcbkitem_text">${item2.muestrapersonaId.cedula}</span>
+                    <input name="${item2.muestrapersonaId.cedula}" type="hidden" checked="checked" value="0"/>
+                </li>
+            </c:forEach>     
         </ul>
     </fieldset>
     <div class="form-actions">
