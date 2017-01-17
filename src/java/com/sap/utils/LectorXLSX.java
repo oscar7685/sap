@@ -72,7 +72,7 @@ public class LectorXLSX {
                 if (fuente.equals("Egresado") || fuente.equals("Directivo")) {
                     numColumnas = 3;
                 } else if (fuente.equals("Empleador")) {
-                    numColumnas = 3;
+                    numColumnas = 5;
                 }
                 for (int j = 0; j < numColumnas; j++) {
                     XSSFCell hssfCell = (XSSFCell) hssfRow.getCell(j);
