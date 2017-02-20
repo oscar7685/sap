@@ -19,8 +19,8 @@
     <c:when test="${fn:length(actividades)!= 0}">
         <table class="table table-striped table-bordered table-condensed">
             <thead>
-            <th>Metas</th>
-            <th>Acciones</th>    
+            <th>Actividad</th>
+            <th>Meta</th>    
             <th>Indicador de Cumplimiento</th>    
             <th>Fecha Inicio</th>    
             <th>Fecha Final</th>    
