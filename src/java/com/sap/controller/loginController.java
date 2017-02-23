@@ -313,12 +313,13 @@ public class loginController extends HttpServlet {
                                                 if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
                                                 } else {
                                                     session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
+                                                    break;
                                                 }
                                             }
 
                                         }
                                     }
-                                    break;
+                                    
                                 } else {
                                     if (l + 1 == usuario.size()) {
                                         respuesta = "1";
