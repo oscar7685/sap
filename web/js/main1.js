@@ -238,7 +238,9 @@ $(function() {
                     $("#dancing-dots-text").remove();
                 } //fin success
             }); //fin del $.ajax
-        } else if (hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#verActividadesH") !== -1 || hash.indexOf("#editarActividadH") !== -1) {
+        } else if (hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#verActividadesH") !== -1 
+                || hash.indexOf("#editarActividadH") !== -1 || hash.indexOf("#verSeguimientos") !== -1 
+                || hash.indexOf("#editarSeguimiento") !== -1) {
             var cual = hash.split("&");
             hash = cual[0];
             var url3 = "/sap/controladorCP?action=";
