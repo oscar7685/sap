@@ -145,7 +145,7 @@
             <div id="editM">
                 <c:choose>
                     <c:when test="${fn:length(listMuestraSeleccionada)!= 0}">
-                        <c:if test="${EstadoProceso == 2}">
+                        <c:if test="${EstadoProceso == 2 || EstadoProceso == 3}">
                             <div class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-danger">
                                     <input type="checkbox" autocomplete="off" checked>Pendiente

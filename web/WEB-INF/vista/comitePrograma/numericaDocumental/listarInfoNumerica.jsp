@@ -42,8 +42,9 @@
             </table>  
 
 
-            <table class="table table-bordered table-condensed">
+            <table id="tablaX" class="table table-bordered table-condensed">
                 <thead>
+                <th>ID</th>
                 <th>Indicador Arcusur</th>
                 <th>C&oacute;digo</th>
                 <th>Indicador SAP</th>
@@ -55,39 +56,43 @@
                 <th>Acci&oacute;n a implementar u observaci&oacute;n</th>
                 </thead>
                 <tbody>
-                <tbody>
                     <c:choose>
                         <c:when test="${fn:length(listaNum2)!= 0}">
                             <c:forEach items="${listaNum2}" var="itemN" varStatus="iterN">
                                 <c:if test="${fn:length(itemN.indicadorId.indicadorList1)>0}">
                                     <tr>
-                                    <td>
-                                        <c:forEach items="${itemN.indicadorId.indicadorList1}" var="aux0" varStatus="iter0">
-                                            ${aux0.nombre}
-                                        </c:forEach>
-                                        
-                                    </td>
-                                    <td>${itemN.indicadorId.codigo}</td>
-                                    <td style="text-align: justify;">${itemN.indicadorId.nombre}</td>
-                                    <td>
-                                        ${itemN.documento}
-                                    </td>
-                                    <td>
-                                        ${itemN.responsable}
-                                    </td>
-                                    <td>
-                                        ${itemN.medio}
-                                    </td>
-                                    <td>
-                                        ${itemN.lugar}
-                                    </td>
-                                    <td>
-                                        ${itemN.evaluacion}
-                                    </td>
-                                    <td>
-                                        ${itemN.accion}
-                                    </td>
-                                </tr>  
+                                        <td>
+                                            <c:forEach items="${itemN.indicadorId.indicadorList1}" var="aux0" varStatus="iter0">
+                                                ${aux0.id}
+                                            </c:forEach>
+                                        </td>
+                                        <td>
+                                            <c:forEach items="${itemN.indicadorId.indicadorList1}" var="aux0" varStatus="iter0">
+                                                ${aux0.nombre}
+                                            </c:forEach>
+
+                                        </td>
+                                        <td>${itemN.indicadorId.codigo}</td>
+                                        <td style="text-align: justify;">${itemN.indicadorId.nombre}</td>
+                                        <td>
+                                            ${itemN.documento}
+                                        </td>
+                                        <td>
+                                            ${itemN.responsable}
+                                        </td>
+                                        <td>
+                                            ${itemN.medio}
+                                        </td>
+                                        <td>
+                                            ${itemN.lugar}
+                                        </td>
+                                        <td>
+                                            ${itemN.evaluacion}
+                                        </td>
+                                        <td>
+                                            ${itemN.accion}
+                                        </td>
+                                    </tr>  
                                 </c:if>
                             </c:forEach>
                         </c:when>
@@ -97,6 +102,15 @@
                     </c:choose>          
                 </tbody>
             </table>  
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#tablaX').dataTable({
+                        "bPaginate": false,
+                        "iDisplayLength": -1,
+                        "aaSorting": [[0, "asc"]]
+                    });
+                });
+            </script>
         </div>
     </div>
-</div>    
+</div>  

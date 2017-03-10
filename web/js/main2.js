@@ -129,6 +129,7 @@ $(function() {
                 '<li><a href="#detalleProceso"><i class="icon-cogs"></i> Detalle de Proceso</a></li>' +
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Dimensiones</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Componentes</a></li>' +
+                '<li><a href="#listarIndicadores"><i class="icon-list"></i> Listar indicadores</a></li>' +
                 '<li><a href="#listEncuestas"><i class="icon-check"></i> Encuestas</a></li>' +
                 '<li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
                 '<li><a href = "#preparedInfoNumerica"><i class = "icon-file-alt"></i> Informaci&oacute;n Num&eacute;rica</a></li>' +

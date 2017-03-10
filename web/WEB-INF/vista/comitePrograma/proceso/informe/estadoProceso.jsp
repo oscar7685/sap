@@ -169,7 +169,6 @@
                     <!--<a  href="<%=request.getContextPath()%>/#resultadosGenerales"><i class="icon-bar-chart"></i> Resultados Generales</a>-->
                     <a  href="<%=request.getContextPath()%>/#resultadosGenerales2" class="btn btn-warning"><i class="icon-bar-chart"></i> Resultados Generales</a>
                     <c:if test="${EstadoProceso == 3}">
-                    <a class="btn btn-warning" href="<%=request.getContextPath()%>/#todosResultados"><i class="icon-bar-chart"></i> Resultados</a>
                     <a class="btn btn-warning" href="<%=request.getContextPath()%>/#comentarios"><i class="icon-comment"></i> Comentarios</a>    
                     </c:if>
 

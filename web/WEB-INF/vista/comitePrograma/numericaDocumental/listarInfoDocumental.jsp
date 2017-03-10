@@ -43,8 +43,9 @@
 
 
 
-            <table class="table table-bordered table-condensed">
+            <table id="tablaX" class="table table-bordered table-condensed">
                 <thead>
+                <th>ID</th>
                 <th>Indicador Arcusur</th>
                 <th>C&oacute;digo</th>
                 <th>Indicador SAP</th>
@@ -56,12 +57,16 @@
                 <th>Acci&oacute;n a implementar u observaci&oacute;n</th>
                 </thead>
                 <tbody>
-                <tbody>
                     <c:choose>
                         <c:when test="${fn:length(listaDoc2)!= 0}">
                             <c:forEach items="${listaDoc2}" var="itemD" varStatus="iterD">
                                 <c:if test="${fn:length(itemD.indicadorId.indicadorList1)>0}">
                                     <tr>
+                                        <td>
+                                            <c:forEach items="${itemD.indicadorId.indicadorList1}" var="aux0" varStatus="iter0">
+                                                ${aux0.id}
+                                            </c:forEach>
+                                        </td>
                                         <td>
                                             <c:forEach items="${itemD.indicadorId.indicadorList1}" var="aux0" varStatus="iter0">
                                                 ${aux0.nombre}
@@ -97,7 +102,16 @@
                         </c:otherwise>                
                     </c:choose>          
                 </tbody>
-            </table>  
+            </table> 
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#tablaX').dataTable({
+                        "bPaginate": false,
+                        "iDisplayLength": -1,
+                        "aaSorting": [[0, "asc"]]
+                    });
+                });
+            </script>
         </div>
     </div>
 </div>    

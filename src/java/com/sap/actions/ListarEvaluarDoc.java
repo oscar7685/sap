@@ -38,7 +38,7 @@ public class ListarEvaluarDoc implements Action {
         sesion.setAttribute("listaDoc", listaDoc);
         
         Proceso proceso = procesoFacade.find(52);
-        listaDoc = numericadocumentalFacade.findByList2("procesoId", proceso, "instrumentoId", instrumentoFacade.find(2));
+        listaDoc = numericadocumentalFacade.findByList2("procesoId", proceso, "instrumentoId", instrumentoFacade.find(3));
         sesion.setAttribute("listaDoc2", listaDoc);
         return "/WEB-INF/vista/comitePrograma/numericaDocumental/listarInfoDocumental.jsp";
     }
