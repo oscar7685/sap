@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <style type="text/css">
     .popover{
@@ -97,25 +98,42 @@
                                 </tr> 
                             </tbody>
                         </table>
-                        <c:forEach items="${indicador.indicadorList}" var="indicadorSAP" varStatus="statusISAP">
-                            <table class="table table-striped table-bordered table-condensed">
-                                <h4>Indicador SAP ${indicadorSAP.codigo}</h4>
-                                <thead style="background-color: #ffffff;">
-                                    <tr>
-                                        <th>Código</th>
-                                        <th>Indicador</th>
-                                        <th>Grado de Cumplimiento</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>${indicadorSAP.getCodigo()}</td>
-                                        <td>${indicadorSAP.getNombre()}</td>
-                                        <td>${cumplimientoISap[indiceI][statusISAP.index]}</td>
-                                    </tr> 
-                                </tbody>
-                            </table>
-                        </c:forEach> 
+                        <c:choose>
+                            <c:when test="${fn:length(indicador.indicadorList)!= 0}">
+                                <div class="accordion" id="accordion${indicador.id}">
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion${indicador.id}" href="#collapse${indicador.id}">
+                                                Indicadores SAP
+                                            </a>
+                                        </div>
+                                        <div id="collapse${indicador.id}" class="accordion-body collapse">
+                                            <div class="accordion-inner">
+                                                <c:forEach items="${indicador.indicadorList}" var="indicadorSAP" varStatus="statusISAP">
+                                                    <table class="table table-striped table-bordered table-condensed">
+                                                        <h4>Indicador SAP ${indicadorSAP.codigo}</h4>
+                                                        <thead style="background-color: #ffffff;">
+                                                            <tr>
+                                                                <th>Código</th>
+                                                                <th>Indicador</th>
+                                                                <th>Grado de Cumplimiento</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>${indicadorSAP.getCodigo()}</td>
+                                                                <td>${indicadorSAP.getNombre()}</td>
+                                                                <td>${cumplimientoISap[indiceI][statusISAP.index]}</td>
+                                                            </tr> 
+                                                        </tbody>
+                                                    </table>
+                                                </c:forEach> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:when>
+                        </c:choose>
                         <c:set var="indiceI" value="${indiceI + 1}"></c:set>  
                     </c:forEach>
                 </c:forEach>  

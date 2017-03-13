@@ -182,7 +182,7 @@ $(function() {
             }); //fin post
 
 
-        } else if (hash === "#listPonderacionCara2" || hash === "#inicio" || hash === "#listarIndicadores" || hash === "#preparedCrearProceso" || hash === "#listarProceso"
+        } else if (hash === "#listPonderacionCara2" || hash === "#inicio" || hash === "#listarIndicadores" || hash === "#indicadoresEliminados" || hash === "#indicadoresSinAsociacion" || hash === "#preparedCrearProceso" || hash === "#listarProceso"
                 || hash === "#detalleProceso" || hash === "#detalleProceso" || hash === "#preparedPonderarFactor" || hash === "#ponderarFactor"
                 || hash === "#listPonderacionFactor" || hash === "#preparedPonderarCara" || hash === "#preparedAsignarMuestra"
                 || hash === "#selectorListMuestra" || hash === "#listMuestra" || hash === "#preparedEvaluador" || hash === "#preparedEditPonderarFactor"
