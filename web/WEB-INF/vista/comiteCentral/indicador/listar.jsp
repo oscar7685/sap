@@ -3,7 +3,7 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <h3 style="margin: 0;">Listado de  Indicadores</h3>
+            <h3 style="margin: 0;">Listado de Indicadores Arcusur</h3>
             <c:choose>
                 <c:when test="${fn:length(listaI)!= 0}">
 
@@ -42,4 +42,4 @@
         </div>
     </div>
 </div>    
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTableSinPaginacion.js"></script>

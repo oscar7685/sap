@@ -3,7 +3,7 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <h3 style="margin: 0;">Listado de  Indicadores</h3>
+            <h3 style="margin: 0;">Listado de Indicadores Arcusur sin asociación</h3>
             <c:choose>
                 <c:when test="${fn:length(sinAsociacion)!= 0}">
 
@@ -30,7 +30,13 @@
                     No existen indicadores registrados en el sistema para este modelo.
                 </c:otherwise>
             </c:choose>
+            <c:choose>
+                <c:when test="${Proceso.modeloId.id == 6}">
+                    <a href="#listarIndicadores" class="btn btn-large btn-primary llamador">Ver indicadores arcusur</a>
+                    <a href="#indicadoresEliminados" class="btn btn-large llamador"><i class="icon-remove"></i> Ver indicadores SAP eliminados</a>
+                </c:when>
+            </c:choose>
         </div>
     </div>
 </div>    
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTable.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTableSinPaginacion.js"></script>

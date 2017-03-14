@@ -3,7 +3,7 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <h3 style="margin: 0;">Listado de  Indicadores</h3>
+            <h3 style="margin: 0;">Listado de Indicadores SAP Eliminados</h3>
             <c:choose>
                 <c:when test="${fn:length(eliminados)!= 0}">
 
@@ -33,6 +33,12 @@
                 <c:otherwise>
                     No existen indicadores registrados en el sistema para este modelo.
                 </c:otherwise>
+            </c:choose>
+            <c:choose>
+                <c:when test="${Proceso.modeloId.id == 6}">
+                    <a href="#listarIndicadores" class="btn btn-large btn-primary llamador">Ver indicadores Arcusur</a>
+                    <a href="#indicadoresSinAsociacion" class="btn btn-large llamador"><i class="icon-off"></i> Ver indicadores Arcusur sin asociacion</a>
+                </c:when>
             </c:choose>
         </div>
     </div>
