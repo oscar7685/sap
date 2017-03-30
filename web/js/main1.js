@@ -1,9 +1,9 @@
-$(function() {
+$(function () {
     if ($(".brand").text().length > 60) {
         $(".brand").css("font-size", "18px");
     }
     location = "/sap/#inicio";
-    $(document).ajaxStart(function() {
+    $(document).ajaxStart(function () {
         $("div.ui-layout-center").append("<div id='contenido'></div>");
         //$("#contenido").hide();
         $("div.ui-layout-center").append(""
@@ -12,7 +12,7 @@ $(function() {
                 + "</div>");
 
     });
-    $(document).ajaxStop(function() {
+    $(document).ajaxStop(function () {
         $("#dancing-dots-text").remove();
     });
 
@@ -20,38 +20,38 @@ $(function() {
     myLayout = $('body').layout({
         //	enable showOverflow on west-pane so CSS popups will overlap north pane
         west__size: 280
-                , center__paneSelector: ".ui-layout-center"
-                , north__paneClass: "ui-layout-pane2"
+        , center__paneSelector: ".ui-layout-center"
+        , north__paneClass: "ui-layout-pane2"
                 //	reference only - these options are NOT required because 'true' is the default
-                , closable: true	// pane can open & close
-                , resizable: false	// when open, pane can be resized 
-                , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-                , north__size: 1
-                , north__closable: false
-                , north__maxSize: 1
-                , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
-                , north__spacing_open: 0		// no resizer-bar when open (zero height)
-                , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
-                , south__closable: false
-                , south__spacing_open: 0		// no resizer-bar when open (zero height)
-                , west__spacing_open: 0
-                , west__spacing_closed: 20
-                , west__togglerLength_closed: 35
-                , west__togglerAlign_closed: "top"
-                , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
-                , west__togglerTip_closed: "Mostrar menú"
-                , west__togglerTip_open: "Ocultar menú"
-                , west__enableCursorHotkey: false
-                , west__onclose_end: function() {
+        , closable: true	// pane can open & close
+        , resizable: false	// when open, pane can be resized 
+        , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
+        , north__size: 1
+        , north__closable: false
+        , north__maxSize: 1
+        , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
+        , north__spacing_open: 0		// no resizer-bar when open (zero height)
+        , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+        , south__closable: false
+        , south__spacing_open: 0		// no resizer-bar when open (zero height)
+        , west__spacing_open: 0
+        , west__spacing_closed: 20
+        , west__togglerLength_closed: 35
+        , west__togglerAlign_closed: "top"
+        , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
+        , west__togglerTip_closed: "Mostrar menú"
+        , west__togglerTip_open: "Ocultar menú"
+        , west__enableCursorHotkey: false
+        , west__onclose_end: function () {
             $("#conte").removeClass("span10").addClass("span12");
         }
-        , west__onopen_end: function() {
+        , west__onopen_end: function () {
             $("#conte").removeClass("span12").addClass("span10");
         }
         , south__paneClass: "ui-layout-pane"
-                , west__togglerContent_open: ""
-                , west__minSize: 200
-                , west__maxSize: 350
+        , west__togglerContent_open: ""
+        , west__minSize: 200
+        , west__maxSize: 350
 
 
     });
@@ -64,24 +64,24 @@ $(function() {
 
 
 
-    var actualizaEnlaces = function(hash) {
+    var actualizaEnlaces = function (hash) {
         $("li").removeClass("active");
         $("a[href='" + hash + "']").parent().addClass("active");
     };
 
-    $("a[href='#preparedInfoNumerica']").click(function() {
-        setTimeout(function() {
+    $("a[href='#preparedInfoNumerica']").click(function () {
+        setTimeout(function () {
             $("#west-closer").trigger("click");
         }, 500);
 
     });
-    $("a[href='#preparedInfoDocumental']").click(function() {
-        setTimeout(function() {
+    $("a[href='#preparedInfoDocumental']").click(function () {
+        setTimeout(function () {
             $("#west-closer").trigger("click");
         }, 500);
 
     });
-    var menuProceso0 = function() {
+    var menuProceso0 = function () {
         $("#menu0").html('<div  align="center" class="alert alert-block">' +
                 ' <i class="icon-info-sign"></i> No existen proceso activos' +
                 '</div>' +
@@ -94,7 +94,7 @@ $(function() {
                 '</ul>' +
                 '</div>');
     };
-    var menuProceso1 = function() {
+    var menuProceso1 = function () {
         $("#menu0").html('<div align="center" class="alert alert-info"><i class="icon-cog"></i> Proceso en configuraci&oacute;n</div>' +
                 ' <div id="menu" style="padding: 8px 0pt;" class="well">' +
                 '<ul class="nav nav-list">' +
@@ -109,7 +109,7 @@ $(function() {
                 '</ul>' +
                 '</div>');
     };
-    var menuProceso2 = function() {
+    var menuProceso2 = function () {
         $("#menu0").html('<div align="center" class="alert alert-success"><i class="icon-play-sign"></i> Proceso en ejecuci&oacute;n</div>' +
                 '<div id="menu" style="padding: 8px 0pt;" class="well">' +
                 '<ul class="nav nav-list">' +
@@ -129,7 +129,7 @@ $(function() {
                 );
     };
 
-    var menuProceso4 = function() {
+    var menuProceso4 = function () {
         $("#menu0").html('<div align="center" class="alert alert-success"><i class="icon-play-sign"></i> Proceso en ejecuci&oacute;n</div>' +
                 '<div id="menu" style="padding: 8px 0pt;" class="well">' +
                 '<ul class="nav nav-list">' +
@@ -150,7 +150,7 @@ $(function() {
                 );
     };
 
-    var menuProceso3 = function() {
+    var menuProceso3 = function () {
         $("#menu0").html('<div align="center" class="alert alert-error" style="margin-bottom:5px;"><i class="icon-play-sign"></i> Proceso finalizado</div>' +
                 '<div id="menu" style="padding: 8px 0pt;" class="well">' +
                 '<ul class="nav nav-list">' +
@@ -160,8 +160,8 @@ $(function() {
                 '<li><a href="#listPonderacionFactor"><i class="icon-list"></i>  Factores</a></li>' +
                 '<li><a href="#listPonderacionCara"><i class="icon-list"></i> Caracteristicas</a></li>' +
                 ' <li><a href="#listMuestra"><i class="icon-group"></i> Muestra Asignada</a></li>' +
-                ' <li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Información Numérica</a></li>' +
-                ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Información Documental</a></li>' +
+                ' <li><a href = "#listarEvaluarNum"><i class = "icon-file-alt"></i> Informaci&oacute;n Num&eacute;rica</a></li>' +
+                ' <li><a href = "#listarEvaluarDoc"><i class = "icon-list-ol"></i> Informaci&oacute;n Documental</a></li>' +
                 ' <li class = "nav-header"> Estado del proceso </li>' +
                 ' <li><a  id = "informeEncuesta"  href = "#estadoProceso"><i class = "icon-bar-chart"></i> Estado del proceso</a></li>' +
                 '<li class = "nav-header"> Plan de Aseguramiento </li>' +
@@ -174,10 +174,10 @@ $(function() {
 
 
 
-    $(window).hashchange(function() {
+    $(window).hashchange(function () {
         var hash = location.hash;
         if (hash === "#CerrarSesion") {
-            $.post('/sap/loginController?action=CerrarSesion', function() {
+            $.post('/sap/loginController?action=CerrarSesion', function () {
                 location = "/sap";
 
             }); //fin post
@@ -192,17 +192,17 @@ $(function() {
                 || hash === "#estadoProceso" || hash === "#informeMatrizFactores" || hash === "#informeMatrizCaracteristicas" || hash === "#listarEvaluarDoc" || hash === "#listarEvaluarNum"
                 || hash === "#listEncuestas" || hash === "#cerrarPreguntas" || hash === "#encuestaAleatoria" || hash === "#informeMatrizFactoresP" || hash === "#informeMatrizCaracteristicasP"
                 || hash === "#comentarios" || hash === "#todosResultados" || hash === "#resultadosGenerales" || hash === "#resultadosGenerales2"
-                || hash === "#planMejoramiento" || hash === "#crearObjetivo" || hash === "#crear2Meta" || hash === "#crearSeguimiento" || hash === "#PM" || hash === "#PM2") {
+                || hash === "#planMejoramiento" || hash === "#crearObjetivo" || hash === "#crear2Meta" || hash === "#crearSeguimiento" || hash === "#crearFSeguimiento" || hash === "#PM" || hash === "#PM2") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
                     $("#contenido").append(data);
-                    $("#contenido").show(400, function() {
+                    $("#contenido").show(400, function () {
                         $("#dancing-dots-text").remove();
                     }
                     );
@@ -219,7 +219,7 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
                     $("div#mejoramiento").append(data);
                     $("#dancing-dots-text").remove();
@@ -232,41 +232,62 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
                     $("div#mantenimiento").append(data);
                     $("#dancing-dots-text").remove();
                 } //fin success
             }); //fin del $.ajax
-        } else if (hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#verActividadesH") !== -1 
-                || hash.indexOf("#editarActividadH") !== -1 || hash.indexOf("#verSeguimientos") !== -1 
+        } else if (hash.indexOf("#editarHallazgo") !== -1 || hash.indexOf("#verActividadesH") !== -1
+                || hash.indexOf("#editarActividadH") !== -1 || hash.indexOf("#verSeguimientos") !== -1
                 || hash.indexOf("#editarSeguimiento") !== -1) {
             var cual = hash.split("&");
             hash = cual[0];
             var url3 = "/sap/controladorCP?action=";
             url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
-            $("div#mejoramiento").empty();
+            if ($("div#mejoramiento").length > 0) {
+                $("div#mejoramiento").empty();
+            } else {
+                $("#contenido").empty();
+            }
+
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
-                    $("div#mejoramiento").append(data);
+                    if ($("div#mejoramiento").length > 0) {
+                        $("div#mejoramiento").append(data);
+                    } else {
+                        $("#contenido").append(data);
+                    }
+
                     $("#dancing-dots-text").remove();
                 } //fin success
             }); //fin del $.ajax
-        } else if (hash.indexOf("#editarFortaleza") !== -1 || hash.indexOf("#verActividadesF") !== -1 || hash.indexOf("#editarActividadF") !== -1) {
+        } else if (hash.indexOf("#editarFortaleza") !== -1 || hash.indexOf("#verActividadesF") !== -1 || hash.indexOf("#editarActividadF") !== -1
+                || hash.indexOf("#verFSeguimientos") !== -1 || hash.indexOf("#editarFSeguimiento") !== -1) {
             var cual = hash.split("&");
             hash = cual[0];
             var url3 = "/sap/controladorCP?action=";
             url3 = url3.concat(cual[0].substring(1), "&id=", cual[1]);
-            $("div#mantenimiento").empty();
+
+            if ($("div#mantenimiento").length > 0) {
+                $("div#mantenimiento").empty();
+            } else {
+                $("#contenido").empty();
+            }
+
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
-                    $("div#mantenimiento").append(data);
+                    if ($("div#mantenimiento").length > 0) {
+                        $("div#mantenimiento").append(data);
+                    } else {
+                        $("#contenido").append(data);
+                    }
                     $("#dancing-dots-text").remove();
                 } //fin success
             }); //fin del $.ajax
@@ -282,13 +303,13 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
 
                     menuProceso2();
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
-                    $("#contenido").show(200, function() {
+                    $("#contenido").show(200, function () {
                         $("#dancing-dots-text").remove();
                     });
 
@@ -305,7 +326,7 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
                     if (data === '1') {
                         menuProceso1();
@@ -318,7 +339,7 @@ $(function() {
                     }
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
-                    $("#contenido").show(200, function() {
+                    $("#contenido").show(200, function () {
                         $("#dancing-dots-text").remove();
                     });
                     location = "/sap/#inicio";
@@ -355,7 +376,7 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
                     $("#contenido").append(data);
                     if ($("ul.nav-list li:eq(0)").html() !== "Factores") {
@@ -363,7 +384,7 @@ $(function() {
                         myLayout.addCloseBtn("#west-closer", "west");
                         actualizaEnlaces();
                     }
-                    $("#contenido").show(200, function() {
+                    $("#contenido").show(200, function () {
                         $("#dancing-dots-text").remove();
                     });
                     actualizaEnlaces(hash);
@@ -376,7 +397,7 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
                     $("#contenido").after(data);
                     $("#dancing-dots-text").remove();
@@ -385,23 +406,22 @@ $(function() {
                 } //fin success
             }); //fin del $.ajax
             actualizaEnlaces(hash);
-        }
-        else if (hash === "#preparedPonderarFactor") {
+        } else if (hash === "#preparedPonderarFactor") {
             var url3 = "/sap/" + hash;
             url3 = url3.replace('#', "controladorCP?action=");
             $("div.ui-layout-center").empty();
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
                     $("#contenido").append(data);
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $("#dancing-dots-text").remove();
                     }, 200);
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $("div.ui-layout-center").affix();
                     }, 500);
 
@@ -417,7 +437,7 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
                     if (data == 1) {
                         location = "/sap/#listPonderacionCara2";
@@ -439,12 +459,12 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
                     $("#contenido").append(data);
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
-                    $("#contenido").show(200, function() {
+                    $("#contenido").show(200, function () {
                         $("#dancing-dots-text").remove();
                     });
                 } //fin success
@@ -457,10 +477,10 @@ $(function() {
                 $.ajax({
                     type: "POST",
                     url: url3,
-                    success: function(data)
+                    success: function (data)
                     {
                         $("#contenido").append(data);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             $("#dancing-dots-text").remove();
                         }, 200);
                         actualizaEnlaces(hash);
@@ -471,25 +491,25 @@ $(function() {
     });
 
 
-    $('#modalCpb2').click(function() {
+    $('#modalCpb2').click(function () {
         location = "#detalleProceso";
     });
 
-    $('#modalCpb1').click(function() {
+    $('#modalCpb1').click(function () {
         var url3 = "/sap/" + "controladorCP?action=iniciarProceso";
         url3 = url3.replace('#', "controladorCP?action=");
         $("div.ui-layout-center").empty();
         $.ajax({
             type: "POST",
             url: url3,
-            success: function(data)
+            success: function (data)
             {
                 if (data == 1) {
                     // $("#contenido").append(data);
                     menuProceso2();
                     myLayout.addCloseBtn("#west-closer", "west");
                     actualizaEnlaces();
-                    $("#contenido").show(200, function() {
+                    $("#contenido").show(200, function () {
                         $("#dancing-dots-text").remove();
                     });
                 } else {

@@ -55,6 +55,7 @@
 
                     <td>   
                         <a href="#editarActividadF&${item.idactividad}" title="Editar"><i class="icon-edit"></i></a>
+                        <a href="#verFSeguimientos&${item.idactividad}" title="Ver Seguimientos"><i class="icon-eye-open"></i></a>
                     </td>
                 </tr>
             </c:forEach>

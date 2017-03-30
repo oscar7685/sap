@@ -17,7 +17,7 @@
                         <td>VERSIÓN:00</td>
                     </tr>
                     <tr>
-                        <td style="width: 50%; text-align: center;">SEGUIMIENTO Y MONITOREO AL PLAN DE MEJORAMIENTO POR HALLAZGO</td>
+                        <td style="width: 50%; text-align: center;">SEGUIMIENTO Y MONITOREO AL PLAN DE MANTENIMIENTO POR FORTALEZA</td>
                         <td>FECHA:07/04/2012</td>
                     </tr>
                 </tbody>
@@ -35,15 +35,15 @@
                     </tr>
                     <tr>
                         <td><strong>Factor:</strong></td>
-                        <td colspan="2">${hallazgo.caracteristicaId.factorId.codigo} - ${hallazgo.caracteristicaId.factorId.nombre}</td>   
+                        <td colspan="2">${fortaleza.caracteristicaId.factorId.codigo} - ${fortaleza.caracteristicaId.factorId.nombre}</td>   
                     </tr>
                     <tr>
                         <td><strong>Caracteristica:</strong></td>
-                        <td colspan="2">${hallazgo.caracteristicaId.codigo} - ${hallazgo.caracteristicaId.nombre}</td>   
+                        <td colspan="2">${fortaleza.caracteristicaId.codigo} - ${fortaleza.caracteristicaId.nombre}</td>   
                     </tr>
                     <tr>
-                        <td><strong>Hallazgo:</strong></td>        
-                        <td colspan="2">${hallazgo.hallazgo}</td>   
+                        <td><strong>Fortaleza:</strong></td>
+                        <td colspan="2">${fortaleza.hallazgo}</td>   
                     </tr>
                     <tr>
                         <td><strong>Actividad:</strong></td>
@@ -82,7 +82,7 @@
                                 ${item3.observaciones}
                             </td>
                             <td>
-                                <a href="#editarSeguimiento&${item3.idseguimiento}" title="Editar"><i class="icon-edit"></i></a>
+                                <a href="#editarSeguimientoF&${item3.idseguimiento}" title="Editar"><i class="icon-edit"></i></a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -90,7 +90,7 @@
             </table>
 
 
-            <a href="#crearSeguimiento" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear seguimiento</a>                  
+            <a href="#crearFSeguimiento" class="btn btn-large btn-primary"><i class="icon-plus"></i> Crear seguimiento</a>                  
 
         </div>
     </div>

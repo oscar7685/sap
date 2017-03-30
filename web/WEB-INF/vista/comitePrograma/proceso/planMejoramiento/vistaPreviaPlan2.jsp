@@ -98,7 +98,7 @@
                                                     ${item3.financiacion}
                                                 </td>
                                                 <td>
-                                                    <a href="#verSeguimientos&${item3.idactividad}"><i class="icon-eye-open"></i> Ver Seguimientos</a>
+                                                    <a href="#verFSeguimientos&${item3.idactividad}"><i class="icon-eye-open"></i> Ver Seguimientos</a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
