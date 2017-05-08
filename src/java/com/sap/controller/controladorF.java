@@ -45,9 +45,8 @@ public class controladorF extends HttpServlet {
     private final static Logger LOGGER = Logger.getLogger(controladorF.class);
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -81,7 +80,9 @@ public class controladorF extends HttpServlet {
                     Encabezado enc = null;
                     if (encabExistentes != null && encabExistentes.size() > 0) {
                         for (int i = 0; i < encabExistentes.size(); i++) {
-                            enc = encabExistentes.get(i);
+                            if (fuente.getId().intValue() == encabExistentes.get(i).getFuenteId().getId().intValue()) {
+                                enc = encabExistentes.get(i);
+                            }
                         }
                     }
                     if (enc != null) {
@@ -150,7 +151,6 @@ public class controladorF extends HttpServlet {
                                             }
                                         }
 
-
                                     }
                                 } catch (Exception e) {
                                     LOGGER.error("Ha ocurrido un error guardando las repuestas: ", e);
@@ -163,8 +163,6 @@ public class controladorF extends HttpServlet {
                                 }
 
                             }
-
-
 
                         } else {
 
@@ -285,8 +283,7 @@ public class controladorF extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -300,8 +297,7 @@ public class controladorF extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
