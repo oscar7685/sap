@@ -84,9 +84,8 @@ public class loginController extends HttpServlet {
     private ProcesoFacade procesoFacade;
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -115,8 +114,7 @@ public class loginController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -130,8 +128,7 @@ public class loginController extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -157,7 +154,6 @@ public class loginController extends HttpServlet {
 
             response.setContentType("text/plain");
 
-
             if (tp != null && tp.equals("Estudiantes")) {
                 Muestrapersona persona = null;
                 Muestraestudiante estudiante = null;
@@ -166,6 +162,12 @@ public class loginController extends HttpServlet {
                 Modelo m;
                 Proceso proceso;
                 usuario = muestrapersonaFacade.findByCedula(un);
+                for (int i = 0; i < usuario.size(); i++) {
+                    if (usuario.get(i).getMuestraestudianteList().isEmpty()) {
+                        usuario.remove(i);
+                        i--;
+                    }
+                }
                 if (usuario != null && usuario.size() > 0) {
                     for (int i = 0; i < usuario.size(); i++) {
                         persona = usuario.get(i);
@@ -223,6 +225,12 @@ public class loginController extends HttpServlet {
                     Modelo m;
                     Proceso proceso;
                     usuario = muestrapersonaFacade.findByCedula(un);
+                    for (int i = 0; i < usuario.size(); i++) {
+                        if (usuario.get(i).getMuestraegresadoList().isEmpty()) {
+                            usuario.remove(i);
+                            i--;
+                        }
+                    }
                     if (usuario != null && usuario.size() > 0) {
                         for (int l = 0; l < usuario.size(); l++) {
                             persona = usuario.get(l);
@@ -280,6 +288,12 @@ public class loginController extends HttpServlet {
                         Modelo m;
                         Proceso proceso;
                         usuario = muestrapersonaFacade.findByCedula(un);
+                        for (int i = 0; i < usuario.size(); i++) {
+                            if (usuario.get(i).getMuestradocenteList().isEmpty()) {
+                                usuario.remove(i);
+                                i--;
+                            }
+                        }
                         if (usuario != null && usuario.size() > 0) {
                             for (int l = 0; l < usuario.size(); l++) {
                                 persona = usuario.get(l);
@@ -319,7 +333,7 @@ public class loginController extends HttpServlet {
 
                                         }
                                     }
-                                    
+
                                 } else {
                                     if (l + 1 == usuario.size()) {
                                         respuesta = "1";
@@ -338,6 +352,12 @@ public class loginController extends HttpServlet {
                             Modelo m;
                             Proceso proceso;
                             usuario = muestrapersonaFacade.findByCedula(un);
+                            for (int i = 0; i < usuario.size(); i++) {
+                                if (usuario.get(i).getMuestradirectorList().isEmpty()) {
+                                    usuario.remove(i);
+                                    i--;
+                                }
+                            }
                             if (usuario != null && usuario.size() > 0) {
                                 for (int l = 0; l < usuario.size(); l++) {
                                     persona = usuario.get(l);
@@ -395,6 +415,12 @@ public class loginController extends HttpServlet {
                             Modelo m;
                             Proceso proceso;
                             usuario = muestrapersonaFacade.findByCedula(un);
+                            for (int i = 0; i < usuario.size(); i++) {
+                                if (usuario.get(i).getMuestraadministrativoList().isEmpty()) {
+                                    usuario.remove(i);
+                                    i--;
+                                }
+                            }
                             if (usuario != null && usuario.size() > 0) {
                                 for (int l = 0; l < usuario.size(); l++) {
                                     persona = usuario.get(l);
@@ -451,6 +477,12 @@ public class loginController extends HttpServlet {
                             Modelo m;
                             Proceso proceso;
                             usuario = muestrapersonaFacade.findByCedula(un);
+                            for (int i = 0; i < usuario.size(); i++) {
+                                if (usuario.get(i).getMuestraempleadorList().isEmpty()) {
+                                    usuario.remove(i);
+                                    i--;
+                                }
+                            }
                             if (usuario != null && usuario.size() > 0) {
                                 for (int l = 0; l < usuario.size(); l++) {
                                     persona = usuario.get(l);
@@ -507,6 +539,12 @@ public class loginController extends HttpServlet {
                             Modelo m;
                             Proceso proceso;
                             usuario = muestrapersonaFacade.findByCedula(un);
+                            for (int i = 0; i < usuario.size(); i++) {
+                                if (usuario.get(i).getMuestraagenciaList().isEmpty()) {
+                                    usuario.remove(i);
+                                    i--;
+                                }
+                            }
                             if (usuario != null && usuario.size() > 0) {
                                 for (int l = 0; l < usuario.size(); l++) {
                                     persona = usuario.get(l);
