@@ -56,26 +56,26 @@
                     <div class="accordion-group">
                         <div class="accordion-heading">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${indiceF}">
-                                <h3>Factor ${indicadorAux.caracteristicaId.factorId.codigo}</h3>
-                            </a>
-                        </div>
-                        <div id="collapse${indiceF}" class="accordion-body collapse in">
-                            <div class="accordion-inner">
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead style="background-color: #ffffff;">
-                                        <tr>
-                                            <th>Código</th>
-                                            <th>Factor</th>
-                                            <th>Ponderación</th>
-                                            <th>Grado de Cumplimiento</th>
-                                            <th>Evaluacion teniendo en cuenta ponderacion</th>
-                                            <th>Logro ideal</th>
-                                            <th>Relacion con el logro ideal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>${factores.get(indiceF).getCodigo()}</td>
+                            <h3>Factor ${indicadorAux.caracteristicaId.factorId.codigo}</h3>
+                        </a>
+                    </div>
+                    <div id="collapse${indiceF}" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead style="background-color: #ffffff;">
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Factor</th>
+                                        <th>Ponderación</th>
+                                        <th>Grado de Cumplimiento</th>
+                                        <th>Evaluacion teniendo en cuenta ponderacion</th>
+                                        <th>Logro ideal</th>
+                                        <th>Relacion con el logro ideal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>${factores.get(indiceF).getCodigo()}</td>
                                         <td>${factores.get(indiceF).getNombre()}</td>
                                         <td>${ponderacionesF.get(indiceF).ponderacion}</td>
                                         <td>${cumplimientoF[indiceF]}</td>
@@ -91,7 +91,7 @@
                     <c:choose>
                         <c:when test="${indicador.caracteristicaId.id != indiceCaracteristicas}">
                             <c:set var="indiceC" value="${indiceC+1}"></c:set>
-                            <c:set var="indiceCaracteristicas" value="${indicador.caracteristicaId.id}"></c:set>
+                            <c:set var="indiceCaracteristicas" value="${indicadorAux.caracteristicaId.id}"></c:set>
                                 <h3>Caracteristica</h3>
                                 <table class="table table-striped table-bordered table-condensed">
                                     <thead style="background-color: #ffffff;">
