@@ -9,6 +9,7 @@ import com.sap.ejb.FactorFacade;
 import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.NumericadocumentalFacade;
 import com.sap.ejb.PonderacioncaracteristicaFacade;
+import com.sap.ejb.ResultadoevaluacionFacade;
 import com.sap.entity.Caracteristica;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Factor;
@@ -38,13 +39,13 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class TodosResultados implements Action {
-
+    ResultadoevaluacionFacade resultadoevaluacionFacade = lookupResultadoevaluacionFacadeBean();
     NumericadocumentalFacade numericadocumentalFacade = lookupNumericadocumentalFacadeBean();
     PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade = lookupPonderacioncaracteristicaFacadeBean();
     CaracteristicaFacade caracteristicaFacade = lookupCaracteristicaFacadeBean();
     FactorFacade factorFacade = lookupFactorFacadeBean();
     IndicadorFacade indicadorFacade = lookupIndicadorFacadeBean();
-
+    
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
@@ -116,7 +117,7 @@ public class TodosResultados implements Action {
                     for (int l = 0; l < preguntas.size(); l++) {
                         Pregunta pregunta = preguntas.get(l);
 
-                        List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
+                        List<Resultadoevaluacion> respuestas = resultadoevaluacionFacade.findByList2("encabezadoId.procesoId", proceso, "preguntaId", pregunta);;
                         if (respuestas.size() > 0) {
                             preguntasContestadasEnElActualIndicador++;
                         }
@@ -390,6 +391,16 @@ public class TodosResultados implements Action {
         try {
             Context c = new InitialContext();
             return (NumericadocumentalFacade) c.lookup("java:global/sap/NumericadocumentalFacade!com.sap.ejb.NumericadocumentalFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ResultadoevaluacionFacade lookupResultadoevaluacionFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (ResultadoevaluacionFacade) c.lookup("java:global/sap/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

@@ -10,6 +10,7 @@ import com.sap.ejb.IndicadorFacade;
 import com.sap.ejb.NumericadocumentalFacade;
 import com.sap.ejb.PonderacioncaracteristicaFacade;
 import com.sap.ejb.PonderacionfactorFacade;
+import com.sap.ejb.ResultadoevaluacionFacade;
 import com.sap.entity.Caracteristica;
 import com.sap.entity.Encuesta;
 import com.sap.entity.Factor;
@@ -40,7 +41,7 @@ import javax.servlet.http.HttpSession;
  * @author acreditacion
  */
 public class ResultadosGenerales2 implements Action {
-
+    ResultadoevaluacionFacade resultadoevaluacionFacade = lookupResultadoevaluacionFacadeBean();
     PonderacionfactorFacade ponderacionfactorFacade = lookupPonderacionfactorFacadeBean();
     NumericadocumentalFacade numericadocumentalFacade = lookupNumericadocumentalFacadeBean();
     PonderacioncaracteristicaFacade ponderacioncaracteristicaFacade = lookupPonderacioncaracteristicaFacadeBean();
@@ -141,7 +142,7 @@ public class ResultadosGenerales2 implements Action {
                         Pregunta pregunta = preguntas.get(l);
                         promedioPregunta = 0;
 
-                        List<Resultadoevaluacion> respuestas = pregunta.getResultadoevaluacionList();
+                        List<Resultadoevaluacion> respuestas = resultadoevaluacionFacade.findByList2("encabezadoId.procesoId", proceso, "preguntaId", pregunta);
                         if (respuestas.size() > 0) {
                             preguntasContestadasEnElActualIndicador++;
                         }
@@ -182,7 +183,7 @@ public class ResultadosGenerales2 implements Action {
                                 } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 6) {
                                     numEmp++;
                                     promedioEmpl += Integer.parseInt(respuestas.get(n).getRespuesta());
-                                }else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 7) {
+                                } else if (respuestas.get(n).getEncabezadoId().getFuenteId().getId() == 7) {
                                     numVi++;
                                     promedioVi += Integer.parseInt(respuestas.get(n).getRespuesta());
                                 }
@@ -228,7 +229,8 @@ public class ResultadosGenerales2 implements Action {
                             promedioEmpl = (float) Math.rint(promedioEmpl * 10) / 10;
                             promedioXpregunta += promedioEmpl;
                             FuentesPregunta++;
-                        }if (numVi != 0) {
+                        }
+                        if (numVi != 0) {
                             promedioVi /= numVi;
                             promedioVi = (float) Math.rint(promedioVi * 10) / 10;
                             promedioXpregunta += promedioVi;
@@ -442,6 +444,16 @@ public class ResultadosGenerales2 implements Action {
         try {
             Context c = new InitialContext();
             return (PonderacionfactorFacade) c.lookup("java:global/sap/PonderacionfactorFacade!com.sap.ejb.PonderacionfactorFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ResultadoevaluacionFacade lookupResultadoevaluacionFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (ResultadoevaluacionFacade) c.lookup("java:global/sap/ResultadoevaluacionFacade!com.sap.ejb.ResultadoevaluacionFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
