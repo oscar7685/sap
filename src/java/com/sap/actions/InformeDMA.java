@@ -65,8 +65,8 @@ public class InformeDMA implements Action {
 
             List<List<Encuesta>> encuestas = new ArrayList<List<Encuesta>>(); //preguntasxencuestas
 
-            String[][] resultados = new String[258][12];
-            String[][] cerillos = new String[258][12];
+            String[][] resultados = new String[266][12];
+            String[][] cerillos = new String[266][12];
 
             int[] relacionEncuestaFuente = {0, 1, 8, 7, 2, 11, 5, 3, 4, 9, 10, 6};
 
@@ -81,6 +81,10 @@ public class InformeDMA implements Action {
                 if (caracteristica.getPreguntaList().size() > 0) {
                     List<Pregunta> preguntas = caracteristica.getPreguntaList();
                     for (Pregunta pregunta : preguntas) {
+                        if(pregunta.getCodigo().equals("61")){
+                          System.out.println("preguntaId: "+pregunta.getCodigo());
+                        }
+                      
                         if (pregunta.getPreguntaList().size() > 0) {
 
                             List<Encuesta> encuestasDondeAplica = encuestaFacade.findByPreguntaYModelo(m, pregunta);
@@ -108,6 +112,10 @@ public class InformeDMA implements Action {
                                     } else {
                                         double dma = (double) ((cincos + cuatros) * 100) / rs.size();
                                         double cerosPorcentaje = (double) ((ceros) * 100) / rs.size();
+                                        System.out.println("dma: "+dma);
+                                        System.out.println("f.getId(): "+f.getId());
+                                        System.out.println("pregunta.getPreguntaList().get(i).getId(): "+pregunta.getPreguntaList().get(i).getId());
+                                        
                                         resultados[pregunta.getPreguntaList().get(i).getId()][f.getId()] = "" + dma + "";
                                         cerillos[pregunta.getPreguntaList().get(i).getId()][f.getId()] = "" + cerosPorcentaje;
                                     }
