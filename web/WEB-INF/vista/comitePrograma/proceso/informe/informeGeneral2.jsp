@@ -46,21 +46,21 @@
                         <c:when test="${indicadorAux.caracteristicaId.factorId.id != indiceFactor}">
                             <c:choose>
                                 <c:when test="${indiceF!=-1}"> 
+                                        </div>
+                                    </div>
                                 </div>
+                                </c:when>
+                            </c:choose>
+                            <c:set var="indiceF" value="${indiceF+1}"></c:set>
+                            <c:set var="indiceFactor" value="${indicadorAux.caracteristicaId.factorId.id}"></c:set>
+                            <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${indiceF}">
+                                    <h3>Factor ${indicadorAux.caracteristicaId.factorId.codigo}</h3>
+                                </a>
                             </div>
-                        </div>
-                    </c:when>
-                </c:choose>
-                <c:set var="indiceF" value="${indiceF+1}"></c:set>
-                <c:set var="indiceFactor" value="${indicadorAux.caracteristicaId.factorId.id}"></c:set>
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${indiceF}">
-                            <h3>Factor ${indicadorAux.caracteristicaId.factorId.codigo}</h3>
-                        </a>
-                    </div>
-                    <div id="collapse${indiceF}" class="accordion-body collapse in">
-                        <div class="accordion-inner">
+                            <div id="collapse${indiceF}" class="accordion-body collapse in">
+                            <div class="accordion-inner">
                             <table class="table table-striped table-bordered table-condensed">
                                 <thead style="background-color: #ffffff;">
                                     <tr>
@@ -89,7 +89,7 @@
                         </c:when>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${indicador.caracteristicaId.id != indiceCaracteristicas}">
+                        <c:when test="${indicadorAux.caracteristicaId.id != indiceCaracteristicas}">
                             <c:set var="indiceC" value="${indiceC+1}"></c:set>
                             <c:set var="indiceCaracteristicas" value="${indicadorAux.caracteristicaId.id}"></c:set>
                                 <h3>Caracteristica</h3>
@@ -109,17 +109,17 @@
                                     <tbody>
                                         <tr>
                                             <td>${caracteristicas.get(indiceC).getCodigo()}</td>
-                                        <td>${caracteristicas.get(indiceC).getNombre()}</td>
-                                        <td>${ponderacionesCara.get(indiceC).nivelimportancia}</td>
-                                        <td>${ponderacionesCara.get(indiceC).ponderacion}</td>
-                                        <td>${cumplimientoC[indiceC]}</td>
-                                        <td><fmt:formatNumber type="number" maxFractionDigits="1" value="${ponderacionesCara.get(indiceC).ponderacion * cumplimientoC[indiceC]}"/></td>
-                                        <td>${ponderacionesCara.get(indiceC).ponderacion * 5}</td>
-                                        <td><fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoC[indiceC] * 20}"/>%</td>
-                                    </tr>
+                                            <td>${caracteristicas.get(indiceC).getNombre()}</td>
+                                            <td>${ponderacionesCara.get(indiceC).nivelimportancia}</td>
+                                            <td>${ponderacionesCara.get(indiceC).ponderacion}</td>
+                                            <td>${cumplimientoC[indiceC]}</td>
+                                            <td><fmt:formatNumber type="number" maxFractionDigits="1" value="${ponderacionesCara.get(indiceC).ponderacion * cumplimientoC[indiceC]}"/></td>
+                                            <td>${ponderacionesCara.get(indiceC).ponderacion * 5}</td>
+                                            <td><fmt:formatNumber type="number" maxFractionDigits="1" value="${cumplimientoC[indiceC] * 20}"/>%</td>
+                                        </tr>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
                         </c:when>
                     </c:choose>
                     <h4>Indicador</h4>
