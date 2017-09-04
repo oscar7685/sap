@@ -314,23 +314,18 @@ public class loginController extends HttpServlet {
                                     proceso = persona.getMuestraId().getProcesoId();
                                     if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
                                         m = proceso.getModeloId();
-                                        auxD3 = encuestaFacade.findByModelo(m);
                                         session.setAttribute("proceso", proceso);
 
                                     }
-                                    if (auxD3 != null) {
-                                        for (int i = 0; i < auxD3.size(); i++) {
-                                            Encuesta en = auxD3.get(i);
-                                            List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(2), proceso.getModeloId());
-                                            if (aux4 != null && aux4.size() > 0) {
-                                                List<Encabezado> encabExistentes = encabezadoFacade.findByVars(proceso, aux4.get(0).getEncuestaId(), fuenteFacade.find(2), persona);
-                                                if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
-                                                } else {
-                                                    session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
-                                                    break;
-                                                }
-                                            }
 
+                                    Asignacionencuesta aux4 = asignacionencuestaFacade.findBySingle2("fuenteId", fuenteFacade.find(2), "modeloId", proceso.getModeloId());
+                                    if (aux4 != null) {
+                                        List<Encabezado> encabExistentes = encabezadoFacade.findByVars(proceso, aux4.getEncuestaId(), fuenteFacade.find(2), persona);
+                                        if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
+                                            continue;
+                                        } else {
+                                            session.setAttribute("encuesta", aux4.getEncuestaId());
+                                            break;
                                         }
                                     }
 
@@ -378,26 +373,21 @@ public class loginController extends HttpServlet {
                                         proceso = persona.getMuestraId().getProcesoId();
                                         if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
                                             m = proceso.getModeloId();
-                                            auxDi3 = encuestaFacade.findByModelo(m);
                                             session.setAttribute("proceso", proceso);
 
                                         }
-                                        if (auxDi3 != null) {
-                                            for (int i = 0; i < auxDi3.size(); i++) {
-                                                Encuesta en = auxDi3.get(i);
-                                                List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(5), proceso.getModeloId());
-                                                if (aux4 != null && aux4.size() > 0) {
-                                                    List<Encabezado> encabExistentes = encabezadoFacade.findByVars(proceso, aux4.get(0).getEncuestaId(), fuenteFacade.find(5), persona);
-                                                    if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
-                                                    } else {
-                                                        session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
-                                                    }
-
-                                                }
-
+                                        Asignacionencuesta aux4 = asignacionencuestaFacade.findBySingle2("fuenteId", fuenteFacade.find(5), "modeloId", proceso.getModeloId());
+                                        if (aux4 != null) {
+                                            List<Encabezado> encabExistentes = encabezadoFacade.findByVars(proceso, aux4.getEncuestaId(), fuenteFacade.find(5), persona);
+                                            if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
+                                                continue;
+                                            } else {
+                                                session.setAttribute("encuesta", aux4.getEncuestaId());
+                                                break;
                                             }
+
                                         }
-                                        break;
+
                                     } else {
                                         if (l + 1 == usuario.size()) {
                                             respuesta = "1";
@@ -442,25 +432,22 @@ public class loginController extends HttpServlet {
                                         proceso = persona.getMuestraId().getProcesoId();
                                         if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
                                             m = proceso.getModeloId();
-                                            auxA3 = encuestaFacade.findByModelo(m);
+                                            //auxA3 = encuestaFacade.findByModelo(m);
                                             session.setAttribute("proceso", proceso);
 
                                         }
-                                        if (auxA3 != null) {
-                                            for (int i = 0; i < auxA3.size(); i++) {
-                                                Encuesta en = auxA3.get(i);
-                                                List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(3), proceso.getModeloId());
-                                                if (aux4 != null && aux4.size() > 0) {
-                                                    List<Encabezado> encabExistentes = encabezadoFacade.findByVars(proceso, aux4.get(0).getEncuestaId(), fuenteFacade.find(3), persona);
-                                                    if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
-                                                    } else {
-                                                        session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
-                                                    }
-                                                }
 
+                                        Asignacionencuesta aux4 = asignacionencuestaFacade.findBySingle2("fuenteId", fuenteFacade.find(3), "modeloId", proceso.getModeloId());
+                                        if (aux4 != null) {
+                                            List<Encabezado> encabExistentes = encabezadoFacade.findByVars(proceso, aux4.getEncuestaId(), fuenteFacade.find(3), persona);
+                                            if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
+                                                continue;
+                                            } else {
+                                                session.setAttribute("encuesta", aux4.getEncuestaId());
+                                                break;
                                             }
                                         }
-                                        break;
+
                                     } else {
                                         if (l + 1 == usuario.size()) {
                                             respuesta = "1";
