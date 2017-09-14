@@ -491,25 +491,19 @@ public class loginController extends HttpServlet {
                                         proceso = persona.getMuestraId().getProcesoId();
                                         if (!proceso.getFechainicio().equals("En Configuración") && proceso.getFechacierre().equals("--")) {
                                             m = proceso.getModeloId();
-                                            auxEm3 = encuestaFacade.findByModelo(m);
                                             session.setAttribute("proceso", proceso);
 
                                         }
-                                        if (auxEm3 != null) {
-                                            for (int i = 0; i < auxEm3.size(); i++) {
-                                                Encuesta en = auxEm3.get(i);
-                                                List<Asignacionencuesta> aux4 = asignacionencuestaFacade.findByEncuestayFuenteyModelo(en, fuenteFacade.find(6), proceso.getModeloId());
-                                                if (aux4 != null && aux4.size() > 0) {
-                                                    List<Encabezado> encabExistentes = encabezadoFacade.findByVars(proceso, aux4.get(0).getEncuestaId(), fuenteFacade.find(6), persona);
-                                                    if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
-                                                    } else {
-                                                        session.setAttribute("encuesta", aux4.get(0).getEncuestaId());
-                                                    }
-                                                }
-
+                                        Asignacionencuesta aux4 = asignacionencuestaFacade.findBySingle2("fuenteId", fuenteFacade.find(6), "modeloId", proceso.getModeloId());
+                                        if (aux4 != null) {
+                                            List<Encabezado> encabExistentes = encabezadoFacade.findByVars(proceso, aux4.getEncuestaId(), fuenteFacade.find(6), persona);
+                                            if (encabExistentes.size() > 0 && encabExistentes.get(0).getEstado().equals("terminado")) {
+                                                continue;
+                                            } else {
+                                                session.setAttribute("encuesta", aux4.getEncuestaId());
+                                                break;
                                             }
                                         }
-                                        break;
                                     } else {
                                         if (l + 1 == usuario.size()) {
                                             respuesta = "1";
