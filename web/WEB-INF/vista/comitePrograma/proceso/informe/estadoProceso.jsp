@@ -78,7 +78,7 @@
                         'Estudiantes'
                         ,'Docentes'
                         ,'Directores de programa'
-            <c:if test="${Proceso.modeloId.id < 4}">
+            <c:if test="${Proceso.modeloId.id != 4 && Proceso.modeloId.id != 5 }">
                          ,'Administrativos'       
                          ,'Egresados'
                          ,'Empleadores'
@@ -115,7 +115,7 @@
                 series: [{
                         name: 'Seleccionados',
                         data: [${totalEst}, ${totalDoc}, ${totalDir}
-                        <c:if test="${Proceso.modeloId.id < 4}">
+                        <c:if test="${Proceso.modeloId.id != 4 && Proceso.modeloId.id != 5 }">
                         ,${totalAdm}
                         , ${totalEgr}
                         , ${totalEmp}
@@ -129,7 +129,7 @@
                         ]}, {
                         name: 'Evaluados',
                         data: [${terminadosEst}, ${terminadosDoc}, ${terminadosDir}
-                        <c:if test="${Proceso.modeloId.id < 4}">
+                        <c:if test="${Proceso.modeloId.id != 4 && Proceso.modeloId.id != 5 }">
                         , ${terminadosAdm}
                         , ${terminadosEgr}
                         , ${terminadosEmp}
@@ -214,7 +214,7 @@
                             <li><a href="#encuestaXaleatoria&1">de un estudiante</a></li>
                             <li><a href="#encuestaXaleatoria&2">de un docente</a></li>
                             <li><a href="#encuestaXaleatoria&5">de un director de programa</a></li>
-                            <c:if test="${Proceso.modeloId.id < 4}">
+                            <c:if test="${Proceso.modeloId.id != 4 && Proceso.modeloId.id != 5 }">
                             <li><a href="#encuestaXaleatoria&4">de un egresado</a></li>
                             <li><a href="#encuestaXaleatoria&3">de un administrativo</a></li>
                             <li><a href="#encuestaXaleatoria&6">de un empleador</a></li>
@@ -385,7 +385,7 @@
 
                         </tr>
                         
-                        <c:if test="${Proceso.modeloId.id < 4}">
+                        <c:if test="${Proceso.modeloId.id != 4 && Proceso.modeloId.id != 5 }">
                         <tr>
                             <td>
                                 ADMINISTRATIVOS

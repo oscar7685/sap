@@ -1,8 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script type="text/javascript">
-    $(function() {
-        $("#selectListMuestra").change(function() {
+    $(function () {
+        $("#selectListMuestra").change(function () {
             $("#help1").html('Seleccione una fuente para ver la muestra asignada a la misma.');
             $("#listM").empty();
             $("#selectSemestre option:eq(0)").prop("selected", true);
@@ -23,9 +23,9 @@
                     type: 'POST',
                     url: "/sap/controladorCP?action=selectorListMuestra",
                     data: $("#formListarMuestra").serialize(),
-                    success: function(datos) {
+                    success: function (datos) {
                         $("#listM").append(datos);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             $("#dancing-dots-text").remove();
                         }, 200);
                     } //fin success
@@ -34,7 +34,7 @@
 
         });
 
-        $("#selectSemestre").change(function() {
+        $("#selectSemestre").change(function () {
             var a = $("#selectSemestre option:selected").index();
             if (a == 0) {
                 $("#listM").empty();
@@ -44,10 +44,10 @@
                     type: 'POST',
                     url: "/sap/controladorCP?action=selectorListSemestre",
                     data: $("#formListarMuestra").serialize(),
-                    success: function(datos) {
+                    success: function (datos) {
                         $("#listM").empty();
                         $("#listM").append(datos);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             $("#dancing-dots-text").remove();
                         }, 200);
 
@@ -73,17 +73,19 @@
                                         <option value="Estudiante">Estudiantes</option>
                                         <option value="Docente">Docentes</option>
                                         <option value="Directivo">Directores de programa</option>
-                                        <c:if test="${Proceso.modeloId.id < 4}">
-                                            <option value="Egresado">Egresados</option>
-                                            <option value="Administrativo">Administrativos</option>
-                                            <option value="Empleador">Empleadores</option>
-                                        </c:if>
-                                        <c:if test="${Proceso.modeloId.id == 4}">
-                                            <option value="Egresado">Egresados</option>
-                                        </c:if>
-                                        <c:if test="${Proceso.modeloId.id == 5}">
-                                            <option value="Visitante">Visitantes</option>    
-                                        </c:if>
+                                        <c:choose>
+                                            <c:when test="${Proceso.modeloId.id == 4}">
+                                                <option value="Egresado">Egresados</option>
+                                            </c:when>
+                                            <c:when test="${Proceso.modeloId.id == 5}">
+                                                <option value="Visitante">Visitantes</option>   
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="Egresado">Egresados</option>
+                                                <option value="Administrativo">Administrativos</option>
+                                                <option value="Empleador">Empleadores</option>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </select>
                                 </div>
                             </div>   
