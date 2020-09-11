@@ -33,6 +33,7 @@ private final Logger LOGGER = Logger.getLogger(DescargarFormato.class);
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
         String fuente = (String) request.getParameter("fuente");
         try {
@@ -73,8 +74,11 @@ private final Logger LOGGER = Logger.getLogger(DescargarFormato.class);
             inStream.close();
             outStream.close();
         } catch (IOException e) {
+           
+           out.print("ha ocurrido un error:_ "+e.toString());
            LOGGER.error("Se ha presentado un error", e);
         } catch (Exception e) {
+             out.print("ha ocurrido un error:_ "+e.toString());
             LOGGER.error("Se ha presentado un error", e);
         } finally {
             //out.close();
